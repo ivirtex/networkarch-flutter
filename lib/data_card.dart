@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class DataCard extends StatelessWidget {
-  DataCard(
-    this.color, [
+  DataCard({
+    this.color,
     this.cardChild,
     this.onPress,
-  ]);
+  });
 
   final Color color;
   final Widget cardChild;
@@ -16,7 +16,10 @@ class DataCard extends StatelessWidget {
     return GestureDetector(
       onTap: onPress,
       child: Container(
-        child: cardChild,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: cardChild,
+        ),
         margin: EdgeInsets.all(15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
