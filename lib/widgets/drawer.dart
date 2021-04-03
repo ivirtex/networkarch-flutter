@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'builders.dart';
+
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({
     Key key,
@@ -17,25 +21,25 @@ class DrawerWidget extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             child: Text(
-              'About',
+              'Menu',
               style: TextStyle(
                 fontSize: 30.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          ListTile(
-            title: Text('Item 1'),
+          Builders.buildMenuListTile(
+            icon: FaIcon(FontAwesomeIcons.cog),
+            text: "Settings",
             onTap: () {
-              // Update the state of the app.
-              // ...
+              // TODO: Implement onTap()
             },
           ),
-          ListTile(
-            title: Text('Item 2'),
+          Builders.buildMenuListTile(
+            icon: FaIcon(FontAwesomeIcons.infoCircle),
+            text: "About",
             onTap: () {
-              // Update the state of the app.
-              // ...
+              // TODO: Implement onTap()
             },
           ),
         ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:network_arch/constants.dart';
 
+import 'builders.dart';
 import 'data_card.dart';
 import 'data_line.dart';
 import 'drawer.dart';
@@ -12,7 +13,8 @@ class Dashboard extends StatelessWidget {
         MediaQuery.of(context).platformBrightness;
     bool isDark = brightnessValue == Brightness.dark;
 
-    bool isConnected = true;
+    bool isWiFiConnected = true;
+    bool isCellularConnected = false;
 
     return Scaffold(
       appBar: AppBar(
@@ -43,42 +45,52 @@ class Dashboard extends StatelessWidget {
                       children: [
                         Text(
                           "Wi-Fi",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
-                          ),
+                          style: Constants.networkTypeTextStyle,
                         ),
                         Spacer(),
-                        Row(
-                          children: [
-                            Text(
-                              isConnected ? "Connected" : "Not connected",
-                              style: TextStyle(
-                                color: isConnected ? Colors.green : Colors.red,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(width: 10.0),
-                            FaIcon(
-                              isConnected
-                                  ? FontAwesomeIcons.checkCircle
-                                  : FontAwesomeIcons.timesCircle,
-                              color: isConnected ? Colors.green : Colors.red,
-                            )
-                          ],
-                        )
+                        Builders.buildConnectionState(isWiFiConnected)
                       ],
                     ),
                     SizedBox(height: 5.0),
                     Column(
                       children: [
-                        DataLine(textL: "IP Address", textR: "192.168.0.1"),
-                        DataLine(textL: "BSSID", textR: "UPC2137420")
+                        DataLine(
+                          textL: "BSSID",
+                          textR: "UPC2137420",
+                        ),
+                        DataLine(
+                          textL: "Int. IP Address",
+                          textR: "192.168.0.1",
+                        ),
                       ],
                     )
                   ],
                 ),
-              )
+              ),
+              DataCard(
+                color: isDark ? Colors.grey[800] : Colors.grey[200],
+                cardChild: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Cellular",
+                          style: Constants.networkTypeTextStyle,
+                        ),
+                        Spacer(),
+                        Builders.buildConnectionState(isCellularConnected)
+                      ],
+                    ),
+                    SizedBox(height: 5.0),
+                    Column(
+                      children: [
+                        DataLine(textL: "Carrier", textR: "Play"),
+                        DataLine(textL: "IP Address", textR: "192.168.0.1"),
+                      ],
+                    )
+                  ],
+                ),
+              ),
             ],
           )
         ],
