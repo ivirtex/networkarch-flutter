@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
+
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:connectivity/connectivity.dart';
+
 import 'package:network_arch/constants.dart';
+import 'package:network_arch/utils/network_type.dart';
+import 'package:network_arch/widgets/network_card.dart';
+import 'package:network_arch/store/connection_type/connectivity_store.dart';
+import 'package:network_arch/widgets/tool_card.dart';
+import '../widgets/drawer.dart';
 
-import 'builders.dart';
-import 'data_card.dart';
-import 'data_line.dart';
-import 'drawer.dart';
+class Dashboard extends StatefulWidget {
+  @override
+  _DashboardState createState() => _DashboardState();
+}
 
-class Dashboard extends StatelessWidget {
+class _DashboardState extends State<Dashboard> {
+  final ConnectivityStore connectivityStore = ConnectivityStore();
+
   @override
   Widget build(BuildContext context) {
     final Brightness brightnessValue =
         MediaQuery.of(context).platformBrightness;
     bool isDark = brightnessValue == Brightness.dark;
-
-    bool isWiFiConnected = true;
-    bool isCellularConnected = false;
 
     return Scaffold(
       appBar: AppBar(
@@ -37,59 +45,109 @@ class Dashboard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DataCard(
-                color: isDark ? Colors.grey[800] : Colors.grey[200],
-                cardChild: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "Wi-Fi",
-                          style: Constants.networkTypeTextStyle,
-                        ),
-                        Spacer(),
-                        Builders.buildConnectionState(isWiFiConnected)
-                      ],
-                    ),
-                    SizedBox(height: 5.0),
-                    Column(
-                      children: [
-                        DataLine(
-                          textL: "BSSID",
-                          textR: "UPC2137420",
-                        ),
-                        DataLine(
-                          textL: "Int. IP Address",
-                          textR: "192.168.0.1",
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+              Observer(
+                builder: (_) {
+                  bool isWiFiConnected =
+                      connectivityStore.connectivityStream.value ==
+                              ConnectivityResult.wifi
+                          ? true
+                          : false;
+
+                  return NetworkCard(
+                    isDarkTheme: isDark,
+                    isNetworkConnected: isWiFiConnected,
+                    networkType: NetworkType.wifi,
+                    bssidOrCarrier: "UPC2137420",
+                    ipAddress: "192.168.0.1",
+                    onPressed: () {
+                      // TODO: Implement onTap()
+                    },
+                  );
+                },
               ),
-              DataCard(
-                color: isDark ? Colors.grey[800] : Colors.grey[200],
-                cardChild: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "Cellular",
-                          style: Constants.networkTypeTextStyle,
-                        ),
-                        Spacer(),
-                        Builders.buildConnectionState(isCellularConnected)
-                      ],
-                    ),
-                    SizedBox(height: 5.0),
-                    Column(
-                      children: [
-                        DataLine(textL: "Carrier", textR: "Play"),
-                        DataLine(textL: "IP Address", textR: "192.168.0.1"),
-                      ],
-                    )
-                  ],
-                ),
+              Observer(
+                builder: (_) {
+                  bool isCellularConnected =
+                      connectivityStore.connectivityStream.value ==
+                              ConnectivityResult.mobile
+                          ? true
+                          : false;
+
+                  return NetworkCard(
+                    isDarkTheme: isDark,
+                    isNetworkConnected: isCellularConnected,
+                    networkType: NetworkType.cellular,
+                    bssidOrCarrier: "papiez",
+                    ipAddress: "0.0.0.0",
+                    onPressed: () {
+                      // TODO: Implement onTap()
+                    },
+                  );
+                },
+              ),
+              Divider(
+                indent: 15,
+                endIndent: 15,
+              ),
+
+              //! debug
+              // Observer(builder: (_) {
+              //   return Text(connectivityStore.networkInterfaces.toString());
+              // }),
+              // TextButton(
+              //   child: Text("update"),
+              //   onPressed: () {
+              //     connectivityStore.updateInterfaces();
+              //   },
+              // )
+
+              ToolCard(
+                isDarkTheme: isDark,
+                toolName: "Ping",
+                toolDesc: Constants.pingDesc,
+                onPressed: () {
+                  // TODO: Implement onTap()
+                },
+              ),
+              ToolCard(
+                isDarkTheme: isDark,
+                toolName: "LAN Scanner",
+                toolDesc: Constants.lanScannerDesc,
+                onPressed: () {
+                  // TODO: Implement onTap()
+                },
+              ),
+              ToolCard(
+                isDarkTheme: isDark,
+                toolName: "Wake On LAN",
+                toolDesc: Constants.lanScannerDesc,
+                onPressed: () {
+                  // TODO: Implement onTap()
+                },
+              ),
+              ToolCard(
+                isDarkTheme: isDark,
+                toolName: "IP Geolocation",
+                toolDesc: Constants.lanScannerDesc,
+                onPressed: () {
+                  // TODO: Implement onTap()
+                },
+              ),
+              ToolCard(
+                isDarkTheme: isDark,
+                toolName: "Whois",
+                toolDesc: Constants.lanScannerDesc,
+                onPressed: () {
+                  // TODO: Implement onTap()
+                },
+              ),
+              ToolCard(
+                isDarkTheme: isDark,
+                toolName: "DNS Lookup",
+                toolDesc: Constants.lanScannerDesc,
+                onPressed: () {
+                  // TODO: Implement onTap()
+                },
               ),
             ],
           )

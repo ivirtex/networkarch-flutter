@@ -20,7 +20,7 @@ class DataCard extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: cardChild,
         ),
-        margin: EdgeInsets.all(15),
+        margin: EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: color,
