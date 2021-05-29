@@ -13,7 +13,10 @@ class MyApp extends StatelessWidget {
       title: 'Dashboard',
       theme: ThemeData(),
       darkTheme: ThemeData.dark(),
-      home: Dashboard(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Dashboard(),
+      },
     );
   }
 }
