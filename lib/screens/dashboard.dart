@@ -28,16 +28,9 @@ class _DashboardState extends State<Dashboard> {
       appBar: AppBar(
         title: Text(
           "Dashboard",
-          style: TextStyle(
-            color: isDark ? Colors.white : Colors.black,
-          ),
         ),
-        centerTitle: true,
-        iconTheme: IconThemeData(
-          color: isDark ? Colors.white : Colors.black,
-        ),
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
+        iconTheme: Theme.of(context).iconTheme,
+        textTheme: Theme.of(context).textTheme,
       ),
       drawer: DrawerWidget(),
       body: ListView(
@@ -106,7 +99,7 @@ class _DashboardState extends State<Dashboard> {
                 toolName: "Ping",
                 toolDesc: Constants.pingDesc,
                 onPressed: () {
-                  // TODO: Implement onTap()
+                  Navigator.pushNamed(context, "/tools/ping");
                 },
               ),
               ToolCard(
@@ -120,7 +113,7 @@ class _DashboardState extends State<Dashboard> {
               ToolCard(
                 isDarkTheme: isDark,
                 toolName: "Wake On LAN",
-                toolDesc: Constants.lanScannerDesc,
+                toolDesc: Constants.wolDesc,
                 onPressed: () {
                   // TODO: Implement onTap()
                 },
@@ -128,7 +121,7 @@ class _DashboardState extends State<Dashboard> {
               ToolCard(
                 isDarkTheme: isDark,
                 toolName: "IP Geolocation",
-                toolDesc: Constants.lanScannerDesc,
+                toolDesc: Constants.ipGeoDesc,
                 onPressed: () {
                   // TODO: Implement onTap()
                 },
@@ -136,7 +129,7 @@ class _DashboardState extends State<Dashboard> {
               ToolCard(
                 isDarkTheme: isDark,
                 toolName: "Whois",
-                toolDesc: Constants.lanScannerDesc,
+                toolDesc: Constants.whoisDesc,
                 onPressed: () {
                   // TODO: Implement onTap()
                 },
@@ -144,7 +137,7 @@ class _DashboardState extends State<Dashboard> {
               ToolCard(
                 isDarkTheme: isDark,
                 toolName: "DNS Lookup",
-                toolDesc: Constants.lanScannerDesc,
+                toolDesc: Constants.dnsDesc,
                 onPressed: () {
                   // TODO: Implement onTap()
                 },

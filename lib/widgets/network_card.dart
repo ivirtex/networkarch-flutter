@@ -69,14 +69,12 @@ class NetworkCard extends StatelessWidget {
                       Text(
                         "Detailed view",
                         style: TextStyle(
-                          color:
-                              isDarkTheme == true ? Colors.white : Colors.black,
+                          color: isDarkTheme ? Colors.white : Colors.black,
                         ),
                       ),
                       FaIcon(
                         FontAwesomeIcons.arrowCircleRight,
-                        color:
-                            isDarkTheme == true ? Colors.white : Colors.black,
+                        color: isDarkTheme ? Colors.white : Colors.black,
                       )
                     ],
                   ),

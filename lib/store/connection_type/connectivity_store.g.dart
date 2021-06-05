@@ -41,14 +41,6 @@ mixin _$ConnectivityStore on _ConnectivityStore, Store {
     });
   }
 
-  final _$updateInterfacesAsyncAction =
-      AsyncAction('_ConnectivityStore.updateInterfaces');
-
-  @override
-  Future<void> updateInterfaces() {
-    return _$updateInterfacesAsyncAction.run(() => super.updateInterfaces());
-  }
-
   @override
   String toString() {
     return '''

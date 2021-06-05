@@ -19,8 +19,8 @@ abstract class _ConnectivityStore with Store {
   List<NetworkInterface> networkInterfaces;
 
   //! debug
-  @action
-  Future<void> updateInterfaces() async {
-    networkInterfaces = await NetworkInterface.list();
-  }
+  // @action
+  // Future<void> updateInterfaces() async {
+  //   networkInterfaces = await NetworkInterface.list();
+  // }
 }

@@ -40,7 +40,7 @@ class ToolCard extends StatelessWidget {
                 Text(
                   toolDesc,
                   style: TextStyle(
-                    color: Colors.grey[400],
+                    color: isDarkTheme ? Colors.grey[400] : Colors.grey[600],
                   ),
                 )
               ],
@@ -57,7 +57,7 @@ class ToolCard extends StatelessWidget {
               ),
               child: FaIcon(
                 FontAwesomeIcons.arrowCircleRight,
-                color: isDarkTheme == true ? Colors.white : Colors.black,
+                color: isDarkTheme ? Colors.white : Colors.black,
               ),
               onPressed: onPressed,
             ),

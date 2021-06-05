@@ -30,10 +30,11 @@ dependencies:
 
   font_awesome_flutter: ^9.0.0
   connectivity: ^3.0.3
-  mobx: ^2.0.0
+  mobx: ^2.0.1
   flutter_mobx: ^2.0.0
   provider: ^5.0.0
   wifi_info_flutter: ^2.0.0
+  styled_widget: ^0.3.1
 
 dev_dependencies:
   flutter_test:
