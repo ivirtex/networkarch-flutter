@@ -1,5 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 abstract class Builders {
@@ -7,7 +9,7 @@ abstract class Builders {
     return Row(
       children: [
         Text(
-          isNetworkConnected ? "Connected" : "Not connected",
+          isNetworkConnected ? "Connected" : "Disconnected",
           style: TextStyle(
             color: isNetworkConnected ? Colors.green : Colors.red,
             fontWeight: FontWeight.bold,

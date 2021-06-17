@@ -1,12 +1,17 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:connectivity/connectivity.dart';
+// Package imports:
+import 'package:carrier_info/carrier_info.dart';
+import 'package:provider/provider.dart';
 
+// Project imports:
 import 'package:network_arch/constants.dart';
+import 'package:network_arch/models/connectivity.dart';
 import 'package:network_arch/utils/network_type.dart';
+import 'package:network_arch/widgets/error_card.dart';
+import 'package:network_arch/widgets/loading_card.dart';
 import 'package:network_arch/widgets/network_card.dart';
-import 'package:network_arch/store/connection_type/connectivity_store.dart';
 import 'package:network_arch/widgets/tool_card.dart';
 import '../widgets/drawer.dart';
 
@@ -16,13 +21,13 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  final ConnectivityStore connectivityStore = ConnectivityStore();
-
   @override
   Widget build(BuildContext context) {
     final Brightness brightnessValue =
         MediaQuery.of(context).platformBrightness;
-    bool isDark = brightnessValue == Brightness.dark;
+    final bool isDark = brightnessValue == Brightness.dark;
+
+    final Connectivity connectivity = Provider.of<Connectivity>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -38,44 +43,65 @@ class _DashboardState extends State<Dashboard> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Observer(
-                builder: (_) {
-                  bool isWiFiConnected =
-                      connectivityStore.connectivityStream.value ==
-                              ConnectivityResult.wifi
-                          ? true
-                          : false;
+              StreamBuilder(
+                stream: connectivity.getWifiInfoStream,
+                initialData: null,
+                builder: (context, AsyncSnapshot<Map<int, Object>> snapshot) {
+                  if (snapshot.hasError) {
+                    print(snapshot.error.toString());
 
-                  return NetworkCard(
-                    isDarkTheme: isDark,
-                    isNetworkConnected: isWiFiConnected,
-                    networkType: NetworkType.wifi,
-                    bssidOrCarrier: "UPC2137420",
-                    ipAddress: "192.168.0.1",
-                    onPressed: () {
-                      // TODO: Implement onTap()
-                    },
-                  );
+                    return ErrorCard(isDark: isDark);
+                  }
+
+                  if (!snapshot.hasData) {
+                    return LoadingCard(isDark: isDark);
+                  } else {
+                    bool isWifiConnected =
+                        snapshot.data[1] != null ? true : false;
+
+                    return NetworkCard(
+                      isDarkTheme: isDark, // TODO: By provider?
+                      isNetworkConnected: isWifiConnected,
+                      networkType: NetworkType.wifi,
+                      bssidOrCarrier: snapshot.data[0] ?? "N/A",
+                      ipAddress: snapshot.data[1] ?? "N/A",
+                      onPressed: () {
+                        // TODO: Implement onTap()
+                      },
+                    );
+                  }
                 },
               ),
-              Observer(
-                builder: (_) {
-                  bool isCellularConnected =
-                      connectivityStore.connectivityStream.value ==
-                              ConnectivityResult.mobile
-                          ? true
-                          : false;
+              StreamBuilder(
+                stream: connectivity.getCellularInfoStream,
+                initialData: null,
+                builder: (context, AsyncSnapshot<CarrierData> snapshot) {
+                  print(snapshot.data.toString());
+                  if (snapshot.hasError) {
+                    print(snapshot.error);
 
-                  return NetworkCard(
-                    isDarkTheme: isDark,
-                    isNetworkConnected: isCellularConnected,
-                    networkType: NetworkType.cellular,
-                    bssidOrCarrier: "papiez",
-                    ipAddress: "0.0.0.0",
-                    onPressed: () {
-                      // TODO: Implement onTap()
-                    },
-                  );
+                    return ErrorCard(isDark: isDark);
+                  }
+
+                  if (!snapshot.hasData) {
+                    print("no data from snapshot");
+
+                    return LoadingCard(isDark: isDark);
+                  } else {
+                    bool isCellularConnected =
+                        snapshot.data.carrierName != null ? true : false;
+
+                    return NetworkCard(
+                      isDarkTheme: isDark,
+                      isNetworkConnected: isCellularConnected,
+                      networkType: NetworkType.cellular,
+                      bssidOrCarrier: "UPC2137420",
+                      ipAddress: "192.168.0.1",
+                      onPressed: () {
+                        // TODO: Implement onTap()
+                      },
+                    );
+                  }
                 },
               ),
               Divider(

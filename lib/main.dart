@@ -1,11 +1,28 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:provider/provider.dart';
+
+// Project imports:
 import 'constants.dart';
+import 'models/connectivity.dart';
+import 'models/ping_model.dart';
 import 'screens/dashboard.dart';
-import 'screens/ping.dart';
+import 'screens/ping_view.dart';
 
 void main() {
-  runApp(MyApp());
+  Provider.debugCheckInvalidValueType = null;
+
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider(create: (context) => PingModel()),
+        Provider(create: (context) => Connectivity())
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +36,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => Dashboard(),
-        '/tools/ping': (context) => Ping(),
+        '/tools/ping': (context) => PingView(),
       },
     );
   }

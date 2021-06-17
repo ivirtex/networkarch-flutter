@@ -29,19 +29,21 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   font_awesome_flutter: ^9.0.0
-  connectivity: ^3.0.3
-  mobx: ^2.0.1
-  flutter_mobx: ^2.0.0
   provider: ^5.0.0
   wifi_info_flutter: ^2.0.0
+  carrier_info: ^2.0.0
   styled_widget: ^0.3.1
+  dart_ping: ^6.0.0
+  faker: ^2.0.0
+  rxdart: ^0.27.1
+  network_info_plus: ^1.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   build_runner:
-  mobx_codegen: ^2.0.0
+  import_sorter: ^4.6.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

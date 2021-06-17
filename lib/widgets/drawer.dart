@@ -1,7 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+// Project imports:
 import 'builders.dart';
 
 class DrawerWidget extends StatelessWidget {

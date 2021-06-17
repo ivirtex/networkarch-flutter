@@ -1,7 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+// Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/utils/network_type.dart';
 import 'package:network_arch/widgets/builders.dart';
@@ -53,11 +56,14 @@ class NetworkCard extends StatelessWidget {
                 textL: "IP Address",
                 textR: ipAddress,
               ),
-              Divider(),
+              SizedBox(height: 10),
               TextButton(
                 onPressed: onPressed,
                 style: TextButton.styleFrom(
                   primary: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(6)),
+                  ),
                   backgroundColor:
                       isDarkTheme ? Colors.grey[700] : Colors.grey[300],
                 ),
