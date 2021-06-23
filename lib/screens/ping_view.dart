@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:dart_ping/dart_ping.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:network_arch/utils/keyboard_hider.dart';
 import 'package:provider/provider.dart';
 import 'package:styled_widget/styled_widget.dart';
 
@@ -19,11 +21,8 @@ class PingView extends StatefulWidget {
 
 class _PingViewState extends State<PingView> {
   final targetHostController = TextEditingController();
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  IconData pingButtonIcon = FontAwesomeIcons.play;
+  Color pingButtonColor = Colors.green;
 
   @override
   Widget build(BuildContext context) {
@@ -36,54 +35,66 @@ class _PingViewState extends State<PingView> {
         ),
         iconTheme: Theme.of(context).iconTheme,
         textTheme: Theme.of(context).textTheme,
-        actions: [
-          TextButton(
-            child: Text(
-              "Start",
-              style: TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-                fontSize: 17,
-              ),
-            ),
-            style: ButtonStyle(
-              overlayColor: MaterialStateColor.resolveWith(
-                (states) => Colors.grey[200],
-              ),
-            ),
-            onPressed: () {
-              setState(() {
-                pingModel.clearData();
-                pingModel.isPingingStarted = true;
-                pingModel.setHost(targetHostController.text);
-                targetHostController.clear();
-              });
-
-              print("pressed");
-            },
-          )
-        ],
       ),
       body: SingleChildScrollView(
         physics: ScrollPhysics(),
         child: Column(
           children: [
-            TextField(
-              controller: targetHostController,
-              autocorrect: false,
-              decoration: InputDecoration(
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                labelText: "IP address",
-              ),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: targetHostController,
+                    autocorrect: false,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                            width: 1.5,
+                          ),
+                        ),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0)),
+                        labelText: "IP address",
+                        labelStyle: TextStyle()),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: IconButton(
+                    icon: FaIcon(pingButtonIcon, color: pingButtonColor),
+                    onPressed: () {
+                      if (pingButtonIcon == FontAwesomeIcons.play) {
+                        setState(() {
+                          pingButtonIcon = FontAwesomeIcons.times;
+                          pingButtonColor = Colors.red;
+                        });
+                        pingModel.clearData();
+                        pingModel.isPingingStarted = true;
+                        pingModel.setHost(targetHostController.text);
+                      } else {
+                        setState(() {
+                          pingButtonIcon = FontAwesomeIcons.play;
+                          pingButtonColor = Colors.green;
+                        });
+                        pingModel.stopStream();
+                        pingModel.isPingingStarted = false;
+                      }
+
+                      targetHostController.clear();
+                      hideKeyboard(context);
+                    },
+                  ),
+                )
+              ],
             ).padding(all: 10),
             Consumer<PingModel>(
               builder: (context, model, child) {
-                print("rebuilded");
-
                 if (model.isPingingStarted) {
                   return StreamBuilder(
-                    stream: pingModel.getStream(), //! Can't listen twice
+                    stream: pingModel.getStream(),
                     initialData: null,
                     builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.hasError) {
@@ -93,7 +104,6 @@ class _PingViewState extends State<PingView> {
                       if (!snapshot.hasData) {
                         return CircularProgressIndicator();
                       } else {
-                        print("received snapshot");
                         model.pingData.add(snapshot.data);
 
                         return ListView.builder(
@@ -104,20 +114,49 @@ class _PingViewState extends State<PingView> {
                             PingData currData = model.pingData[index];
 
                             if (currData.error != null) {
-                              print(currData.error.toString());
-
-                              return ListTile(
-                                title: Text(currData.error.error.toString()),
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  child: ListTile(
+                                    leading: FaIcon(
+                                      FontAwesomeIcons.timesCircle,
+                                      color: Colors.red,
+                                    ),
+                                    title: Text(model
+                                        .getErrorDesc(currData.error.error)),
+                                  ),
+                                ),
                               );
                             }
 
                             if (currData.response != null) {
-                              return ListTile(
-                                leading: Text(currData.response.ip),
-                                trailing: Text(
-                                  currData.response.time.inMilliseconds
-                                          .toString() +
-                                      " ms",
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  child: ListTile(
+                                    title: Text(currData.response.ip),
+                                    subtitle: Row(
+                                      children: [
+                                        Text(currData.response.seq.toString()),
+                                        Text(currData.response.ttl.toString())
+                                      ],
+                                    ),
+                                    trailing: Text(
+                                      currData.response.time.inMilliseconds
+                                              .toString() +
+                                          " ms",
+                                    ),
+                                  ),
                                 ),
                               );
                             } else {

@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'constants.dart';
-import 'models/connectivity.dart';
+import 'models/connectivity_model.dart';
 import 'models/ping_model.dart';
 import 'screens/dashboard.dart';
 import 'screens/ping_view.dart';
@@ -18,7 +18,7 @@ void main() {
     MultiProvider(
       providers: [
         Provider(create: (context) => PingModel()),
-        Provider(create: (context) => Connectivity())
+        Provider(create: (context) => ConnectivityModel())
       ],
       child: MyApp(),
     ),
@@ -33,6 +33,8 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: Constants.themeDataLight,
       darkTheme: Constants.themeDataDark,
+      // theme: ThemeData.light(),
+      // darkTheme: ThemeData.dark(),
       initialRoute: '/',
       routes: {
         '/': (context) => Dashboard(),

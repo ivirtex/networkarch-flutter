@@ -17,16 +17,14 @@ class NetworkCard extends StatelessWidget {
     this.isDarkTheme,
     this.isNetworkConnected,
     this.networkType,
-    this.bssidOrCarrier,
-    this.ipAddress,
+    this.firstLine,
     this.onPressed,
   }) : super(key: key);
 
   final bool isDarkTheme;
   final bool isNetworkConnected;
   final NetworkType networkType;
-  final String bssidOrCarrier;
-  final String ipAddress;
+  final String firstLine;
   final Function onPressed;
 
   @override
@@ -49,18 +47,14 @@ class NetworkCard extends StatelessWidget {
           Column(
             children: [
               DataLine(
-                textL: networkType == NetworkType.wifi ? "BSSID" : "Carrier",
-                textR: bssidOrCarrier,
-              ),
-              DataLine(
-                textL: "IP Address",
-                textR: ipAddress,
+                textL: networkType == NetworkType.wifi ? "SSID" : "Carrier",
+                textR: firstLine,
               ),
               SizedBox(height: 10),
               TextButton(
                 onPressed: onPressed,
                 style: TextButton.styleFrom(
-                  primary: Colors.white,
+                  primary: isDarkTheme ? Colors.white : Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(6)),
                   ),

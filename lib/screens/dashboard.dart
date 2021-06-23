@@ -2,12 +2,11 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:carrier_info/carrier_info.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
-import 'package:network_arch/models/connectivity.dart';
+import 'package:network_arch/models/connectivity_model.dart';
 import 'package:network_arch/utils/network_type.dart';
 import 'package:network_arch/widgets/error_card.dart';
 import 'package:network_arch/widgets/loading_card.dart';
@@ -27,7 +26,8 @@ class _DashboardState extends State<Dashboard> {
         MediaQuery.of(context).platformBrightness;
     final bool isDark = brightnessValue == Brightness.dark;
 
-    final Connectivity connectivity = Provider.of<Connectivity>(context);
+    final ConnectivityModel connectivity =
+        Provider.of<ConnectivityModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -46,25 +46,35 @@ class _DashboardState extends State<Dashboard> {
               StreamBuilder(
                 stream: connectivity.getWifiInfoStream,
                 initialData: null,
-                builder: (context, AsyncSnapshot<Map<int, Object>> snapshot) {
+                builder:
+                    (context, AsyncSnapshot<SynchronousWifiInfo> snapshot) {
                   if (snapshot.hasError) {
                     print(snapshot.error.toString());
 
-                    return ErrorCard(isDark: isDark);
+                    if (snapshot.error == Exception("SIM_CARD_NOT_READY")) {
+                      return ErrorCard(
+                        isDark: isDark,
+                        message: Constants.simError,
+                      );
+                    } else {
+                      return ErrorCard(
+                        isDark: isDark,
+                        message: Constants.defaultError,
+                      );
+                    }
                   }
 
                   if (!snapshot.hasData) {
                     return LoadingCard(isDark: isDark);
                   } else {
                     bool isWifiConnected =
-                        snapshot.data[1] != null ? true : false;
+                        snapshot.data.wifiIP != null ? true : false;
 
                     return NetworkCard(
                       isDarkTheme: isDark, // TODO: By provider?
                       isNetworkConnected: isWifiConnected,
                       networkType: NetworkType.wifi,
-                      bssidOrCarrier: snapshot.data[0] ?? "N/A",
-                      ipAddress: snapshot.data[1] ?? "N/A",
+                      firstLine: snapshot.data.wifiName ?? "N/A",
                       onPressed: () {
                         // TODO: Implement onTap()
                       },
@@ -75,16 +85,20 @@ class _DashboardState extends State<Dashboard> {
               StreamBuilder(
                 stream: connectivity.getCellularInfoStream,
                 initialData: null,
-                builder: (context, AsyncSnapshot<CarrierData> snapshot) {
-                  print(snapshot.data.toString());
+                builder:
+                    (context, AsyncSnapshot<SynchronousCarrierInfo> snapshot) {
+                  // print(snapshot.data.toString());
                   if (snapshot.hasError) {
                     print(snapshot.error);
 
-                    return ErrorCard(isDark: isDark);
+                    return ErrorCard(
+                      isDark: isDark,
+                      message: Constants.defaultError,
+                    );
                   }
 
                   if (!snapshot.hasData) {
-                    print("no data from snapshot");
+                    // print("no data from snapshot");
 
                     return LoadingCard(isDark: isDark);
                   } else {
@@ -95,8 +109,7 @@ class _DashboardState extends State<Dashboard> {
                       isDarkTheme: isDark,
                       isNetworkConnected: isCellularConnected,
                       networkType: NetworkType.cellular,
-                      bssidOrCarrier: "UPC2137420",
-                      ipAddress: "192.168.0.1",
+                      firstLine: snapshot.data.carrierName,
                       onPressed: () {
                         // TODO: Implement onTap()
                       },
