@@ -12,11 +12,11 @@ class ErrorCard extends StatelessWidget {
   const ErrorCard({
     Key? key,
     required this.isDark,
-    required this.message,
+    this.message,
   }) : super(key: key);
 
   final bool isDark;
-  final String message;
+  final String? message;
 
   @override
   Widget build(BuildContext context) {
