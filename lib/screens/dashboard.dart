@@ -8,11 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/connectivity_model.dart';
 import 'package:network_arch/utils/network_type.dart';
-import 'package:network_arch/widgets/error_card.dart';
-import 'package:network_arch/widgets/loading_card.dart';
-import 'package:network_arch/widgets/network_card.dart';
-import 'package:network_arch/widgets/tool_card.dart';
-import '../widgets/drawer.dart';
+import 'package:network_arch/widgets/drawer.dart';
+import 'package:network_arch/widgets/shared_widgets.dart';
 
 class Dashboard extends StatefulWidget {
   @override

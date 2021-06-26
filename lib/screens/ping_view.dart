@@ -5,12 +5,11 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:dart_ping/dart_ping.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:network_arch/utils/keyboard_hider.dart';
 import 'package:provider/provider.dart';
-import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
 import 'package:network_arch/models/ping_model.dart';
+import 'package:network_arch/utils/keyboard_hider.dart';
 
 class PingView extends StatefulWidget {
   PingView({Key key}) : super(key: key);
@@ -40,56 +39,59 @@ class _PingViewState extends State<PingView> {
         physics: ScrollPhysics(),
         child: Column(
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: targetHostController,
-                    autocorrect: false,
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                            width: 1.5,
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: targetHostController,
+                      autocorrect: false,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                              width: 1.5,
+                            ),
                           ),
-                        ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
-                        labelText: "IP address",
-                        labelStyle: TextStyle()),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          labelText: "IP address",
+                          labelStyle: TextStyle()),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: IconButton(
-                    icon: FaIcon(pingButtonIcon, color: pingButtonColor),
-                    onPressed: () {
-                      if (pingButtonIcon == FontAwesomeIcons.play) {
-                        setState(() {
-                          pingButtonIcon = FontAwesomeIcons.times;
-                          pingButtonColor = Colors.red;
-                        });
-                        pingModel.clearData();
-                        pingModel.isPingingStarted = true;
-                        pingModel.setHost(targetHostController.text);
-                      } else {
-                        setState(() {
-                          pingButtonIcon = FontAwesomeIcons.play;
-                          pingButtonColor = Colors.green;
-                        });
-                        pingModel.stopStream();
-                        pingModel.isPingingStarted = false;
-                      }
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: IconButton(
+                      icon: FaIcon(pingButtonIcon, color: pingButtonColor),
+                      onPressed: () {
+                        if (pingButtonIcon == FontAwesomeIcons.play) {
+                          setState(() {
+                            pingButtonIcon = FontAwesomeIcons.times;
+                            pingButtonColor = Colors.red;
+                          });
+                          pingModel.clearData();
+                          pingModel.isPingingStarted = true;
+                          pingModel.setHost(targetHostController.text);
+                        } else {
+                          setState(() {
+                            pingButtonIcon = FontAwesomeIcons.play;
+                            pingButtonColor = Colors.green;
+                          });
+                          pingModel.stopStream();
+                          pingModel.isPingingStarted = false;
+                        }
 
-                      targetHostController.clear();
-                      hideKeyboard(context);
-                    },
-                  ),
-                )
-              ],
-            ).padding(all: 10),
+                        targetHostController.clear();
+                        hideKeyboard(context);
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
             Consumer<PingModel>(
               builder: (context, model, child) {
                 if (model.isPingingStarted) {
@@ -106,18 +108,17 @@ class _PingViewState extends State<PingView> {
                       } else {
                         model.pingData.add(snapshot.data);
 
-                        return ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: model.pingData.length,
-                          itemBuilder: (context, index) {
-                            PingData currData = model.pingData[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: model.pingData.length,
+                            itemBuilder: (context, index) {
+                              PingData currData = model.pingData[index];
 
-                            if (currData.error != null) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Card(
+                              if (currData.error != null) {
+                                return Card(
                                   shape: RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
@@ -130,15 +131,11 @@ class _PingViewState extends State<PingView> {
                                     title: Text(model
                                         .getErrorDesc(currData.error.error)),
                                   ),
-                                ),
-                              );
-                            }
+                                );
+                              }
 
-                            if (currData.response != null) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Card(
+                              if (currData.response != null) {
+                                return Card(
                                   shape: RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
@@ -157,12 +154,12 @@ class _PingViewState extends State<PingView> {
                                           " ms",
                                     ),
                                   ),
-                                ),
-                              );
-                            } else {
-                              return null;
-                            }
-                          },
+                                );
+                              } else {
+                                return null;
+                              }
+                            },
+                          ),
                         );
 
                         //! DEBUG

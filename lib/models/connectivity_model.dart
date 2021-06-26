@@ -1,10 +1,12 @@
 // Dart imports:
 import 'dart:async';
 
-// Package imports:
+// Flutter imports:
 import 'package:flutter/services.dart';
-import 'package:sim_info/sim_info.dart';
+
+// Package imports:
 import 'package:network_info_plus/network_info_plus.dart';
+import 'package:sim_info/sim_info.dart';
 
 class ConnectivityModel {
   Future<SynchronousWifiInfo> getDataForIOS() async {

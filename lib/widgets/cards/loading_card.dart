@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:network_arch/widgets/data_card.dart';
+import 'package:network_arch/widgets/cards/data_card.dart';
 
 class LoadingCard extends StatelessWidget {
   const LoadingCard({

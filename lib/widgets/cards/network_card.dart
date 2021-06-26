@@ -8,7 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/utils/network_type.dart';
 import 'package:network_arch/widgets/builders.dart';
-import 'package:network_arch/widgets/data_card.dart';
+import 'package:network_arch/widgets/cards/data_card.dart';
 import 'package:network_arch/widgets/data_line.dart';
 
 class NetworkCard extends StatelessWidget {

@@ -34,16 +34,12 @@ class DrawerWidget extends StatelessWidget {
           Builders.buildMenuListTile(
             icon: FaIcon(FontAwesomeIcons.cog),
             text: "Settings",
-            onTap: () {
-              // TODO: Implement onTap()
-            },
+            onTap: () {},
           ),
           Builders.buildMenuListTile(
             icon: FaIcon(FontAwesomeIcons.infoCircle),
             text: "About",
-            onTap: () {
-              // TODO: Implement onTap()
-            },
+            onTap: () {},
           ),
         ],
       ),
