@@ -14,10 +14,10 @@ import 'package:network_arch/widgets/data_line.dart';
 class NetworkCard extends StatelessWidget {
   const NetworkCard({
     Key key,
-    this.isDarkTheme,
-    this.isNetworkConnected,
-    this.networkType,
-    this.firstLine,
+    @required this.isDarkTheme,
+    @required this.isNetworkConnected,
+    @required this.networkType,
+    @required this.firstLine,
     this.onPressed,
   }) : super(key: key);
 

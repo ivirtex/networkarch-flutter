@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class DataLine extends StatelessWidget {
   const DataLine({
-    this.textL,
-    this.textR,
+    @required this.textL,
+    @required this.textR,
   });
 
   final String textL;

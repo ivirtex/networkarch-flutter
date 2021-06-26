@@ -5,8 +5,8 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:carrier_info/carrier_info.dart';
 import 'package:network_info_plus/network_info_plus.dart';
-import 'package:sim_info/sim_info.dart';
 
 class ConnectivityModel {
   Future<SynchronousWifiInfo> getDataForIOS() async {
@@ -78,15 +78,15 @@ class ConnectivityModel {
       SynchronousCarrierInfo carrierInfo;
 
       try {
-        var data = await Future.wait(
-          [
-            SimInfo.getAllowsVOIP,
-            SimInfo.getCarrierName,
-            SimInfo.getIsoCountryCode,
-            SimInfo.getMobileCountryCode,
-            SimInfo.getMobileNetworkCode
-          ],
-        );
+        var data = await Future.wait([
+          CarrierInfo.allowsVOIP,
+          CarrierInfo.carrierName,
+          CarrierInfo.isoCountryCode,
+          CarrierInfo.mobileCountryCode,
+          CarrierInfo.mobileNetworkCode,
+          CarrierInfo.networkGeneration,
+          CarrierInfo.radioType
+        ]);
 
         carrierInfo = SynchronousCarrierInfo(
           allowsVOIP: data[0],
@@ -94,6 +94,8 @@ class ConnectivityModel {
           isoCountryCode: data[2],
           mobileCountryCode: data[3],
           mobileNetworkCode: data[4],
+          networkGeneration: data[5],
+          radioType: data[6],
         );
       } on PlatformException catch (_) {
         // print("exception catched: " + err.toString());
@@ -137,11 +139,15 @@ class SynchronousCarrierInfo {
     this.isoCountryCode,
     this.mobileCountryCode,
     this.mobileNetworkCode,
+    this.networkGeneration,
+    this.radioType,
   });
 
-  final String allowsVOIP;
+  final bool allowsVOIP;
   final String carrierName;
   final String isoCountryCode;
   final String mobileCountryCode;
   final String mobileNetworkCode;
+  final String networkGeneration;
+  final String radioType;
 }

@@ -92,6 +92,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "8.1.0"
+  carrier_info:
+    dependency: "direct main"
+    description:
+      name: carrier_info
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   characters:
     dependency: transitive
     description:
@@ -478,13 +485,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-  sim_info:
-    dependency: "direct main"
-    description:
-      name: sim_info
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.3"
   sky_engine:
     dependency: transitive
     description: flutter

@@ -22,7 +22,6 @@ class PingModel extends ChangeNotifier {
 
   void stopStream() {
     _ping.stop();
-    notifyListeners();
   }
 
   String getErrorDesc(ErrorType error) {

@@ -10,9 +10,9 @@ import 'package:network_arch/widgets/cards/data_card.dart';
 class ToolCard extends StatelessWidget {
   const ToolCard({
     Key key,
-    this.isDarkTheme,
-    this.toolName,
-    this.toolDesc,
+    @required this.isDarkTheme,
+    @required this.toolName,
+    @required this.toolDesc,
     this.onPressed,
   }) : super(key: key);
 

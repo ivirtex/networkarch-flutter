@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:network_arch/models/ping_model.dart';
 import 'package:network_arch/utils/keyboard_hider.dart';
+import 'package:network_arch/widgets/shared_widgets.dart';
 
 class PingView extends StatefulWidget {
   PingView({Key key}) : super(key: key);
@@ -123,13 +124,23 @@ class _PingViewState extends State<PingView> {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
                                   ),
-                                  child: ListTile(
-                                    leading: FaIcon(
-                                      FontAwesomeIcons.timesCircle,
-                                      color: Colors.red,
-                                    ),
-                                    title: Text(model
-                                        .getErrorDesc(currData.error.error)),
+                                  // child: ListTile(
+                                  //   leading: StatusCard(
+                                  //     color: Colors.red,
+                                  //     text: "Error",
+                                  //   ),
+                                  //   trailing: Text(model
+                                  //       .getErrorDesc(currData.error.error)),
+                                  // ),
+
+                                  child: Row(
+                                    children: [
+                                      StatusCard(
+                                        color: Colors.red,
+                                        text: "Error",
+                                      ),
+                                      Text("yyyy")
+                                    ],
                                   ),
                                 );
                               }
@@ -141,6 +152,7 @@ class _PingViewState extends State<PingView> {
                                         BorderRadius.all(Radius.circular(10)),
                                   ),
                                   child: ListTile(
+                                    minLeadingWidth: 0,
                                     title: Text(currData.response.ip),
                                     subtitle: Row(
                                       children: [
