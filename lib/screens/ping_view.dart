@@ -13,7 +13,7 @@ import 'package:network_arch/utils/keyboard_hider.dart';
 import 'package:network_arch/widgets/shared_widgets.dart';
 
 class PingView extends StatefulWidget {
-  PingView({Key key}) : super(key: key);
+  PingView({Key? key}) : super(key: key);
 
   @override
   _PingViewState createState() => _PingViewState();
@@ -116,7 +116,7 @@ class _PingViewState extends State<PingView> {
                             shrinkWrap: true,
                             itemCount: model.pingData.length,
                             itemBuilder: (context, index) {
-                              PingData currData = model.pingData[index];
+                              PingData currData = model.pingData[index]!;
 
                               if (currData.error != null) {
                                 return Card(
@@ -153,22 +153,22 @@ class _PingViewState extends State<PingView> {
                                   ),
                                   child: ListTile(
                                     minLeadingWidth: 0,
-                                    title: Text(currData.response.ip),
+                                    title: Text(currData.response!.ip!),
                                     subtitle: Row(
                                       children: [
-                                        Text(currData.response.seq.toString()),
-                                        Text(currData.response.ttl.toString())
+                                        Text(currData.response!.seq.toString()),
+                                        Text(currData.response!.ttl.toString())
                                       ],
                                     ),
                                     trailing: Text(
-                                      currData.response.time.inMilliseconds
+                                      currData.response!.time!.inMilliseconds
                                               .toString() +
                                           " ms",
                                     ),
                                   ),
                                 );
                               } else {
-                                return null;
+                                return Container();
                               }
                             },
                           ),

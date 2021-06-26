@@ -22,11 +22,11 @@ class ConnectivityModel {
     );
 
     return SynchronousWifiInfo(
-      locationServiceAuthorizationStatus: data[0],
-      locationServiceAuthorization: data[1],
-      wifiBSSID: data[2],
-      wifiIP: data[3],
-      wifiName: data[4],
+      locationServiceAuthorizationStatus: data[0] as String?,
+      locationServiceAuthorization: data[1] as String?,
+      wifiBSSID: data[2] as String?,
+      wifiIP: data[3] as String?,
+      wifiName: data[4] as String?,
     );
   }
 
@@ -89,13 +89,13 @@ class ConnectivityModel {
         ]);
 
         carrierInfo = SynchronousCarrierInfo(
-          allowsVOIP: data[0],
-          carrierName: data[1],
-          isoCountryCode: data[2],
-          mobileCountryCode: data[3],
-          mobileNetworkCode: data[4],
-          networkGeneration: data[5],
-          radioType: data[6],
+          allowsVOIP: data[0] as bool?,
+          carrierName: data[1] as String?,
+          isoCountryCode: data[2] as String?,
+          mobileCountryCode: data[3] as String?,
+          mobileNetworkCode: data[4] as String?,
+          networkGeneration: data[5] as String?,
+          radioType: data[6] as String?,
         );
       } on PlatformException catch (_) {
         // print("exception catched: " + err.toString());
@@ -125,11 +125,11 @@ class SynchronousWifiInfo {
     this.wifiName,
   });
 
-  final String locationServiceAuthorizationStatus;
-  final String locationServiceAuthorization;
-  final String wifiBSSID;
-  final String wifiIP;
-  final String wifiName;
+  final String? locationServiceAuthorizationStatus;
+  final String? locationServiceAuthorization;
+  final String? wifiBSSID;
+  final String? wifiIP;
+  final String? wifiName;
 }
 
 class SynchronousCarrierInfo {
@@ -143,11 +143,11 @@ class SynchronousCarrierInfo {
     this.radioType,
   });
 
-  final bool allowsVOIP;
-  final String carrierName;
-  final String isoCountryCode;
-  final String mobileCountryCode;
-  final String mobileNetworkCode;
-  final String networkGeneration;
-  final String radioType;
+  final bool? allowsVOIP;
+  final String? carrierName;
+  final String? isoCountryCode;
+  final String? mobileCountryCode;
+  final String? mobileNetworkCode;
+  final String? networkGeneration;
+  final String? radioType;
 }

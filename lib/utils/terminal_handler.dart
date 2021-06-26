@@ -6,7 +6,7 @@ import 'dart:io';
 class TerminalHandler {
   dynamic stdout = "awdawd";
 
-  String onInput(String input) {
+  String? onInput(String input) {
     Process.run('pwd', []).then((ProcessResult results) {
       stdout = results.stdout;
       print(stdout);

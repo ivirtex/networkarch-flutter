@@ -13,19 +13,19 @@ import 'package:network_arch/widgets/data_line.dart';
 
 class NetworkCard extends StatelessWidget {
   const NetworkCard({
-    Key key,
-    @required this.isDarkTheme,
-    @required this.isNetworkConnected,
-    @required this.networkType,
-    @required this.firstLine,
+    Key? key,
+    required this.isDarkTheme,
+    required this.isNetworkConnected,
+    required this.networkType,
+    required this.firstLine,
     this.onPressed,
   }) : super(key: key);
 
   final bool isDarkTheme;
   final bool isNetworkConnected;
   final NetworkType networkType;
-  final String firstLine;
-  final Function onPressed;
+  final String? firstLine;
+  final Function? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class NetworkCard extends StatelessWidget {
               ),
               SizedBox(height: 10),
               TextButton(
-                onPressed: onPressed,
+                onPressed: onPressed as void Function()?,
                 style: TextButton.styleFrom(
                   primary: isDarkTheme ? Colors.white : Colors.black,
                   shape: RoundedRectangleBorder(

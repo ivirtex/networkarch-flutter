@@ -10,9 +10,9 @@ import 'package:network_arch/widgets/cards/data_card.dart';
 
 class ErrorCard extends StatelessWidget {
   const ErrorCard({
-    Key key,
-    @required this.isDark,
-    @required this.message,
+    Key? key,
+    required this.isDark,
+    required this.message,
   }) : super(key: key);
 
   final bool isDark;

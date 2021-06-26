@@ -8,14 +8,14 @@ class DataCard extends StatelessWidget {
     this.onPress,
   });
 
-  final Color color;
-  final Widget cardChild;
-  final Function onPress;
+  final Color? color;
+  final Widget? cardChild;
+  final Function? onPress;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPress,
+      onTap: onPress as void Function()?,
       child: Container(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

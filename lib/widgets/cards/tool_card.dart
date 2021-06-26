@@ -9,17 +9,17 @@ import 'package:network_arch/widgets/cards/data_card.dart';
 
 class ToolCard extends StatelessWidget {
   const ToolCard({
-    Key key,
-    @required this.isDarkTheme,
-    @required this.toolName,
-    @required this.toolDesc,
+    Key? key,
+    required this.isDarkTheme,
+    required this.toolName,
+    required this.toolDesc,
     this.onPressed,
   }) : super(key: key);
 
   final bool isDarkTheme;
   final String toolName;
   final String toolDesc;
-  final Function onPressed;
+  final Function? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class ToolCard extends StatelessWidget {
                 FontAwesomeIcons.arrowCircleRight,
                 color: isDarkTheme ? Colors.white : Colors.black,
               ),
-              onPressed: onPressed,
+              onPressed: onPressed as void Function()?,
             ),
           )
         ],

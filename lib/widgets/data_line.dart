@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class DataLine extends StatelessWidget {
   const DataLine({
-    @required this.textL,
-    @required this.textR,
+    required this.textL,
+    required this.textR,
   });
 
   final String textL;
-  final String textR;
+  final String? textR;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class DataLine extends StatelessWidget {
         children: [
           Text(textL),
           Spacer(),
-          Text(textR),
+          Text(textR!),
         ],
       ),
     );

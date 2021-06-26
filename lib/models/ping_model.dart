@@ -8,7 +8,7 @@ class PingModel extends ChangeNotifier {
   Ping _ping = Ping("");
 
   bool isPingingStarted = false;
-  List<PingData> pingData = [];
+  List<PingData?> pingData = [];
 
   void setHost(String host) {
     _ping = Ping(host);
@@ -24,7 +24,7 @@ class PingModel extends ChangeNotifier {
     _ping.stop();
   }
 
-  String getErrorDesc(ErrorType error) {
+  String? getErrorDesc(ErrorType error) {
     switch (error) {
       case ErrorType.NoReply:
         return "No reply received from the host";

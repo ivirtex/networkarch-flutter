@@ -44,7 +44,7 @@ class _DashboardState extends State<Dashboard> {
                 stream: connectivity.getWifiInfoStream,
                 initialData: null,
                 builder:
-                    (context, AsyncSnapshot<SynchronousWifiInfo> snapshot) {
+                    (context, AsyncSnapshot<SynchronousWifiInfo?> snapshot) {
                   if (snapshot.hasError) {
                     print(snapshot.error.toString());
 
@@ -65,13 +65,13 @@ class _DashboardState extends State<Dashboard> {
                     return LoadingCard(isDark: isDark);
                   } else {
                     bool isWifiConnected =
-                        snapshot.data.wifiIP != null ? true : false;
+                        snapshot.data!.wifiIP != null ? true : false;
 
                     return NetworkCard(
                       isDarkTheme: isDark, // TODO: By provider?
                       isNetworkConnected: isWifiConnected,
                       networkType: NetworkType.wifi,
-                      firstLine: snapshot.data.wifiName ?? "N/A",
+                      firstLine: snapshot.data!.wifiName ?? "N/A",
                       onPressed: () {
                         // TODO: Implement onTap()
                       },
@@ -83,7 +83,7 @@ class _DashboardState extends State<Dashboard> {
                 stream: connectivity.getCellularInfoStream,
                 initialData: null,
                 builder:
-                    (context, AsyncSnapshot<SynchronousCarrierInfo> snapshot) {
+                    (context, AsyncSnapshot<SynchronousCarrierInfo?> snapshot) {
                   // print(snapshot.data.toString());
                   if (snapshot.hasError) {
                     print(snapshot.error);
@@ -100,13 +100,13 @@ class _DashboardState extends State<Dashboard> {
                     return LoadingCard(isDark: isDark);
                   } else {
                     bool isCellularConnected =
-                        snapshot.data.carrierName != null ? true : false;
+                        snapshot.data!.carrierName != null ? true : false;
 
                     return NetworkCard(
                       isDarkTheme: isDark,
                       isNetworkConnected: isCellularConnected,
                       networkType: NetworkType.cellular,
-                      firstLine: snapshot.data.carrierName,
+                      firstLine: snapshot.data!.carrierName,
                       onPressed: () {
                         // TODO: Implement onTap()
                       },

@@ -9,7 +9,7 @@ import 'builders.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

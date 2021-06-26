@@ -6,8 +6,8 @@ import 'package:network_arch/widgets/cards/data_card.dart';
 
 class LoadingCard extends StatelessWidget {
   const LoadingCard({
-    Key key,
-    @required this.isDark,
+    Key? key,
+    required this.isDark,
   }) : super(key: key);
 
   final bool isDark;
