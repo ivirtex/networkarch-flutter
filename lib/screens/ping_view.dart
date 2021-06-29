@@ -109,74 +109,84 @@ class _PingViewState extends State<PingView> {
                       } else {
                         model.pingData.add(snapshot.data);
 
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: model.pingData.length,
-                            itemBuilder: (context, index) {
-                              PingData currData = model.pingData[index]!;
-
-                              if (currData.error != null) {
-                                return Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  child: ListTile(
-                                    leading: StatusCard(
-                                      color: Colors.red,
-                                      text: "Error",
-                                    ),
-                                    title: Text(model.host),
-                                    trailing: Text(model
-                                        .getErrorDesc(currData.error!.error)),
-                                  ),
-                                );
-                              }
-
-                              if (currData.response != null) {
-                                return Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  child: ListTile(
-                                    minLeadingWidth: 0,
-                                    title: Text(currData.response!.ip!),
-                                    subtitle: Row(
-                                      children: [
-                                        Text(currData.response!.seq.toString()),
-                                        Text(currData.response!.ttl.toString())
-                                      ],
-                                    ),
-                                    trailing: Text(
-                                      currData.response!.time!.inMilliseconds
-                                              .toString() +
-                                          " ms",
-                                    ),
-                                  ),
-                                );
-                              } else {
-                                return Container();
-                              }
-                            },
-                          ),
-                        );
-
-                        //! DEBUG
-                        // return Text(snapshot.data.toString());
+                        return buildPingListView(model);
                       }
                     },
                   );
                 } else {
-                  return Container();
+                  return buildPingListView(model);
                 }
               },
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Padding buildPingListView(PingModel model) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: model.pingData.length,
+        itemBuilder: (context, index) {
+          PingData currData = model.pingData[index]!;
+
+          if (currData.error != null) {
+            return Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              child: ListTile(
+                leading: StatusCard(
+                  color: CupertinoColors.systemRed,
+                  text: "Offline",
+                ),
+                title: Text("N/A"),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Seq. position: " +
+                        currData.response!.seq.toString() +
+                        " "),
+                    Text("TTL: N/A"),
+                  ],
+                ),
+                trailing: Text(model.getErrorDesc(currData.error!.error)),
+              ),
+            );
+          }
+
+          if (currData.response != null) {
+            return Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              child: ListTile(
+                leading: StatusCard(
+                  color: CupertinoColors.systemGreen,
+                  text: "Online",
+                ),
+                title: Text(currData.response!.ip!),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        "Seq. pos: " + currData.response!.seq.toString() + " "),
+                    Text("TTL: " + currData.response!.ttl.toString())
+                  ],
+                ),
+                trailing: Text(
+                  currData.response!.time!.inMilliseconds.toString() + " ms",
+                ),
+              ),
+            );
+          } else {
+            return Container();
+          }
+        },
       ),
     );
   }

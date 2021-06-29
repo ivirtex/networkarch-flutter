@@ -72,7 +72,7 @@ class _DashboardState extends State<Dashboard> {
                   print(snapshot.error.toString());
 
                   if (snapshot.hasError) {
-                    if (snapshot.error == Exception("SIM_CARD_NOT_READY")) {
+                    if (snapshot.error is NoSimCardException) {
                       return ErrorCard(
                         message: Constants.simError,
                       );
@@ -106,18 +106,6 @@ class _DashboardState extends State<Dashboard> {
                 indent: 15,
                 endIndent: 15,
               ),
-
-              //! debug
-              // Observer(builder: (_) {
-              //   return Text(connectivityStore.networkInterfaces.toString());
-              // }),
-              // TextButton(
-              //   child: Text("update"),
-              //   onPressed: () {
-              //     connectivityStore.updateInterfaces();
-              //   },
-              // )
-
               ToolCard(
                 toolName: "Ping",
                 toolDesc: Constants.pingDesc,

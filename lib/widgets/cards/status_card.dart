@@ -16,7 +16,10 @@ class StatusCard extends StatelessWidget {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Text(text),
+        child: Text(
+          text,
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       color: color,
       shape: RoundedRectangleBorder(

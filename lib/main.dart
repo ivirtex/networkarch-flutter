@@ -18,7 +18,7 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        Provider(create: (context) => PingModel()),
+        ChangeNotifierProvider(create: (context) => PingModel()),
         Provider(create: (context) => ConnectivityModel()),
       ],
       child: EasyDynamicThemeWidget(child: MyApp()),

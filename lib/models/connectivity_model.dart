@@ -76,7 +76,7 @@ class ConnectivityModel {
       } on PlatformException catch (_) {
         // print("exception catched: " + err.toString());
 
-        throw Exception("SIM_CARD_NOT_READY");
+        throw NoSimCardException();
       }
 
       print("value of carrierInfo: $carrierInfo");
@@ -129,3 +129,5 @@ class SynchronousCarrierInfo {
   final String? networkGeneration;
   final String? radioType;
 }
+
+class NoSimCardException implements Exception {}

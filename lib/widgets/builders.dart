@@ -25,18 +25,4 @@ abstract class Builders {
       ],
     );
   }
-
-  static ListTile buildMenuListTile(
-      {FaIcon? icon, required String text, Function? onTap}) {
-    return ListTile(
-      title: Row(
-        children: [
-          icon!,
-          SizedBox(width: 10),
-          Text(text),
-        ],
-      ),
-      onTap: onTap as void Function()?,
-    );
-  }
 }
