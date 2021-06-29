@@ -19,10 +19,6 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    final Brightness brightnessValue =
-        MediaQuery.of(context).platformBrightness;
-    final bool isDark = brightnessValue == Brightness.dark;
-
     final ConnectivityModel connectivity =
         Provider.of<ConnectivityModel>(context);
 
@@ -46,29 +42,18 @@ class _DashboardState extends State<Dashboard> {
                 builder:
                     (context, AsyncSnapshot<SynchronousWifiInfo?> snapshot) {
                   if (snapshot.hasError) {
-                    print(snapshot.error.toString());
-
-                    if (snapshot.error == Exception("SIM_CARD_NOT_READY")) {
-                      return ErrorCard(
-                        isDark: isDark,
-                        message: Constants.simError,
-                      );
-                    } else {
-                      return ErrorCard(
-                        isDark: isDark,
-                        message: Constants.defaultError,
-                      );
-                    }
+                    return ErrorCard(
+                      message: Constants.defaultError,
+                    );
                   }
 
                   if (!snapshot.hasData) {
-                    return LoadingCard(isDark: isDark);
+                    return LoadingCard();
                   } else {
                     bool isWifiConnected =
                         snapshot.data!.wifiIP != null ? true : false;
 
                     return NetworkCard(
-                      isDarkTheme: isDark, // TODO: By provider?
                       isNetworkConnected: isWifiConnected,
                       networkType: NetworkType.wifi,
                       firstLine: snapshot.data!.wifiName ?? "N/A",
@@ -84,29 +69,32 @@ class _DashboardState extends State<Dashboard> {
                 initialData: null,
                 builder:
                     (context, AsyncSnapshot<SynchronousCarrierInfo?> snapshot) {
-                  // print(snapshot.data.toString());
-                  if (snapshot.hasError) {
-                    print(snapshot.error);
+                  print(snapshot.error.toString());
 
-                    return ErrorCard(
-                      isDark: isDark,
-                      message: Constants.defaultError,
-                    );
+                  if (snapshot.hasError) {
+                    if (snapshot.error == Exception("SIM_CARD_NOT_READY")) {
+                      return ErrorCard(
+                        message: Constants.simError,
+                      );
+                    } else {
+                      return ErrorCard(
+                        message: Constants.defaultError,
+                      );
+                    }
                   }
 
                   if (!snapshot.hasData) {
-                    // print("no data from snapshot");
+                    print(snapshot.data.toString());
 
-                    return LoadingCard(isDark: isDark);
+                    return LoadingCard();
                   } else {
                     bool isCellularConnected =
                         snapshot.data!.carrierName != null ? true : false;
 
                     return NetworkCard(
-                      isDarkTheme: isDark,
                       isNetworkConnected: isCellularConnected,
                       networkType: NetworkType.cellular,
-                      firstLine: snapshot.data!.carrierName,
+                      firstLine: snapshot.data!.carrierName ?? "N/A",
                       onPressed: () {
                         // TODO: Implement onTap()
                       },
@@ -131,7 +119,6 @@ class _DashboardState extends State<Dashboard> {
               // )
 
               ToolCard(
-                isDarkTheme: isDark,
                 toolName: "Ping",
                 toolDesc: Constants.pingDesc,
                 onPressed: () {
@@ -139,7 +126,6 @@ class _DashboardState extends State<Dashboard> {
                 },
               ),
               ToolCard(
-                isDarkTheme: isDark,
                 toolName: "LAN Scanner",
                 toolDesc: Constants.lanScannerDesc,
                 onPressed: () {
@@ -147,7 +133,6 @@ class _DashboardState extends State<Dashboard> {
                 },
               ),
               ToolCard(
-                isDarkTheme: isDark,
                 toolName: "Wake On LAN",
                 toolDesc: Constants.wolDesc,
                 onPressed: () {
@@ -155,7 +140,6 @@ class _DashboardState extends State<Dashboard> {
                 },
               ),
               ToolCard(
-                isDarkTheme: isDark,
                 toolName: "IP Geolocation",
                 toolDesc: Constants.ipGeoDesc,
                 onPressed: () {
@@ -163,7 +147,6 @@ class _DashboardState extends State<Dashboard> {
                 },
               ),
               ToolCard(
-                isDarkTheme: isDark,
                 toolName: "Whois",
                 toolDesc: Constants.whoisDesc,
                 onPressed: () {
@@ -171,7 +154,6 @@ class _DashboardState extends State<Dashboard> {
                 },
               ),
               ToolCard(
-                isDarkTheme: isDark,
                 toolName: "DNS Lookup",
                 toolDesc: Constants.dnsDesc,
                 onPressed: () {

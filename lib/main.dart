@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -12,15 +13,15 @@ import 'screens/dashboard.dart';
 import 'screens/ping_view.dart';
 
 void main() {
-  Provider.debugCheckInvalidValueType = null;
+  // Provider.debugCheckInvalidValueType = null;
 
   runApp(
     MultiProvider(
       providers: [
         Provider(create: (context) => PingModel()),
-        Provider(create: (context) => ConnectivityModel())
+        Provider(create: (context) => ConnectivityModel()),
       ],
-      child: MyApp(),
+      child: EasyDynamicThemeWidget(child: MyApp()),
     ),
   );
 }
@@ -30,11 +31,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Dashboard',
-      themeMode: ThemeMode.system,
       theme: Constants.themeDataLight,
       darkTheme: Constants.themeDataDark,
-      // theme: ThemeData.light(),
-      // darkTheme: ThemeData.dark(),
+      themeMode: EasyDynamicTheme.of(context).themeMode,
       initialRoute: '/',
       routes: {
         '/': (context) => Dashboard(),

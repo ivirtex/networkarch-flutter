@@ -10,21 +10,21 @@ import 'package:network_arch/widgets/cards/data_card.dart';
 class ToolCard extends StatelessWidget {
   const ToolCard({
     Key? key,
-    required this.isDarkTheme,
     required this.toolName,
     required this.toolDesc,
     this.onPressed,
   }) : super(key: key);
 
-  final bool isDarkTheme;
   final String toolName;
   final String toolDesc;
   final Function? onPressed;
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+
     return DataCard(
-      color: isDarkTheme ? Colors.grey[800] : Colors.grey[200],
+      color: isDarkModeOn ? Colors.grey[800] : Colors.grey[200],
       cardChild: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -43,7 +43,7 @@ class ToolCard extends StatelessWidget {
                 Text(
                   toolDesc,
                   style: TextStyle(
-                    color: isDarkTheme ? Colors.grey[400] : Colors.grey[600],
+                    color: isDarkModeOn ? Colors.grey[400] : Colors.grey[600],
                   ),
                 )
               ],
@@ -56,11 +56,11 @@ class ToolCard extends StatelessWidget {
                 shape: CircleBorder(),
                 primary: Colors.white,
                 backgroundColor:
-                    isDarkTheme ? Colors.grey[700] : Colors.grey[300],
+                    isDarkModeOn ? Colors.grey[700] : Colors.grey[300],
               ),
               child: FaIcon(
                 FontAwesomeIcons.arrowCircleRight,
-                color: isDarkTheme ? Colors.white : Colors.black,
+                color: isDarkModeOn ? Colors.white : Colors.black,
               ),
               onPressed: onPressed as void Function()?,
             ),

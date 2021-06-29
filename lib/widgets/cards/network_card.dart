@@ -14,14 +14,12 @@ import 'package:network_arch/widgets/data_line.dart';
 class NetworkCard extends StatelessWidget {
   const NetworkCard({
     Key? key,
-    required this.isDarkTheme,
     required this.isNetworkConnected,
     required this.networkType,
     required this.firstLine,
     this.onPressed,
   }) : super(key: key);
 
-  final bool isDarkTheme;
   final bool isNetworkConnected;
   final NetworkType networkType;
   final String? firstLine;
@@ -29,8 +27,10 @@ class NetworkCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+
     return DataCard(
-      color: isDarkTheme ? Colors.grey[800] : Colors.grey[200],
+      color: isDarkModeOn ? Colors.grey[800] : Colors.grey[200],
       cardChild: Column(
         children: [
           Row(
@@ -54,12 +54,12 @@ class NetworkCard extends StatelessWidget {
               TextButton(
                 onPressed: onPressed as void Function()?,
                 style: TextButton.styleFrom(
-                  primary: isDarkTheme ? Colors.white : Colors.black,
+                  primary: isDarkModeOn ? Colors.white : Colors.black,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(6)),
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                   backgroundColor:
-                      isDarkTheme ? Colors.grey[700] : Colors.grey[300],
+                      isDarkModeOn ? Colors.grey[700] : Colors.grey[300],
                 ),
                 child: Container(
                   child: Row(
@@ -69,12 +69,12 @@ class NetworkCard extends StatelessWidget {
                       Text(
                         "Detailed view",
                         style: TextStyle(
-                          color: isDarkTheme ? Colors.white : Colors.black,
+                          color: isDarkModeOn ? Colors.white : Colors.black,
                         ),
                       ),
                       FaIcon(
                         FontAwesomeIcons.arrowCircleRight,
-                        color: isDarkTheme ? Colors.white : Colors.black,
+                        color: isDarkModeOn ? Colors.white : Colors.black,
                       )
                     ],
                   ),

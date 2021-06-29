@@ -1,4 +1,5 @@
 export 'data_line.dart';
+export 'drawer_tile.dart';
 export 'cards/data_card.dart';
 export 'cards/error_card.dart';
 export 'cards/loading_card.dart';

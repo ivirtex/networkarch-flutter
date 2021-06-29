@@ -9,9 +9,11 @@ class PingModel extends ChangeNotifier {
 
   bool isPingingStarted = false;
   List<PingData?> pingData = [];
+  String host = "";
 
-  void setHost(String host) {
+  set setHost(String host) {
     _ping = Ping(host);
+    this.host = host;
     notifyListeners();
   }
 
@@ -24,23 +26,17 @@ class PingModel extends ChangeNotifier {
     _ping.stop();
   }
 
-  String? getErrorDesc(ErrorType error) {
+  String getErrorDesc(ErrorType error) {
     switch (error) {
       case ErrorType.NoReply:
         return "No reply received from the host";
-        break;
       case ErrorType.Unknown:
         return "Unknown address";
-        break;
       case ErrorType.UnknownHost:
         return "Unknown host";
-        break;
       case ErrorType.RequestTimedOut:
         return "Request timed out";
-        break;
     }
-
-    return null;
   }
 
   Stream<PingData> getStream() {

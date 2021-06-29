@@ -10,42 +10,24 @@ import 'package:network_info_plus/network_info_plus.dart';
 
 class ConnectivityModel {
   Future<SynchronousWifiInfo> getDataForIOS() async {
-    // Await for all class values before yielding them
-    var data = await Future.wait(
-      [
-        NetworkInfo().getLocationServiceAuthorization(), // 0
-        NetworkInfo().requestLocationServiceAuthorization(), // 1
-        NetworkInfo().getWifiBSSID(), // 2
-        NetworkInfo().getWifiIP(), // 3
-        NetworkInfo().getWifiName(), // 4
-      ],
-    );
-
     return SynchronousWifiInfo(
-      locationServiceAuthorizationStatus: data[0] as String?,
-      locationServiceAuthorization: data[1] as String?,
-      wifiBSSID: data[2] as String?,
-      wifiIP: data[3] as String?,
-      wifiName: data[4] as String?,
+      locationServiceAuthorizationStatus:
+          await NetworkInfo().getLocationServiceAuthorization(),
+      locationServiceAuthorization:
+          await NetworkInfo().requestLocationServiceAuthorization(),
+      wifiBSSID: await NetworkInfo().getWifiBSSID(),
+      wifiIP: await NetworkInfo().getWifiIP(),
+      wifiName: await NetworkInfo().getWifiName(),
     );
   }
 
   Future<SynchronousWifiInfo> getDataForAndroid() async {
-    // Await for all class values before yielding them
-    var data = await Future.wait(
-      [
-        NetworkInfo().getWifiBSSID(), // 0
-        NetworkInfo().getWifiIP(), // 1
-        NetworkInfo().getWifiName(), // 2
-      ],
-    );
-
     return SynchronousWifiInfo(
       locationServiceAuthorizationStatus: null,
       locationServiceAuthorization: null,
-      wifiBSSID: data[0],
-      wifiIP: data[1],
-      wifiName: data[2],
+      wifiBSSID: await NetworkInfo().getWifiBSSID(),
+      wifiIP: await NetworkInfo().getWifiIP(),
+      wifiName: await NetworkInfo().getWifiName(),
     );
   }
 
@@ -67,6 +49,8 @@ class ConnectivityModel {
         wifiInfo = await getDataForAndroid();
       }
 
+      // print("value of wifiInfo: $wifiInfo");
+
       yield wifiInfo;
     }
   }
@@ -78,30 +62,24 @@ class ConnectivityModel {
       SynchronousCarrierInfo carrierInfo;
 
       try {
-        var data = await Future.wait([
-          CarrierInfo.allowsVOIP,
-          CarrierInfo.carrierName,
-          CarrierInfo.isoCountryCode,
-          CarrierInfo.mobileCountryCode,
-          CarrierInfo.mobileNetworkCode,
-          CarrierInfo.networkGeneration,
-          CarrierInfo.radioType
-        ]);
-
         carrierInfo = SynchronousCarrierInfo(
-          allowsVOIP: data[0] as bool?,
-          carrierName: data[1] as String?,
-          isoCountryCode: data[2] as String?,
-          mobileCountryCode: data[3] as String?,
-          mobileNetworkCode: data[4] as String?,
-          networkGeneration: data[5] as String?,
-          radioType: data[6] as String?,
+          allowsVOIP: await CarrierInfo.allowsVOIP,
+          carrierName: await CarrierInfo.carrierName,
+          isoCountryCode: await CarrierInfo.isoCountryCode,
+          mobileCountryCode: await CarrierInfo.mobileCountryCode,
+          mobileNetworkCode: await CarrierInfo.mobileNetworkCode,
+          networkGeneration: await CarrierInfo.networkGeneration,
+          radioType: await CarrierInfo.radioType,
         );
+
+        // carrierInfo = (await CarrierInfo.all)!;
       } on PlatformException catch (_) {
         // print("exception catched: " + err.toString());
 
         throw Exception("SIM_CARD_NOT_READY");
       }
+
+      print("value of carrierInfo: $carrierInfo");
 
       yield carrierInfo;
     }
@@ -125,8 +103,8 @@ class SynchronousWifiInfo {
     this.wifiName,
   });
 
-  final String? locationServiceAuthorizationStatus;
-  final String? locationServiceAuthorization;
+  final LocationAuthorizationStatus? locationServiceAuthorizationStatus;
+  final LocationAuthorizationStatus? locationServiceAuthorization;
   final String? wifiBSSID;
   final String? wifiIP;
   final String? wifiName;
@@ -134,7 +112,7 @@ class SynchronousWifiInfo {
 
 class SynchronousCarrierInfo {
   SynchronousCarrierInfo({
-    this.allowsVOIP,
+    required this.allowsVOIP,
     this.carrierName,
     this.isoCountryCode,
     this.mobileCountryCode,
@@ -143,7 +121,7 @@ class SynchronousCarrierInfo {
     this.radioType,
   });
 
-  final bool? allowsVOIP;
+  final bool allowsVOIP;
   final String? carrierName;
   final String? isoCountryCode;
   final String? mobileCountryCode;

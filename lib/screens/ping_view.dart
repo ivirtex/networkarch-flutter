@@ -25,6 +25,12 @@ class _PingViewState extends State<PingView> {
   Color pingButtonColor = Colors.green;
 
   @override
+  void dispose() {
+    targetHostController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     PingModel pingModel = Provider.of<PingModel>(context, listen: false);
 
@@ -48,24 +54,18 @@ class _PingViewState extends State<PingView> {
                     child: TextField(
                       controller: targetHostController,
                       autocorrect: false,
-                      style: TextStyle(color: Colors.white),
+                      enabled: !pingModel.isPingingStarted,
                       decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 1.5,
-                            ),
-                          ),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                          labelText: "IP address",
-                          labelStyle: TextStyle()),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0)),
+                        labelText: "IP address",
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: IconButton(
+                      splashRadius: 25.0,
                       icon: FaIcon(pingButtonIcon, color: pingButtonColor),
                       onPressed: () {
                         if (pingButtonIcon == FontAwesomeIcons.play) {
@@ -74,8 +74,8 @@ class _PingViewState extends State<PingView> {
                             pingButtonColor = Colors.red;
                           });
                           pingModel.clearData();
+                          pingModel.setHost = targetHostController.text;
                           pingModel.isPingingStarted = true;
-                          pingModel.setHost(targetHostController.text);
                         } else {
                           setState(() {
                             pingButtonIcon = FontAwesomeIcons.play;
@@ -124,23 +124,14 @@ class _PingViewState extends State<PingView> {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
                                   ),
-                                  // child: ListTile(
-                                  //   leading: StatusCard(
-                                  //     color: Colors.red,
-                                  //     text: "Error",
-                                  //   ),
-                                  //   trailing: Text(model
-                                  //       .getErrorDesc(currData.error.error)),
-                                  // ),
-
-                                  child: Row(
-                                    children: [
-                                      StatusCard(
-                                        color: Colors.red,
-                                        text: "Error",
-                                      ),
-                                      Text("yyyy")
-                                    ],
+                                  child: ListTile(
+                                    leading: StatusCard(
+                                      color: Colors.red,
+                                      text: "Error",
+                                    ),
+                                    title: Text(model.host),
+                                    trailing: Text(model
+                                        .getErrorDesc(currData.error!.error)),
                                   ),
                                 );
                               }

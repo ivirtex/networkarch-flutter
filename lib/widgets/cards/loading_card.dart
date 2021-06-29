@@ -7,17 +7,16 @@ import 'package:network_arch/widgets/cards/data_card.dart';
 class LoadingCard extends StatelessWidget {
   const LoadingCard({
     Key? key,
-    required this.isDark,
   }) : super(key: key);
-
-  final bool isDark;
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+
     return DataCard(
-      color: isDark ? Colors.grey[800] : Colors.grey[200],
+      color: isDarkModeOn ? Colors.grey[800] : Colors.grey[200],
       cardChild: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 40),
+        padding: const EdgeInsets.symmetric(vertical: 30),
         child: Column(
           children: [
             CircularProgressIndicator(),

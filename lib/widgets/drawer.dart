@@ -1,11 +1,12 @@
 // Flutter imports:
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'builders.dart';
+import 'shared_widgets.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({
@@ -31,16 +32,28 @@ class DrawerWidget extends StatelessWidget {
               ),
             ),
           ),
-          Builders.buildMenuListTile(
-            icon: FaIcon(FontAwesomeIcons.cog),
-            text: "Settings",
-            onTap: () {},
+          ListTile(
+            leading: FaIcon(
+              FontAwesomeIcons.cog,
+              color: Colors.black,
+            ),
+            title: Text("Settings"),
           ),
-          Builders.buildMenuListTile(
-            icon: FaIcon(FontAwesomeIcons.infoCircle),
-            text: "About",
-            onTap: () {},
+          ListTile(
+            leading: FaIcon(
+              FontAwesomeIcons.infoCircle,
+              color: Colors.black,
+            ),
+            title: Text("About"),
           ),
+          ListTile(
+            leading: FaIcon(
+              FontAwesomeIcons.adjust,
+              color: Colors.black,
+            ),
+            title: Text("Theme"),
+            trailing: EasyDynamicThemeBtn(),
+          )
         ],
       ),
     );
