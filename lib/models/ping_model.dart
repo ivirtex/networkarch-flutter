@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:dart_ping/dart_ping.dart';
+import 'package:network_arch/constants.dart';
 
 class PingModel extends ChangeNotifier {
   Ping _ping = Ping("");
@@ -29,13 +30,13 @@ class PingModel extends ChangeNotifier {
   String getErrorDesc(ErrorType error) {
     switch (error) {
       case ErrorType.NoReply:
-        return "No reply received from the host";
+        return Constants.noReplyError;
       case ErrorType.Unknown:
-        return "Unknown address";
+        return Constants.unknownError;
       case ErrorType.UnknownHost:
-        return "Unknown host";
+        return Constants.unknownHostError;
       case ErrorType.RequestTimedOut:
-        return "Request timed out";
+        return Constants.requestTimedOutError;
     }
   }
 

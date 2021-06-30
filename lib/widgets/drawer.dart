@@ -32,7 +32,7 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             leading: FaIcon(
               FontAwesomeIcons.cog,
-              color: isDarkModeOn ? Colors.white : Colors.white,
+              color: isDarkModeOn ? Colors.white : Colors.black,
             ),
             title: Text("Settings"),
             onTap: () {},
@@ -40,7 +40,7 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             leading: FaIcon(
               FontAwesomeIcons.adjust,
-              color: isDarkModeOn ? Colors.white : Colors.white,
+              color: isDarkModeOn ? Colors.white : Colors.black,
             ),
             title: Text("Theme"),
             trailing: EasyDynamicThemeBtn(),
@@ -51,7 +51,7 @@ class DrawerWidget extends StatelessWidget {
               child: ListTile(
                 leading: FaIcon(
                   FontAwesomeIcons.infoCircle,
-                  color: isDarkModeOn ? Colors.white : Colors.white,
+                  color: isDarkModeOn ? Colors.white : Colors.black,
                 ),
                 title: Text("About"),
                 onTap: () {},

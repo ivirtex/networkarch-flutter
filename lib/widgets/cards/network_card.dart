@@ -37,7 +37,10 @@ class NetworkCard extends StatelessWidget {
             children: [
               Text(
                 networkType == NetworkType.wifi ? "Wi-Fi" : "Cellular",
-                style: Constants.networkTypeTextStyle,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                ),
               ),
               Spacer(),
               Builders.buildConnectionState(isNetworkConnected)

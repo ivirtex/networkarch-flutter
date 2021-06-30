@@ -142,19 +142,20 @@ class _PingViewState extends State<PingView> {
               child: ListTile(
                 leading: StatusCard(
                   color: CupertinoColors.systemRed,
-                  text: "Offline",
+                  text: "Error",
                 ),
                 title: Text("N/A"),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Seq. position: " +
-                        currData.response!.seq.toString() +
-                        " "),
+                    Text("Seq. pos.: ${index + 1}"),
                     Text("TTL: N/A"),
                   ],
                 ),
-                trailing: Text(model.getErrorDesc(currData.error!.error)),
+                trailing: Container(
+                  width: 110,
+                  child: Text(model.getErrorDesc(currData.error!.error)),
+                ),
               ),
             );
           }
@@ -173,8 +174,9 @@ class _PingViewState extends State<PingView> {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                        "Seq. pos: " + currData.response!.seq.toString() + " "),
+                    Text("Seq. pos.: " +
+                        currData.response!.seq.toString() +
+                        " "),
                     Text("TTL: " + currData.response!.ttl.toString())
                   ],
                 ),

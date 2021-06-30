@@ -24,11 +24,6 @@ abstract class Constants {
     ),
   );
 
-  static TextStyle networkTypeTextStyle = TextStyle(
-    fontWeight: FontWeight.bold,
-    fontSize: 20.0,
-  );
-
   // Tools descriptions
   static const String pingDesc =
       "Send packets to specific IP address or domain";
@@ -47,5 +42,14 @@ abstract class Constants {
 
   static const String simError = "Couldn't detect the SIM card";
 
+  // Error descriptions
   static const String defaultError = "Couldn't read the data";
+
+  static const String noReplyError = "No reply received from the host";
+
+  static const String unknownError = "No reply received from the host";
+
+  static const String unknownHostError = "No reply received from the host";
+
+  static const String requestTimedOutError = "No reply received from the host";
 }
