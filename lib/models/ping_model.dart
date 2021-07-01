@@ -3,20 +3,24 @@ import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:dart_ping/dart_ping.dart';
+
+// Project imports:
 import 'package:network_arch/constants.dart';
 
 class PingModel extends ChangeNotifier {
-  Ping _ping = Ping("");
+  Ping _ping = Ping("1.1.1.1");
 
   bool isPingingStarted = false;
   List<PingData?> pingData = [];
-  String host = "";
+  String _host = "";
 
   set setHost(String host) {
     _ping = Ping(host);
-    this.host = host;
+    _host = host;
     notifyListeners();
   }
+
+  get getHost => _host;
 
   void clearData() {
     pingData.clear();

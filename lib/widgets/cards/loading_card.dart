@@ -16,7 +16,7 @@ class LoadingCard extends StatelessWidget {
     return DataCard(
       color: isDarkModeOn ? Colors.grey[800] : Colors.grey[200],
       cardChild: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 30),
+        padding: const EdgeInsets.symmetric(vertical: 37),
         child: Column(
           children: [
             CircularProgressIndicator(),

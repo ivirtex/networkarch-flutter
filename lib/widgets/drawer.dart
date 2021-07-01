@@ -1,8 +1,8 @@
 // Flutter imports:
-import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -15,9 +15,6 @@ class DrawerWidget extends StatelessWidget {
     bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
     return Drawer(
-      // Add a ListView to the drawer. This ensures the user can scroll
-      // through the options in the drawer if there isn't enough vertical
-      // space to fit everything.
       child: Column(
         children: <Widget>[
           DrawerHeader(

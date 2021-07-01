@@ -69,8 +69,6 @@ class _DashboardState extends State<Dashboard> {
                 initialData: null,
                 builder:
                     (context, AsyncSnapshot<SynchronousCarrierInfo?> snapshot) {
-                  print(snapshot.error.toString());
-
                   if (snapshot.hasError) {
                     if (snapshot.error is NoSimCardException) {
                       return ErrorCard(
@@ -84,8 +82,6 @@ class _DashboardState extends State<Dashboard> {
                   }
 
                   if (!snapshot.hasData) {
-                    print(snapshot.data.toString());
-
                     return LoadingCard();
                   } else {
                     bool isCellularConnected =
@@ -117,7 +113,7 @@ class _DashboardState extends State<Dashboard> {
                 toolName: "LAN Scanner",
                 toolDesc: Constants.lanScannerDesc,
                 onPressed: () {
-                  // TODO: Implement onTap()
+                  Navigator.pushNamed(context, "/tools/lan");
                 },
               ),
               ToolCard(

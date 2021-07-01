@@ -30,13 +30,15 @@ dependencies:
 
   font_awesome_flutter: ^9.0.0
   easy_dynamic_theme: ^2.2.0
-  shimmer: ^2.0.0
   permission_handler: ^8.1.1
   provider: ^5.0.0
+  styled_widget: ^0.3.1
+
   network_info_plus: ^1.0.2
   carrier_info: ^2.0.1
-  styled_widget: ^0.3.1
   dart_ping: ^6.0.0
+  ping_discover_network: ^0.2.0+1
+  wake_on_lan: ^2.0.1+1
 
 dev_dependencies:
   flutter_test:
