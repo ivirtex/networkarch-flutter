@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
+import 'package:network_arch/models/lan_scanner_model.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -20,6 +21,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => PingModel()),
+        ChangeNotifierProvider(create: (context) => LanScannerModel()),
         Provider(create: (context) => ConnectivityModel()),
       ],
       child: EasyDynamicThemeWidget(child: MyApp()),

@@ -71,8 +71,6 @@ class ConnectivityModel {
           networkGeneration: await CarrierInfo.networkGeneration,
           radioType: await CarrierInfo.radioType,
         );
-
-        // carrierInfo = (await CarrierInfo.all)!;
       } on PlatformException catch (_) {
         // print("exception catched: " + err.toString());
 

@@ -394,6 +394,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  network_tools:
+    dependency: "direct main"
+    description:
+      name: network_tools
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   package_config:
     dependency: transitive
     description:
@@ -457,13 +464,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.0"
-  ping_discover_network:
-    dependency: "direct main"
-    description:
-      name: ping_discover_network
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.0+1"
   platform:
     dependency: transitive
     description:

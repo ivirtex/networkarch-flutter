@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:dart_ping/dart_ping.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:network_arch/models/ping_model.dart';
 import 'package:network_arch/utils/keyboard_hider.dart';
 import 'package:network_arch/widgets/shared_widgets.dart';
-import 'package:network_arch/widgets/switchable_app_bar.dart';
+import 'package:network_arch/widgets/builders.dart';
 
 class PingView extends StatefulWidget {
   PingView({Key? key}) : super(key: key);
@@ -22,8 +21,6 @@ class PingView extends StatefulWidget {
 
 class _PingViewState extends State<PingView> {
   final targetHostController = TextEditingController();
-  IconData pingButtonIcon = FontAwesomeIcons.play;
-  Color pingButtonColor = Colors.green;
 
   @override
   void dispose() {
@@ -37,7 +34,7 @@ class _PingViewState extends State<PingView> {
 
     return Scaffold(
       appBar: pingModel.isPingingStarted
-          ? switchableAppBar(
+          ? Builders.switchableAppBar(
               context: context,
               title: "Ping",
               action: ButtonActions.stop,
@@ -48,7 +45,7 @@ class _PingViewState extends State<PingView> {
                 });
               },
             )
-          : switchableAppBar(
+          : Builders.switchableAppBar(
               context: context,
               title: "Ping",
               action: ButtonActions.start,
@@ -83,34 +80,6 @@ class _PingViewState extends State<PingView> {
                       ),
                     ),
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  //   child: IconButton(
-                  //     splashRadius: 25.0,
-                  //     icon: FaIcon(pingButtonIcon, color: pingButtonColor),
-                  //     onPressed: () {
-                  //       if (pingButtonIcon == FontAwesomeIcons.play) {
-                  //         setState(() {
-                  //           pingButtonIcon = FontAwesomeIcons.times;
-                  //           pingButtonColor = Colors.red;
-                  //         });
-                  //         pingModel.clearData();
-                  //         pingModel.setHost = targetHostController.text;
-                  //         pingModel.isPingingStarted = true;
-                  //       } else {
-                  //         setState(() {
-                  //           pingButtonIcon = FontAwesomeIcons.play;
-                  //           pingButtonColor = Colors.green;
-                  //         });
-                  //         pingModel.stopStream();
-                  //         pingModel.isPingingStarted = false;
-                  //       }
-
-                  //       targetHostController.clear();
-                  //       hideKeyboard(context);
-                  //     },
-                  //   ),
-                  // )
                 ],
               ),
             ),
@@ -120,7 +89,7 @@ class _PingViewState extends State<PingView> {
                   return StreamBuilder(
                     stream: model.getStream(),
                     initialData: null,
-                    builder: (context, AsyncSnapshot snapshot) {
+                    builder: (context, AsyncSnapshot<PingData?> snapshot) {
                       if (snapshot.hasError) {
                         print(snapshot.error);
                       }

@@ -37,7 +37,7 @@ dependencies:
   network_info_plus: ^1.0.2
   carrier_info: ^2.0.1
   dart_ping: ^6.0.0
-  ping_discover_network: ^0.2.0+1
+  network_tools: ^0.0.3
   wake_on_lan: ^2.0.1+1
 
 dev_dependencies:

@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:network_arch/models/lan_scanner_model.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
@@ -21,6 +22,8 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     final ConnectivityModel connectivity =
         Provider.of<ConnectivityModel>(context);
+
+    final LanScannerModel lanModel = Provider.of<LanScannerModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -52,6 +55,10 @@ class _DashboardState extends State<Dashboard> {
                   } else {
                     bool isWifiConnected =
                         snapshot.data!.wifiIP != null ? true : false;
+
+                    if (isWifiConnected) {
+                      lanModel.configure(ip: snapshot.data!.wifiIP!);
+                    }
 
                     return NetworkCard(
                       isNetworkConnected: isWifiConnected,
