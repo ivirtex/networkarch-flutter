@@ -1,12 +1,14 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:lan_scanner/lan_scanner.dart';
 
-import 'package:network_arch/widgets/builders.dart';
-
-import 'package:network_arch/models/lan_scanner_model.dart';
-import 'package:network_arch/widgets/shared_widgets.dart';
-import 'package:network_tools/network_tools.dart';
+// Package imports:
 import 'package:provider/provider.dart';
+
+// Project imports:
+import 'package:network_arch/models/lan_scanner_model.dart';
+import 'package:network_arch/widgets/builders.dart';
+import 'package:network_arch/widgets/shared_widgets.dart';
 
 class LanScannerView extends StatefulWidget {
   const LanScannerView({Key? key}) : super(key: key);
@@ -18,17 +20,22 @@ class LanScannerView extends StatefulWidget {
 class _LanScannerViewState extends State<LanScannerView> {
   @override
   Widget build(BuildContext context) {
-    LanScannerModel lanModel = Provider.of<LanScannerModel>(context);
+    LanScannerModel lanModel =
+        Provider.of<LanScannerModel>(context, listen: false);
 
     return Consumer<LanScannerModel>(
       builder: (context, model, child) {
         return Scaffold(
-          appBar: lanModel.isScannerRunning
+          appBar: lanModel.getIsScannerRunning()
               ? Builders.switchableAppBar(
                   context: context,
                   title: "LAN Scanner",
-                  action: ButtonActions.start,
-                  onPressed: null,
+                  action: ButtonActions.stop,
+                  onPressed: () {
+                    setState(() {
+                      lanModel.isScannerViewActive = false;
+                    });
+                  },
                 )
               : Builders.switchableAppBar(
                   context: context,
@@ -36,45 +43,42 @@ class _LanScannerViewState extends State<LanScannerView> {
                   action: ButtonActions.start,
                   onPressed: () {
                     setState(() {
-                      lanModel.isScannerRunning = true;
+                      lanModel.hosts.clear();
+                      lanModel.isScannerViewActive = true;
                     });
                   },
                 ),
           body: Consumer<LanScannerModel>(
             builder: (context, model, child) {
-              if (model.isScannerRunning) {
+              if (model.isScannerViewActive) {
                 return StreamBuilder(
                   stream: model.getStream(),
                   initialData: null,
                   builder: (BuildContext context,
-                      AsyncSnapshot<ActiveHost?> snapshot) {
+                      AsyncSnapshot<DeviceAddress?> snapshot) {
                     if (snapshot.hasError) {
                       print(snapshot.error);
                     }
 
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      lanModel.isScannerViewActive = false;
+                    }
+
                     if (!snapshot.hasData) {
-                      return ErrorCard();
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
                     } else {
+                      print("Received new data: ${snapshot.data!.ip}");
+
                       model.hosts.add(snapshot.data!);
 
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: LinearProgressIndicator(
-                              value: model.getProgress,
-                              backgroundColor: Colors.grey,
-                              color: Colors.green,
-                            ),
-                          ),
-                          buildPingListView(model),
-                        ],
-                      );
+                      return buildHostsListView(model);
                     }
                   },
                 );
               } else {
-                return buildPingListView(model);
+                return buildHostsListView(model);
               }
             },
           ),
@@ -83,15 +87,14 @@ class _LanScannerViewState extends State<LanScannerView> {
     );
   }
 
-  Padding buildPingListView(LanScannerModel model) {
+  Padding buildHostsListView(LanScannerModel model) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: model.hosts.length,
         itemBuilder: (context, index) {
-          ActiveHost currData = model.hosts.elementAt(index);
+          DeviceAddress currData = model.hosts.elementAt(index);
 
           return Card(
             shape: RoundedRectangleBorder(
@@ -99,10 +102,11 @@ class _LanScannerViewState extends State<LanScannerView> {
             ),
             child: ListTile(
                 leading: StatusCard(
-                  color: Colors.greenAccent,
-                  text: "Online",
+                  color:
+                      currData.exists ? Colors.greenAccent : Colors.redAccent,
+                  text: currData.exists ? "Online" : "Offline",
                 ),
-                title: Text(currData.ip)),
+                title: Text(currData.ip ?? "N/A")),
           );
         },
       ),

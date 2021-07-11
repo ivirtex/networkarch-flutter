@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
-import 'package:network_arch/models/lan_scanner_model.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'package:network_arch/models/lan_scanner_model.dart';
 import 'package:network_arch/screens/lan_scanner_view.dart';
 import 'constants.dart';
 import 'models/connectivity_model.dart';

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
 import 'package:network_arch/utils/network_type.dart';
 import 'package:network_arch/widgets/builders.dart';
 import 'package:network_arch/widgets/cards/data_card.dart';

@@ -1,14 +1,19 @@
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
-import 'package:network_tools/network_tools.dart';
+
+// Package imports:
+import 'package:lan_scanner/lan_scanner.dart';
 
 class LanScannerModel extends ChangeNotifier {
+  LanScanner _scanner = LanScanner();
+
   String? _ip;
   String? _subnet;
   int _port = 80;
+  Duration _timeout = Duration(seconds: 5);
 
-  double _progress = 0;
-  bool isScannerRunning = false;
-  Set<ActiveHost> hosts = Set<ActiveHost>();
+  bool isScannerViewActive = false;
+  Set<DeviceAddress> hosts = Set<DeviceAddress>();
 
   void configure({required String? ip}) {
     _ip = ip;
@@ -18,26 +23,29 @@ class LanScannerModel extends ChangeNotifier {
     }
   }
 
+  bool getIsScannerRunning() {
+    return _scanner.isScanInProgress;
+  }
+
   set setIP(String ip) => _ip;
   set setSubnet(String subnet) => _subnet;
   set setPort(int port) => _port;
+  set setDuration(Duration timeoutDuration) => _timeout;
 
   String? get getIP => _ip;
   String? get getSubnet => _subnet;
-  int get getPort => _port;
-  double get getProgress => _progress;
+  Duration get getTimeout => _timeout;
 
-  Stream<ActiveHost> getStream() {
-    print("IP: $_ip, Subnet: $_subnet");
-
+  Stream<DeviceAddress> getStream() {
     if (_ip != null && _subnet != null) {
-      final stream = HostScanner.discover(_subnet!,
-          firstSubnet: 1, lastSubnet: 255, progressCallback: (progress) {
-        print('Progress for host discovery : $progress');
-        _progress = progress;
-      });
+      final stream = _scanner.preciseScan(
+          subnet: _subnet,
+          timeout: _timeout,
+          progressCallback: (progress) {
+            print(progress);
+          });
 
-      return stream.asBroadcastStream();
+      return stream;
     } else {
       throw "Can't discover the network without connection with Wi-Fi";
     }

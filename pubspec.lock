@@ -230,6 +230,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_icmp_ping:
+    dependency: transitive
+    description:
+      name: flutter_icmp_ping
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -310,6 +317,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
+  lan_scanner:
+    dependency: "direct main"
+    description:
+      path: "/Users/hubertjozwiak/Desktop/Development/lan_scanner"
+      relative: false
+    source: path
+    version: "1.0.1"
   lint:
     dependency: transitive
     description:

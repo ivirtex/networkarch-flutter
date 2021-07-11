@@ -9,8 +9,8 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:network_arch/models/ping_model.dart';
 import 'package:network_arch/utils/keyboard_hider.dart';
-import 'package:network_arch/widgets/shared_widgets.dart';
 import 'package:network_arch/widgets/builders.dart';
+import 'package:network_arch/widgets/shared_widgets.dart';
 
 class PingView extends StatefulWidget {
   PingView({Key? key}) : super(key: key);

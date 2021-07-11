@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:network_arch/models/lan_scanner_model.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
@@ -8,6 +7,7 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/connectivity_model.dart';
+import 'package:network_arch/models/lan_scanner_model.dart';
 import 'package:network_arch/utils/network_type.dart';
 import 'package:network_arch/widgets/drawer.dart';
 import 'package:network_arch/widgets/shared_widgets.dart';
@@ -57,7 +57,7 @@ class _DashboardState extends State<Dashboard> {
                         snapshot.data!.wifiIP != null ? true : false;
 
                     if (isWifiConnected) {
-                      lanModel.configure(ip: snapshot.data!.wifiIP!);
+                      lanModel.configure(ip: snapshot.data!.wifiIP);
                     }
 
                     return NetworkCard(
