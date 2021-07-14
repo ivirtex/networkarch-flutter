@@ -1,9 +1,9 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icmp_ping/flutter_icmp_ping.dart';
 
 // Package imports:
-import 'package:dart_ping/dart_ping.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -13,7 +13,7 @@ import 'package:network_arch/widgets/builders.dart';
 import 'package:network_arch/widgets/shared_widgets.dart';
 
 class PingView extends StatefulWidget {
-  PingView({Key? key}) : super(key: key);
+  const PingView({Key? key}) : super(key: key);
 
   @override
   _PingViewState createState() => _PingViewState();
@@ -30,13 +30,13 @@ class _PingViewState extends State<PingView> {
 
   @override
   Widget build(BuildContext context) {
-    PingModel pingModel = Provider.of<PingModel>(context);
+    final PingModel pingModel = Provider.of<PingModel>(context);
 
     return Scaffold(
       appBar: pingModel.isPingingStarted
           ? Builders.switchableAppBar(
               context: context,
-              title: "Ping",
+              title: 'Ping',
               action: ButtonActions.stop,
               onPressed: () {
                 setState(() {
@@ -47,12 +47,12 @@ class _PingViewState extends State<PingView> {
             )
           : Builders.switchableAppBar(
               context: context,
-              title: "Ping",
+              title: 'Ping',
               action: ButtonActions.start,
               onPressed: () {
                 setState(() {
                   pingModel.clearData();
-                  pingModel.setHost = targetHostController.text;
+                  pingModel.setHost(targetHostController.text);
                   pingModel.isPingingStarted = true;
                 });
 
@@ -61,7 +61,7 @@ class _PingViewState extends State<PingView> {
               },
             ),
       body: SingleChildScrollView(
-        physics: ScrollPhysics(),
+        physics: const ScrollPhysics(),
         child: Column(
           children: [
             Padding(
@@ -76,7 +76,7 @@ class _PingViewState extends State<PingView> {
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0)),
-                        labelText: "IP address",
+                        labelText: 'IP address',
                       ),
                     ),
                   ),
@@ -91,11 +91,11 @@ class _PingViewState extends State<PingView> {
                     initialData: null,
                     builder: (context, AsyncSnapshot<PingData?> snapshot) {
                       if (snapshot.hasError) {
-                        print(snapshot.error);
+                        // print(snapshot.error);
                       }
 
                       if (!snapshot.hasData) {
-                        return CircularProgressIndicator();
+                        return const CircularProgressIndicator();
                       } else {
                         model.pingData.add(snapshot.data);
 
@@ -118,60 +118,59 @@ class _PingViewState extends State<PingView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: model.pingData.length,
         itemBuilder: (context, index) {
-          PingData currData = model.pingData[index]!;
+          final PingData currData = model.pingData[index]!;
 
           if (currData.error != null) {
             return Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              ),
-              child: ListTile(
-                leading: StatusCard(
-                  color: CupertinoColors.systemRed,
-                  text: "Error",
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
-                title: Text(model.getHost),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Seq. pos.: ${index + 1}"),
-                    Text("TTL: N/A"),
-                  ],
-                ),
-                trailing: Container(
-                  width: 110,
-                  child: Text(model.getErrorDesc(currData.error!.error)),
-                ),
-              ),
-            );
+                child: ListTile(
+                  leading: const StatusCard(
+                    color: CupertinoColors.systemRed,
+                    text: 'Error',
+                  ),
+                  title: Text(model.getHost),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Seq. pos.: ${index + 1}'),
+                      const Text('TTL: N/A'),
+                    ],
+                  ),
+                  trailing: Container(
+                    width: 110,
+                    child: Text(
+                      model.getErrorDesc(currData.error!),
+                    ),
+                  ),
+                ));
           }
 
           if (currData.response != null) {
             return Card(
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               child: ListTile(
-                leading: StatusCard(
+                leading: const StatusCard(
                   color: CupertinoColors.systemGreen,
-                  text: "Online",
+                  text: 'Online',
                 ),
                 title: Text(currData.response!.ip!),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Seq. pos.: " +
-                        currData.response!.seq.toString() +
-                        " "),
-                    Text("TTL: " + currData.response!.ttl.toString())
+                    Text('Seq. pos.: ${currData.response!.seq.toString()} '),
+                    Text('TTL: ${currData.response!.ttl.toString()}')
                   ],
                 ),
                 trailing: Text(
-                  currData.response!.time!.inMilliseconds.toString() + " ms",
+                  '${currData.response!.time!.inMilliseconds.toString()} ms',
                 ),
               ),
             );

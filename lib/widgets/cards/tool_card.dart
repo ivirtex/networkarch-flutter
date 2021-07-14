@@ -21,7 +21,7 @@ class ToolCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
     return DataCard(
       color: isDarkModeOn ? Colors.grey[800] : Colors.grey[200],
@@ -35,7 +35,7 @@ class ToolCard extends StatelessWidget {
               children: [
                 Text(
                   toolName,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
                   ),
@@ -49,20 +49,20 @@ class ToolCard extends StatelessWidget {
               ],
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Flexible(
             child: TextButton(
               style: TextButton.styleFrom(
-                shape: CircleBorder(),
+                shape: const CircleBorder(),
                 primary: Colors.white,
                 backgroundColor:
                     isDarkModeOn ? Colors.grey[700] : Colors.grey[300],
               ),
+              onPressed: onPressed as void Function()?,
               child: FaIcon(
                 FontAwesomeIcons.arrowCircleRight,
                 color: isDarkModeOn ? Colors.white : Colors.black,
               ),
-              onPressed: onPressed as void Function()?,
             ),
           )
         ],

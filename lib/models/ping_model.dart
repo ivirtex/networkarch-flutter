@@ -2,25 +2,25 @@
 import 'package:flutter/foundation.dart';
 
 // Package imports:
-import 'package:dart_ping/dart_ping.dart';
+import 'package:flutter_icmp_ping/flutter_icmp_ping.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
 
 class PingModel extends ChangeNotifier {
-  Ping _ping = Ping("1.1.1.1");
+  Ping _ping = Ping('1.1.1.1');
 
   bool isPingingStarted = false;
   List<PingData?> pingData = [];
-  String _host = "";
+  String _host = '';
 
-  set setHost(String host) {
+  void setHost(String host) {
     _ping = Ping(host);
     _host = host;
     notifyListeners();
   }
 
-  get getHost => _host;
+  String get getHost => _host;
 
   void clearData() {
     pingData.clear();
@@ -31,15 +31,13 @@ class PingModel extends ChangeNotifier {
     _ping.stop();
   }
 
-  String getErrorDesc(ErrorType error) {
+  String getErrorDesc(PingError error) {
     switch (error) {
-      case ErrorType.NoReply:
-        return Constants.noReplyError;
-      case ErrorType.Unknown:
+      case PingError.Unknown:
         return Constants.unknownError;
-      case ErrorType.UnknownHost:
+      case PingError.UnknownHost:
         return Constants.unknownHostError;
-      case ErrorType.RequestTimedOut:
+      case PingError.RequestTimedOut:
         return Constants.requestTimedOutError;
     }
   }

@@ -10,17 +10,17 @@ enum ButtonActions {
 }
 
 abstract class Builders {
-  static Row buildConnectionState(bool isNetworkConnected) {
+  static Row buildConnectionState({required bool isNetworkConnected}) {
     return Row(
       children: [
         Text(
-          isNetworkConnected ? "Connected" : "Disconnected",
+          isNetworkConnected ? 'Connected' : 'Disconnected',
           style: TextStyle(
             color: isNetworkConnected ? Colors.green : Colors.red,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(width: 10.0),
+        const SizedBox(width: 10.0),
         FaIcon(
           isNetworkConnected
               ? FontAwesomeIcons.checkCircle
@@ -44,23 +44,24 @@ abstract class Builders {
       iconTheme: Theme.of(context).iconTheme,
       textTheme: Theme.of(context).textTheme,
       actions: [
-        action == ButtonActions.start
-            ? IconButton(
-                splashRadius: 25.0,
-                icon: FaIcon(
-                  FontAwesomeIcons.play,
-                  color: Colors.green,
-                ),
-                onPressed: onPressed,
-              )
-            : IconButton(
-                splashRadius: 25.0,
-                icon: FaIcon(
-                  FontAwesomeIcons.stopCircle,
-                  color: Colors.red,
-                ),
-                onPressed: onPressed,
-              )
+        if (action == ButtonActions.start)
+          IconButton(
+            splashRadius: 25.0,
+            icon: const FaIcon(
+              FontAwesomeIcons.play,
+              color: Colors.green,
+            ),
+            onPressed: onPressed,
+          )
+        else
+          IconButton(
+            splashRadius: 25.0,
+            icon: const FaIcon(
+              FontAwesomeIcons.stopCircle,
+              color: Colors.red,
+            ),
+            onPressed: onPressed,
+          )
       ],
     );
   }

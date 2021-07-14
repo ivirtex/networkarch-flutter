@@ -22,7 +22,7 @@ class DrawerTile extends StatelessWidget {
       title: Row(
         children: [
           icon,
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           child,
         ],
       ),

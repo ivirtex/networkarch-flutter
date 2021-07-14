@@ -40,8 +40,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => Dashboard(),
-        '/tools/ping': (context) => PingView(),
-        '/tools/lan': (context) => LanScannerView(),
+        '/tools/ping': (context) => const PingView(),
+        '/tools/lan': (context) => const LanScannerView(),
       },
     );
   }

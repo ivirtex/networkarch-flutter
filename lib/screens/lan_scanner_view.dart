@@ -20,7 +20,7 @@ class LanScannerView extends StatefulWidget {
 class _LanScannerViewState extends State<LanScannerView> {
   @override
   Widget build(BuildContext context) {
-    LanScannerModel lanModel =
+    final LanScannerModel lanModel =
         Provider.of<LanScannerModel>(context, listen: false);
 
     return Consumer<LanScannerModel>(
@@ -29,7 +29,7 @@ class _LanScannerViewState extends State<LanScannerView> {
           appBar: lanModel.getIsScannerRunning()
               ? Builders.switchableAppBar(
                   context: context,
-                  title: "LAN Scanner",
+                  title: 'LAN Scanner',
                   action: ButtonActions.stop,
                   onPressed: () {
                     setState(() {
@@ -39,7 +39,7 @@ class _LanScannerViewState extends State<LanScannerView> {
                 )
               : Builders.switchableAppBar(
                   context: context,
-                  title: "LAN Scanner",
+                  title: 'LAN Scanner',
                   action: ButtonActions.start,
                   onPressed: () {
                     setState(() {
@@ -57,7 +57,7 @@ class _LanScannerViewState extends State<LanScannerView> {
                   builder: (BuildContext context,
                       AsyncSnapshot<DeviceAddress?> snapshot) {
                     if (snapshot.hasError) {
-                      print(snapshot.error);
+                      // print(snapshot.error);
                     }
 
                     if (snapshot.connectionState == ConnectionState.done) {
@@ -65,11 +65,11 @@ class _LanScannerViewState extends State<LanScannerView> {
                     }
 
                     if (!snapshot.hasData) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     } else {
-                      print("Received new data: ${snapshot.data!.ip}");
+                      // print('Received new data: ${snapshot.data!.ip}');
 
                       model.hosts.add(snapshot.data!);
 
@@ -94,19 +94,19 @@ class _LanScannerViewState extends State<LanScannerView> {
         shrinkWrap: true,
         itemCount: model.hosts.length,
         itemBuilder: (context, index) {
-          DeviceAddress currData = model.hosts.elementAt(index);
+          final DeviceAddress currData = model.hosts.elementAt(index);
 
           return Card(
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             child: ListTile(
                 leading: StatusCard(
                   color:
                       currData.exists ? Colors.greenAccent : Colors.redAccent,
-                  text: currData.exists ? "Online" : "Offline",
+                  text: currData.exists ? 'Online' : 'Offline',
                 ),
-                title: Text(currData.ip ?? "N/A")),
+                title: Text(currData.ip ?? 'N/A')),
           );
         },
       ),

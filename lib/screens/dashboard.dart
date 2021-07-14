@@ -27,13 +27,13 @@ class _DashboardState extends State<Dashboard> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Dashboard",
+        title: const Text(
+          'Dashboard',
         ),
         iconTheme: Theme.of(context).iconTheme,
         textTheme: Theme.of(context).textTheme,
       ),
-      drawer: DrawerWidget(),
+      drawer: const DrawerWidget(),
       body: ListView(
         children: [
           Column(
@@ -45,16 +45,15 @@ class _DashboardState extends State<Dashboard> {
                 builder:
                     (context, AsyncSnapshot<SynchronousWifiInfo?> snapshot) {
                   if (snapshot.hasError) {
-                    return ErrorCard(
+                    return const ErrorCard(
                       message: Constants.defaultError,
                     );
                   }
 
                   if (!snapshot.hasData) {
-                    return LoadingCard();
+                    return const LoadingCard();
                   } else {
-                    bool isWifiConnected =
-                        snapshot.data!.wifiIP != null ? true : false;
+                    final bool isWifiConnected = snapshot.data!.wifiIP != null;
 
                     if (isWifiConnected) {
                       lanModel.configure(ip: snapshot.data!.wifiIP);
@@ -63,7 +62,7 @@ class _DashboardState extends State<Dashboard> {
                     return NetworkCard(
                       isNetworkConnected: isWifiConnected,
                       networkType: NetworkType.wifi,
-                      firstLine: snapshot.data!.wifiName ?? "N/A",
+                      firstLine: snapshot.data!.wifiName ?? 'N/A',
                       onPressed: () {
                         // TODO: Implement onTap()
                       },
@@ -78,26 +77,26 @@ class _DashboardState extends State<Dashboard> {
                     (context, AsyncSnapshot<SynchronousCarrierInfo?> snapshot) {
                   if (snapshot.hasError) {
                     if (snapshot.error is NoSimCardException) {
-                      return ErrorCard(
+                      return const ErrorCard(
                         message: Constants.simError,
                       );
                     } else {
-                      return ErrorCard(
+                      return const ErrorCard(
                         message: Constants.defaultError,
                       );
                     }
                   }
 
                   if (!snapshot.hasData) {
-                    return LoadingCard();
+                    return const LoadingCard();
                   } else {
-                    bool isCellularConnected =
-                        snapshot.data!.carrierName != null ? true : false;
+                    final bool isCellularConnected =
+                        snapshot.data!.carrierName != null;
 
                     return NetworkCard(
                       isNetworkConnected: isCellularConnected,
                       networkType: NetworkType.cellular,
-                      firstLine: snapshot.data!.carrierName ?? "N/A",
+                      firstLine: snapshot.data!.carrierName ?? 'N/A',
                       onPressed: () {
                         // TODO: Implement onTap()
                       },
@@ -105,47 +104,47 @@ class _DashboardState extends State<Dashboard> {
                   }
                 },
               ),
-              Divider(
+              const Divider(
                 indent: 15,
                 endIndent: 15,
               ),
               ToolCard(
-                toolName: "Ping",
+                toolName: 'Ping',
                 toolDesc: Constants.pingDesc,
                 onPressed: () {
-                  Navigator.pushNamed(context, "/tools/ping");
+                  Navigator.pushNamed(context, '/tools/ping');
                 },
               ),
               ToolCard(
-                toolName: "LAN Scanner",
+                toolName: 'LAN Scanner',
                 toolDesc: Constants.lanScannerDesc,
                 onPressed: () {
-                  Navigator.pushNamed(context, "/tools/lan");
+                  Navigator.pushNamed(context, '/tools/lan');
                 },
               ),
               ToolCard(
-                toolName: "Wake On LAN",
+                toolName: 'Wake On LAN',
                 toolDesc: Constants.wolDesc,
                 onPressed: () {
                   // TODO: Implement onTap()
                 },
               ),
               ToolCard(
-                toolName: "IP Geolocation",
+                toolName: 'IP Geolocation',
                 toolDesc: Constants.ipGeoDesc,
                 onPressed: () {
                   // TODO: Implement onTap()
                 },
               ),
               ToolCard(
-                toolName: "Whois",
+                toolName: 'Whois',
                 toolDesc: Constants.whoisDesc,
                 onPressed: () {
                   // TODO: Implement onTap()
                 },
               ),
               ToolCard(
-                toolName: "DNS Lookup",
+                toolName: 'DNS Lookup',
                 toolDesc: Constants.dnsDesc,
                 onPressed: () {
                   // TODO: Implement onTap()

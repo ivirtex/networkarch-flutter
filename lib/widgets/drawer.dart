@@ -12,12 +12,12 @@ class DrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
     return Drawer(
       child: Column(
         children: <Widget>[
-          DrawerHeader(
+          const DrawerHeader(
             child: Text(
               'Menu',
               style: TextStyle(
@@ -31,7 +31,7 @@ class DrawerWidget extends StatelessWidget {
               FontAwesomeIcons.cog,
               color: isDarkModeOn ? Colors.white : Colors.black,
             ),
-            title: Text("Settings"),
+            title: const Text('Settings'),
             onTap: () {},
           ),
           ListTile(
@@ -39,7 +39,7 @@ class DrawerWidget extends StatelessWidget {
               FontAwesomeIcons.adjust,
               color: isDarkModeOn ? Colors.white : Colors.black,
             ),
-            title: Text("Theme"),
+            title: const Text('Theme'),
             trailing: EasyDynamicThemeBtn(),
           ),
           Expanded(
@@ -50,18 +50,18 @@ class DrawerWidget extends StatelessWidget {
                   FontAwesomeIcons.infoCircle,
                   color: isDarkModeOn ? Colors.white : Colors.black,
                 ),
-                title: Text("About"),
+                title: const Text('About'),
                 onTap: () {},
               ),
             ),
           ),
           ListTile(
-            leading: FaIcon(
+            leading: const FaIcon(
               FontAwesomeIcons.bug,
               color: Colors.red,
             ),
-            title: Text(
-              "Report a bug",
+            title: const Text(
+              'Report a bug',
               style: TextStyle(color: Colors.red),
             ),
             onTap: () {},

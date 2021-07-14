@@ -169,13 +169,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  dart_ping:
-    dependency: "direct main"
-    description:
-      name: dart_ping
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "6.0.0"
   dart_style:
     dependency: transitive
     description:
@@ -231,7 +224,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_icmp_ping:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_icmp_ping
       url: "https://pub.dartlang.org"
@@ -323,9 +316,9 @@ packages:
       path: "/Users/hubertjozwiak/Desktop/Development/lan_scanner"
       relative: false
     source: path
-    version: "1.0.1"
+    version: "1.0.2"
   lint:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: lint
       url: "https://pub.dartlang.org"
@@ -408,13 +401,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
-  network_tools:
-    dependency: "direct main"
-    description:
-      name: network_tools
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.3"
   package_config:
     dependency: transitive
     description:

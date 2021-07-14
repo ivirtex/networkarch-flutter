@@ -5,21 +5,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:lan_scanner/lan_scanner.dart';
 
 class LanScannerModel extends ChangeNotifier {
-  LanScanner _scanner = LanScanner();
+  final LanScanner _scanner = LanScanner();
 
   String? _ip;
-  String? _subnet;
-  int _port = 80;
-  Duration _timeout = Duration(seconds: 5);
+  String? subnet;
+  final int port = 80;
+  final Duration timeout = const Duration(seconds: 5);
 
   bool isScannerViewActive = false;
-  Set<DeviceAddress> hosts = Set<DeviceAddress>();
+  Set<DeviceAddress> hosts = <DeviceAddress>{};
 
   void configure({required String? ip}) {
     _ip = ip;
 
     if (ip != null) {
-      _subnet = ip.substring(0, ip.lastIndexOf('.'));
+      subnet = ip.substring(0, ip.lastIndexOf('.'));
     }
   }
 
@@ -27,22 +27,13 @@ class LanScannerModel extends ChangeNotifier {
     return _scanner.isScanInProgress;
   }
 
-  set setIP(String ip) => _ip;
-  set setSubnet(String subnet) => _subnet;
-  set setPort(int port) => _port;
-  set setDuration(Duration timeoutDuration) => _timeout;
-
-  String? get getIP => _ip;
-  String? get getSubnet => _subnet;
-  Duration get getTimeout => _timeout;
-
   Stream<DeviceAddress> getStream() {
-    if (_ip != null && _subnet != null) {
+    if (_ip != null && subnet != null) {
       final stream = _scanner.preciseScan(
-          subnet: _subnet,
-          timeout: _timeout,
+          subnet: subnet,
+          timeout: timeout,
           progressCallback: (progress) {
-            print(progress);
+            // print(progress);
           });
 
       return stream;

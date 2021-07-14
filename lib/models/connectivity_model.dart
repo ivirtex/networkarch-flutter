@@ -23,8 +23,6 @@ class ConnectivityModel {
 
   Future<SynchronousWifiInfo> getDataForAndroid() async {
     return SynchronousWifiInfo(
-      locationServiceAuthorizationStatus: null,
-      locationServiceAuthorization: null,
       wifiBSSID: await NetworkInfo().getWifiBSSID(),
       wifiIP: await NetworkInfo().getWifiIP(),
       wifiName: await NetworkInfo().getWifiName(),
@@ -33,7 +31,7 @@ class ConnectivityModel {
 
   Stream<SynchronousWifiInfo> _wifiInfoStream() async* {
     while (true) {
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
 
       SynchronousWifiInfo wifiInfo;
 
@@ -57,7 +55,7 @@ class ConnectivityModel {
 
   Stream<SynchronousCarrierInfo> _cellularInfoStream() async* {
     while (true) {
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
 
       SynchronousCarrierInfo carrierInfo;
 
@@ -77,7 +75,7 @@ class ConnectivityModel {
         throw NoSimCardException();
       }
 
-      print("value of carrierInfo: $carrierInfo");
+      // print('value of carrierInfo: $carrierInfo');
 
       yield carrierInfo;
     }

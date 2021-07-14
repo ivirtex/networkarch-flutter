@@ -18,7 +18,7 @@ class ErrorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
     return DataCard(
       color: isDarkModeOn ? Colors.grey[800] : Colors.grey[200],
@@ -26,15 +26,15 @@ class ErrorCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
           children: [
-            Icon(
+            const Icon(
               FontAwesomeIcons.timesCircle,
               color: Colors.red,
               size: 25,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               message ?? Constants.defaultError,
-              style: TextStyle(fontSize: 15),
+              style: const TextStyle(fontSize: 15),
             )
           ],
         ),
