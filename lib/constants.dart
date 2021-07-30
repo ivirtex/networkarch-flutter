@@ -24,6 +24,10 @@ abstract class Constants {
     ),
   );
 
+  // Description styles
+  static TextStyle descStyleLight = TextStyle(color: Colors.grey[600]);
+  static TextStyle descStyleDark = TextStyle(color: Colors.grey[400]);
+
   // Tools descriptions
   static const String pingDesc =
       'Send packets to specific IP address or domain';
@@ -52,4 +56,8 @@ abstract class Constants {
   static const String unknownHostError = 'No reply received from the host';
 
   static const String requestTimedOutError = 'No reply received from the host';
+
+  // Permissions descriptions
+  static const String locationPermissionDesc =
+      'We need your location permission in order to access Wi-Fi information';
 }

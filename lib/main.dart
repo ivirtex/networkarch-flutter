@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
+import 'package:network_arch/models/permissions_model.dart';
+import 'package:network_arch/screens/permissions_view.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -22,6 +24,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => PingModel()),
         ChangeNotifierProvider(create: (context) => LanScannerModel()),
+        ChangeNotifierProvider(create: (context) => PermissionsModel()),
         Provider(create: (context) => ConnectivityModel()),
       ],
       child: EasyDynamicThemeWidget(child: MyApp()),
@@ -40,6 +43,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => Dashboard(),
+        '/permissions': (context) => PermissionsView(),
         '/tools/ping': (context) => const PingView(),
         '/tools/lan': (context) => const LanScannerView(),
       },

@@ -18,8 +18,8 @@ class LoadingCard extends StatelessWidget {
       cardChild: Padding(
         padding: const EdgeInsets.symmetric(vertical: 37),
         child: Column(
-          children: [
-            const CircularProgressIndicator(),
+          children: const [
+            CircularProgressIndicator(),
           ],
         ),
       ),

@@ -1,5 +1,6 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:network_arch/models/permissions_model.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
@@ -19,12 +20,25 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      final permissions = Provider.of<PermissionsModel>(context, listen: false);
+
+      Permission.location.isGranted.then((bool isGranted) {
+        if (isGranted) {
+          permissions.isLocationPermissionGranted = true;
+        } else {
+          Navigator.of(context).pushReplacementNamed('/permissions');
+        }
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final ConnectivityModel connectivity =
-        Provider.of<ConnectivityModel>(context);
-
-    final LanScannerModel lanModel = Provider.of<LanScannerModel>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -40,7 +54,7 @@ class _DashboardState extends State<Dashboard> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               StreamBuilder(
-                stream: connectivity.getWifiInfoStream,
+                stream: context.read<ConnectivityModel>().getWifiInfoStream,
                 initialData: null,
                 builder:
                     (context, AsyncSnapshot<SynchronousWifiInfo?> snapshot) {
@@ -56,7 +70,9 @@ class _DashboardState extends State<Dashboard> {
                     final bool isWifiConnected = snapshot.data!.wifiIP != null;
 
                     if (isWifiConnected) {
-                      lanModel.configure(ip: snapshot.data!.wifiIP);
+                      final model = context.read<LanScannerModel>();
+
+                      model.configure(ip: snapshot.data!.wifiIP);
                     }
 
                     return NetworkCard(
@@ -71,7 +87,7 @@ class _DashboardState extends State<Dashboard> {
                 },
               ),
               StreamBuilder(
-                stream: connectivity.getCellularInfoStream,
+                stream: context.read<ConnectivityModel>().getCellularInfoStream,
                 initialData: null,
                 builder:
                     (context, AsyncSnapshot<SynchronousCarrierInfo?> snapshot) {
