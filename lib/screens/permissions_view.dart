@@ -13,6 +13,10 @@ class PermissionsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
+    void goToDashboard() {
+      Navigator.of(context).pushReplacementNamed('/');
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -25,7 +29,6 @@ class PermissionsView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           DataCard(
-            color: isDarkModeOn ? Colors.grey[800] : Colors.grey[200],
             cardChild: Consumer<PermissionsModel>(
               builder: (_, PermissionsModel model, __) {
                 return Row(
@@ -70,13 +73,17 @@ class PermissionsView extends StatelessWidget {
           ),
           const Spacer(),
           IconButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacementNamed('/');
-            },
+            onPressed:
+                context.watch<PermissionsModel>().isLocationPermissionGranted
+                    ? goToDashboard
+                    : null,
             iconSize: 50,
-            icon: const FaIcon(
+            icon: FaIcon(
               FontAwesomeIcons.arrowCircleRight,
-              color: Colors.green,
+              color:
+                  context.watch<PermissionsModel>().isLocationPermissionGranted
+                      ? Colors.green
+                      : Colors.grey,
             ),
           ),
           const SizedBox(height: 20)

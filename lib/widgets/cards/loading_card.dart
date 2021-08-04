@@ -11,10 +11,7 @@ class LoadingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
-
     return DataCard(
-      color: isDarkModeOn ? Colors.grey[800] : Colors.grey[200],
       cardChild: Padding(
         padding: const EdgeInsets.symmetric(vertical: 37),
         child: Column(

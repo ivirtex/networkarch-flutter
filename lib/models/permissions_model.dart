@@ -17,8 +17,6 @@ class PermissionsModel extends ChangeNotifier {
   );
 
   void setLocationStatusIcon(PermissionStatus status) {
-    print(status);
-
     if (status == PermissionStatus.granted) {
       locationStatusIcon = const FaIcon(
         FontAwesomeIcons.check,

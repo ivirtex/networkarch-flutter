@@ -26,6 +26,7 @@ abstract class Constants {
 
   // Description styles
   static TextStyle descStyleLight = TextStyle(color: Colors.grey[600]);
+
   static TextStyle descStyleDark = TextStyle(color: Colors.grey[400]);
 
   // Tools descriptions
@@ -44,10 +45,10 @@ abstract class Constants {
 
   static const String dnsDesc = 'Get the DNS records of a specific domain';
 
-  static const String simError = "Couldn't detect the SIM card";
-
   // Error descriptions
   static const String defaultError = "Couldn't read the data";
+
+  static const String simError = "Couldn't detect the SIM card";
 
   static const String noReplyError = 'No reply received from the host';
 

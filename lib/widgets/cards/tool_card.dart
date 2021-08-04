@@ -25,7 +25,6 @@ class ToolCard extends StatelessWidget {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
     return DataCard(
-      color: isDarkModeOn ? Colors.grey[800] : Colors.grey[200],
       cardChild: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

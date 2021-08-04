@@ -3,24 +3,24 @@ import 'package:flutter/material.dart';
 
 class DataCard extends StatelessWidget {
   const DataCard({
-    this.color,
     this.cardChild,
     this.onPress,
   });
 
-  final Color? color;
   final Widget? cardChild;
   final Function? onPress;
 
   @override
   Widget build(BuildContext context) {
+    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+
     return GestureDetector(
       onTap: onPress as void Function()?,
       child: Container(
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color: color,
+          color: isDarkModeOn ? Colors.grey[800] : Colors.grey[200],
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
