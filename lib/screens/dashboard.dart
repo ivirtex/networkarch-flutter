@@ -19,6 +19,10 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  void _showSnackbar(SnackBar snackBar) {
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -30,6 +34,11 @@ class _DashboardState extends State<Dashboard> {
       Permission.location.isGranted.then((bool isGranted) {
         if (isGranted) {
           permissions.isLocationPermissionGranted = true;
+        } else if (!isGranted &&
+            permissions.hasLocationPermissionBeenRequested) {
+          Future.delayed(Duration.zero, () {
+            _showSnackbar(Constants.permissionDeniedSnackBar);
+          });
         } else {
           Navigator.of(context).pushReplacementNamed('/permissions');
         }

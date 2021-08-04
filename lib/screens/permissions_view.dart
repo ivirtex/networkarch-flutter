@@ -25,6 +25,17 @@ class PermissionsView extends StatelessWidget {
         iconTheme: Theme.of(context).iconTheme,
         textTheme: Theme.of(context).textTheme,
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed:
+            context.watch<PermissionsModel>().hasLocationPermissionBeenRequested
+                ? goToDashboard
+                : null,
+        backgroundColor:
+            context.watch<PermissionsModel>().hasLocationPermissionBeenRequested
+                ? Colors.blue
+                : Colors.grey,
+        child: const FaIcon(FontAwesomeIcons.arrowRight),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -64,6 +75,24 @@ class PermissionsView extends StatelessWidget {
                               await Permission.locationWhenInUse.request();
 
                           model.setLocationStatusIcon(status);
+
+                          switch (status) {
+                            case PermissionStatus.granted:
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  Constants.permissionGrantedSnackBar);
+                              break;
+                            case PermissionStatus.denied:
+                            case PermissionStatus.permanentlyDenied:
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  Constants.permissionDeniedSnackBar);
+                              break;
+                            default:
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  Constants.permissionDefaultSnackBar);
+                              break;
+                          }
+
+                          model.hasLocationPermissionBeenRequested = true;
                         },
                         child: const Text('Request'))
                   ],
@@ -71,22 +100,6 @@ class PermissionsView extends StatelessWidget {
               },
             ),
           ),
-          const Spacer(),
-          IconButton(
-            onPressed:
-                context.watch<PermissionsModel>().isLocationPermissionGranted
-                    ? goToDashboard
-                    : null,
-            iconSize: 50,
-            icon: FaIcon(
-              FontAwesomeIcons.arrowCircleRight,
-              color:
-                  context.watch<PermissionsModel>().isLocationPermissionGranted
-                      ? Colors.green
-                      : Colors.grey,
-            ),
-          ),
-          const SizedBox(height: 20)
         ],
       ),
     );

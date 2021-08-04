@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 abstract class Constants {
   static ThemeData themeDataLight = ThemeData().copyWith(
@@ -61,4 +62,50 @@ abstract class Constants {
   // Permissions descriptions
   static const String locationPermissionDesc =
       'We need your location permission in order to access Wi-Fi information';
+
+  // Permissions snackbars
+  static SnackBar permissionGrantedSnackBar = SnackBar(
+    content: Row(
+      children: const [
+        FaIcon(
+          FontAwesomeIcons.checkCircle,
+          color: Colors.green,
+        ),
+        SizedBox(width: 10),
+        Expanded(child: Text('Permission granted.')),
+      ],
+    ),
+  );
+
+  static SnackBar permissionDeniedSnackBar = SnackBar(
+    duration: const Duration(seconds: 5),
+    content: Row(
+      children: const [
+        FaIcon(
+          FontAwesomeIcons.timesCircle,
+          color: Colors.red,
+        ),
+        SizedBox(width: 10),
+        Expanded(
+          child: Text(
+              'Permission denied, the app may not function properly, check settings.'),
+        ),
+      ],
+    ),
+  );
+
+  static SnackBar permissionDefaultSnackBar = SnackBar(
+    content: Row(
+      children: const [
+        FaIcon(
+          FontAwesomeIcons.timesCircle,
+          color: Colors.red,
+        ),
+        SizedBox(width: 10),
+        Expanded(
+          child: Text('Something gone wrong, check app permissions.'),
+        ),
+      ],
+    ),
+  );
 }

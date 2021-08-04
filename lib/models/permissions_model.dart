@@ -10,6 +10,7 @@ class PermissionsModel extends ChangeNotifier {
 
   PermissionWithService locationPermission = Permission.location;
   bool isLocationPermissionGranted = false;
+  bool hasLocationPermissionBeenRequested = false;
   FaIcon locationStatusIcon = const FaIcon(
     FontAwesomeIcons.timesCircle,
     color: Colors.red,
