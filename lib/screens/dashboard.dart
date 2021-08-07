@@ -1,14 +1,15 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:network_arch/models/permissions_model.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 // Package imports:
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/connectivity_model.dart';
 import 'package:network_arch/models/lan_scanner_model.dart';
+import 'package:network_arch/models/permissions_model.dart';
 import 'package:network_arch/utils/network_type.dart';
 import 'package:network_arch/widgets/drawer.dart';
 import 'package:network_arch/widgets/shared_widgets.dart';
@@ -31,11 +32,15 @@ class _DashboardState extends State<Dashboard> {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       final permissions = Provider.of<PermissionsModel>(context, listen: false);
 
+      permissions.initPrefs();
+
       Permission.location.isGranted.then((bool isGranted) {
         if (isGranted) {
           permissions.isLocationPermissionGranted = true;
         } else if (!isGranted &&
-            permissions.hasLocationPermissionBeenRequested) {
+            (permissions.prefs!
+                    .getBool('hasLocationPermissionsBeenRequested') ??
+                false)) {
           Future.delayed(Duration.zero, () {
             _showSnackbar(Constants.permissionDeniedSnackBar);
           });

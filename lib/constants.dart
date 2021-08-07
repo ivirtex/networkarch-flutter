@@ -1,9 +1,13 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 abstract class Constants {
-  static ThemeData themeDataLight = ThemeData().copyWith(
+  static ThemeData themeDataLight = ThemeData(
     brightness: Brightness.light,
     accentColor: Colors.black,
     appBarTheme: const AppBarTheme(
@@ -24,6 +28,8 @@ abstract class Constants {
       elevation: 0,
     ),
   );
+
+  static CupertinoThemeData cupertinoThemeData = const CupertinoThemeData();
 
   // Description styles
   static TextStyle descStyleLight = TextStyle(color: Colors.grey[600]);
@@ -64,6 +70,14 @@ abstract class Constants {
       'We need your location permission in order to access Wi-Fi information';
 
   // Permissions snackbars
+  static const String _permissioGranted = 'Permission granted.';
+
+  static const String _permissionDenied =
+      '''Permission denied, the app may not function properly, check the app's settings.''';
+
+  static const String _permissionDefault =
+      'Something gone wrong, check app permissions.';
+
   static SnackBar permissionGrantedSnackBar = SnackBar(
     content: Row(
       children: const [
@@ -72,13 +86,19 @@ abstract class Constants {
           color: Colors.green,
         ),
         SizedBox(width: 10),
-        Expanded(child: Text('Permission granted.')),
+        Expanded(child: Text(_permissioGranted)),
       ],
     ),
   );
 
   static SnackBar permissionDeniedSnackBar = SnackBar(
-    duration: const Duration(seconds: 5),
+    duration: const Duration(seconds: 10),
+    action: SnackBarAction(
+      onPressed: () {
+        openAppSettings();
+      },
+      label: 'Settings',
+    ),
     content: Row(
       children: const [
         FaIcon(
@@ -87,14 +107,20 @@ abstract class Constants {
         ),
         SizedBox(width: 10),
         Expanded(
-          child: Text(
-              'Permission denied, the app may not function properly, check settings.'),
+          child: Text(_permissionDenied),
         ),
       ],
     ),
   );
 
   static SnackBar permissionDefaultSnackBar = SnackBar(
+    duration: const Duration(seconds: 5),
+    action: SnackBarAction(
+      onPressed: () {
+        openAppSettings();
+      },
+      label: 'Settings',
+    ),
     content: Row(
       children: const [
         FaIcon(
@@ -103,7 +129,7 @@ abstract class Constants {
         ),
         SizedBox(width: 10),
         Expanded(
-          child: Text('Something gone wrong, check app permissions.'),
+          child: Text(_permissionDefault),
         ),
       ],
     ),

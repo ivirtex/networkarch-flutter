@@ -1,10 +1,16 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+// Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/permissions_model.dart';
 import 'package:network_arch/widgets/shared_widgets.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
 
 // TODO: Fix this
 
@@ -26,14 +32,20 @@ class PermissionsView extends StatelessWidget {
         textTheme: Theme.of(context).textTheme,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed:
-            context.watch<PermissionsModel>().hasLocationPermissionBeenRequested
-                ? goToDashboard
-                : null,
-        backgroundColor:
-            context.watch<PermissionsModel>().hasLocationPermissionBeenRequested
-                ? Colors.blue
-                : Colors.grey,
+        onPressed: context
+                    .watch<PermissionsModel>()
+                    .prefs!
+                    .getBool('hasLocationPermissionsBeenRequested') ??
+                false
+            ? goToDashboard
+            : null,
+        backgroundColor: context
+                    .watch<PermissionsModel>()
+                    .prefs!
+                    .getBool('hasLocationPermissionsBeenRequested') ??
+                false
+            ? Colors.blue
+            : Colors.grey,
         child: const FaIcon(FontAwesomeIcons.arrowRight),
       ),
       body: Column(
@@ -92,7 +104,10 @@ class PermissionsView extends StatelessWidget {
                               break;
                           }
 
-                          model.hasLocationPermissionBeenRequested = true;
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setBool(
+                              'hasLocationPermissionsBeenRequested', true);
                         },
                         child: const Text('Request'))
                   ],

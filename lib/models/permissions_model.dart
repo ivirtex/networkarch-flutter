@@ -1,6 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PermissionsModel extends ChangeNotifier {
   // PERMISSIONS:
@@ -8,9 +12,10 @@ class PermissionsModel extends ChangeNotifier {
   // requestLocationServiceAuthorization
   // Access WiFi information capability in XCode must be enabled.
 
+  SharedPreferences? prefs;
+
   PermissionWithService locationPermission = Permission.location;
   bool isLocationPermissionGranted = false;
-  bool hasLocationPermissionBeenRequested = false;
   FaIcon locationStatusIcon = const FaIcon(
     FontAwesomeIcons.timesCircle,
     color: Colors.red,
@@ -35,5 +40,9 @@ class PermissionsModel extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  Future<void> initPrefs() async {
+    prefs = await SharedPreferences.getInstance();
   }
 }

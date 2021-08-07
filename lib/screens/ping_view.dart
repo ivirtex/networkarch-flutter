@@ -1,9 +1,9 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icmp_ping/flutter_icmp_ping.dart';
 
 // Package imports:
+import 'package:flutter_icmp_ping/flutter_icmp_ping.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:

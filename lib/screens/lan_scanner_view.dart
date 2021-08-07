@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:lan_scanner/lan_scanner.dart';
 
 // Package imports:
+import 'package:lan_scanner/lan_scanner.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
