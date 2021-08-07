@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/permissions_model.dart';
-import 'package:network_arch/widgets/shared_widgets.dart';
+import 'package:network_arch/services/widgets/shared_widgets.dart';
 
 // TODO: Fix this
 

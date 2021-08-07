@@ -8,9 +8,9 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:network_arch/models/ping_model.dart';
-import 'package:network_arch/utils/keyboard_hider.dart';
-import 'package:network_arch/widgets/builders.dart';
-import 'package:network_arch/widgets/shared_widgets.dart';
+import 'package:network_arch/services/utils/keyboard_hider.dart';
+import 'package:network_arch/services/widgets/builders.dart';
+import 'package:network_arch/services/widgets/shared_widgets.dart';
 
 class PingView extends StatefulWidget {
   const PingView({Key? key}) : super(key: key);
@@ -142,7 +142,7 @@ class _PingViewState extends State<PingView> {
                       const Text('TTL: N/A'),
                     ],
                   ),
-                  trailing: Container(
+                  trailing: SizedBox(
                     width: 110,
                     child: Text(
                       model.getErrorDesc(currData.error!),

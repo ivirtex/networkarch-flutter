@@ -10,9 +10,9 @@ import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/connectivity_model.dart';
 import 'package:network_arch/models/lan_scanner_model.dart';
 import 'package:network_arch/models/permissions_model.dart';
-import 'package:network_arch/utils/network_type.dart';
-import 'package:network_arch/widgets/drawer.dart';
-import 'package:network_arch/widgets/shared_widgets.dart';
+import 'package:network_arch/services/utils/network_type.dart';
+import 'package:network_arch/services/widgets/drawer.dart';
+import 'package:network_arch/services/widgets/shared_widgets.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -29,10 +29,10 @@ class _DashboardState extends State<Dashboard> {
     // TODO: implement initState
     super.initState();
 
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       final permissions = Provider.of<PermissionsModel>(context, listen: false);
 
-      permissions.initPrefs();
+      await permissions.initPrefs();
 
       Permission.location.isGranted.then((bool isGranted) {
         if (isGranted) {

@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:network_arch/models/lan_scanner_model.dart';
-import 'package:network_arch/widgets/builders.dart';
-import 'package:network_arch/widgets/shared_widgets.dart';
+import 'package:network_arch/services/widgets/builders.dart';
+import 'package:network_arch/services/widgets/shared_widgets.dart';
 
 class LanScannerView extends StatefulWidget {
   const LanScannerView({Key? key}) : super(key: key);

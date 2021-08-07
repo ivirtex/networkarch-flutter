@@ -11,7 +11,7 @@ import 'package:network_arch/models/lan_scanner_model.dart';
 import 'package:network_arch/models/permissions_model.dart';
 import 'package:network_arch/screens/lan_scanner_view.dart';
 import 'package:network_arch/screens/permissions_view.dart';
-import 'package:network_arch/widgets/platform_widget.dart';
+import 'package:network_arch/services/widgets/platform_widget.dart';
 import 'constants.dart';
 import 'models/connectivity_model.dart';
 import 'models/ping_model.dart';
