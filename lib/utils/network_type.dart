@@ -1,1 +1,0 @@
-enum NetworkType { wifi, cellular }
