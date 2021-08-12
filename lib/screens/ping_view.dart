@@ -126,29 +126,30 @@ class _PingViewState extends State<PingView> {
 
           if (currData.error != null) {
             return Card(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              child: ListTile(
+                leading: const StatusCard(
+                  color: CupertinoColors.systemRed,
+                  text: 'Error',
                 ),
-                child: ListTile(
-                  leading: const StatusCard(
-                    color: CupertinoColors.systemRed,
-                    text: 'Error',
+                title: Text(model.getHost),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Seq. pos.: ${index + 1}'),
+                    const Text('TTL: N/A'),
+                  ],
+                ),
+                trailing: SizedBox(
+                  width: 110,
+                  child: Text(
+                    model.getErrorDesc(currData.error!),
                   ),
-                  title: Text(model.getHost),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Seq. pos.: ${index + 1}'),
-                      const Text('TTL: N/A'),
-                    ],
-                  ),
-                  trailing: SizedBox(
-                    width: 110,
-                    child: Text(
-                      model.getErrorDesc(currData.error!),
-                    ),
-                  ),
-                ));
+                ),
+              ),
+            );
           }
 
           if (currData.response != null) {

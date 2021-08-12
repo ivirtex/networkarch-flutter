@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
+import 'package:network_arch/screens/wake_on_lan_view.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => Dashboard(),
           '/permissions': (context) => PermissionsView(),
           '/tools/ping': (context) => const PingView(),
-          '/tools/lan': (context) => const LanScannerView(),
+          '/tools/lan': (context) => LanScannerView(),
         },
       );
     }, iosBuilder: (context) {
@@ -60,7 +61,8 @@ class MyApp extends StatelessWidget {
           '/': (context) => Dashboard(),
           '/permissions': (context) => PermissionsView(),
           '/tools/ping': (context) => const PingView(),
-          '/tools/lan': (context) => const LanScannerView(),
+          '/tools/lan': (context) => LanScannerView(),
+          '/tools/wol': (context) => const WakeOnLanView(),
         },
       );
     });

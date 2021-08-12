@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:lan_scanner/lan_scanner.dart';
+import 'package:network_arch/services/utils/scanner_mode.dart';
 import 'package:provider/provider.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 // Project imports:
 import 'package:network_arch/models/lan_scanner_model.dart';
 import 'package:network_arch/services/widgets/builders.dart';
 import 'package:network_arch/services/widgets/shared_widgets.dart';
 
+//! Not really working yet.
 class LanScannerView extends StatefulWidget {
-  const LanScannerView({Key? key}) : super(key: key);
-
   @override
   _LanScannerViewState createState() => _LanScannerViewState();
 }
@@ -23,67 +24,86 @@ class _LanScannerViewState extends State<LanScannerView> {
     final LanScannerModel lanModel =
         Provider.of<LanScannerModel>(context, listen: false);
 
-    return Consumer<LanScannerModel>(
-      builder: (context, model, child) {
-        return Scaffold(
-          appBar: lanModel.getIsScannerRunning()
-              ? Builders.switchableAppBar(
-                  context: context,
-                  title: 'LAN Scanner',
-                  action: ButtonActions.stop,
-                  onPressed: () {
-                    setState(() {
-                      lanModel.isScannerViewActive = false;
-                    });
-                  },
-                )
-              : Builders.switchableAppBar(
-                  context: context,
-                  title: 'LAN Scanner',
-                  action: ButtonActions.start,
-                  onPressed: () {
-                    setState(() {
-                      lanModel.hosts.clear();
-                      lanModel.isScannerViewActive = true;
-                    });
-                  },
-                ),
-          body: Consumer<LanScannerModel>(
-            builder: (context, model, child) {
-              if (model.isScannerViewActive) {
-                return StreamBuilder(
-                  stream: model.getStream(),
-                  initialData: null,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<DeviceAddress?> snapshot) {
-                    if (snapshot.hasError) {
-                      // print(snapshot.error);
-                    }
+    return Scaffold(
+      appBar: context.watch<LanScannerModel>().getIsScannerRunning()
+          ? Builders.switchableAppBar(
+              context: context,
+              title: 'LAN Scanner',
+              action: ButtonActions.stop,
+              onPressed: () {
+                setState(() {
+                  lanModel.isScannerViewActive = false;
+                });
+              },
+            )
+          : Builders.switchableAppBar(
+              context: context,
+              title: 'LAN Scanner',
+              action: ButtonActions.start,
+              onPressed: () {
+                lanModel.isScannerViewActive = true;
 
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      lanModel.isScannerViewActive = false;
-                    }
+                setState(() {
+                  lanModel.hosts.clear();
+                });
+              },
+            ),
+      body: Column(
+        children: [
+          ToggleSwitch(
+            totalSwitches: 2,
+            initialLabelIndex: lanModel.mode == ScannerMode.quick ? 0 : 1,
+            inactiveBgColor: Colors.grey[800],
+            activeBgColor: [Colors.grey[900]!],
+            activeFgColor: Colors.white,
+            labels: const ['Quick', 'Precise'],
+            onToggle: (index) {
+              print('Switched to $index');
 
-                    if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      // print('Received new data: ${snapshot.data!.ip}');
-
-                      model.hosts.add(snapshot.data!);
-
-                      return buildHostsListView(model);
-                    }
-                  },
-                );
+              if (index == 0) {
+                lanModel.mode = ScannerMode.quick;
               } else {
-                return buildHostsListView(model);
+                lanModel.mode = ScannerMode.precise;
               }
             },
           ),
-        );
-      },
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: LinearProgressIndicator(
+              value: context.watch<LanScannerModel>().scanProgress,
+            ),
+          ),
+          Visibility(
+            visible: context.read<LanScannerModel>().isScannerViewActive,
+            child: StreamBuilder(
+              stream: context.read<LanScannerModel>().getStream(),
+              initialData: null,
+              builder:
+                  (BuildContext context, AsyncSnapshot<DeviceModel?> snapshot) {
+                if (snapshot.hasError) {
+                  // print(snapshot.error);
+                }
+
+                if (snapshot.connectionState == ConnectionState.done) {
+                  lanModel.isScannerViewActive = false;
+                }
+
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  print('Received new data: ${snapshot.data!.ip}');
+
+                  context.read<LanScannerModel>().hosts.add(snapshot.data!);
+
+                  return buildHostsListView(context.read<LanScannerModel>());
+                }
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -94,7 +114,7 @@ class _LanScannerViewState extends State<LanScannerView> {
         shrinkWrap: true,
         itemCount: model.hosts.length,
         itemBuilder: (context, index) {
-          final DeviceAddress currData = model.hosts.elementAt(index);
+          final DeviceModel currData = model.hosts.elementAt(index);
 
           return Card(
             shape: const RoundedRectangleBorder(

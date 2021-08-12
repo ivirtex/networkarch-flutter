@@ -145,18 +145,18 @@ class _DashboardState extends State<Dashboard> {
                   Navigator.pushNamed(context, '/tools/ping');
                 },
               ),
-              ToolCard(
-                toolName: 'LAN Scanner',
-                toolDesc: Constants.lanScannerDesc,
-                onPressed: () {
-                  Navigator.pushNamed(context, '/tools/lan');
-                },
-              ),
+              // ToolCard(
+              //   toolName: 'LAN Scanner',
+              //   toolDesc: Constants.lanScannerDesc,
+              //   onPressed: () {
+              //     Navigator.pushNamed(context, '/tools/lan');
+              //   },
+              // ),
               ToolCard(
                 toolName: 'Wake On LAN',
                 toolDesc: Constants.wolDesc,
                 onPressed: () {
-                  // TODO: Implement onTap()
+                  Navigator.pushNamed(context, '/tools/wol');
                 },
               ),
               ToolCard(

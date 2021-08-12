@@ -1,0 +1,4 @@
+enum ScannerMode {
+  quick,
+  precise,
+}

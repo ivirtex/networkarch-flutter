@@ -31,6 +31,11 @@ abstract class Constants {
 
   static CupertinoThemeData cupertinoThemeData = const CupertinoThemeData();
 
+  // Colors
+  static Color lightBgColor = Colors.grey[200]!;
+
+  static Color darkBgColor = Colors.grey[800]!;
+
   // Description styles
   static TextStyle descStyleLight = TextStyle(color: Colors.grey[600]);
 

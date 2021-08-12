@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:network_arch/constants.dart';
 
 class DataCard extends StatelessWidget {
   const DataCard({
@@ -20,7 +21,7 @@ class DataCard extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color: isDarkModeOn ? Colors.grey[800] : Colors.grey[200],
+          color: isDarkModeOn ? Constants.darkBgColor : Constants.lightBgColor,
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),

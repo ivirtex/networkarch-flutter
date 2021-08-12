@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 // Package imports:
 import 'package:lan_scanner/lan_scanner.dart';
+import 'package:network_arch/services/utils/scanner_mode.dart';
 
 class LanScannerModel extends ChangeNotifier {
   final LanScanner _scanner = LanScanner();
@@ -13,7 +14,9 @@ class LanScannerModel extends ChangeNotifier {
   final Duration timeout = const Duration(seconds: 5);
 
   bool isScannerViewActive = false;
-  Set<DeviceAddress> hosts = <DeviceAddress>{};
+  Set<DeviceModel> hosts = <DeviceModel>{};
+  ScannerMode mode = ScannerMode.quick;
+  double scanProgress = 0.0;
 
   void configure({required String? ip}) {
     _ip = ip;
@@ -27,16 +30,27 @@ class LanScannerModel extends ChangeNotifier {
     return _scanner.isScanInProgress;
   }
 
-  Stream<DeviceAddress> getStream() {
+  Stream<DeviceModel> getStream() {
     if (_ip != null && subnet != null) {
-      final stream = _scanner.preciseScan(
-          subnet: subnet,
-          timeout: timeout,
-          progressCallback: (progress) {
-            // print(progress);
+      switch (mode) {
+        case ScannerMode.quick:
+          final stream = _scanner.quickScan(
+            subnet: subnet,
+            timeout: timeout,
+          );
+
+          return stream;
+        case ScannerMode.precise:
+          final stream = _scanner.preciseScan(subnet,
+              progressCallback: (ProgressModel progress) {
+            print('Scan progress: ${progress.percent}');
+            print('Current IP: ${progress.currIP}\n');
+
+            scanProgress = progress.percent;
           });
 
-      return stream;
+          return stream;
+      }
     } else {
       throw "Can't discover the network without connection with Wi-Fi";
     }
