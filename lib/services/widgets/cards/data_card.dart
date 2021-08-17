@@ -1,14 +1,16 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:network_arch/constants.dart';
 
 class DataCard extends StatelessWidget {
   const DataCard({
-    this.cardChild,
+    this.child,
     this.onPress,
   });
 
-  final Widget? cardChild;
+  final Widget? child;
   final Function? onPress;
 
   @override
@@ -25,7 +27,7 @@ class DataCard extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: cardChild,
+          child: child,
         ),
       ),
     );

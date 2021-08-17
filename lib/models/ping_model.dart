@@ -8,19 +8,19 @@ import 'package:flutter_icmp_ping/flutter_icmp_ping.dart';
 import 'package:network_arch/constants.dart';
 
 class PingModel extends ChangeNotifier {
-  Ping _ping = Ping('1.1.1.1');
+  late Ping _ping;
 
   bool isPingingStarted = false;
   List<PingData?> pingData = [];
-  String _host = '';
+  String? _host;
 
-  void setHost(String host) {
-    _ping = Ping(host);
+  void setHost(String? host) {
+    _ping = Ping(host ?? '');
     _host = host;
     notifyListeners();
   }
 
-  String get getHost => _host;
+  String? get getHost => _host;
 
   void clearData() {
     pingData.clear();

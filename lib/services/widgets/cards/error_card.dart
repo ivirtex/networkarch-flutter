@@ -19,7 +19,7 @@ class ErrorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DataCard(
-      cardChild: Padding(
+      child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
           children: [

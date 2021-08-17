@@ -52,7 +52,7 @@ class PermissionsView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           DataCard(
-            cardChild: Consumer<PermissionsModel>(
+            child: Consumer<PermissionsModel>(
               builder: (_, PermissionsModel model, __) {
                 return Row(
                   children: [

@@ -12,7 +12,7 @@ class LoadingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DataCard(
-      cardChild: Padding(
+      child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 37),
         child: Column(
           children: const [

@@ -35,6 +35,7 @@ abstract class Builders {
     required BuildContext context,
     required String title,
     required ButtonActions action,
+    required bool isActive,
     VoidCallback? onPressed,
   }) {
     return AppBar(
@@ -47,20 +48,20 @@ abstract class Builders {
         if (action == ButtonActions.start)
           IconButton(
             splashRadius: 25.0,
-            icon: const FaIcon(
+            icon: FaIcon(
               FontAwesomeIcons.play,
-              color: Colors.green,
+              color: isActive ? Colors.green : Colors.grey,
             ),
-            onPressed: onPressed,
+            onPressed: isActive ? onPressed : null,
           )
         else
           IconButton(
             splashRadius: 25.0,
-            icon: const FaIcon(
+            icon: FaIcon(
               FontAwesomeIcons.stopCircle,
-              color: Colors.red,
+              color: isActive ? Colors.red : Colors.grey,
             ),
-            onPressed: onPressed,
+            onPressed: isActive ? onPressed : null,
           )
       ],
     );

@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:lan_scanner/lan_scanner.dart';
-import 'package:network_arch/services/utils/scanner_mode.dart';
 import 'package:provider/provider.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 // Project imports:
 import 'package:network_arch/models/lan_scanner_model.dart';
+import 'package:network_arch/services/utils/scanner_mode.dart';
 import 'package:network_arch/services/widgets/builders.dart';
 import 'package:network_arch/services/widgets/shared_widgets.dart';
 
@@ -30,6 +30,7 @@ class _LanScannerViewState extends State<LanScannerView> {
               context: context,
               title: 'LAN Scanner',
               action: ButtonActions.stop,
+              isActive: true,
               onPressed: () {
                 setState(() {
                   lanModel.isScannerViewActive = false;
@@ -40,6 +41,7 @@ class _LanScannerViewState extends State<LanScannerView> {
               context: context,
               title: 'LAN Scanner',
               action: ButtonActions.start,
+              isActive: true,
               onPressed: () {
                 lanModel.isScannerViewActive = true;
 

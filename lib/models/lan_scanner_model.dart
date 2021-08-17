@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 
 // Package imports:
 import 'package:lan_scanner/lan_scanner.dart';
+
+// Project imports:
 import 'package:network_arch/services/utils/scanner_mode.dart';
 
 class LanScannerModel extends ChangeNotifier {

@@ -24,8 +24,9 @@ class _PingViewState extends State<PingView> {
 
   @override
   void dispose() {
-    targetHostController.dispose();
     super.dispose();
+
+    targetHostController.dispose();
   }
 
   @override
@@ -38,6 +39,7 @@ class _PingViewState extends State<PingView> {
               context: context,
               title: 'Ping',
               action: ButtonActions.stop,
+              isActive: true,
               onPressed: () {
                 setState(() {
                   pingModel.stopStream();
@@ -49,10 +51,15 @@ class _PingViewState extends State<PingView> {
               context: context,
               title: 'Ping',
               action: ButtonActions.start,
+              isActive: targetHostController.text.isNotEmpty,
               onPressed: () {
                 setState(() {
                   pingModel.clearData();
-                  pingModel.setHost(targetHostController.text);
+                  pingModel.setHost(
+                    targetHostController.text.isEmpty
+                        ? null
+                        : targetHostController.text,
+                  );
                   pingModel.isPingingStarted = true;
                 });
 
@@ -76,8 +83,11 @@ class _PingViewState extends State<PingView> {
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0)),
-                        labelText: 'IP address',
+                        labelText: 'IP address (e.g. 1.1.1.1)',
                       ),
+                      onChanged: (_) {
+                        setState(() {});
+                      },
                     ),
                   ),
                 ],
@@ -134,7 +144,7 @@ class _PingViewState extends State<PingView> {
                   color: CupertinoColors.systemRed,
                   text: 'Error',
                 ),
-                title: Text(model.getHost),
+                title: Text(model.getHost ?? 'N/A'),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

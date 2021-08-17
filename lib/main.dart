@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
-import 'package:network_arch/screens/wake_on_lan_view.dart';
+import 'package:network_arch/models/wake_on_lan_model.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -12,6 +12,7 @@ import 'package:network_arch/models/lan_scanner_model.dart';
 import 'package:network_arch/models/permissions_model.dart';
 import 'package:network_arch/screens/lan_scanner_view.dart';
 import 'package:network_arch/screens/permissions_view.dart';
+import 'package:network_arch/screens/wake_on_lan_view.dart';
 import 'package:network_arch/services/widgets/platform_widget.dart';
 import 'constants.dart';
 import 'models/connectivity_model.dart';
@@ -27,6 +28,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => PingModel()),
         ChangeNotifierProvider(create: (context) => LanScannerModel()),
+        ChangeNotifierProvider(create: (context) => WakeOnLanModel()),
         ChangeNotifierProvider(create: (context) => PermissionsModel()),
         Provider(create: (context) => ConnectivityModel()),
       ],
@@ -50,6 +52,7 @@ class MyApp extends StatelessWidget {
           '/permissions': (context) => PermissionsView(),
           '/tools/ping': (context) => const PingView(),
           '/tools/lan': (context) => LanScannerView(),
+          '/tools/wol': (context) => WakeOnLanView(),
         },
       );
     }, iosBuilder: (context) {
@@ -62,7 +65,7 @@ class MyApp extends StatelessWidget {
           '/permissions': (context) => PermissionsView(),
           '/tools/ping': (context) => const PingView(),
           '/tools/lan': (context) => LanScannerView(),
-          '/tools/wol': (context) => const WakeOnLanView(),
+          '/tools/wol': (context) => WakeOnLanView(),
         },
       );
     });
