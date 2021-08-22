@@ -139,4 +139,25 @@ abstract class Constants {
       ],
     ),
   );
+
+  // Wake On Lan snackbars
+  static const String _wolValidationError =
+      '''The IP address or MAC address is not valid, please check it and try again.''';
+
+  static SnackBar wolValidationFault = SnackBar(
+    content: Row(
+      children: const [
+        FaIcon(
+          FontAwesomeIcons.timesCircle,
+          color: Colors.red,
+        ),
+        SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            _wolValidationError,
+          ),
+        ),
+      ],
+    ),
+  );
 }

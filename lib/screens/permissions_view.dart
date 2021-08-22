@@ -48,74 +48,77 @@ class PermissionsView extends StatelessWidget {
             : Colors.grey,
         child: const FaIcon(FontAwesomeIcons.arrowRight),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          DataCard(
-            child: Consumer<PermissionsModel>(
-              builder: (_, PermissionsModel model, __) {
-                return Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: model.locationStatusIcon,
-                    ),
-                    const SizedBox(width: 10),
-                    Flexible(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Location',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.0,
-                            ),
-                          ),
-                          Text(
-                            Constants.locationPermissionDesc,
-                            style: isDarkModeOn
-                                ? Constants.descStyleDark
-                                : Constants.descStyleLight,
-                          )
-                        ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            DataCard(
+              child: Consumer<PermissionsModel>(
+                builder: (_, PermissionsModel model, __) {
+                  return Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: model.locationStatusIcon,
                       ),
-                    ),
-                    TextButton(
-                        onPressed: () async {
-                          final PermissionStatus status =
-                              await Permission.locationWhenInUse.request();
+                      const SizedBox(width: 10),
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Location',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0,
+                              ),
+                            ),
+                            Text(
+                              Constants.locationPermissionDesc,
+                              style: isDarkModeOn
+                                  ? Constants.descStyleDark
+                                  : Constants.descStyleLight,
+                            )
+                          ],
+                        ),
+                      ),
+                      TextButton(
+                          onPressed: () async {
+                            final PermissionStatus status =
+                                await Permission.locationWhenInUse.request();
 
-                          model.setLocationStatusIcon(status);
+                            model.setLocationStatusIcon(status);
 
-                          switch (status) {
-                            case PermissionStatus.granted:
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  Constants.permissionGrantedSnackBar);
-                              break;
-                            case PermissionStatus.denied:
-                            case PermissionStatus.permanentlyDenied:
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  Constants.permissionDeniedSnackBar);
-                              break;
-                            default:
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  Constants.permissionDefaultSnackBar);
-                              break;
-                          }
+                            switch (status) {
+                              case PermissionStatus.granted:
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    Constants.permissionGrantedSnackBar);
+                                break;
+                              case PermissionStatus.denied:
+                              case PermissionStatus.permanentlyDenied:
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    Constants.permissionDeniedSnackBar);
+                                break;
+                              default:
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    Constants.permissionDefaultSnackBar);
+                                break;
+                            }
 
-                          final SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          prefs.setBool(
-                              'hasLocationPermissionsBeenRequested', true);
-                        },
-                        child: const Text('Request'))
-                  ],
-                );
-              },
+                            final SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            prefs.setBool(
+                                'hasLocationPermissionsBeenRequested', true);
+                          },
+                          child: const Text('Request'))
+                    ],
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

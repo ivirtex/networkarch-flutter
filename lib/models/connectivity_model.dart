@@ -29,12 +29,13 @@ class ConnectivityModel {
     );
   }
 
-  Stream<SynchronousWifiInfo> _wifiInfoStream() async* {
-    while (true) {
-      await Future.delayed(const Duration(seconds: 1));
+  Stream<SynchronousWifiInfo> _wifiInfoStream() {
+    late StreamController<SynchronousWifiInfo> controller;
+    Timer? timer;
 
-      SynchronousWifiInfo wifiInfo;
+    SynchronousWifiInfo wifiInfo;
 
+    Future<void> fetchData(_) async {
       try {
         wifiInfo = await getDataForIOS();
       } on MissingPluginException catch (_) {
@@ -47,16 +48,33 @@ class ConnectivityModel {
         wifiInfo = await getDataForAndroid();
       }
 
-      // print("value of wifiInfo: $wifiInfo");
-
-      yield wifiInfo;
+      controller.add(wifiInfo);
     }
+
+    void startTimer() {
+      timer = Timer.periodic(const Duration(seconds: 1), fetchData);
+    }
+
+    void stopTimer() {
+      timer?.cancel();
+      timer = null;
+    }
+
+    controller = StreamController<SynchronousWifiInfo>(
+      onCancel: stopTimer,
+      onListen: startTimer,
+      onPause: stopTimer,
+      onResume: startTimer,
+    );
+
+    return controller.stream;
   }
 
-  Stream<SynchronousCarrierInfo> _cellularInfoStream() async* {
-    while (true) {
-      await Future.delayed(const Duration(seconds: 1));
+  Stream<SynchronousCarrierInfo> _cellularInfoStream() {
+    late StreamController<SynchronousCarrierInfo> controller;
+    Timer? timer;
 
+    Future<void> fetchData(_) async {
       SynchronousCarrierInfo carrierInfo;
 
       try {
@@ -69,16 +87,32 @@ class ConnectivityModel {
           networkGeneration: await CarrierInfo.networkGeneration,
           radioType: await CarrierInfo.radioType,
         );
+
+        controller.add(carrierInfo);
       } on PlatformException catch (_) {
         // print("exception catched: " + err.toString());
 
-        throw NoSimCardException();
+        controller.addError(NoSimCardException());
       }
-
-      // print('value of carrierInfo: $carrierInfo');
-
-      yield carrierInfo;
     }
+
+    void startTimer() {
+      timer = Timer.periodic(const Duration(seconds: 1), fetchData);
+    }
+
+    void stopTimer() {
+      timer?.cancel();
+      timer = null;
+    }
+
+    controller = StreamController<SynchronousCarrierInfo>(
+      onCancel: stopTimer,
+      onListen: startTimer,
+      onPause: stopTimer,
+      onResume: startTimer,
+    );
+
+    return controller.stream;
   }
 
   Stream<SynchronousWifiInfo> get getWifiInfoStream {

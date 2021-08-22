@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:network_arch/services/utils/network_type.dart';
+import 'package:network_arch/services/utils/enums.dart';
 import 'package:network_arch/services/widgets/builders.dart';
 import 'package:network_arch/services/widgets/cards/data_card.dart';
 import 'package:network_arch/services/widgets/data_line.dart';

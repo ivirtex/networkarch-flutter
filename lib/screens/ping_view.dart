@@ -21,12 +21,33 @@ class PingView extends StatefulWidget {
 
 class _PingViewState extends State<PingView> {
   final targetHostController = TextEditingController();
+  late final PingModel provider;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    provider = context.read<PingModel>();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+
+    final String routedAddr =
+        // ignore: cast_nullable_to_non_nullable
+        ModalRoute.of(context)!.settings.arguments as String;
+    targetHostController.text = routedAddr;
+  }
 
   @override
   void dispose() {
     super.dispose();
 
     targetHostController.dispose();
+    provider.stopStream();
   }
 
   @override
@@ -124,72 +145,75 @@ class _PingViewState extends State<PingView> {
     );
   }
 
-  Padding buildPingListView(PingModel model) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      child: ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: model.pingData.length,
-        itemBuilder: (context, index) {
-          final PingData currData = model.pingData[index]!;
+  ListView buildPingListView(PingModel model) {
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: model.pingData.length,
+      itemBuilder: (context, index) {
+        final PingData currData = model.pingData[index]!;
 
-          if (currData.error != null) {
-            return Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+        if (currData.error != null) {
+          return Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            child: ListTile(
+              leading: const StatusCard(
+                color: CupertinoColors.systemRed,
+                text: 'Error',
               ),
-              child: ListTile(
-                leading: const StatusCard(
-                  color: CupertinoColors.systemRed,
-                  text: 'Error',
-                ),
-                title: Text(model.getHost ?? 'N/A'),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Seq. pos.: ${index + 1}'),
-                    const Text('TTL: N/A'),
-                  ],
-                ),
-                trailing: SizedBox(
-                  width: 110,
-                  child: Text(
-                    model.getErrorDesc(currData.error!),
-                  ),
+              title: Text(model.getHost ?? 'N/A'),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Seq. pos.: ${index + 1}'),
+                  const Text('TTL: N/A'),
+                ],
+              ),
+              trailing: SizedBox(
+                width: 110,
+                child: Text(
+                  model.getErrorDesc(currData.error!),
                 ),
               ),
-            );
-          }
+            ),
+          );
+        }
 
-          if (currData.response != null) {
-            return Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+        if (currData.response != null) {
+          return Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            child: ListTile(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 5.0),
+              leading: const StatusCard(
+                color: Colors.green,
+                text: 'Online',
               ),
-              child: ListTile(
-                leading: const StatusCard(
-                  color: CupertinoColors.systemGreen,
-                  text: 'Online',
-                ),
-                title: Text(currData.response!.ip!),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Seq. pos.: ${currData.response!.seq.toString()} '),
-                    Text('TTL: ${currData.response!.ttl.toString()}')
-                  ],
-                ),
-                trailing: Text(
-                  '${currData.response!.time!.inMilliseconds.toString()} ms',
+              title: Text(
+                currData.response!.ip!,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            );
-          } else {
-            return Container();
-          }
-        },
-      ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Seq. pos.: ${currData.response!.seq.toString()} '),
+                  Text('TTL: ${currData.response!.ttl.toString()}')
+                ],
+              ),
+              trailing: Text(
+                '${currData.response!.time!.inMilliseconds.toString()} ms',
+              ),
+            ),
+          );
+        } else {
+          return Container();
+        }
+      },
     );
   }
 }

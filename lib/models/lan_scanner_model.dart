@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:lan_scanner/lan_scanner.dart';
 
 // Project imports:
-import 'package:network_arch/services/utils/scanner_mode.dart';
+import 'package:network_arch/services/utils/enums.dart';
 
 class LanScannerModel extends ChangeNotifier {
   final LanScanner _scanner = LanScanner();

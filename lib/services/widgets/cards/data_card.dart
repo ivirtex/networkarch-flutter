@@ -20,7 +20,7 @@ class DataCard extends StatelessWidget {
     return GestureDetector(
       onTap: onPress as void Function()?,
       child: Container(
-        margin: const EdgeInsets.all(10),
+        margin: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: isDarkModeOn ? Constants.darkBgColor : Constants.lightBgColor,

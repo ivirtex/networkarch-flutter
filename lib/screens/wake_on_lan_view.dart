@@ -1,9 +1,15 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:network_arch/constants.dart';
+import 'package:network_arch/services/utils/enums.dart';
+
+// Package imports:
+import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:network_arch/models/wake_on_lan_model.dart';
 import 'package:network_arch/services/widgets/shared_widgets.dart';
-import 'package:provider/provider.dart';
 
 class WakeOnLanView extends StatefulWidget {
   const WakeOnLanView({Key? key}) : super(key: key);
@@ -17,7 +23,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
 
   final macTextFieldController = TextEditingController();
 
-  bool areTextFieldsValid() {
+  bool areTextFieldsNotEmpty() {
     return ipv4TextFieldController.text.isNotEmpty &&
         macTextFieldController.text.isNotEmpty;
   }
@@ -31,87 +37,107 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
         textTheme: Theme.of(context).textTheme,
         actions: [
           TextButton(
-            onPressed: !areTextFieldsValid()
+            onPressed: !areTextFieldsNotEmpty()
                 ? null
-                : () {
-                    context
-                        .read<WakeOnLanModel>()
-                        .wolResponses
-                        .add(WolResponse('ipv4', ''));
+                : () async {
+                    final model = context.read<WakeOnLanModel>();
 
-                    print('added');
+                    model.ipv4 = ipv4TextFieldController.text;
+                    model.mac = macTextFieldController.text;
+
+                    if (model.areTextFieldsValid()) {
+                      await model.sendPacket();
+                    } else {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(Constants.wolValidationFault);
+                    }
                   },
             child: Text(
               'Send',
               style: TextStyle(
-                color: areTextFieldsValid() ? Colors.green : Colors.grey,
+                color: areTextFieldsNotEmpty() ? Colors.green : Colors.grey,
                 fontSize: 16,
               ),
             ),
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            TextField(
-              autocorrect: false,
-              controller: ipv4TextFieldController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
-                labelText: 'IPv4 address',
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              TextField(
+                autocorrect: false,
+                controller: ipv4TextFieldController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                  labelText: 'IPv4 address',
+                ),
+                onChanged: (_) {
+                  setState(() {});
+                },
               ),
-              onChanged: (_) {
-                setState(() {});
-              },
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              autocorrect: false,
-              controller: macTextFieldController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
-                labelText: 'MAC address',
+              const SizedBox(height: 10),
+              TextField(
+                autocorrect: false,
+                controller: macTextFieldController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                  labelText: 'MAC address',
+                ),
+                onChanged: (_) {
+                  setState(() {});
+                },
               ),
-              onChanged: (_) {
-                setState(() {});
-              },
-            ),
-            StreamBuilder(
-              initialData: null,
-              stream: context.read<WakeOnLanModel>().getStream(),
-              builder: (context, AsyncSnapshot<WolResponse?> snapshot) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: context.read<WakeOnLanModel>().wolResponses.length,
-                  itemBuilder: (context, index) {
-                    final WolResponse response =
-                        context.read<WakeOnLanModel>().wolResponses[index];
-
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: DataCard(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              StatusCard(text: 'Success', color: Colors.green),
-                              Text(response.ipv4),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
-            )
-          ],
+              const SizedBox(height: 10),
+              buildResponsesView(context),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  ListView buildResponsesView(BuildContext context) {
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: context.watch<WakeOnLanModel>().wolResponses.length,
+      itemBuilder: (context, index) {
+        final WolResponse response =
+            context.read<WakeOnLanModel>().wolResponses[index];
+
+        return Card(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 5.0),
+            leading: response.status == WolStatus.success
+                ? const StatusCard(text: 'Success', color: Colors.green)
+                : const StatusCard(text: 'Fail', color: Colors.red),
+            title: Text('IP: ${response.ipv4}'),
+            subtitle: Text('MAC: ${response.mac}'),
+            trailing: TextButton(
+              onPressed: response.status == WolStatus.success
+                  ? () {
+                      // TODO: Pass address to the ping tool.
+
+                      Navigator.popAndPushNamed(
+                        context,
+                        '/tools/ping',
+                        arguments: response.ipv4,
+                      );
+                    }
+                  : null,
+              child: const Text('Ping address'),
+            ),
+          ),
+        );
+      },
     );
   }
 }
