@@ -20,12 +20,20 @@ class WakeOnLanView extends StatefulWidget {
 
 class _WakeOnLanViewState extends State<WakeOnLanView> {
   final ipv4TextFieldController = TextEditingController();
-
   final macTextFieldController = TextEditingController();
 
   bool areTextFieldsNotEmpty() {
     return ipv4TextFieldController.text.isNotEmpty &&
         macTextFieldController.text.isNotEmpty;
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+    ipv4TextFieldController.dispose();
+    macTextFieldController.dispose();
   }
 
   @override

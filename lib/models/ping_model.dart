@@ -17,13 +17,19 @@ class PingModel extends ChangeNotifier {
   void setHost(String? host) {
     _ping = Ping(host ?? '');
     _host = host;
+
     notifyListeners();
   }
 
   String? get getHost => _host;
 
+  PingData getData({required int atIndex}) {
+    return pingData.elementAt(atIndex)!;
+  }
+
   void clearData() {
     pingData.clear();
+
     notifyListeners();
   }
 

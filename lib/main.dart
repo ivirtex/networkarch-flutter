@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
           '/permissions': (context) => PermissionsView(),
           '/tools/ping': (context) => const PingView(),
           '/tools/lan': (context) => LanScannerView(),
-          '/tools/wol': (context) => WakeOnLanView(),
+          '/tools/wol': (context) => const WakeOnLanView(),
         },
       );
     }, iosBuilder: (context) {
@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
           '/permissions': (context) => PermissionsView(),
           '/tools/ping': (context) => const PingView(),
           '/tools/lan': (context) => LanScannerView(),
-          '/tools/wol': (context) => WakeOnLanView(),
+          '/tools/wol': (context) => const WakeOnLanView(),
         },
       );
     });
