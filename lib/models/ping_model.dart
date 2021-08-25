@@ -6,12 +6,13 @@ import 'package:flutter_icmp_ping/flutter_icmp_ping.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
+import 'package:network_arch/models/list_model.dart';
 
 class PingModel extends ChangeNotifier {
   late Ping _ping;
 
   bool isPingingStarted = false;
-  List<PingData?> pingData = [];
+  late AnimatedListModel<PingData?> pingData;
   String? _host;
 
   void setHost(String? host) {
@@ -24,7 +25,7 @@ class PingModel extends ChangeNotifier {
   String? get getHost => _host;
 
   PingData getData({required int atIndex}) {
-    return pingData.elementAt(atIndex)!;
+    return pingData[atIndex]!;
   }
 
   void clearData() {

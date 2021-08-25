@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_icmp_ping/flutter_icmp_ping.dart';
+import 'package:network_arch/models/list_model.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -27,18 +28,13 @@ class _PingViewState extends State<PingView>
   final targetHostController = TextEditingController();
   final _listKey = GlobalKey<AnimatedListState>();
 
-  final Animatable<Offset> _slideTween = Tween<Offset>(
-    begin: const Offset(0, 1),
-    end: const Offset(0, 0),
-  ).chain(CurveTween(curve: Curves.easeInOut));
-
-  final Animatable<double> _fadeTween = Tween<double>(begin: 0, end: 1);
-
   @override
   void initState() {
     // TODO: implement initStated
     super.initState();
 
+    context.read<PingModel>().pingData =
+        AnimatedListModel<PingData>(_listKey, _buildItem, []);
     provider = context.read<PingModel>();
   }
 
@@ -69,9 +65,9 @@ class _PingViewState extends State<PingView>
 
     if (item!.error != null) {
       return FadeTransition(
-        opacity: animation.drive(_fadeTween),
+        opacity: animation.drive(pingModel.pingData.fadeTween),
         child: SlideTransition(
-          position: animation.drive(_slideTween),
+          position: animation.drive(pingModel.pingData.slideTween),
           child: Card(
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -103,15 +99,15 @@ class _PingViewState extends State<PingView>
 
     if (item.response != null) {
       return FadeTransition(
-        opacity: animation.drive(_fadeTween),
+        opacity: animation.drive(pingModel.pingData.fadeTween),
         child: SlideTransition(
-          position: animation.drive(_slideTween),
+          position: animation.drive(pingModel.pingData.slideTween),
           child: Card(
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             child: ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 5.0),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 10.0),
               leading: const StatusCard(
                 color: Colors.green,
                 text: 'Online',
@@ -172,43 +168,6 @@ class _PingViewState extends State<PingView>
     hideKeyboard(context);
   }
 
-  Future<void> _removeLastElement(BuildContext context) async {
-    final pingData = context.read<PingModel>().pingData;
-    final int index = pingData.length - 1;
-
-    _listKey.currentState!.removeItem(
-        index,
-        (context, animation) => _buildItem(
-              context,
-              animation,
-              pingData.last,
-            ));
-
-    // Default insert/remove animation duration is 300 ms,
-    // so we need to wait for the animation to complete
-    // before we can remove object from the list.
-    await Future.delayed(const Duration(milliseconds: 350));
-
-    setState(() {
-      context.read<PingModel>().pingData.removeAt(index);
-    });
-  }
-
-  Future<void> _removeAllElements(BuildContext context) async {
-    final dataList = context.read<PingModel>().pingData;
-
-    for (int i = dataList.length - 1; i >= 0; --i) {
-      final PingData? removedItem = dataList.removeAt(i);
-
-      _listKey.currentState!.removeItem(i,
-          (context, animation) => _buildItem(context, animation, removedItem));
-
-      await Future.delayed(const Duration(milliseconds: 100));
-    }
-
-    dataList.clear();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -229,11 +188,11 @@ class _PingViewState extends State<PingView>
             ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              Row(
                 children: [
                   Expanded(
                     child: TextField(
@@ -254,26 +213,30 @@ class _PingViewState extends State<PingView>
                   TextButton(
                     onPressed: context.watch<PingModel>().isPingingStarted
                         ? null
-                        : () => _removeAllElements(context),
+                        : () => context
+                            .watch<PingModel>()
+                            .pingData
+                            .removeAllElements(context),
                     child: const Text('Clear list'),
                   ),
                 ],
               ),
-            ),
-            AnimatedList(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              key: _listKey,
-              initialItemCount: context.read<PingModel>().pingData.length,
-              itemBuilder: (context, index, animation) {
-                return _buildItem(
-                  context,
-                  animation,
-                  context.read<PingModel>().pingData.elementAt(index),
-                );
-              },
-            )
-          ],
+              const SizedBox(height: 10),
+              AnimatedList(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                key: _listKey,
+                initialItemCount: context.read<PingModel>().pingData.length,
+                itemBuilder: (context, index, animation) {
+                  return _buildItem(
+                    context,
+                    animation,
+                    context.read<PingModel>().pingData[index],
+                  );
+                },
+              )
+            ],
+          ),
         ),
       ),
     );
