@@ -1,3 +1,4 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 typedef ItemBuilder<T> = Widget Function(
@@ -7,11 +8,11 @@ typedef ItemBuilder<T> = Widget Function(
 );
 
 class AnimatedListModel<T> {
-  AnimatedListModel(
-    this.listKey,
-    this.itemBuilder,
-    this._items,
-  );
+  AnimatedListModel({
+    required this.listKey,
+    required this.itemBuilder,
+    Iterable<T>? initialItems,
+  }) : _items = List<T>.from(initialItems ?? <T>[]);
 
   final GlobalKey<AnimatedListState> listKey;
   final ItemBuilder<T> itemBuilder;
@@ -37,7 +38,7 @@ class AnimatedListModel<T> {
   int indexOf(T item) => _items.indexOf(item);
 
   void insert(int index, T item) {
-    _items.insert(index, item);
+    _items.add(item);
     _animatedListState!.insertItem(index);
   }
 
@@ -68,7 +69,7 @@ class AnimatedListModel<T> {
   }
 
   Future<void> removeAllElements(BuildContext context) async {
-    for (int i = _items.length - 1; i >= 0; --i) {
+    for (int i = length - 1; i >= 0; --i) {
       final T removedItem = _items.removeAt(i)!;
 
       _animatedListState!.removeItem(i,

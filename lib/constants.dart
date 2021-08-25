@@ -60,7 +60,7 @@ abstract class Constants {
   // Error descriptions
   static const String defaultError = "Couldn't read the data";
 
-  static const String simError = "Couldn't detect the SIM card";
+  static const String simError = 'No SIM card';
 
   static const String noReplyError = 'No reply received from the host';
 

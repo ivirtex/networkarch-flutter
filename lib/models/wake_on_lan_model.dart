@@ -8,13 +8,14 @@ import 'package:flutter/foundation.dart';
 import 'package:wake_on_lan/wake_on_lan.dart';
 
 // Project imports:
+import 'package:network_arch/models/list_model.dart';
 import 'package:network_arch/services/utils/enums.dart';
 
 class WakeOnLanModel extends ChangeNotifier {
   late String ipv4;
   late String mac;
 
-  List<WolResponse> wolResponses = [];
+  late AnimatedListModel<WolResponse> wolResponses;
 
   bool areTextFieldsValid() {
     if (MACAddress.validate(mac) && IPv4Address.validate(ipv4)) {
@@ -33,7 +34,10 @@ class WakeOnLanModel extends ChangeNotifier {
       await wol.wake().then((_) {
         print('sent');
 
-        wolResponses.add(WolResponse(ipv4, mac, WolStatus.success));
+        wolResponses.insert(
+          wolResponses.length,
+          WolResponse(ipv4, mac, WolStatus.success),
+        );
       });
     }
 

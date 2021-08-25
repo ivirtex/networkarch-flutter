@@ -1,14 +1,15 @@
 // Flutter imports:
 
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_icmp_ping/flutter_icmp_ping.dart';
-import 'package:network_arch/models/list_model.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'package:network_arch/models/list_model.dart';
 import 'package:network_arch/models/ping_model.dart';
 import 'package:network_arch/services/utils/keyboard_hider.dart';
 import 'package:network_arch/services/widgets/builders.dart';
@@ -33,8 +34,10 @@ class _PingViewState extends State<PingView>
     // TODO: implement initStated
     super.initState();
 
-    context.read<PingModel>().pingData =
-        AnimatedListModel<PingData>(_listKey, _buildItem, []);
+    context.read<PingModel>().pingData = AnimatedListModel<PingData>(
+      listKey: _listKey,
+      itemBuilder: _buildItem,
+    );
     provider = context.read<PingModel>();
   }
 
@@ -146,11 +149,12 @@ class _PingViewState extends State<PingView>
     });
   }
 
-  void _handleStartButtonPressed(BuildContext context) {
+  Future<void> _handleStartButtonPressed(BuildContext context) async {
     final PingModel pingModel = context.read<PingModel>();
 
+    await pingModel.pingData.removeAllElements(context);
+
     setState(() {
-      pingModel.clearData();
       pingModel.setHost(
         targetHostController.text.isEmpty ? null : targetHostController.text,
       );
@@ -160,8 +164,10 @@ class _PingViewState extends State<PingView>
     final stream = pingModel.getStream();
 
     stream.listen((PingData event) {
-      pingModel.pingData.add(event);
-      _listKey.currentState!.insertItem(pingModel.pingData.length - 1);
+      // final int length =
+      //     pingModel.pingData.length == 0 ? 0 : pingModel.pingData.length - 1;
+
+      pingModel.pingData.insert(pingModel.pingData.length, event);
     });
 
     targetHostController.clear();
@@ -214,7 +220,7 @@ class _PingViewState extends State<PingView>
                     onPressed: context.watch<PingModel>().isPingingStarted
                         ? null
                         : () => context
-                            .watch<PingModel>()
+                            .read<PingModel>()
                             .pingData
                             .removeAllElements(context),
                     child: const Text('Clear list'),

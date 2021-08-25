@@ -1,14 +1,16 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/services/utils/enums.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'package:network_arch/constants.dart';
+import 'package:network_arch/models/lan_scanner_model.dart';
+import 'package:network_arch/models/list_model.dart';
 import 'package:network_arch/models/wake_on_lan_model.dart';
+import 'package:network_arch/services/utils/enums.dart';
 import 'package:network_arch/services/widgets/shared_widgets.dart';
 
 class WakeOnLanView extends StatefulWidget {
@@ -22,9 +24,22 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
   final ipv4TextFieldController = TextEditingController();
   final macTextFieldController = TextEditingController();
 
+  final _listKey = GlobalKey<AnimatedListState>();
+
   bool areTextFieldsNotEmpty() {
     return ipv4TextFieldController.text.isNotEmpty &&
         macTextFieldController.text.isNotEmpty;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    context.read<WakeOnLanModel>().wolResponses = AnimatedListModel(
+      listKey: _listKey,
+      itemBuilder: _buildItem,
+    );
   }
 
   @override
@@ -34,6 +49,45 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
 
     ipv4TextFieldController.dispose();
     macTextFieldController.dispose();
+  }
+
+  Widget _buildItem(
+      BuildContext context, Animation<double> animation, WolResponse? item) {
+    final model = context.read<WakeOnLanModel>();
+
+    return FadeTransition(
+      opacity: animation.drive(model.wolResponses.fadeTween),
+      child: SlideTransition(
+        position: animation.drive(model.wolResponses.slideTween),
+        child: Card(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 5.0),
+            leading: item!.status == WolStatus.success
+                ? const StatusCard(text: 'Success', color: Colors.green)
+                : const StatusCard(text: 'Fail', color: Colors.red),
+            title: Text('IP: ${item.ipv4}'),
+            subtitle: Text('MAC: ${item.mac}'),
+            trailing: TextButton(
+              onPressed: item.status == WolStatus.success
+                  ? () {
+                      // TODO: Pass address to the ping tool.
+
+                      Navigator.popAndPushNamed(
+                        context,
+                        '/tools/ping',
+                        arguments: item.ipv4,
+                      );
+                    }
+                  : null,
+              child: const Text('Ping address'),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -94,58 +148,27 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0)),
-                  labelText: 'MAC address',
+                  labelText: 'MAC address [XX:XX:XX:XX:XX:XX]',
                 ),
                 onChanged: (_) {
                   setState(() {});
                 },
               ),
               const SizedBox(height: 10),
-              buildResponsesView(context),
+              AnimatedList(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                key: _listKey,
+                initialItemCount: context.read<LanScannerModel>().hosts.length,
+                itemBuilder: (context, index, animation) {
+                  return _buildItem(context, animation,
+                      context.read<WakeOnLanModel>().wolResponses[index]);
+                },
+              )
             ],
           ),
         ),
       ),
-    );
-  }
-
-  ListView buildResponsesView(BuildContext context) {
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: context.watch<WakeOnLanModel>().wolResponses.length,
-      itemBuilder: (context, index) {
-        final WolResponse response =
-            context.read<WakeOnLanModel>().wolResponses[index];
-
-        return Card(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 5.0),
-            leading: response.status == WolStatus.success
-                ? const StatusCard(text: 'Success', color: Colors.green)
-                : const StatusCard(text: 'Fail', color: Colors.red),
-            title: Text('IP: ${response.ipv4}'),
-            subtitle: Text('MAC: ${response.mac}'),
-            trailing: TextButton(
-              onPressed: response.status == WolStatus.success
-                  ? () {
-                      // TODO: Pass address to the ping tool.
-
-                      Navigator.popAndPushNamed(
-                        context,
-                        '/tools/ping',
-                        arguments: response.ipv4,
-                      );
-                    }
-                  : null,
-              child: const Text('Ping address'),
-            ),
-          ),
-        );
-      },
     );
   }
 }
