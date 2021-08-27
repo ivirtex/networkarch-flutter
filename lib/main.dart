@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
+import 'package:network_arch/screens/cellular_detail_view.dart';
+import 'package:network_arch/screens/wifi_detail_view.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -50,6 +52,8 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => Dashboard(),
           '/permissions': (context) => PermissionsView(),
+          '/wifi': (context) => WiFiDetailView(),
+          '/cellular': (context) => CellularDetailView(),
           '/tools/ping': (context) => const PingView(),
           '/tools/lan': (context) => LanScannerView(),
           '/tools/wol': (context) => const WakeOnLanView(),
@@ -63,6 +67,8 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => Dashboard(),
           '/permissions': (context) => PermissionsView(),
+          '/wifi': (context) => WiFiDetailView(),
+          '/cellular': (context) => CellularDetailView(),
           '/tools/ping': (context) => const PingView(),
           '/tools/lan': (context) => LanScannerView(),
           '/tools/wol': (context) => const WakeOnLanView(),

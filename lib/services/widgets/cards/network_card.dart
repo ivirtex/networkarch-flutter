@@ -48,9 +48,13 @@ class NetworkCard extends StatelessWidget {
           const SizedBox(height: 5.0),
           Column(
             children: [
-              DataLine(
-                textL: networkType == NetworkType.wifi ? 'SSID' : 'Carrier',
-                textR: firstLine,
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Text(networkType == NetworkType.wifi ? 'SSID' : 'Carrier'),
+                  const Spacer(),
+                  Text(firstLine ?? 'N/A'),
+                ],
               ),
               const SizedBox(height: 10),
               TextButton(

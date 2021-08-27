@@ -9,23 +9,34 @@ import 'package:carrier_info/carrier_info.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 
 class ConnectivityModel {
-  Future<SynchronousWifiInfo> getDataForIOS() async {
+  late SynchronousWifiInfo globalWifiInfo;
+  late SynchronousCarrierInfo globalCarrierInfo;
+
+  Future<SynchronousWifiInfo> _getDataForIOS() async {
     return SynchronousWifiInfo(
       locationServiceAuthorizationStatus:
           await NetworkInfo().getLocationServiceAuthorization(),
       locationServiceAuthorization:
           await NetworkInfo().requestLocationServiceAuthorization(),
+      wifiSSID: await NetworkInfo().getWifiName(),
       wifiBSSID: await NetworkInfo().getWifiBSSID(),
-      wifiIP: await NetworkInfo().getWifiIP(),
-      wifiName: await NetworkInfo().getWifiName(),
+      wifiIPv4: await NetworkInfo().getWifiIP(),
+      wifiIPv6: await NetworkInfo().getWifiIPv6(),
+      wifiBroadcast: await NetworkInfo().getWifiBroadcast(),
+      wifiGateway: await NetworkInfo().getWifiGatewayIP(),
+      wifiSubmask: await NetworkInfo().getWifiSubmask(),
     );
   }
 
-  Future<SynchronousWifiInfo> getDataForAndroid() async {
+  Future<SynchronousWifiInfo> _getDataForAndroid() async {
     return SynchronousWifiInfo(
+      wifiSSID: await NetworkInfo().getWifiName(),
       wifiBSSID: await NetworkInfo().getWifiBSSID(),
-      wifiIP: await NetworkInfo().getWifiIP(),
-      wifiName: await NetworkInfo().getWifiName(),
+      wifiIPv4: await NetworkInfo().getWifiIP(),
+      wifiIPv6: await NetworkInfo().getWifiIPv6(),
+      wifiBroadcast: await NetworkInfo().getWifiBroadcast(),
+      wifiGateway: await NetworkInfo().getWifiGatewayIP(),
+      wifiSubmask: await NetworkInfo().getWifiSubmask(),
     );
   }
 
@@ -37,16 +48,18 @@ class ConnectivityModel {
 
     Future<void> fetchData(_) async {
       try {
-        wifiInfo = await getDataForIOS();
+        wifiInfo = await _getDataForIOS();
       } on MissingPluginException catch (_) {
         // print("exception catched: " + err.toString());
 
-        wifiInfo = await getDataForAndroid();
+        wifiInfo = await _getDataForAndroid();
       } on PlatformException catch (_) {
         // print("exception catched: " + err.toString());
 
-        wifiInfo = await getDataForAndroid();
+        wifiInfo = await _getDataForAndroid();
       }
+
+      globalWifiInfo = wifiInfo;
 
       controller.add(wifiInfo);
     }
@@ -128,16 +141,24 @@ class SynchronousWifiInfo {
   SynchronousWifiInfo({
     this.locationServiceAuthorizationStatus,
     this.locationServiceAuthorization,
+    this.wifiSSID,
     this.wifiBSSID,
-    this.wifiIP,
-    this.wifiName,
+    this.wifiIPv4,
+    this.wifiIPv6,
+    this.wifiBroadcast,
+    this.wifiGateway,
+    this.wifiSubmask,
   });
 
   final LocationAuthorizationStatus? locationServiceAuthorizationStatus;
   final LocationAuthorizationStatus? locationServiceAuthorization;
+  final String? wifiSSID;
   final String? wifiBSSID;
-  final String? wifiIP;
-  final String? wifiName;
+  final String? wifiIPv4;
+  final String? wifiIPv6;
+  final String? wifiBroadcast;
+  final String? wifiGateway;
+  final String? wifiSubmask;
 }
 
 class SynchronousCarrierInfo {

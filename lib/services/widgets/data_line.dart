@@ -18,7 +18,7 @@ class DataLine extends StatelessWidget {
         children: [
           Text(textL),
           const Spacer(),
-          Text(textR!),
+          Text(textR ?? 'N/A'),
         ],
       ),
     );

@@ -7,10 +7,12 @@ import 'package:network_arch/constants.dart';
 class DataCard extends StatelessWidget {
   const DataCard({
     this.child,
+    this.margin = 10,
     this.onPress,
   });
 
   final Widget? child;
+  final double margin;
   final Function? onPress;
 
   @override
@@ -20,7 +22,7 @@ class DataCard extends StatelessWidget {
     return GestureDetector(
       onTap: onPress as void Function()?,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10),
+        margin: EdgeInsets.symmetric(vertical: margin),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: isDarkModeOn ? Constants.darkBgColor : Constants.lightBgColor,

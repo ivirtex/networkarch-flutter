@@ -20,7 +20,7 @@ class AnimatedListModel<T> {
 
   final Animatable<Offset> slideTween = Tween<Offset>(
     begin: const Offset(0, 1),
-    end: const Offset(0, 0),
+    end: Offset.zero,
   ).chain(CurveTween(curve: Curves.easeInOut));
   final Animatable<double> fadeTween = Tween<double>(
     begin: 0,

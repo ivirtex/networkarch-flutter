@@ -9,7 +9,7 @@ import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/list_model.dart';
 
 class PingModel extends ChangeNotifier {
-  late Ping _ping;
+  Ping _ping = Ping('');
 
   bool isPingingStarted = false;
   late AnimatedListModel<PingData?> pingData;

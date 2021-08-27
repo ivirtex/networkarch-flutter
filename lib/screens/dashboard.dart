@@ -84,20 +84,22 @@ class _DashboardState extends State<Dashboard> {
                       return const LoadingCard();
                     } else {
                       final bool isWifiConnected =
-                          snapshot.data!.wifiIP != null;
+                          snapshot.data!.wifiIPv4 != null;
 
                       if (isWifiConnected) {
                         final model = context.read<LanScannerModel>();
 
-                        model.configure(ip: snapshot.data!.wifiIP);
+                        model.configure(ip: snapshot.data!.wifiIPv4);
                       }
 
                       return NetworkCard(
                         isNetworkConnected: isWifiConnected,
                         networkType: NetworkType.wifi,
-                        firstLine: snapshot.data!.wifiName ?? 'N/A',
+                        firstLine: snapshot.data!.wifiSSID ?? 'N/A',
                         onPressed: () {
                           // TODO: Implement onTap()
+
+                          Navigator.of(context).pushNamed('/wifi');
                         },
                       );
                     }
