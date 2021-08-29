@@ -4,25 +4,25 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
-import 'package:network_arch/models/ip_geo_model.dart';
-import 'package:network_arch/screens/cellular_detail_view.dart';
-import 'package:network_arch/screens/ip_geolocation_view.dart';
-import 'package:network_arch/screens/wifi_detail_view.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:network_arch/models/lan_scanner_model.dart';
-import 'package:network_arch/models/permissions_model.dart';
-import 'package:network_arch/models/wake_on_lan_model.dart';
-import 'package:network_arch/screens/lan_scanner_view.dart';
-import 'package:network_arch/screens/permissions_view.dart';
-import 'package:network_arch/screens/wake_on_lan_view.dart';
-import 'package:network_arch/services/widgets/platform_widget.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/connectivity_model.dart';
+import 'package:network_arch/models/ip_geo_model.dart';
+import 'package:network_arch/models/lan_scanner_model.dart';
+import 'package:network_arch/models/permissions_model.dart';
 import 'package:network_arch/models/ping_model.dart';
+import 'package:network_arch/models/wake_on_lan_model.dart';
+import 'package:network_arch/screens/cellular_detail_view.dart';
 import 'package:network_arch/screens/dashboard.dart';
+import 'package:network_arch/screens/ip_geolocation_view.dart';
+import 'package:network_arch/screens/lan_scanner_view.dart';
+import 'package:network_arch/screens/permissions_view.dart';
 import 'package:network_arch/screens/ping_view.dart';
+import 'package:network_arch/screens/wake_on_lan_view.dart';
+import 'package:network_arch/screens/wifi_detail_view.dart';
+import 'package:network_arch/services/widgets/platform_widget.dart';
 
 void main() {
   // Provider.debugCheckInvalidValueType = null;
@@ -37,7 +37,9 @@ void main() {
         ChangeNotifierProvider(create: (context) => IPGeoModel()),
         Provider(create: (context) => ConnectivityModel()),
       ],
-      child: EasyDynamicThemeWidget(child: MyApp()),
+      child: EasyDynamicThemeWidget(
+        child: MyApp(),
+      ),
     ),
   );
 }

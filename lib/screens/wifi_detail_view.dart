@@ -1,8 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:network_arch/models/connectivity_model.dart';
 import 'package:network_arch/services/widgets/shared_widgets.dart';
-import 'package:provider/provider.dart';
 
 class WiFiDetailView extends StatelessWidget {
   @override
@@ -22,45 +26,68 @@ class WiFiDetailView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               DataLine(
-                textL: 'SSID',
-                textR:
-                    context.watch<ConnectivityModel>().globalWifiInfo.wifiSSID,
+                textL: const Text('SSID'),
+                textR: Text(context
+                        .watch<ConnectivityModel>()
+                        .globalWifiInfo
+                        .wifiSSID ??
+                    'N/A'),
               ),
               DataLine(
-                textL: 'BSSID',
-                textR:
-                    context.watch<ConnectivityModel>().globalWifiInfo.wifiBSSID,
+                textL: const Text('BSSID'),
+                textR: Text(context
+                        .watch<ConnectivityModel>()
+                        .globalWifiInfo
+                        .wifiBSSID ??
+                    'N/A'),
               ),
               DataLine(
-                textL: 'IPv4',
-                textR:
-                    context.watch<ConnectivityModel>().globalWifiInfo.wifiIPv4,
+                textL: const Text('Local IPv4'),
+                textR: Text(context
+                        .watch<ConnectivityModel>()
+                        .globalWifiInfo
+                        .wifiIPv4 ??
+                    'N/A'),
               ),
               DataLine(
-                textL: 'IPv6',
-                textR:
-                    context.watch<ConnectivityModel>().globalWifiInfo.wifiIPv6,
+                textL: const Text('Local IPv6'),
+                textR: Text(context
+                        .watch<ConnectivityModel>()
+                        .globalWifiInfo
+                        .wifiIPv6 ??
+                    'N/A'),
               ),
               DataLine(
-                textL: 'Broadcast address',
-                textR: context
-                    .watch<ConnectivityModel>()
-                    .globalWifiInfo
-                    .wifiBroadcast,
+                textL: const Text('Public IPv4'),
+                textR: Text(context
+                        .watch<ConnectivityModel>()
+                        .globalWifiInfo
+                        .wifiIPv4 ??
+                    'N/A'),
               ),
               DataLine(
-                textL: 'Gateway',
-                textR: context
-                    .watch<ConnectivityModel>()
-                    .globalWifiInfo
-                    .wifiGateway,
+                textL: const Text('Broadcast address'),
+                textR: Text(context
+                        .watch<ConnectivityModel>()
+                        .globalWifiInfo
+                        .wifiBroadcast ??
+                    'N/A'),
               ),
               DataLine(
-                textL: 'Submask',
-                textR: context
-                    .watch<ConnectivityModel>()
-                    .globalWifiInfo
-                    .wifiSubmask,
+                textL: const Text('Gateway'),
+                textR: Text(context
+                        .watch<ConnectivityModel>()
+                        .globalWifiInfo
+                        .wifiGateway ??
+                    'N/A'),
+              ),
+              DataLine(
+                textL: const Text('Submask'),
+                textR: Text(context
+                        .watch<ConnectivityModel>()
+                        .globalWifiInfo
+                        .wifiSubmask ??
+                    'N/A'),
               ),
             ],
           ),

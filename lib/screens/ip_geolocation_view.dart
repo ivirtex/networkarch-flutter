@@ -1,10 +1,17 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:network_arch/models/ip_geo_model.dart';
-import 'package:network_arch/models/ip_geo_response.dart';
-import 'package:network_arch/services/widgets/builders.dart';
-import 'package:network_arch/services/widgets/cards/error_card.dart';
 import 'package:provider/provider.dart';
+
+// Project imports:
+import 'package:network_arch/services/widgets/shared_widgets.dart';
+import '../models/ip_geo_model.dart';
+import '../models/ip_geo_response.dart';
+import '../services/utils/keyboard_hider.dart';
+import '../services/widgets/builders.dart';
+import '../services/widgets/cards/error_card.dart';
 
 class IPGeolocationView extends StatefulWidget {
   const IPGeolocationView({Key? key}) : super(key: key);
@@ -14,17 +21,16 @@ class IPGeolocationView extends StatefulWidget {
 }
 
 class _IPGeolocationViewState extends State<IPGeolocationView> {
-  final targetHostController = TextEditingController();
-
-  late Future<IpGeoResponse> futureData;
+  final _targetHostController = TextEditingController();
+  late GoogleMapController _mapController;
 
   @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
 
-    futureData =
-        context.read<IPGeoModel>().fetchDataFor(ip: targetHostController.text);
+    _targetHostController.dispose();
+    _mapController.dispose();
   }
 
   @override
@@ -37,7 +43,16 @@ class _IPGeolocationViewState extends State<IPGeolocationView> {
               action: ButtonActions.start,
               isActive: true,
               onPressed: () {
-                setState(() {});
+                final IPGeoModel model = context.read<IPGeoModel>();
+
+                setState(() {
+                  model.isFetching = true;
+                  model.hasBeenFetchedAtLeastOnce = true;
+                  model.fetchDataFor(ip: _targetHostController.text);
+                });
+
+                _targetHostController.clear();
+                hideKeyboard(context);
               },
             )
           : Builders.switchableAppBar(
@@ -45,47 +60,164 @@ class _IPGeolocationViewState extends State<IPGeolocationView> {
               title: 'IP Geolocation',
               action: ButtonActions.stop,
               isActive: true,
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  context.watch<IPGeoModel>().isFetching = false;
+                });
+              },
             ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            TextField(
-              autocorrect: false,
-              controller: targetHostController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
-                labelText: 'IP address or hostname',
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              TextField(
+                autocorrect: false,
+                controller: _targetHostController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                  labelText: 'IP address or hostname',
+                ),
+                onChanged: (_) {},
               ),
-              onChanged: (_) {
-                setState(() {});
-              },
-            ),
-            const SizedBox(height: 10),
-            const GoogleMap(
-              initialCameraPosition: CameraPosition(target: LatLng(0, 0)),
-            ),
-            const SizedBox(height: 10),
-            FutureBuilder(
-              future: futureData,
-              builder: (BuildContext context,
-                  AsyncSnapshot<IpGeoResponse> snapshot) {
-                if (snapshot.hasData) {
-                  return Text(snapshot.data!.latitude.toString());
-                } else if (snapshot.hasError) {
-                  return const ErrorCard(
-                    message: 'Error when fetching data',
-                  );
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              },
-            )
-          ],
+              const SizedBox(height: 10),
+              SizedBox(
+                height: 300,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: GoogleMap(
+                    initialCameraPosition:
+                        context.read<IPGeoModel>().startPosition,
+                    markers: context.read<IPGeoModel>().markers,
+                    onMapCreated: (GoogleMapController controller) {
+                      _mapController = controller;
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Visibility(
+                visible: context.watch<IPGeoModel>().hasBeenFetchedAtLeastOnce,
+                child: StreamBuilder<IpGeoResponse>(
+                  stream: context.read<IPGeoModel>().streamOfResponses(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<IpGeoResponse> snapshot) {
+                    context.read<IPGeoModel>().isFetching = false;
+
+                    if (snapshot.hasData) {
+                      processData(context, snapshot);
+
+                      return buildDataList(snapshot);
+                    } else if (snapshot.hasError) {
+                      return const ErrorCard(
+                        message: 'Error when fetching data',
+                      );
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  ListView buildDataList(AsyncSnapshot<IpGeoResponse> snapshot) {
+    return ListView(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      children: [
+        DataCard(
+          margin: 5,
+          child: DataLine(
+            textL: const Text('Latitude'),
+            textR: Text(snapshot.data!.latitude.toString()),
+          ),
+        ),
+        DataCard(
+          margin: 5,
+          child: DataLine(
+            textL: const Text('Longitude'),
+            textR: Text(snapshot.data!.longitude.toString()),
+          ),
+        ),
+        DataCard(
+          margin: 5,
+          child: DataLine(
+            textL: const Text('City'),
+            textR: Text(snapshot.data!.city ?? 'N/A'),
+          ),
+        ),
+        DataCard(
+          margin: 5,
+          child: DataLine(
+            textL: const Text('Country code'),
+            textR: Text(snapshot.data!.countryCode ?? 'N/A'),
+          ),
+        ),
+        DataCard(
+          margin: 5,
+          child: DataLine(
+            textL: const Text('Country name'),
+            textR: Text(snapshot.data!.countryName ?? 'N/A'),
+          ),
+        ),
+        DataCard(
+          margin: 5,
+          child: DataLine(
+            textL: const Text('IP'),
+            textR: Text(snapshot.data!.ip ?? 'N/A'),
+          ),
+        ),
+        DataCard(
+          margin: 5,
+          child: DataLine(
+            textL: const Text('Metro code'),
+            textR: Text(snapshot.data!.metroCode.toString()),
+          ),
+        ),
+        DataCard(
+          margin: 5,
+          child: DataLine(
+            textL: const Text('Region code'),
+            textR: Text(snapshot.data!.regionCode ?? 'N/A'),
+          ),
+        ),
+        DataCard(
+          margin: 5,
+          child: DataLine(
+            textL: const Text('Region name'),
+            textR: Text(snapshot.data!.regionName ?? 'N/A'),
+          ),
+        ),
+        DataCard(
+          margin: 5,
+          child: DataLine(
+            textL: const Text('Time zone'),
+            textR: Text(snapshot.data!.timeZone ?? 'N/A'),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void processData(
+      BuildContext context, AsyncSnapshot<IpGeoResponse> snapshot) {
+    final pos = LatLng(snapshot.data!.latitude!, snapshot.data!.longitude!);
+
+    context
+        .read<IPGeoModel>()
+        .markers
+        .add(Marker(markerId: const MarkerId('IP Loc'), position: pos));
+
+    _mapController.animateCamera(
+      CameraUpdate.newLatLng(pos),
+    );
+
+    context.read<IPGeoModel>().isFetching = false;
   }
 }

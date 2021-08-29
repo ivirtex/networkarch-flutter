@@ -1,11 +1,13 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:convert';
 
 // Flutter imports:
 import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:carrier_info/carrier_info.dart';
+import 'package:http/http.dart' as http;
 import 'package:network_info_plus/network_info_plus.dart';
 
 class ConnectivityModel {
@@ -13,6 +15,8 @@ class ConnectivityModel {
   late SynchronousCarrierInfo globalCarrierInfo;
 
   Future<SynchronousWifiInfo> _getDataForIOS() async {
+    final PublicIpModel publicIPv4 = await fetchPublicIP();
+
     return SynchronousWifiInfo(
       locationServiceAuthorizationStatus:
           await NetworkInfo().getLocationServiceAuthorization(),
@@ -22,6 +26,7 @@ class ConnectivityModel {
       wifiBSSID: await NetworkInfo().getWifiBSSID(),
       wifiIPv4: await NetworkInfo().getWifiIP(),
       wifiIPv6: await NetworkInfo().getWifiIPv6(),
+      publicIPv4: publicIPv4.ip,
       wifiBroadcast: await NetworkInfo().getWifiBroadcast(),
       wifiGateway: await NetworkInfo().getWifiGatewayIP(),
       wifiSubmask: await NetworkInfo().getWifiSubmask(),
@@ -29,11 +34,14 @@ class ConnectivityModel {
   }
 
   Future<SynchronousWifiInfo> _getDataForAndroid() async {
+    final PublicIpModel publicIPv4 = await fetchPublicIP();
+
     return SynchronousWifiInfo(
       wifiSSID: await NetworkInfo().getWifiName(),
       wifiBSSID: await NetworkInfo().getWifiBSSID(),
       wifiIPv4: await NetworkInfo().getWifiIP(),
       wifiIPv6: await NetworkInfo().getWifiIPv6(),
+      publicIPv4: publicIPv4.ip,
       wifiBroadcast: await NetworkInfo().getWifiBroadcast(),
       wifiGateway: await NetworkInfo().getWifiGatewayIP(),
       wifiSubmask: await NetworkInfo().getWifiSubmask(),
@@ -135,6 +143,18 @@ class ConnectivityModel {
   Stream<SynchronousCarrierInfo> get getCellularInfoStream {
     return _cellularInfoStream();
   }
+
+  Future<PublicIpModel> fetchPublicIP() async {
+    final http.Response response =
+        await http.get(Uri.parse('https://api.ipify.org?format=json'));
+
+    if (response.statusCode == 200) {
+      return PublicIpModel.fromJson(
+          jsonDecode(response.body) as Map<String, dynamic>);
+    } else {
+      throw Exception('Failed to fetch IP');
+    }
+  }
 }
 
 class SynchronousWifiInfo {
@@ -145,6 +165,7 @@ class SynchronousWifiInfo {
     this.wifiBSSID,
     this.wifiIPv4,
     this.wifiIPv6,
+    this.publicIPv4,
     this.wifiBroadcast,
     this.wifiGateway,
     this.wifiSubmask,
@@ -156,6 +177,7 @@ class SynchronousWifiInfo {
   final String? wifiBSSID;
   final String? wifiIPv4;
   final String? wifiIPv6;
+  final String? publicIPv4;
   final String? wifiBroadcast;
   final String? wifiGateway;
   final String? wifiSubmask;
@@ -179,6 +201,24 @@ class SynchronousCarrierInfo {
   final String? mobileNetworkCode;
   final String? networkGeneration;
   final String? radioType;
+}
+
+class PublicIpModel {
+  PublicIpModel({this.ip});
+
+  factory PublicIpModel.fromJson(Map<String, dynamic> json) {
+    return PublicIpModel(
+      ip: json['ip'] as String?,
+    );
+  }
+
+  final String? ip;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'ip': ip,
+    };
+  }
 }
 
 class NoSimCardException implements Exception {}
