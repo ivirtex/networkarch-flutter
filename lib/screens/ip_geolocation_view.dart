@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:network_arch/models/ip_geo_model.dart';
 import 'package:network_arch/models/ip_geo_response.dart';
 import 'package:network_arch/services/widgets/builders.dart';
@@ -61,6 +62,10 @@ class _IPGeolocationViewState extends State<IPGeolocationView> {
               onChanged: (_) {
                 setState(() {});
               },
+            ),
+            const SizedBox(height: 10),
+            const GoogleMap(
+              initialCameraPosition: CameraPosition(target: LatLng(0, 0)),
             ),
             const SizedBox(height: 10),
             FutureBuilder(
