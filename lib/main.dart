@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
+import 'package:network_arch/models/ip_geo_model.dart';
 import 'package:network_arch/screens/cellular_detail_view.dart';
+import 'package:network_arch/screens/ip_geolocation_view.dart';
 import 'package:network_arch/screens/wifi_detail_view.dart';
 import 'package:provider/provider.dart';
 
@@ -16,11 +18,11 @@ import 'package:network_arch/screens/lan_scanner_view.dart';
 import 'package:network_arch/screens/permissions_view.dart';
 import 'package:network_arch/screens/wake_on_lan_view.dart';
 import 'package:network_arch/services/widgets/platform_widget.dart';
-import 'constants.dart';
-import 'models/connectivity_model.dart';
-import 'models/ping_model.dart';
-import 'screens/dashboard.dart';
-import 'screens/ping_view.dart';
+import 'package:network_arch/constants.dart';
+import 'package:network_arch/models/connectivity_model.dart';
+import 'package:network_arch/models/ping_model.dart';
+import 'package:network_arch/screens/dashboard.dart';
+import 'package:network_arch/screens/ping_view.dart';
 
 void main() {
   // Provider.debugCheckInvalidValueType = null;
@@ -32,6 +34,7 @@ void main() {
         ChangeNotifierProvider(create: (context) => LanScannerModel()),
         ChangeNotifierProvider(create: (context) => WakeOnLanModel()),
         ChangeNotifierProvider(create: (context) => PermissionsModel()),
+        ChangeNotifierProvider(create: (context) => IPGeoModel()),
         Provider(create: (context) => ConnectivityModel()),
       ],
       child: EasyDynamicThemeWidget(child: MyApp()),
@@ -57,6 +60,7 @@ class MyApp extends StatelessWidget {
           '/tools/ping': (context) => const PingView(),
           '/tools/lan': (context) => LanScannerView(),
           '/tools/wol': (context) => const WakeOnLanView(),
+          '/tools/ip_geo': (context) => const IPGeolocationView(),
         },
       );
     }, iosBuilder: (context) {
@@ -72,6 +76,7 @@ class MyApp extends StatelessWidget {
           '/tools/ping': (context) => const PingView(),
           '/tools/lan': (context) => LanScannerView(),
           '/tools/wol': (context) => const WakeOnLanView(),
+          '/tools/ip_geo': (context) => const IPGeolocationView(),
         },
       );
     });

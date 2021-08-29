@@ -170,6 +170,7 @@ class _DashboardState extends State<Dashboard> {
                   toolDesc: Constants.ipGeoDesc,
                   onPressed: () {
                     // TODO: Implement onTap()
+                    Navigator.pushNamed(context, '/tools/ip_geo');
                   },
                 ),
                 ToolCard(
