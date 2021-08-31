@@ -23,8 +23,15 @@ class IPGeoModel extends ChangeNotifier {
       const CameraPosition(target: LatLng(45, 0));
 
   Future<void> fetchDataFor({required String ip}) async {
-    final http.Response response =
-        await http.get(Uri.parse('https://freegeoip.app/json/$ip'));
+    final http.Response response;
+
+    try {
+      response = await http.get(Uri.parse('https://freegeoip.app/json/$ip'));
+    } catch (e) {
+      _controller.addError('Failed to load data');
+
+      return;
+    }
 
     isFetching = false;
     notifyListeners();

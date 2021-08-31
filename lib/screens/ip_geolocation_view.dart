@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -22,12 +23,30 @@ class IPGeolocationView extends StatefulWidget {
 
 class _IPGeolocationViewState extends State<IPGeolocationView> {
   final _targetHostController = TextEditingController();
+
   late GoogleMapController _mapController;
+  late String _darkMapStyle;
+
+  late IPGeoModel modelProvider;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    rootBundle.loadString('assets/dark_mode_map_style.txt').then((value) {
+      _darkMapStyle = value;
+    });
+
+    modelProvider = context.read<IPGeoModel>();
+  }
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+
+    modelProvider.hasBeenFetchedAtLeastOnce = false;
 
     _targetHostController.dispose();
     _mapController.dispose();
@@ -92,6 +111,10 @@ class _IPGeolocationViewState extends State<IPGeolocationView> {
                     markers: context.read<IPGeoModel>().markers,
                     onMapCreated: (GoogleMapController controller) {
                       _mapController = controller;
+
+                      if (Theme.of(context).brightness == Brightness.dark) {
+                        _mapController.setMapStyle(_darkMapStyle);
+                      }
                     },
                   ),
                 ),

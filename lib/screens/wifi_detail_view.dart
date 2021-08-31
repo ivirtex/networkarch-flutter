@@ -19,79 +19,97 @@ class WiFiDetailView extends StatelessWidget {
         iconTheme: Theme.of(context).iconTheme,
         textTheme: Theme.of(context).textTheme,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: DataCard(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DataLine(
-                textL: const Text('SSID'),
-                textR: Text(context
-                        .watch<ConnectivityModel>()
-                        .globalWifiInfo
-                        .wifiSSID ??
-                    'N/A'),
-              ),
-              DataLine(
-                textL: const Text('BSSID'),
-                textR: Text(context
-                        .watch<ConnectivityModel>()
-                        .globalWifiInfo
-                        .wifiBSSID ??
-                    'N/A'),
-              ),
-              DataLine(
-                textL: const Text('Local IPv4'),
-                textR: Text(context
-                        .watch<ConnectivityModel>()
-                        .globalWifiInfo
-                        .wifiIPv4 ??
-                    'N/A'),
-              ),
-              DataLine(
-                textL: const Text('Local IPv6'),
-                textR: Text(context
-                        .watch<ConnectivityModel>()
-                        .globalWifiInfo
-                        .wifiIPv6 ??
-                    'N/A'),
-              ),
-              DataLine(
-                textL: const Text('Public IPv4'),
-                textR: Text(context
-                        .watch<ConnectivityModel>()
-                        .globalWifiInfo
-                        .wifiIPv4 ??
-                    'N/A'),
-              ),
-              DataLine(
-                textL: const Text('Broadcast address'),
-                textR: Text(context
-                        .watch<ConnectivityModel>()
-                        .globalWifiInfo
-                        .wifiBroadcast ??
-                    'N/A'),
-              ),
-              DataLine(
-                textL: const Text('Gateway'),
-                textR: Text(context
-                        .watch<ConnectivityModel>()
-                        .globalWifiInfo
-                        .wifiGateway ??
-                    'N/A'),
-              ),
-              DataLine(
-                textL: const Text('Submask'),
-                textR: Text(context
-                        .watch<ConnectivityModel>()
-                        .globalWifiInfo
-                        .wifiSubmask ??
-                    'N/A'),
-              ),
-            ],
+      body: buildDataList(context),
+    );
+  }
+
+  Padding buildDataList(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Wrap(
+        spacing: 5,
+        children: [
+          DataCard(
+            margin: 5,
+            child: DataLine(
+              textL: const Text('SSID'),
+              textR: Text(
+                  context.watch<ConnectivityModel>().globalWifiInfo.wifiSSID ??
+                      'N/A'),
+            ),
           ),
-        ),
+          DataCard(
+            margin: 5,
+            child: DataLine(
+              textL: const Text('BSSID'),
+              textR: Text(
+                  context.watch<ConnectivityModel>().globalWifiInfo.wifiBSSID ??
+                      'N/A'),
+            ),
+          ),
+          DataCard(
+            margin: 5,
+            child: DataLine(
+              textL: const Text('Local IPv4'),
+              textR: Text(
+                  context.watch<ConnectivityModel>().globalWifiInfo.wifiIPv4 ??
+                      'N/A'),
+            ),
+          ),
+          DataCard(
+            margin: 5,
+            child: DataLine(
+              textL: const Text('Local IPv6'),
+              textR: Text(
+                  context.watch<ConnectivityModel>().globalWifiInfo.wifiIPv6 ??
+                      'N/A'),
+            ),
+          ),
+          DataCard(
+            margin: 5,
+            child: DataLine(
+              textL: const Text('Public IPv4'),
+              textR: Text(context
+                      .watch<ConnectivityModel>()
+                      .globalWifiInfo
+                      .publicIPv4 ??
+                  'N/A'),
+            ),
+          ),
+          DataCard(
+            margin: 5,
+            child: DataLine(
+              textL: const Text('Broadcast address'),
+              textR: Text(context
+                      .watch<ConnectivityModel>()
+                      .globalWifiInfo
+                      .wifiBroadcast ??
+                  'N/A'),
+            ),
+          ),
+          DataCard(
+            margin: 5,
+            child: DataLine(
+              textL: const Text('Gateway'),
+              textR: Text(context
+                      .watch<ConnectivityModel>()
+                      .globalWifiInfo
+                      .wifiGateway ??
+                  'N/A'),
+            ),
+          ),
+          DataCard(
+            margin: 5,
+            child: DataLine(
+              textL: const Text('Submask'),
+              textR: Text(context
+                      .watch<ConnectivityModel>()
+                      .globalWifiInfo
+                      .wifiSubmask ??
+                  'N/A'),
+            ),
+          ),
+        ],
       ),
     );
   }
