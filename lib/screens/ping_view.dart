@@ -9,6 +9,7 @@ import 'package:flutter_icmp_ping/flutter_icmp_ping.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/list_model.dart';
 import 'package:network_arch/models/ping_model.dart';
 import 'package:network_arch/services/utils/keyboard_hider.dart';
@@ -72,6 +73,8 @@ class _PingViewState extends State<PingView>
         child: SlideTransition(
           position: animation.drive(pingModel.pingData.slideTween),
           child: Card(
+            color: Constants.lightBgColor,
+            elevation: 0.0,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
@@ -106,6 +109,8 @@ class _PingViewState extends State<PingView>
         child: SlideTransition(
           position: animation.drive(pingModel.pingData.slideTween),
           child: Card(
+            color: Constants.lightBgColor,
+            elevation: 0.0,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),

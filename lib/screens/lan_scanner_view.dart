@@ -14,6 +14,8 @@ import 'package:network_arch/services/widgets/shared_widgets.dart';
 
 //! Not really working yet.
 class LanScannerView extends StatefulWidget {
+  const LanScannerView({Key? key}) : super(key: key);
+
   @override
   _LanScannerViewState createState() => _LanScannerViewState();
 }

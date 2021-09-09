@@ -15,6 +15,8 @@ import 'package:network_arch/services/widgets/shared_widgets.dart';
 // TODO: Fix this
 
 class PermissionsView extends StatelessWidget {
+  const PermissionsView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
@@ -29,7 +31,7 @@ class PermissionsView extends StatelessWidget {
           'Permissions',
         ),
         iconTheme: Theme.of(context).iconTheme,
-        textTheme: Theme.of(context).textTheme,
+        titleTextStyle: Theme.of(context).textTheme.headline6,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: context

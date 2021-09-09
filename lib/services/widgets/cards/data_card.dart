@@ -6,10 +6,11 @@ import 'package:network_arch/constants.dart';
 
 class DataCard extends StatelessWidget {
   const DataCard({
+    Key? key,
     this.child,
-    this.margin = 10,
+    this.margin = 7.0,
     this.onPress,
-  });
+  }) : super(key: key);
 
   final Widget? child;
   final double margin;

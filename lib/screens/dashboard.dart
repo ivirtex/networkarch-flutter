@@ -15,6 +15,8 @@ import 'package:network_arch/services/widgets/drawer.dart';
 import 'package:network_arch/services/widgets/shared_widgets.dart';
 
 class Dashboard extends StatefulWidget {
+  const Dashboard({Key? key}) : super(key: key);
+
   @override
   _DashboardState createState() => _DashboardState();
 }
@@ -59,7 +61,7 @@ class _DashboardState extends State<Dashboard> {
           'Dashboard',
         ),
         iconTheme: Theme.of(context).iconTheme,
-        textTheme: Theme.of(context).textTheme,
+        titleTextStyle: Theme.of(context).textTheme.headline6,
       ),
       drawer: const DrawerWidget(),
       body: Padding(
@@ -68,6 +70,7 @@ class _DashboardState extends State<Dashboard> {
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 StreamBuilder(
                   stream: context.read<ConnectivityModel>().getWifiInfoStream,
@@ -75,13 +78,31 @@ class _DashboardState extends State<Dashboard> {
                   builder:
                       (context, AsyncSnapshot<SynchronousWifiInfo?> snapshot) {
                     if (snapshot.hasError) {
-                      return const ErrorCard(
-                        message: Constants.defaultError,
+                      return Stack(
+                        children: const [
+                          NetworkCard(
+                            isNetworkConnected: false,
+                            networkType: NetworkType.wifi,
+                            firstLine: '',
+                          ),
+                          ErrorCard(
+                            message: Constants.defaultError,
+                          ),
+                        ],
                       );
                     }
 
                     if (!snapshot.hasData) {
-                      return const LoadingCard();
+                      return Stack(
+                        children: const [
+                          NetworkCard(
+                            isNetworkConnected: false,
+                            networkType: NetworkType.wifi,
+                            firstLine: '',
+                          ),
+                          CircularProgressIndicator(),
+                        ],
+                      );
                     } else {
                       final bool isWifiConnected =
                           snapshot.data!.wifiIPv4 != null;
@@ -113,8 +134,18 @@ class _DashboardState extends State<Dashboard> {
                       AsyncSnapshot<SynchronousCarrierInfo?> snapshot) {
                     if (snapshot.hasError) {
                       if (snapshot.error is NoSimCardException) {
-                        return const ErrorCard(
-                          message: Constants.simError,
+                        return Stack(
+                          fit: StackFit.passthrough,
+                          children: const [
+                            NetworkCard(
+                              isNetworkConnected: false,
+                              networkType: NetworkType.cellular,
+                              firstLine: '',
+                            ),
+                            ErrorCard(
+                              message: Constants.simError,
+                            )
+                          ],
                         );
                       } else {
                         return const ErrorCard(

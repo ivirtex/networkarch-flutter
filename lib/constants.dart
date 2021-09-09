@@ -9,7 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 abstract class Constants {
   static ThemeData themeDataLight = ThemeData(
     brightness: Brightness.light,
-    accentColor: Colors.black,
+    colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
     appBarTheme: const AppBarTheme(
       centerTitle: true,
       backgroundColor: Colors.transparent,
@@ -20,7 +20,7 @@ abstract class Constants {
 
   static ThemeData themeDataDark = ThemeData.dark().copyWith(
     brightness: Brightness.dark,
-    accentColor: Colors.white,
+    colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.white),
     appBarTheme: const AppBarTheme(
       centerTitle: true,
       backgroundColor: Colors.transparent,

@@ -96,7 +96,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
       appBar: AppBar(
         title: const Text('Wake on LAN'),
         iconTheme: Theme.of(context).iconTheme,
-        textTheme: Theme.of(context).textTheme,
+        titleTextStyle: Theme.of(context).textTheme.headline6,
         actions: [
           TextButton(
             onPressed: !areTextFieldsNotEmpty()

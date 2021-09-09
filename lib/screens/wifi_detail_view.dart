@@ -9,6 +9,8 @@ import 'package:network_arch/models/connectivity_model.dart';
 import 'package:network_arch/services/widgets/shared_widgets.dart';
 
 class WiFiDetailView extends StatelessWidget {
+  const WiFiDetailView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +19,7 @@ class WiFiDetailView extends StatelessWidget {
           'Wi-Fi Details',
         ),
         iconTheme: Theme.of(context).iconTheme,
-        textTheme: Theme.of(context).textTheme,
+        titleTextStyle: Theme.of(context).textTheme.headline6,
       ),
       body: buildDataList(context),
     );

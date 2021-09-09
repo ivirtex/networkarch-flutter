@@ -89,6 +89,7 @@ class _IPGeolocationViewState extends State<IPGeolocationView> {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextField(
                 autocorrect: false,
@@ -137,7 +138,12 @@ class _IPGeolocationViewState extends State<IPGeolocationView> {
                         message: 'Error when fetching data',
                       );
                     } else {
-                      return const CircularProgressIndicator();
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
                     }
                   },
                 ),

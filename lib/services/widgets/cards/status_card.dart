@@ -15,6 +15,7 @@ class StatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: color,
+      elevation: 0.0,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),

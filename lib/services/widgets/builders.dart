@@ -43,7 +43,7 @@ abstract class Builders {
         title,
       ),
       iconTheme: Theme.of(context).iconTheme,
-      textTheme: Theme.of(context).textTheme,
+      titleTextStyle: Theme.of(context).textTheme.headline6,
       actions: [
         if (action == ButtonActions.start)
           IconButton(

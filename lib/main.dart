@@ -38,13 +38,15 @@ void main() {
         Provider(create: (context) => ConnectivityModel()),
       ],
       child: EasyDynamicThemeWidget(
-        child: MyApp(),
+        child: const MyApp(),
       ),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return PlatformWidget(androidBuilder: (context) {
@@ -56,9 +58,9 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => Dashboard(),
-          '/permissions': (context) => PermissionsView(),
-          '/wifi': (context) => WiFiDetailView(),
-          '/cellular': (context) => CellularDetailView(),
+          '/permissions': (context) => const PermissionsView(),
+          '/wifi': (context) => const WiFiDetailView(),
+          '/cellular': (context) => const CellularDetailView(),
           '/tools/ping': (context) => const PingView(),
           '/tools/lan': (context) => LanScannerView(),
           '/tools/wol': (context) => const WakeOnLanView(),
@@ -72,9 +74,9 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => Dashboard(),
-          '/permissions': (context) => PermissionsView(),
-          '/wifi': (context) => WiFiDetailView(),
-          '/cellular': (context) => CellularDetailView(),
+          '/permissions': (context) => const PermissionsView(),
+          '/wifi': (context) => const WiFiDetailView(),
+          '/cellular': (context) => const CellularDetailView(),
           '/tools/ping': (context) => const PingView(),
           '/tools/lan': (context) => LanScannerView(),
           '/tools/wol': (context) => const WakeOnLanView(),
