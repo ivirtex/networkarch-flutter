@@ -68,9 +68,28 @@ class MyApp extends StatelessWidget {
         },
       );
     }, iosBuilder: (context) {
-      return CupertinoApp(
+      // TODO: Fix iOS specific
+
+      // return CupertinoApp(
+      //   title: 'Dashboard',
+      //   theme: Constants.cupertinoThemeData,
+      //   initialRoute: '/',
+      //   routes: {
+      //     '/': (context) => const Dashboard(),
+      //     '/permissions': (context) => const PermissionsView(),
+      //     '/wifi': (context) => const WiFiDetailView(),
+      //     '/cellular': (context) => const CellularDetailView(),
+      //     '/tools/ping': (context) => const PingView(),
+      //     '/tools/lan': (context) => const LanScannerView(),
+      //     '/tools/wol': (context) => const WakeOnLanView(),
+      //     '/tools/ip_geo': (context) => const IPGeolocationView(),
+      //   },
+      // );
+      return MaterialApp(
         title: 'Dashboard',
-        theme: Constants.cupertinoThemeData,
+        theme: Constants.themeDataLight,
+        darkTheme: Constants.themeDataDark,
+        themeMode: EasyDynamicTheme.of(context).themeMode,
         initialRoute: '/',
         routes: {
           '/': (context) => const Dashboard(),
