@@ -125,12 +125,12 @@ class _LanScannerViewState extends State<LanScannerView> {
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             child: ListTile(
-                leading: StatusCard(
-                  color:
-                      currData.exists ? Colors.greenAccent : Colors.redAccent,
-                  text: currData.exists ? 'Online' : 'Offline',
-                ),
-                title: Text(currData.ip ?? 'N/A')),
+              leading: StatusCard(
+                color: currData.exists ? Colors.greenAccent : Colors.redAccent,
+                text: currData.exists ? 'Online' : 'Offline',
+              ),
+              title: Text(currData.ip ?? 'N/A'),
+            ),
           );
         },
       ),
