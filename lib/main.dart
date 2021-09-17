@@ -49,59 +49,62 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformWidget(androidBuilder: (context) {
-      return MaterialApp(
-        title: 'Dashboard',
-        theme: Constants.themeDataLight,
-        darkTheme: Constants.themeDataDark,
-        themeMode: EasyDynamicTheme.of(context).themeMode,
-        initialRoute: '/',
-        routes: {
-          '/': (context) => const Dashboard(),
-          '/permissions': (context) => const PermissionsView(),
-          '/wifi': (context) => const WiFiDetailView(),
-          '/cellular': (context) => const CellularDetailView(),
-          '/tools/ping': (context) => const PingView(),
-          '/tools/lan': (context) => const LanScannerView(),
-          '/tools/wol': (context) => const WakeOnLanView(),
-          '/tools/ip_geo': (context) => const IPGeolocationView(),
-        },
-      );
-    }, iosBuilder: (context) {
-      // TODO: Fix iOS specific
+    return PlatformWidget(
+      androidBuilder: (context) {
+        return MaterialApp(
+          title: 'Dashboard',
+          theme: Constants.themeDataLight,
+          darkTheme: Constants.themeDataDark,
+          themeMode: EasyDynamicTheme.of(context).themeMode,
+          initialRoute: '/',
+          routes: {
+            '/': (context) => const Dashboard(),
+            '/permissions': (context) => const PermissionsView(),
+            '/wifi': (context) => const WiFiDetailView(),
+            '/cellular': (context) => const CellularDetailView(),
+            '/tools/ping': (context) => const PingView(),
+            '/tools/lan': (context) => const LanScannerView(),
+            '/tools/wol': (context) => const WakeOnLanView(),
+            '/tools/ip_geo': (context) => const IPGeolocationView(),
+          },
+        );
+      },
+      iosBuilder: (context) {
+        // TODO: Fix iOS specific
 
-      // return CupertinoApp(
-      //   title: 'Dashboard',
-      //   theme: Constants.cupertinoThemeData,
-      //   initialRoute: '/',
-      //   routes: {
-      //     '/': (context) => const Dashboard(),
-      //     '/permissions': (context) => const PermissionsView(),
-      //     '/wifi': (context) => const WiFiDetailView(),
-      //     '/cellular': (context) => const CellularDetailView(),
-      //     '/tools/ping': (context) => const PingView(),
-      //     '/tools/lan': (context) => const LanScannerView(),
-      //     '/tools/wol': (context) => const WakeOnLanView(),
-      //     '/tools/ip_geo': (context) => const IPGeolocationView(),
-      //   },
-      // );
-      return MaterialApp(
-        title: 'Dashboard',
-        theme: Constants.themeDataLight,
-        darkTheme: Constants.themeDataDark,
-        themeMode: EasyDynamicTheme.of(context).themeMode,
-        initialRoute: '/',
-        routes: {
-          '/': (context) => const Dashboard(),
-          '/permissions': (context) => const PermissionsView(),
-          '/wifi': (context) => const WiFiDetailView(),
-          '/cellular': (context) => const CellularDetailView(),
-          '/tools/ping': (context) => const PingView(),
-          '/tools/lan': (context) => const LanScannerView(),
-          '/tools/wol': (context) => const WakeOnLanView(),
-          '/tools/ip_geo': (context) => const IPGeolocationView(),
-        },
-      );
-    });
+        // return CupertinoApp(
+        //   title: 'Dashboard',
+        //   theme: Constants.cupertinoThemeData,
+        //   initialRoute: '/',
+        //   routes: {
+        //     '/': (context) => const Dashboard(),
+        //     '/permissions': (context) => const PermissionsView(),
+        //     '/wifi': (context) => const WiFiDetailView(),
+        //     '/cellular': (context) => const CellularDetailView(),
+        //     '/tools/ping': (context) => const PingView(),
+        //     '/tools/lan': (context) => const LanScannerView(),
+        //     '/tools/wol': (context) => const WakeOnLanView(),
+        //     '/tools/ip_geo': (context) => const IPGeolocationView(),
+        //   },
+        // );
+        return MaterialApp(
+          title: 'Dashboard',
+          theme: Constants.themeDataLight,
+          darkTheme: Constants.themeDataDark,
+          themeMode: EasyDynamicTheme.of(context).themeMode,
+          initialRoute: '/',
+          routes: {
+            '/': (context) => const Dashboard(),
+            '/permissions': (context) => const PermissionsView(),
+            '/wifi': (context) => const WiFiDetailView(),
+            '/cellular': (context) => const CellularDetailView(),
+            '/tools/ping': (context) => const PingView(),
+            '/tools/lan': (context) => const LanScannerView(),
+            '/tools/wol': (context) => const WakeOnLanView(),
+            '/tools/ip_geo': (context) => const IPGeolocationView(),
+          },
+        );
+      },
+    );
   }
 }

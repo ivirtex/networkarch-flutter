@@ -1,13 +1,15 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 abstract class Constants {
-  static ThemeData themeDataLight = ThemeData(
+  static ThemeData themeDataLight = ThemeData.light().copyWith(
+    scaffoldBackgroundColor: Colors.white,
     brightness: Brightness.light,
     colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
     appBarTheme: const AppBarTheme(
@@ -19,6 +21,7 @@ abstract class Constants {
   );
 
   static ThemeData themeDataDark = ThemeData.dark().copyWith(
+    scaffoldBackgroundColor: Colors.black,
     brightness: Brightness.dark,
     colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.white),
     appBarTheme: const AppBarTheme(
@@ -32,9 +35,11 @@ abstract class Constants {
   static CupertinoThemeData cupertinoThemeData = const CupertinoThemeData();
 
   // Colors
-  static Color lightBgColor = Colors.grey[200]!;
+  // static Color lightBgColor = Colors.grey[200]!;
+  static Color lightBgColor = CupertinoColors.systemGrey6;
 
-  static Color darkBgColor = Colors.grey[800]!;
+  // static Color darkBgColor = Colors.grey[800]!;
+  static Color darkBgColor = CupertinoColors.systemGrey5;
 
   // Description styles
   static TextStyle descStyleLight = TextStyle(color: Colors.grey[600]);
