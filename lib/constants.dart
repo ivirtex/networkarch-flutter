@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 abstract class Constants {
   static ThemeData themeDataLight = ThemeData.light().copyWith(
@@ -35,11 +36,13 @@ abstract class Constants {
   static CupertinoThemeData cupertinoThemeData = const CupertinoThemeData();
 
   // Colors
-  // static Color lightBgColor = Colors.grey[200]!;
-  static Color lightBgColor = CupertinoColors.systemGrey6;
+  static Color lightBgColor = Colors.grey[100]!;
+  // static Color lightBgColor = CupertinoColors.systemGrey6;
+  static Color lightBtnColor = Colors.grey[300]!;
 
-  // static Color darkBgColor = Colors.grey[800]!;
-  static Color darkBgColor = CupertinoColors.systemGrey5;
+  static Color darkBgColor = Colors.grey[900]!;
+  // static Color darkBgColor = CupertinoColors.systemGrey5;
+  static Color darkBtnColor = Colors.grey[800]!;
 
   // Description styles
   static TextStyle descStyleLight = TextStyle(color: Colors.grey[600]);
@@ -88,81 +91,126 @@ abstract class Constants {
   static const String _permissionDefault =
       'Something gone wrong, check app permissions.';
 
-  static SnackBar permissionGrantedSnackBar = SnackBar(
-    content: Row(
+  static Widget permissionGrantedToast = Container(
+    padding: const EdgeInsets.all(10),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(10),
+      color: Colors.greenAccent[400],
+    ),
+    child: Row(
       children: const [
         FaIcon(
           FontAwesomeIcons.checkCircle,
-          color: Colors.green,
-        ),
-        SizedBox(width: 10),
-        Expanded(child: Text(_permissioGranted)),
-      ],
-    ),
-  );
-
-  static SnackBar permissionDeniedSnackBar = SnackBar(
-    duration: const Duration(seconds: 10),
-    action: SnackBarAction(
-      onPressed: () {
-        openAppSettings();
-      },
-      label: 'Settings',
-    ),
-    content: Row(
-      children: const [
-        FaIcon(
-          FontAwesomeIcons.timesCircle,
-          color: Colors.red,
+          color: Colors.white,
         ),
         SizedBox(width: 10),
         Expanded(
-          child: Text(_permissionDenied),
+          child: Text(
+            _permissioGranted,
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ],
     ),
   );
 
-  static SnackBar permissionDefaultSnackBar = SnackBar(
-    duration: const Duration(seconds: 5),
-    action: SnackBarAction(
-      onPressed: () {
-        openAppSettings();
-      },
-      label: 'Settings',
+  static Widget permissionDeniedToast = Container(
+    padding: const EdgeInsets.all(10),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(10),
+      color: Colors.red,
     ),
-    content: Row(
-      children: const [
-        FaIcon(
+    child: Row(
+      children: [
+        const FaIcon(
           FontAwesomeIcons.timesCircle,
-          color: Colors.red,
+          color: Colors.white,
         ),
-        SizedBox(width: 10),
-        Expanded(
-          child: Text(_permissionDefault),
+        const SizedBox(width: 10),
+        const Expanded(
+          child: Text(
+            _permissionDenied,
+            style: TextStyle(color: Colors.white),
+          ),
         ),
+        TextButton(
+          onPressed: () {
+            openAppSettings();
+          },
+          child: const Text(
+            'Open Settings',
+            style: TextStyle(color: Colors.white),
+          ),
+        )
       ],
     ),
   );
+
+  static Widget permissionDefaultToast = Container(
+    padding: const EdgeInsets.all(10),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(10),
+      color: Colors.yellow[600],
+    ),
+    child: Row(
+      children: [
+        const FaIcon(
+          FontAwesomeIcons.exclamationTriangle,
+          color: Colors.white,
+        ),
+        const SizedBox(width: 10),
+        const Expanded(
+          child: Text(
+            _permissionDefault,
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            openAppSettings();
+          },
+          child: const Text(
+            'Open Settings',
+            style: TextStyle(color: Colors.white),
+          ),
+        )
+      ],
+    ),
+  );
+
+  static void showToast(FToast instance, toastBody) {
+    instance.showToast(
+      child: toastBody,
+      gravity: ToastGravity.BOTTOM,
+      toastDuration: const Duration(seconds: 4),
+    );
+  }
 
   // Wake On Lan snackbars
   static const String _wolValidationError =
       '''The IP address or MAC address is not valid, please check it and try again.''';
 
-  static SnackBar wolValidationFault = SnackBar(
-    content: Row(
-      children: const [
-        FaIcon(
-          FontAwesomeIcons.timesCircle,
-          color: Colors.red,
-        ),
-        SizedBox(width: 10),
-        Expanded(
-          child: Text(
-            _wolValidationError,
+  static Widget wolValidationFault = SnackBar(
+    content: Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.red,
+      ),
+      child: Row(
+        children: const [
+          FaIcon(
+            FontAwesomeIcons.timesCircle,
+            color: Colors.red,
           ),
-        ),
-      ],
+          SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              _wolValidationError,
+            ),
+          ),
+        ],
+      ),
     ),
   );
 }

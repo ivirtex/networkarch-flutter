@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:network_arch/models/toast_notification_model.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,10 +13,20 @@ import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/permissions_model.dart';
 import 'package:network_arch/services/widgets/shared_widgets.dart';
 
-// TODO: Fix this
-
-class PermissionsView extends StatelessWidget {
+class PermissionsView extends StatefulWidget {
   const PermissionsView({Key? key}) : super(key: key);
+
+  @override
+  State<PermissionsView> createState() => _PermissionsViewState();
+}
+
+class _PermissionsViewState extends State<PermissionsView> {
+  @override
+  void initState() {
+    super.initState();
+
+    context.read<ToastNotificationModel>().fToast.init(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,34 +97,44 @@ class PermissionsView extends StatelessWidget {
                         ),
                       ),
                       TextButton(
-                          onPressed: () async {
-                            final PermissionStatus status =
-                                await Permission.locationWhenInUse.request();
+                        onPressed: () async {
+                          final PermissionStatus status =
+                              await Permission.locationWhenInUse.request();
 
-                            model.setLocationStatusIcon(status);
+                          final toastInstance =
+                              context.read<ToastNotificationModel>().fToast;
 
-                            switch (status) {
-                              case PermissionStatus.granted:
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    Constants.permissionGrantedSnackBar);
-                                break;
-                              case PermissionStatus.denied:
-                              case PermissionStatus.permanentlyDenied:
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    Constants.permissionDeniedSnackBar);
-                                break;
-                              default:
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    Constants.permissionDefaultSnackBar);
-                                break;
-                            }
+                          model.setLocationStatusIcon(status);
 
-                            final SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            prefs.setBool(
-                                'hasLocationPermissionsBeenRequested', true);
-                          },
-                          child: const Text('Request'))
+                          switch (status) {
+                            case PermissionStatus.granted:
+                              Constants.showToast(
+                                toastInstance,
+                                Constants.permissionGrantedToast,
+                              );
+                              break;
+                            case PermissionStatus.denied:
+                            case PermissionStatus.permanentlyDenied:
+                              Constants.showToast(
+                                toastInstance,
+                                Constants.permissionDeniedToast,
+                              );
+                              break;
+                            default:
+                              Constants.showToast(
+                                toastInstance,
+                                Constants.permissionDefaultToast,
+                              );
+                              break;
+                          }
+
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setBool(
+                              'hasLocationPermissionsBeenRequested', true);
+                        },
+                        child: const Text('Request'),
+                      )
                     ],
                   );
                 },

@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:network_arch/models/toast_notification_model.dart';
 
 // Package imports:
 import 'package:permission_handler/permission_handler.dart';
@@ -22,14 +23,12 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  void _showSnackbar(SnackBar snackBar) {
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    context.read<ToastNotificationModel>().fToast.init(context);
 
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       final permissions = Provider.of<PermissionsModel>(context, listen: false);
@@ -44,7 +43,8 @@ class _DashboardState extends State<Dashboard> {
                     .getBool('hasLocationPermissionsBeenRequested') ??
                 false)) {
           Future.delayed(Duration.zero, () {
-            _showSnackbar(Constants.permissionDeniedSnackBar);
+            Constants.showToast(context.read<ToastNotificationModel>().fToast,
+                Constants.permissionDeniedToast);
           });
         } else {
           Navigator.of(context).pushReplacementNamed('/permissions');
@@ -209,6 +209,10 @@ class _DashboardState extends State<Dashboard> {
                   toolDesc: Constants.whoisDesc,
                   onPressed: () {
                     // TODO: Implement onTap()
+
+                    Constants.showToast(
+                        context.read<ToastNotificationModel>().fToast,
+                        Constants.permissionGrantedToast);
                   },
                 ),
                 ToolCard(
@@ -216,6 +220,10 @@ class _DashboardState extends State<Dashboard> {
                   toolDesc: Constants.dnsDesc,
                   onPressed: () {
                     // TODO: Implement onTap()
+
+                    Constants.showToast(
+                        context.read<ToastNotificationModel>().fToast,
+                        Constants.permissionDeniedToast);
                   },
                 ),
               ],

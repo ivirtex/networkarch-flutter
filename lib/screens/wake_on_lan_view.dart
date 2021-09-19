@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:network_arch/models/toast_notification_model.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
@@ -110,8 +111,10 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
                     if (model.areTextFieldsValid()) {
                       await model.sendPacket();
                     } else {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(Constants.wolValidationFault);
+                      Constants.showToast(
+                        context.read<ToastNotificationModel>().fToast,
+                        Constants.wolValidationFault,
+                      );
                     }
                   },
             child: Text(

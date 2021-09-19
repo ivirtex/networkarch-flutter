@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
+import 'package:network_arch/models/toast_notification_model.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -36,6 +37,7 @@ void main() {
         ChangeNotifierProvider(create: (context) => PermissionsModel()),
         ChangeNotifierProvider(create: (context) => IPGeoModel()),
         Provider(create: (context) => ConnectivityModel()),
+        Provider(create: (context) => ToastNotificationModel()),
       ],
       child: EasyDynamicThemeWidget(
         child: const MyApp(),

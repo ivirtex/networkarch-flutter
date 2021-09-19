@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:network_arch/constants.dart';
 
 // Project imports:
 import 'package:network_arch/services/utils/enums.dart';
@@ -63,8 +64,9 @@ class NetworkCard extends StatelessWidget {
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
-                  backgroundColor:
-                      isDarkModeOn ? Colors.grey[700] : Colors.grey[300],
+                  backgroundColor: isDarkModeOn
+                      ? Constants.darkBtnColor
+                      : Constants.lightBtnColor,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
