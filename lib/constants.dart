@@ -33,16 +33,26 @@ abstract class Constants {
     ),
   );
 
-  static CupertinoThemeData cupertinoThemeData = const CupertinoThemeData();
+  static CupertinoThemeData cupertinoThemeData = const CupertinoThemeData(
+    brightness: Brightness.light,
+    barBackgroundColor: CupertinoDynamicColor.withBrightness(
+      color: CupertinoColors.white,
+      darkColor: CupertinoColors.black,
+    ),
+  );
 
   // Colors
   static Color lightBgColor = Colors.grey[100]!;
-  // static Color lightBgColor = CupertinoColors.systemGrey6;
+  static Color iOSlightBgColor = CupertinoColors.systemGrey6;
+
   static Color lightBtnColor = Colors.grey[300]!;
+  static Color iOSlightBtnColor = CupertinoColors.systemGrey4;
 
   static Color darkBgColor = Colors.grey[900]!;
-  // static Color darkBgColor = CupertinoColors.systemGrey5;
+  static Color iOSdarkBgColor = CupertinoColors.systemGrey5;
+
   static Color darkBtnColor = Colors.grey[800]!;
+  static Color iOSdarkBtnColor = CupertinoColors.systemGrey4;
 
   // Description styles
   static TextStyle descStyleLight = TextStyle(color: Colors.grey[600]);

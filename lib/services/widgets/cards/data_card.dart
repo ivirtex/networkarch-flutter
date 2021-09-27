@@ -1,4 +1,7 @@
 // Flutter imports:
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -26,7 +29,12 @@ class DataCard extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: margin),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color: isDarkModeOn ? Constants.darkBgColor : Constants.lightBgColor,
+          color: Platform.isAndroid
+              ? isDarkModeOn
+                  ? Constants.darkBgColor
+                  : Constants.lightBgColor
+              : CupertinoDynamicColor.resolve(
+                  CupertinoColors.systemGrey5, context),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),

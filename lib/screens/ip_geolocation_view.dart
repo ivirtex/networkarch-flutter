@@ -1,9 +1,11 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:network_arch/services/widgets/platform_widget.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -91,15 +93,21 @@ class _IPGeolocationViewState extends State<IPGeolocationView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              TextField(
-                autocorrect: false,
-                controller: _targetHostController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  labelText: 'IP address or hostname',
+              PlatformWidget(
+                androidBuilder: (context) => TextField(
+                  autocorrect: false,
+                  controller: _targetHostController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0)),
+                    labelText: 'IP address or hostname',
+                  ),
                 ),
-                onChanged: (_) {},
+                iosBuilder: (context) => CupertinoTextField(
+                  autocorrect: false,
+                  controller: _targetHostController,
+                  placeholder: 'IP address or hostname',
+                ),
               ),
               const SizedBox(height: 10),
               SizedBox(
@@ -141,7 +149,7 @@ class _IPGeolocationViewState extends State<IPGeolocationView> {
                       return const Padding(
                         padding: EdgeInsets.symmetric(vertical: 20),
                         child: Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator.adaptive(),
                         ),
                       );
                     }

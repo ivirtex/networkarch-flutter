@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -35,9 +37,10 @@ class ToolCard extends StatelessWidget {
               children: [
                 Text(
                   toolName,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
+                    color: isDarkModeOn ? Colors.white : Colors.black,
                   ),
                 ),
                 Text(
@@ -56,8 +59,12 @@ class ToolCard extends StatelessWidget {
                 shape: const CircleBorder(),
                 primary: Colors.white,
                 backgroundColor: isDarkModeOn
-                    ? Constants.darkBtnColor
-                    : Constants.lightBtnColor,
+                    ? Platform.isAndroid
+                        ? Constants.darkBtnColor
+                        : Constants.iOSdarkBtnColor
+                    : Platform.isAndroid
+                        ? Constants.lightBtnColor
+                        : Constants.iOSlightBtnColor,
               ),
               onPressed: onPressed as void Function()?,
               child: FaIcon(

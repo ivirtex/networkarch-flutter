@@ -1,10 +1,12 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:network_arch/models/toast_notification_model.dart';
+import 'package:network_arch/screens/settings_view.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -51,62 +53,70 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformWidget(
-      androidBuilder: (context) {
-        return MaterialApp(
-          title: 'Dashboard',
-          theme: Constants.themeDataLight,
-          darkTheme: Constants.themeDataDark,
-          themeMode: EasyDynamicTheme.of(context).themeMode,
-          initialRoute: '/',
-          routes: {
-            '/': (context) => const Dashboard(),
-            '/permissions': (context) => const PermissionsView(),
-            '/wifi': (context) => const WiFiDetailView(),
-            '/cellular': (context) => const CellularDetailView(),
-            '/tools/ping': (context) => const PingView(),
-            '/tools/lan': (context) => const LanScannerView(),
-            '/tools/wol': (context) => const WakeOnLanView(),
-            '/tools/ip_geo': (context) => const IPGeolocationView(),
-          },
-        );
-      },
-      iosBuilder: (context) {
-        // TODO: Fix iOS specific
+    //! Debug, remove in production
+    // debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
-        // return CupertinoApp(
-        //   title: 'Dashboard',
-        //   theme: Constants.cupertinoThemeData,
-        //   initialRoute: '/',
-        //   routes: {
-        //     '/': (context) => const Dashboard(),
-        //     '/permissions': (context) => const PermissionsView(),
-        //     '/wifi': (context) => const WiFiDetailView(),
-        //     '/cellular': (context) => const CellularDetailView(),
-        //     '/tools/ping': (context) => const PingView(),
-        //     '/tools/lan': (context) => const LanScannerView(),
-        //     '/tools/wol': (context) => const WakeOnLanView(),
-        //     '/tools/ip_geo': (context) => const IPGeolocationView(),
-        //   },
-        // );
-        return MaterialApp(
-          title: 'Dashboard',
-          theme: Constants.themeDataLight,
-          darkTheme: Constants.themeDataDark,
-          themeMode: EasyDynamicTheme.of(context).themeMode,
-          initialRoute: '/',
-          routes: {
-            '/': (context) => const Dashboard(),
-            '/permissions': (context) => const PermissionsView(),
-            '/wifi': (context) => const WiFiDetailView(),
-            '/cellular': (context) => const CellularDetailView(),
-            '/tools/ping': (context) => const PingView(),
-            '/tools/lan': (context) => const LanScannerView(),
-            '/tools/wol': (context) => const WakeOnLanView(),
-            '/tools/ip_geo': (context) => const IPGeolocationView(),
-          },
-        );
+    return PlatformWidget(
+      androidBuilder: _buildAndroidApp,
+      iosBuilder: _buildIOSApp,
+    );
+  }
+
+  MaterialApp _buildAndroidApp(BuildContext context) {
+    return MaterialApp(
+      title: 'Dashboard',
+      theme: Constants.themeDataLight,
+      darkTheme: Constants.themeDataDark,
+      themeMode: EasyDynamicTheme.of(context).themeMode,
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const Dashboard(),
+        '/permissions': (context) => const PermissionsView(),
+        '/wifi': (context) => const WiFiDetailView(),
+        '/cellular': (context) => const CellularDetailView(),
+        '/tools/ping': (context) => const PingView(),
+        '/tools/lan': (context) => const LanScannerView(),
+        '/tools/wol': (context) => const WakeOnLanView(),
+        '/tools/ip_geo': (context) => const IPGeolocationView(),
       },
+    );
+  }
+
+  CupertinoApp _buildIOSApp(BuildContext context) {
+    return CupertinoApp(
+      title: 'Dashboard',
+      theme: Constants.cupertinoThemeData,
+      home: CupertinoTabScaffold(
+        tabBar: CupertinoTabBar(
+          items: const [
+            BottomNavigationBarItem(
+              label: 'Dashboard',
+              icon: Icon(CupertinoIcons.home),
+            ),
+            BottomNavigationBarItem(
+              label: 'Settings',
+              icon: Icon(CupertinoIcons.settings),
+            ),
+          ],
+        ),
+        tabBuilder: (context, index) {
+          switch (index) {
+            case 0:
+              return CupertinoTabView(
+                defaultTitle: 'Dashboard',
+                builder: (context) => const Dashboard(),
+              );
+            case 1:
+              return CupertinoTabView(
+                defaultTitle: 'Settings',
+                builder: (context) => const Settings(),
+              );
+            default:
+              assert(false, 'Unexpected tab');
+              return const SizedBox.shrink();
+          }
+        },
+      ),
     );
   }
 }

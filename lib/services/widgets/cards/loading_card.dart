@@ -1,9 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
-import 'package:network_arch/services/widgets/cards/data_card.dart';
-
 class LoadingCard extends StatelessWidget {
   const LoadingCard({
     Key? key,
@@ -11,11 +8,10 @@ class LoadingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DataCard(
-      child: Column(
-        children: const [
-          CircularProgressIndicator(),
-        ],
+    return const Center(
+      child: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: CircularProgressIndicator.adaptive(),
       ),
     );
   }

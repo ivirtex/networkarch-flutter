@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -35,9 +37,10 @@ class NetworkCard extends StatelessWidget {
             children: [
               Text(
                 networkType == NetworkType.wifi ? 'Wi-Fi' : 'Cellular',
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20.0,
+                  color: isDarkModeOn ? Colors.white : Colors.black,
                 ),
               ),
               const Spacer(),
@@ -65,8 +68,12 @@ class NetworkCard extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                   backgroundColor: isDarkModeOn
-                      ? Constants.darkBtnColor
-                      : Constants.lightBtnColor,
+                      ? Platform.isAndroid
+                          ? Constants.darkBtnColor
+                          : Constants.iOSdarkBtnColor
+                      : Platform.isAndroid
+                          ? Constants.lightBtnColor
+                          : Constants.iOSlightBtnColor,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
