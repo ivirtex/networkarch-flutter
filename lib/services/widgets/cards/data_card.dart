@@ -29,12 +29,13 @@ class DataCard extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: margin),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color: Platform.isAndroid
-              ? isDarkModeOn
+          color: isDarkModeOn
+              ? Platform.isAndroid
                   ? Constants.darkBgColor
-                  : Constants.lightBgColor
-              : CupertinoDynamicColor.resolve(
-                  CupertinoColors.systemGrey5, context),
+                  : Constants.iOSdarkBgColor
+              : Platform.isAndroid
+                  ? Constants.lightBgColor
+                  : Constants.iOSlightBgColor,
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),

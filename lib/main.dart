@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //! Debug, remove in production
-    // debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
     return PlatformWidget(
       androidBuilder: _buildAndroidApp,

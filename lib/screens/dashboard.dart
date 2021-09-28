@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:network_arch/models/toast_notification_model.dart';
 import 'package:network_arch/services/widgets/platform_widget.dart';
 
@@ -85,6 +86,7 @@ class _DashboardState extends State<Dashboard> {
       child: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           const CupertinoSliverNavigationBar(
+            stretch: true,
             border: null,
             largeTitle: Text(
               'Dashboard',

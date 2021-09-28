@@ -33,23 +33,27 @@ abstract class Constants {
     ),
   );
 
-  static CupertinoThemeData cupertinoThemeData = const CupertinoThemeData(
+  static CupertinoThemeData cupertinoThemeData = CupertinoThemeData(
     brightness: Brightness.light,
-    barBackgroundColor: CupertinoDynamicColor.withBrightness(
-      color: CupertinoColors.white,
+    scaffoldBackgroundColor: const CupertinoDynamicColor.withBrightness(
+      color: CupertinoColors.systemGrey6,
       darkColor: CupertinoColors.black,
+    ),
+    barBackgroundColor: CupertinoDynamicColor.withBrightness(
+      color: CupertinoColors.systemGrey6.withOpacity(0.7),
+      darkColor: CupertinoColors.black.withOpacity(0.7),
     ),
   );
 
   // Colors
   static Color lightBgColor = Colors.grey[100]!;
-  static Color iOSlightBgColor = CupertinoColors.systemGrey6;
-
-  static Color lightBtnColor = Colors.grey[300]!;
-  static Color iOSlightBtnColor = CupertinoColors.systemGrey4;
+  static Color iOSlightBgColor = CupertinoColors.white;
 
   static Color darkBgColor = Colors.grey[900]!;
   static Color iOSdarkBgColor = CupertinoColors.systemGrey5;
+
+  static Color lightBtnColor = Colors.grey[300]!;
+  static Color iOSlightBtnColor = CupertinoColors.systemGrey4;
 
   static Color darkBtnColor = Colors.grey[800]!;
   static Color iOSdarkBtnColor = CupertinoColors.systemGrey4;
