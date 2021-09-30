@@ -1,5 +1,7 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:network_arch/services/widgets/platform_widget.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
@@ -13,6 +15,30 @@ class WiFiDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return PlatformWidget(
+      androidBuilder: _buildAndroid,
+      iosBuilder: _buildIOS,
+    );
+  }
+
+  Widget _buildIOS(context) {
+    return CupertinoPageScaffold(
+      child: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          const CupertinoSliverNavigationBar(
+            stretch: true,
+            border: null,
+            largeTitle: Text(
+              'Wake On LAN',
+            ),
+          )
+        ],
+        body: _buildDataList(context),
+      ),
+    );
+  }
+
+  Widget _buildAndroid(context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -21,11 +47,11 @@ class WiFiDetailView extends StatelessWidget {
         iconTheme: Theme.of(context).iconTheme,
         titleTextStyle: Theme.of(context).textTheme.headline6,
       ),
-      body: buildDataList(context),
+      body: _buildDataList(context),
     );
   }
 
-  Padding buildDataList(BuildContext context) {
+  Padding _buildDataList(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Wrap(

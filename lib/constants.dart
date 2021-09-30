@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 abstract class Constants {
   static ThemeData themeDataLight = ThemeData.light().copyWith(
@@ -35,13 +35,14 @@ abstract class Constants {
 
   static CupertinoThemeData cupertinoThemeData = CupertinoThemeData(
     brightness: Brightness.light,
+    primaryColor: CupertinoColors.activeBlue,
     scaffoldBackgroundColor: const CupertinoDynamicColor.withBrightness(
       color: CupertinoColors.systemGrey6,
       darkColor: CupertinoColors.black,
     ),
     barBackgroundColor: CupertinoDynamicColor.withBrightness(
-      color: CupertinoColors.systemGrey6.withOpacity(0.7),
-      darkColor: CupertinoColors.black.withOpacity(0.7),
+      color: CupertinoColors.systemGrey6.withOpacity(0.8),
+      darkColor: CupertinoColors.black.withOpacity(0.8),
     ),
   );
 

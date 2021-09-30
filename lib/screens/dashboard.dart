@@ -2,8 +2,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:network_arch/models/toast_notification_model.dart';
-import 'package:network_arch/services/widgets/platform_widget.dart';
 
 // Package imports:
 import 'package:permission_handler/permission_handler.dart';
@@ -14,8 +12,10 @@ import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/connectivity_model.dart';
 import 'package:network_arch/models/lan_scanner_model.dart';
 import 'package:network_arch/models/permissions_model.dart';
+import 'package:network_arch/models/toast_notification_model.dart';
 import 'package:network_arch/services/utils/enums.dart';
 import 'package:network_arch/services/widgets/drawer.dart';
+import 'package:network_arch/services/widgets/platform_widget.dart';
 import 'package:network_arch/services/widgets/shared_widgets.dart';
 
 class Dashboard extends StatefulWidget {
@@ -102,6 +102,7 @@ class _DashboardState extends State<Dashboard> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 0.0),
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

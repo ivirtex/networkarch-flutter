@@ -5,10 +5,10 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:network_arch/services/widgets/platform_widget.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'package:network_arch/services/widgets/platform_widget.dart';
 import 'package:network_arch/services/widgets/shared_widgets.dart';
 import '../models/ip_geo_model.dart';
 import '../models/ip_geo_response.dart';

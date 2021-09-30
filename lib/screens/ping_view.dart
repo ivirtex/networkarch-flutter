@@ -14,6 +14,7 @@ import 'package:network_arch/models/list_model.dart';
 import 'package:network_arch/models/ping_model.dart';
 import 'package:network_arch/services/utils/keyboard_hider.dart';
 import 'package:network_arch/services/widgets/builders.dart';
+import 'package:network_arch/services/widgets/platform_widget.dart';
 import 'package:network_arch/services/widgets/shared_widgets.dart';
 
 class PingView extends StatefulWidget {
@@ -59,6 +60,14 @@ class _PingViewState extends State<PingView>
 
     targetHostController.dispose();
     provider.stopStream();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PlatformWidget(
+      androidBuilder: _buildAndroid,
+      iosBuilder: _buildIOS,
+    );
   }
 
   Widget _buildItem(
@@ -179,8 +188,7 @@ class _PingViewState extends State<PingView>
     hideKeyboard(context);
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: context.read<PingModel>().isPingingStarted
           ? Builders.switchableAppBar(
@@ -199,56 +207,93 @@ class _PingViewState extends State<PingView>
             ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
+        child: _buildBody(context),
+      ),
+    );
+  }
+
+  Widget _buildIOS(BuildContext context) {
+    return CupertinoPageScaffold(
+      child: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          CupertinoSliverNavigationBar(
+            trailing: CupertinoButton(
+              padding: const EdgeInsets.all(0),
+              child: const Text('Ping'),
+              onPressed: () => _handleStartButtonPressed(context),
+            ),
+            stretch: true,
+            border: null,
+            largeTitle: const Text(
+              'Ping',
+            ),
+          )
+        ],
+        body: _buildBody(context),
+      ),
+    );
+  }
+
+  Padding _buildBody(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: targetHostController,
-                      autocorrect: false,
-                      enabled: !context.read<PingModel>().isPingingStarted,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
-                        labelText: 'IP address (e.g. 1.1.1.1)',
-                      ),
-                      onChanged: (_) {
-                        setState(() {});
-                      },
+              Expanded(
+                child: PlatformWidget(
+                  androidBuilder: (context) => TextField(
+                    autocorrect: false,
+                    controller: targetHostController,
+                    enabled: !context.read<PingModel>().isPingingStarted,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      labelText: 'IP address (e.g. 1.1.1.1)',
                     ),
+                    onChanged: (_) {
+                      setState(() {});
+                    },
                   ),
-                  const SizedBox(width: 10),
-                  TextButton(
-                    onPressed: context.watch<PingModel>().isPingingStarted
-                        ? null
-                        : () => context
-                            .read<PingModel>()
-                            .pingData
-                            .removeAllElements(context),
-                    child: const Text('Clear list'),
+                  iosBuilder: (context) => CupertinoSearchTextField(
+                    autocorrect: false,
+                    controller: targetHostController,
+                    enabled: !context.read<PingModel>().isPingingStarted,
+                    placeholder: 'IP address (e.g. 1.1.1.1)',
+                    onChanged: (_) {
+                      setState(() {});
+                    },
                   ),
-                ],
+                ),
               ),
-              const SizedBox(height: 10),
-              AnimatedList(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                key: _listKey,
-                initialItemCount: context.read<PingModel>().pingData.length,
-                itemBuilder: (context, index, animation) {
-                  return _buildItem(
-                    context,
-                    animation,
-                    context.read<PingModel>().pingData[index],
-                  );
-                },
-              )
+              const SizedBox(width: 10),
+              TextButton(
+                onPressed: context.watch<PingModel>().isPingingStarted
+                    ? null
+                    : () => context
+                        .read<PingModel>()
+                        .pingData
+                        .removeAllElements(context),
+                child: const Text('Clear list'),
+              ),
             ],
           ),
-        ),
+          const SizedBox(height: 10),
+          AnimatedList(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            key: _listKey,
+            initialItemCount: context.read<PingModel>().pingData.length,
+            itemBuilder: (context, index, animation) {
+              return _buildItem(
+                context,
+                animation,
+                context.read<PingModel>().pingData[index],
+              );
+            },
+          )
+        ],
       ),
     );
   }
