@@ -61,12 +61,12 @@ class NetworkArch extends StatelessWidget {
       theme: Constants.themeDataLight,
       darkTheme: Constants.themeDataDark,
       themeMode: EasyDynamicTheme.of(context).themeMode,
-      // builder: (context, child) {
-      //   return CupertinoTheme(
-      //     data: Constants.cupertinoThemeData,
-      //     child: Material(child: child),
-      //   );
-      // },
+      builder: (context, child) {
+        return CupertinoTheme(
+          data: Constants.cupertinoThemeData,
+          child: Material(child: child),
+        );
+      },
       routes: {
         '/permissions': (context) => const PermissionsView(),
         '/wifi': (context) => const WiFiDetailView(),

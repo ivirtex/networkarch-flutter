@@ -34,7 +34,6 @@ abstract class Constants {
   );
 
   static CupertinoThemeData cupertinoThemeData = CupertinoThemeData(
-    brightness: Brightness.light,
     primaryColor: CupertinoColors.activeBlue,
     scaffoldBackgroundColor: const CupertinoDynamicColor.withBrightness(
       color: CupertinoColors.systemGrey6,
@@ -51,13 +50,13 @@ abstract class Constants {
   static Color iOSlightBgColor = CupertinoColors.white;
 
   static Color darkBgColor = Colors.grey[900]!;
-  static Color iOSdarkBgColor = CupertinoColors.systemGrey5;
+  static Color iOSdarkBgColor = CupertinoColors.systemGrey6.darkColor;
 
   static Color lightBtnColor = Colors.grey[300]!;
-  static Color iOSlightBtnColor = CupertinoColors.systemGrey4;
+  static Color iOSlightBtnColor = CupertinoColors.systemGrey5.color;
 
   static Color darkBtnColor = Colors.grey[800]!;
-  static Color iOSdarkBtnColor = CupertinoColors.systemGrey4;
+  static Color iOSdarkBtnColor = CupertinoColors.systemGrey4.darkColor;
 
   // Description styles
   static TextStyle descStyleLight = TextStyle(color: Colors.grey[600]);

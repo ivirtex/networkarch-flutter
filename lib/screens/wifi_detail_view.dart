@@ -29,7 +29,7 @@ class WiFiDetailView extends StatelessWidget {
             stretch: true,
             border: null,
             largeTitle: Text(
-              'Wake On LAN',
+              'Wi-Fi Details',
             ),
           )
         ],
