@@ -15,8 +15,6 @@ class ConnectivityModel {
   late SynchronousCarrierInfo globalCarrierInfo;
 
   Future<SynchronousWifiInfo> _getDataForIOS() async {
-    final PublicIpModel? publicIPv4 = await fetchPublicIP();
-
     return SynchronousWifiInfo(
       locationServiceAuthorizationStatus:
           await NetworkInfo().getLocationServiceAuthorization(),
@@ -26,7 +24,6 @@ class ConnectivityModel {
       wifiBSSID: await NetworkInfo().getWifiBSSID(),
       wifiIPv4: await NetworkInfo().getWifiIP(),
       wifiIPv6: await NetworkInfo().getWifiIPv6(),
-      publicIPv4: publicIPv4?.ip,
       wifiBroadcast: await NetworkInfo().getWifiBroadcast(),
       wifiGateway: await NetworkInfo().getWifiGatewayIP(),
       wifiSubmask: await NetworkInfo().getWifiSubmask(),
@@ -34,14 +31,11 @@ class ConnectivityModel {
   }
 
   Future<SynchronousWifiInfo> _getDataForAndroid() async {
-    final PublicIpModel? publicIPv4 = await fetchPublicIP();
-
     return SynchronousWifiInfo(
       wifiSSID: await NetworkInfo().getWifiName(),
       wifiBSSID: await NetworkInfo().getWifiBSSID(),
       wifiIPv4: await NetworkInfo().getWifiIP(),
       wifiIPv6: await NetworkInfo().getWifiIPv6(),
-      publicIPv4: publicIPv4?.ip,
       wifiBroadcast: await NetworkInfo().getWifiBroadcast(),
       wifiGateway: await NetworkInfo().getWifiGatewayIP(),
       wifiSubmask: await NetworkInfo().getWifiSubmask(),
@@ -144,24 +138,18 @@ class ConnectivityModel {
     return _cellularInfoStream();
   }
 
-  Future<PublicIpModel?> fetchPublicIP() async {
+  Future<PublicIpModel> fetchPublicIP() async {
     final http.Response response;
 
-    try {
-      response = await http.get(Uri.parse('https://api.ipify.org?format=json'));
-    } catch (e) {
-      print(e);
-
-      return null;
-    }
+    response = await http.get(Uri.parse('https://api.ipify.org?format=json'));
 
     if (response.statusCode == 200) {
       return PublicIpModel.fromJson(
           jsonDecode(response.body) as Map<String, dynamic>);
     } else {
-      return PublicIpModel();
+      // return PublicIpModel();
 
-      // throw Exception('Failed to fetch IP');
+      throw Exception('Failed to fetch IP');
     }
   }
 }
@@ -174,7 +162,6 @@ class SynchronousWifiInfo {
     this.wifiBSSID,
     this.wifiIPv4,
     this.wifiIPv6,
-    this.publicIPv4,
     this.wifiBroadcast,
     this.wifiGateway,
     this.wifiSubmask,
@@ -186,7 +173,6 @@ class SynchronousWifiInfo {
   final String? wifiBSSID;
   final String? wifiIPv4;
   final String? wifiIPv6;
-  final String? publicIPv4;
   final String? wifiBroadcast;
   final String? wifiGateway;
   final String? wifiSubmask;

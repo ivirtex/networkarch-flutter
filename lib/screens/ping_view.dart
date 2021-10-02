@@ -1,6 +1,7 @@
 // Flutter imports:
 
 // Flutter imports:
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,6 @@ import 'package:flutter_icmp_ping/flutter_icmp_ping.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/list_model.dart';
 import 'package:network_arch/models/ping_model.dart';
 import 'package:network_arch/services/utils/keyboard_hider.dart';
@@ -33,7 +33,6 @@ class _PingViewState extends State<PingView>
 
   @override
   void initState() {
-    // TODO: implement initStated
     super.initState();
 
     context.read<PingModel>().pingData = AnimatedListModel<PingData>(
@@ -45,7 +44,6 @@ class _PingViewState extends State<PingView>
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
 
     final String routedAddr =
@@ -81,15 +79,11 @@ class _PingViewState extends State<PingView>
         opacity: animation.drive(pingModel.pingData.fadeTween),
         child: SlideTransition(
           position: animation.drive(pingModel.pingData.slideTween),
-          child: Card(
-            color: Constants.lightBgColor,
-            elevation: 0.0,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
+          child: DataCard(
             child: ListTile(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 5.0),
               leading: const StatusCard(
-                color: CupertinoColors.systemRed,
+                color: Colors.red,
                 text: 'Error',
               ),
               title: Text(pingModel.getHost ?? 'N/A'),
@@ -117,14 +111,10 @@ class _PingViewState extends State<PingView>
         opacity: animation.drive(pingModel.pingData.fadeTween),
         child: SlideTransition(
           position: animation.drive(pingModel.pingData.slideTween),
-          child: Card(
-            color: Constants.lightBgColor,
-            elevation: 0.0,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
+          child: DataCard(
+            padding: EdgeInsets.zero,
             child: ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 10.0),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 5.0),
               leading: const StatusCard(
                 color: Colors.green,
                 text: 'Online',
@@ -150,7 +140,7 @@ class _PingViewState extends State<PingView>
         ),
       );
     } else {
-      return Container();
+      return const SizedBox();
     }
   }
 

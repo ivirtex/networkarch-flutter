@@ -10,21 +10,22 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/services/utils/enums.dart';
-import 'package:network_arch/services/widgets/builders.dart';
 import 'package:network_arch/services/widgets/cards/data_card.dart';
 
 class NetworkCard extends StatelessWidget {
   const NetworkCard({
     Key? key,
-    required this.isNetworkConnected,
+    this.isNetworkConnected,
     required this.networkType,
     required this.firstLine,
     this.onPressed,
+    this.snapshotHasError,
   }) : super(key: key);
 
-  final bool isNetworkConnected;
+  final bool? isNetworkConnected;
   final NetworkType networkType;
-  final String? firstLine;
+  final Widget firstLine;
+  final bool? snapshotHasError;
   final Function? onPressed;
 
   @override
@@ -45,8 +46,10 @@ class NetworkCard extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Builders.buildConnectionState(
-                  isNetworkConnected: isNetworkConnected)
+              _buildConnectionState(
+                isNetworkConnected: isNetworkConnected,
+                snapshotHasError: snapshotHasError,
+              )
             ],
           ),
           const SizedBox(height: 5.0),
@@ -57,7 +60,7 @@ class NetworkCard extends StatelessWidget {
                 children: [
                   Text(networkType == NetworkType.wifi ? 'SSID' : 'Carrier'),
                   const Spacer(),
-                  Text(firstLine ?? 'N/A'),
+                  firstLine,
                 ],
               ),
               const SizedBox(height: 10),
@@ -97,6 +100,67 @@ class NetworkCard extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+Row _buildConnectionState(
+    {required bool? isNetworkConnected, required bool? snapshotHasError}) {
+  if (isNetworkConnected != null) {
+    return Row(
+      children: [
+        Text(
+          isNetworkConnected ? 'Connected' : 'Disconnected',
+          style: TextStyle(
+            color: isNetworkConnected ? Colors.green : Colors.red,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(width: 10.0),
+        FaIcon(
+          isNetworkConnected
+              ? FontAwesomeIcons.checkCircle
+              : FontAwesomeIcons.timesCircle,
+          color: isNetworkConnected ? Colors.green : Colors.red,
+        )
+      ],
+    );
+  } else if (snapshotHasError != null) {
+    return Row(
+      children: const [
+        Text(
+          'Error',
+          style: TextStyle(
+            color: Colors.red,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(width: 10.0),
+        FaIcon(
+          FontAwesomeIcons.timesCircle,
+          color: Colors.red,
+        )
+      ],
+    );
+  } else {
+    return Row(
+      children: const [
+        Text(
+          'Checking connection...',
+          style: TextStyle(
+            color: Colors.blue,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(width: 10.0),
+        SizedBox(
+          height: 20.0,
+          width: 20.0,
+          child: Center(
+            child: CircularProgressIndicator.adaptive(),
+          ),
+        )
+      ],
     );
   }
 }

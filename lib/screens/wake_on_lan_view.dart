@@ -35,7 +35,6 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     context.read<WakeOnLanModel>().wolResponses = AnimatedListModel(
@@ -46,7 +45,6 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
 
     ipv4TextFieldController.dispose();
@@ -75,8 +73,6 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
             trailing: TextButton(
               onPressed: item.status == WolStatus.success
                   ? () {
-                      // TODO: Pass address to the ping tool.
-
                       Navigator.popAndPushNamed(
                         context,
                         '/tools/ping',

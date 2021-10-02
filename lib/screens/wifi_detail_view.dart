@@ -10,8 +10,22 @@ import 'package:provider/provider.dart';
 import 'package:network_arch/models/connectivity_model.dart';
 import 'package:network_arch/services/widgets/shared_widgets.dart';
 
-class WiFiDetailView extends StatelessWidget {
+class WiFiDetailView extends StatefulWidget {
   const WiFiDetailView({Key? key}) : super(key: key);
+
+  @override
+  State<WiFiDetailView> createState() => _WiFiDetailViewState();
+}
+
+class _WiFiDetailViewState extends State<WiFiDetailView> {
+  late Future<PublicIpModel> futureIpModel;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    futureIpModel = context.read<ConnectivityModel>().fetchPublicIP();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +72,6 @@ class WiFiDetailView extends StatelessWidget {
         spacing: 5,
         children: [
           DataCard(
-            margin: 5,
             child: DataLine(
               textL: const Text('SSID'),
               textR: Text(
@@ -67,7 +80,6 @@ class WiFiDetailView extends StatelessWidget {
             ),
           ),
           DataCard(
-            margin: 5,
             child: DataLine(
               textL: const Text('BSSID'),
               textR: Text(
@@ -76,7 +88,6 @@ class WiFiDetailView extends StatelessWidget {
             ),
           ),
           DataCard(
-            margin: 5,
             child: DataLine(
               textL: const Text('Local IPv4'),
               textR: Text(
@@ -85,7 +96,6 @@ class WiFiDetailView extends StatelessWidget {
             ),
           ),
           DataCard(
-            margin: 5,
             child: DataLine(
               textL: const Text('Local IPv6'),
               textR: Text(
@@ -94,18 +104,33 @@ class WiFiDetailView extends StatelessWidget {
             ),
           ),
           DataCard(
-            margin: 5,
             child: DataLine(
               textL: const Text('Public IPv4'),
-              textR: Text(context
-                      .watch<ConnectivityModel>()
-                      .globalWifiInfo
-                      .publicIPv4 ??
-                  'N/A'),
+              textR: FutureBuilder(
+                future: futureIpModel,
+                initialData: null,
+                builder:
+                    (BuildContext ctx, AsyncSnapshot<PublicIpModel?> snapshot) {
+                  if (snapshot.hasError) {
+                    return const Text('Error when fetching IP');
+                  }
+
+                  if (snapshot.hasData) {
+                    return Text(snapshot.data!.ip ?? 'N/A');
+                  } else {
+                    return const SizedBox(
+                      height: 15.0,
+                      width: 15.0,
+                      child: Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      ),
+                    );
+                  }
+                },
+              ),
             ),
           ),
           DataCard(
-            margin: 5,
             child: DataLine(
               textL: const Text('Broadcast address'),
               textR: Text(context
@@ -116,7 +141,6 @@ class WiFiDetailView extends StatelessWidget {
             ),
           ),
           DataCard(
-            margin: 5,
             child: DataLine(
               textL: const Text('Gateway'),
               textR: Text(context
@@ -127,7 +151,6 @@ class WiFiDetailView extends StatelessWidget {
             ),
           ),
           DataCard(
-            margin: 5,
             child: DataLine(
               textL: const Text('Submask'),
               textR: Text(context

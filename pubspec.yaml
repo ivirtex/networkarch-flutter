@@ -28,22 +28,23 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
-  carrier_info: ^2.0.1
+  carrier_info: ^2.0.2
   easy_dynamic_theme: ^2.2.0
   flutter_icmp_ping: ^3.0.1
   fluttertoast: ^8.0.8
   font_awesome_flutter: ^9.0.0
-  google_maps_flutter: ^2.0.9
+  google_maps_flutter: ^2.0.11
   lan_scanner: ^2.0.1
   http: ^0.13.3
-  network_info_plus: ^1.0.2
+  network_info_plus: ^1.2.1
   permission_handler: ^8.1.6
-  provider: ^6.0.0
-  rxdart: ^0.27.2
+  provider: ^6.0.1
   styled_widget: ^0.4.0+3
   wake_on_lan: ^2.0.1+1
-  shared_preferences: ^2.0.6
+  shared_preferences: ^2.0.8
   toggle_switch: ^1.2.0
+  # device_preview: ^0.7.4
+  cupertino_listview: ^2.0.0
 
 dev_dependencies:
   flutter_test:

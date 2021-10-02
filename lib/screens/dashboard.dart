@@ -98,15 +98,14 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
-  Padding _buildBody(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 0.0),
-        children: [
-          Column(
+  ListView _buildBody(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.symmetric(vertical: 0.0),
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
             children: [
               StreamBuilder(
                 stream: context.read<ConnectivityModel>().getWifiInfoStream,
@@ -114,13 +113,18 @@ class _DashboardState extends State<Dashboard> {
                 builder:
                     (context, AsyncSnapshot<SynchronousWifiInfo?> snapshot) {
                   if (snapshot.hasError) {
-                    return const ErrorCard(
-                      message: Constants.defaultError,
+                    return const NetworkCard(
+                      networkType: NetworkType.wifi,
+                      snapshotHasError: true,
+                      firstLine: Text('N/A'),
                     );
                   }
 
                   if (!snapshot.hasData) {
-                    return const LoadingCard();
+                    return const NetworkCard(
+                      networkType: NetworkType.wifi,
+                      firstLine: Text('N/A'),
+                    );
                   } else {
                     final bool isWifiConnected =
                         snapshot.data!.wifiIPv4 != null;
@@ -134,10 +138,8 @@ class _DashboardState extends State<Dashboard> {
                     return NetworkCard(
                       isNetworkConnected: isWifiConnected,
                       networkType: NetworkType.wifi,
-                      firstLine: snapshot.data!.wifiSSID ?? 'N/A',
+                      firstLine: Text(snapshot.data!.wifiSSID ?? 'N/A'),
                       onPressed: () {
-                        // TODO: Implement onTap()
-
                         Navigator.of(context).pushNamed('/wifi');
                       },
                     );
@@ -151,18 +153,25 @@ class _DashboardState extends State<Dashboard> {
                     (context, AsyncSnapshot<SynchronousCarrierInfo?> snapshot) {
                   if (snapshot.hasError) {
                     if (snapshot.error is NoSimCardException) {
-                      return const ErrorCard(
-                        message: Constants.simError,
+                      return const NetworkCard(
+                        networkType: NetworkType.cellular,
+                        snapshotHasError: true,
+                        firstLine: Text(Constants.simError),
                       );
                     } else {
-                      return const ErrorCard(
-                        message: Constants.defaultError,
+                      return const NetworkCard(
+                        networkType: NetworkType.cellular,
+                        snapshotHasError: true,
+                        firstLine: Text('N/A'),
                       );
                     }
                   }
 
                   if (!snapshot.hasData) {
-                    return const LoadingCard();
+                    return const NetworkCard(
+                      networkType: NetworkType.cellular,
+                      firstLine: Text('N/A'),
+                    );
                   } else {
                     final bool isCellularConnected =
                         snapshot.data!.carrierName != null;
@@ -170,7 +179,7 @@ class _DashboardState extends State<Dashboard> {
                     return NetworkCard(
                       isNetworkConnected: isCellularConnected,
                       networkType: NetworkType.cellular,
-                      firstLine: snapshot.data!.carrierName ?? 'N/A',
+                      firstLine: Text(snapshot.data!.carrierName ?? 'N/A'),
                       onPressed: () {
                         // TODO: Implement onTap()
                       },
@@ -207,7 +216,6 @@ class _DashboardState extends State<Dashboard> {
                 toolName: 'IP Geolocation',
                 toolDesc: Constants.ipGeoDesc,
                 onPressed: () {
-                  // TODO: Implement onTap()
                   Navigator.pushNamed(context, '/tools/ip_geo');
                 },
               ),
@@ -234,9 +242,9 @@ class _DashboardState extends State<Dashboard> {
                 },
               ),
             ],
-          )
-        ],
-      ),
+          ),
+        ),
+      ],
     );
   }
 }
