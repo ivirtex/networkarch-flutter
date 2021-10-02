@@ -1,7 +1,6 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:network_arch/services/widgets/platform_widget.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
@@ -13,6 +12,7 @@ import 'package:network_arch/models/list_model.dart';
 import 'package:network_arch/models/toast_notification_model.dart';
 import 'package:network_arch/models/wake_on_lan_model.dart';
 import 'package:network_arch/services/utils/enums.dart';
+import 'package:network_arch/services/widgets/platform_widget.dart';
 import 'package:network_arch/services/widgets/shared_widgets.dart';
 
 class WakeOnLanView extends StatefulWidget {
@@ -52,7 +52,10 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
   }
 
   Widget _buildItem(
-      BuildContext context, Animation<double> animation, WolResponse? item) {
+    BuildContext context,
+    Animation<double> animation,
+    WolResponse? item,
+  ) {
     final model = context.read<WakeOnLanModel>();
 
     return FadeTransition(
@@ -187,8 +190,11 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
             key: _listKey,
             initialItemCount: context.read<LanScannerModel>().hosts.length,
             itemBuilder: (context, index, animation) {
-              return _buildItem(context, animation,
-                  context.read<WakeOnLanModel>().wolResponses[index]);
+              return _buildItem(
+                context,
+                animation,
+                context.read<WakeOnLanModel>().wolResponses[index],
+              );
             },
           )
         ],

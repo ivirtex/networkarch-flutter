@@ -37,8 +37,11 @@ class IPGeoModel extends ChangeNotifier {
     notifyListeners();
 
     if (response.statusCode == 200) {
-      _controller.add(IpGeoResponse.fromJson(
-          jsonDecode(response.body) as Map<String, dynamic>));
+      _controller.add(
+        IpGeoResponse.fromJson(
+          jsonDecode(response.body) as Map<String, dynamic>,
+        ),
+      );
     } else {
       _controller.addError('Failed to load data');
     }

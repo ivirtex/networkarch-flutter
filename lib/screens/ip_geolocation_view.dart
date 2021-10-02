@@ -64,12 +64,12 @@ class _IPGeolocationViewState extends State<IPGeolocationView> {
     return CupertinoPageScaffold(
       child: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          const CupertinoSliverNavigationBar(
-            stretch: true,
-            border: null,
-            largeTitle: Text(
-              'IP Geolocation',
-            ),
+          Builders.switchableCupertinoNavigationBar(
+            context: context,
+            title: 'IP Geolocation',
+            action: ButtonActions.start,
+            isActive: true,
+            onPressed: () {},
           )
         ],
         body: _buildBody(context),
@@ -77,9 +77,9 @@ class _IPGeolocationViewState extends State<IPGeolocationView> {
     );
   }
 
-  Widget _buildAndroid(context) {
+  Widget _buildAndroid(BuildContext context) {
     return Scaffold(
-      appBar: !context.watch<IPGeoModel>().isFetching
+      appBar: context.watch<IPGeoModel>().hasBeenFetchedAtLeastOnce
           ? Builders.switchableAppBar(
               context: context,
               title: 'IP Geolocation',
@@ -127,11 +127,12 @@ class _IPGeolocationViewState extends State<IPGeolocationView> {
               controller: _targetHostController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
                 labelText: 'IP address or hostname',
               ),
             ),
-            iosBuilder: (context) => CupertinoTextField(
+            iosBuilder: (context) => CupertinoSearchTextField(
               autocorrect: false,
               controller: _targetHostController,
               placeholder: 'IP address or hostname',
@@ -160,8 +161,10 @@ class _IPGeolocationViewState extends State<IPGeolocationView> {
             visible: context.watch<IPGeoModel>().hasBeenFetchedAtLeastOnce,
             child: StreamBuilder<IpGeoResponse>(
               stream: context.read<IPGeoModel>().streamOfResponses(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<IpGeoResponse> snapshot) {
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<IpGeoResponse> snapshot,
+              ) {
                 context.read<IPGeoModel>().isFetching = false;
 
                 if (snapshot.hasData) {
@@ -258,7 +261,9 @@ class _IPGeolocationViewState extends State<IPGeolocationView> {
   }
 
   void processData(
-      BuildContext context, AsyncSnapshot<IpGeoResponse> snapshot) {
+    BuildContext context,
+    AsyncSnapshot<IpGeoResponse> snapshot,
+  ) {
     final pos = LatLng(snapshot.data!.latitude!, snapshot.data!.longitude!);
 
     context

@@ -13,10 +13,10 @@ import 'package:network_arch/services/widgets/cards/data_card.dart';
 
 class ToolCard extends StatelessWidget {
   const ToolCard({
-    Key? key,
     required this.toolName,
     required this.toolDesc,
     this.onPressed,
+    Key? key,
   }) : super(key: key);
 
   final String toolName;

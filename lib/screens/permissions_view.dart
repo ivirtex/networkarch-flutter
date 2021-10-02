@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:network_arch/services/widgets/platform_widget.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/permissions_model.dart';
 import 'package:network_arch/models/toast_notification_model.dart';
+import 'package:network_arch/services/widgets/platform_widget.dart';
 import 'package:network_arch/services/widgets/shared_widgets.dart';
 
 class PermissionsView extends StatefulWidget {
@@ -55,7 +55,6 @@ class _PermissionsViewState extends State<PermissionsView> {
               'Permissions',
             ),
             trailing: CupertinoButton(
-              child: const Text('Continue'),
               onPressed: context
                           .watch<PermissionsModel>()
                           .prefs!
@@ -63,6 +62,7 @@ class _PermissionsViewState extends State<PermissionsView> {
                       false
                   ? () => goToDashboard(context)
                   : null,
+              child: const Text('Continue'),
             ),
           )
         ],
@@ -174,7 +174,9 @@ class _PermissionsViewState extends State<PermissionsView> {
                         final SharedPreferences prefs =
                             await SharedPreferences.getInstance();
                         prefs.setBool(
-                            'hasLocationPermissionsBeenRequested', true);
+                          'hasLocationPermissionsBeenRequested',
+                          true,
+                        );
                       },
                       child: const Text('Request'),
                     )

@@ -14,12 +14,12 @@ import 'package:network_arch/services/widgets/cards/data_card.dart';
 
 class NetworkCard extends StatelessWidget {
   const NetworkCard({
-    Key? key,
-    this.isNetworkConnected,
     required this.networkType,
     required this.firstLine,
+    this.isNetworkConnected,
     this.onPressed,
     this.snapshotHasError,
+    Key? key,
   }) : super(key: key);
 
   final bool? isNetworkConnected;
@@ -104,8 +104,10 @@ class NetworkCard extends StatelessWidget {
   }
 }
 
-Row _buildConnectionState(
-    {required bool? isNetworkConnected, required bool? snapshotHasError}) {
+Row _buildConnectionState({
+  required bool? isNetworkConnected,
+  required bool? snapshotHasError,
+}) {
   if (isNetworkConnected != null) {
     return Row(
       children: [

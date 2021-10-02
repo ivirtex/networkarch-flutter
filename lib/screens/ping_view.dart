@@ -2,6 +2,7 @@
 
 // Flutter imports:
 
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -69,7 +70,10 @@ class _PingViewState extends State<PingView>
   }
 
   Widget _buildItem(
-      BuildContext context, Animation<double> animation, PingData? item) {
+    BuildContext context,
+    Animation<double> animation,
+    PingData? item,
+  ) {
     final pingModel = context.read<PingModel>();
 
     print('building for $item element');
@@ -208,7 +212,7 @@ class _PingViewState extends State<PingView>
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           CupertinoSliverNavigationBar(
             trailing: CupertinoButton(
-              padding: const EdgeInsets.all(0),
+              padding: EdgeInsets.zero,
               child: const Text('Ping'),
               onPressed: () => _handleStartButtonPressed(context),
             ),
@@ -239,7 +243,8 @@ class _PingViewState extends State<PingView>
                     enabled: !context.read<PingModel>().isPingingStarted,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                       labelText: 'IP address (e.g. 1.1.1.1)',
                     ),
                     onChanged: (_) {

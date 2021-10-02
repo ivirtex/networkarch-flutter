@@ -1,13 +1,13 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:network_arch/services/widgets/platform_widget.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:network_arch/models/connectivity_model.dart';
+import 'package:network_arch/services/widgets/platform_widget.dart';
 import 'package:network_arch/services/widgets/shared_widgets.dart';
 
 class WiFiDetailView extends StatefulWidget {
@@ -35,10 +35,11 @@ class _WiFiDetailViewState extends State<WiFiDetailView> {
     );
   }
 
-  Widget _buildIOS(context) {
+  Widget _buildIOS(BuildContext context) {
     return CupertinoPageScaffold(
       child: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) =>
+            [
           const CupertinoSliverNavigationBar(
             stretch: true,
             border: null,
@@ -52,7 +53,7 @@ class _WiFiDetailViewState extends State<WiFiDetailView> {
     );
   }
 
-  Widget _buildAndroid(context) {
+  Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -75,32 +76,36 @@ class _WiFiDetailViewState extends State<WiFiDetailView> {
             child: DataLine(
               textL: const Text('SSID'),
               textR: Text(
-                  context.watch<ConnectivityModel>().globalWifiInfo.wifiSSID ??
-                      'N/A'),
+                context.watch<ConnectivityModel>().globalWifiInfo.wifiSSID ??
+                    'N/A',
+              ),
             ),
           ),
           DataCard(
             child: DataLine(
               textL: const Text('BSSID'),
               textR: Text(
-                  context.watch<ConnectivityModel>().globalWifiInfo.wifiBSSID ??
-                      'N/A'),
+                context.watch<ConnectivityModel>().globalWifiInfo.wifiBSSID ??
+                    'N/A',
+              ),
             ),
           ),
           DataCard(
             child: DataLine(
               textL: const Text('Local IPv4'),
               textR: Text(
-                  context.watch<ConnectivityModel>().globalWifiInfo.wifiIPv4 ??
-                      'N/A'),
+                context.watch<ConnectivityModel>().globalWifiInfo.wifiIPv4 ??
+                    'N/A',
+              ),
             ),
           ),
           DataCard(
             child: DataLine(
               textL: const Text('Local IPv6'),
               textR: Text(
-                  context.watch<ConnectivityModel>().globalWifiInfo.wifiIPv6 ??
-                      'N/A'),
+                context.watch<ConnectivityModel>().globalWifiInfo.wifiIPv6 ??
+                    'N/A',
+              ),
             ),
           ),
           DataCard(
@@ -133,31 +138,31 @@ class _WiFiDetailViewState extends State<WiFiDetailView> {
           DataCard(
             child: DataLine(
               textL: const Text('Broadcast address'),
-              textR: Text(context
-                      .watch<ConnectivityModel>()
-                      .globalWifiInfo
-                      .wifiBroadcast ??
-                  'N/A'),
+              textR: Text(
+                context
+                        .watch<ConnectivityModel>()
+                        .globalWifiInfo
+                        .wifiBroadcast ??
+                    'N/A',
+              ),
             ),
           ),
           DataCard(
             child: DataLine(
               textL: const Text('Gateway'),
-              textR: Text(context
-                      .watch<ConnectivityModel>()
-                      .globalWifiInfo
-                      .wifiGateway ??
-                  'N/A'),
+              textR: Text(
+                context.watch<ConnectivityModel>().globalWifiInfo.wifiGateway ??
+                    'N/A',
+              ),
             ),
           ),
           DataCard(
             child: DataLine(
               textL: const Text('Submask'),
-              textR: Text(context
-                      .watch<ConnectivityModel>()
-                      .globalWifiInfo
-                      .wifiSubmask ??
-                  'N/A'),
+              textR: Text(
+                context.watch<ConnectivityModel>().globalWifiInfo.wifiSubmask ??
+                    'N/A',
+              ),
             ),
           ),
         ],

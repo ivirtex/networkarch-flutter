@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 /// A simple widget that builds different things on different platforms.
 class PlatformWidget extends StatelessWidget {
   const PlatformWidget({
-    Key? key,
     required this.androidBuilder,
     required this.iosBuilder,
+    Key? key,
   }) : super(key: key);
 
   final WidgetBuilder androidBuilder;

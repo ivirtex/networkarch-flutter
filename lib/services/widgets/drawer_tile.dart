@@ -6,10 +6,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DrawerTile extends StatelessWidget {
   const DrawerTile({
-    Key? key,
     required this.icon,
     required this.child,
     required this.onTap,
+    Key? key,
   }) : super(key: key);
 
   final FaIcon icon;

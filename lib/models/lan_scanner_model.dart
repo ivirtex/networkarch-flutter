@@ -43,13 +43,15 @@ class LanScannerModel extends ChangeNotifier {
 
           return stream;
         case ScannerMode.precise:
-          final stream = _scanner.preciseScan(subnet,
-              progressCallback: (ProgressModel progress) {
-            print('Scan progress: ${progress.percent}');
-            print('Current IP: ${progress.currIP}\n');
+          final stream = _scanner.preciseScan(
+            subnet,
+            progressCallback: (ProgressModel progress) {
+              print('Scan progress: ${progress.percent}');
+              print('Current IP: ${progress.currIP}\n');
 
-            scanProgress = progress.percent;
-          });
+              scanProgress = progress.percent;
+            },
+          );
 
           return stream;
       }

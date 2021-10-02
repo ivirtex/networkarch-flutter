@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -43,6 +44,39 @@ abstract class Builders {
             onPressed: isActive ? onPressed : null,
           )
       ],
+    );
+  }
+
+  static CupertinoSliverNavigationBar switchableCupertinoNavigationBar({
+    required BuildContext context,
+    required String title,
+    required ButtonActions action,
+    required bool isActive,
+    VoidCallback? onPressed,
+  }) {
+    return CupertinoSliverNavigationBar(
+      stretch: true,
+      border: null,
+      largeTitle: Text(
+        title,
+      ),
+      trailing: action == ButtonActions.start
+          ? CupertinoButton(
+              padding: EdgeInsets.zero,
+              onPressed: isActive ? onPressed : null,
+              child: const Icon(
+                CupertinoIcons.play,
+                color: CupertinoColors.activeGreen,
+              ),
+            )
+          : CupertinoButton(
+              padding: EdgeInsets.zero,
+              onPressed: isActive ? onPressed : null,
+              child: const FaIcon(
+                CupertinoIcons.stop,
+                color: CupertinoColors.destructiveRed,
+              ),
+            ),
     );
   }
 }

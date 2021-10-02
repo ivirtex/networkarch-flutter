@@ -72,8 +72,10 @@ class AnimatedListModel<T> {
     for (int i = length - 1; i >= 0; --i) {
       final T removedItem = _items.removeAt(i)!;
 
-      _animatedListState!.removeItem(i,
-          (context, animation) => itemBuilder(context, animation, removedItem));
+      _animatedListState!.removeItem(
+        i,
+        (context, animation) => itemBuilder(context, animation, removedItem),
+      );
 
       await Future.delayed(const Duration(milliseconds: 100));
     }

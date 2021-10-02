@@ -192,7 +192,7 @@ abstract class Constants {
     ),
   );
 
-  static void showToast(FToast instance, toastBody) {
+  static void showToast(FToast instance, Widget toastBody) {
     instance.showToast(
       child: toastBody,
       gravity: ToastGravity.BOTTOM,

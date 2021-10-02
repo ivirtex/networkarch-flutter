@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class StatusCard extends StatelessWidget {
   const StatusCard({
-    Key? key,
     required this.text,
     required this.color,
+    Key? key,
   }) : super(key: key);
 
   final String text;

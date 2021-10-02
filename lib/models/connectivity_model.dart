@@ -145,7 +145,8 @@ class ConnectivityModel {
 
     if (response.statusCode == 200) {
       return PublicIpModel.fromJson(
-          jsonDecode(response.body) as Map<String, dynamic>);
+        jsonDecode(response.body) as Map<String, dynamic>,
+      );
     } else {
       // return PublicIpModel();
 

@@ -48,8 +48,10 @@ class _DashboardState extends State<Dashboard> {
           Future.delayed(
             Duration.zero,
             () {
-              Constants.showToast(context.read<ToastNotificationModel>().fToast,
-                  Constants.permissionDeniedToast);
+              Constants.showToast(
+                context.read<ToastNotificationModel>().fToast,
+                Constants.permissionDeniedToast,
+              );
             },
           );
         } else {
@@ -100,7 +102,6 @@ class _DashboardState extends State<Dashboard> {
 
   ListView _buildBody(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.symmetric(vertical: 0.0),
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -226,8 +227,9 @@ class _DashboardState extends State<Dashboard> {
                   // TODO: Implement onTap()
 
                   Constants.showToast(
-                      context.read<ToastNotificationModel>().fToast,
-                      Constants.permissionGrantedToast);
+                    context.read<ToastNotificationModel>().fToast,
+                    Constants.permissionGrantedToast,
+                  );
                 },
               ),
               ToolCard(
@@ -237,8 +239,9 @@ class _DashboardState extends State<Dashboard> {
                   // TODO: Implement onTap()
 
                   Constants.showToast(
-                      context.read<ToastNotificationModel>().fToast,
-                      Constants.permissionDeniedToast);
+                    context.read<ToastNotificationModel>().fToast,
+                    Constants.permissionDeniedToast,
+                  );
                 },
               ),
             ],
