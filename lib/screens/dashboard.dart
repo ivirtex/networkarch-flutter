@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -100,154 +101,157 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
-  ListView _buildBody(BuildContext context) {
-    return ListView(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              StreamBuilder(
-                stream: context.read<ConnectivityModel>().getWifiInfoStream,
-                initialData: null,
-                builder:
-                    (context, AsyncSnapshot<SynchronousWifiInfo?> snapshot) {
-                  if (snapshot.hasError) {
-                    return const NetworkCard(
-                      networkType: NetworkType.wifi,
-                      snapshotHasError: true,
-                      firstLine: Text('N/A'),
-                    );
-                  }
-
-                  if (!snapshot.hasData) {
-                    return const NetworkCard(
-                      networkType: NetworkType.wifi,
-                      firstLine: Text('N/A'),
-                    );
-                  } else {
-                    final bool isWifiConnected =
-                        snapshot.data!.wifiIPv4 != null;
-
-                    if (isWifiConnected) {
-                      final model = context.read<LanScannerModel>();
-
-                      model.configure(ip: snapshot.data!.wifiIPv4);
-                    }
-
-                    return NetworkCard(
-                      isNetworkConnected: isWifiConnected,
-                      networkType: NetworkType.wifi,
-                      firstLine: Text(snapshot.data!.wifiSSID ?? 'N/A'),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/wifi');
-                      },
-                    );
-                  }
-                },
-              ),
-              StreamBuilder(
-                stream: context.read<ConnectivityModel>().getCellularInfoStream,
-                initialData: null,
-                builder:
-                    (context, AsyncSnapshot<SynchronousCarrierInfo?> snapshot) {
-                  if (snapshot.hasError) {
-                    if (snapshot.error is NoSimCardException) {
+  FadeInUp _buildBody(BuildContext context) {
+    return FadeInUp(
+      child: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                StreamBuilder(
+                  stream: context.read<ConnectivityModel>().getWifiInfoStream,
+                  initialData: null,
+                  builder:
+                      (context, AsyncSnapshot<SynchronousWifiInfo?> snapshot) {
+                    if (snapshot.hasError) {
                       return const NetworkCard(
-                        networkType: NetworkType.cellular,
-                        snapshotHasError: true,
-                        firstLine: Text(Constants.simError),
-                      );
-                    } else {
-                      return const NetworkCard(
-                        networkType: NetworkType.cellular,
+                        networkType: NetworkType.wifi,
                         snapshotHasError: true,
                         firstLine: Text('N/A'),
                       );
                     }
-                  }
 
-                  if (!snapshot.hasData) {
-                    return const NetworkCard(
-                      networkType: NetworkType.cellular,
-                      firstLine: Text('N/A'),
+                    if (!snapshot.hasData) {
+                      return const NetworkCard(
+                        networkType: NetworkType.wifi,
+                        firstLine: Text('N/A'),
+                      );
+                    } else {
+                      final bool isWifiConnected =
+                          snapshot.data!.wifiIPv4 != null;
+
+                      if (isWifiConnected) {
+                        final model = context.read<LanScannerModel>();
+
+                        model.configure(ip: snapshot.data!.wifiIPv4);
+                      }
+
+                      return NetworkCard(
+                        isNetworkConnected: isWifiConnected,
+                        networkType: NetworkType.wifi,
+                        firstLine: Text(snapshot.data!.wifiSSID ?? 'N/A'),
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/wifi');
+                        },
+                      );
+                    }
+                  },
+                ),
+                StreamBuilder(
+                  stream:
+                      context.read<ConnectivityModel>().getCellularInfoStream,
+                  initialData: null,
+                  builder: (context,
+                      AsyncSnapshot<SynchronousCarrierInfo?> snapshot) {
+                    if (snapshot.hasError) {
+                      if (snapshot.error is NoSimCardException) {
+                        return const NetworkCard(
+                          networkType: NetworkType.cellular,
+                          snapshotHasError: true,
+                          firstLine: Text(Constants.simError),
+                        );
+                      } else {
+                        return const NetworkCard(
+                          networkType: NetworkType.cellular,
+                          snapshotHasError: true,
+                          firstLine: Text('N/A'),
+                        );
+                      }
+                    }
+
+                    if (!snapshot.hasData) {
+                      return const NetworkCard(
+                        networkType: NetworkType.cellular,
+                        firstLine: Text('N/A'),
+                      );
+                    } else {
+                      final bool isCellularConnected =
+                          snapshot.data!.carrierName != null;
+
+                      return NetworkCard(
+                        isNetworkConnected: isCellularConnected,
+                        networkType: NetworkType.cellular,
+                        firstLine: Text(snapshot.data!.carrierName ?? 'N/A'),
+                        onPressed: () {
+                          // TODO: Implement onTap()
+                        },
+                      );
+                    }
+                  },
+                ),
+                const Divider(
+                  indent: 15,
+                  endIndent: 15,
+                ),
+                ToolCard(
+                  toolName: 'Ping',
+                  toolDesc: Constants.pingDesc,
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/tools/ping', arguments: '');
+                  },
+                ),
+                // ToolCard(
+                //   toolName: 'LAN Scanner',
+                //   toolDesc: Constants.lanScannerDesc,
+                //   onPressed: () {
+                //     Navigator.pushNamed(context, '/tools/lan');
+                //   },
+                // ),
+                ToolCard(
+                  toolName: 'Wake On LAN',
+                  toolDesc: Constants.wolDesc,
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/tools/wol');
+                  },
+                ),
+                ToolCard(
+                  toolName: 'IP Geolocation',
+                  toolDesc: Constants.ipGeoDesc,
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/tools/ip_geo');
+                  },
+                ),
+                ToolCard(
+                  toolName: 'Whois',
+                  toolDesc: Constants.whoisDesc,
+                  onPressed: () {
+                    // TODO: Implement onTap()
+
+                    Constants.showToast(
+                      context.read<ToastNotificationModel>().fToast,
+                      Constants.permissionGrantedToast,
                     );
-                  } else {
-                    final bool isCellularConnected =
-                        snapshot.data!.carrierName != null;
+                  },
+                ),
+                ToolCard(
+                  toolName: 'DNS Lookup',
+                  toolDesc: Constants.dnsDesc,
+                  onPressed: () {
+                    // TODO: Implement onTap()
 
-                    return NetworkCard(
-                      isNetworkConnected: isCellularConnected,
-                      networkType: NetworkType.cellular,
-                      firstLine: Text(snapshot.data!.carrierName ?? 'N/A'),
-                      onPressed: () {
-                        // TODO: Implement onTap()
-                      },
+                    Constants.showToast(
+                      context.read<ToastNotificationModel>().fToast,
+                      Constants.permissionDeniedToast,
                     );
-                  }
-                },
-              ),
-              const Divider(
-                indent: 15,
-                endIndent: 15,
-              ),
-              ToolCard(
-                toolName: 'Ping',
-                toolDesc: Constants.pingDesc,
-                onPressed: () {
-                  Navigator.pushNamed(context, '/tools/ping', arguments: '');
-                },
-              ),
-              // ToolCard(
-              //   toolName: 'LAN Scanner',
-              //   toolDesc: Constants.lanScannerDesc,
-              //   onPressed: () {
-              //     Navigator.pushNamed(context, '/tools/lan');
-              //   },
-              // ),
-              ToolCard(
-                toolName: 'Wake On LAN',
-                toolDesc: Constants.wolDesc,
-                onPressed: () {
-                  Navigator.pushNamed(context, '/tools/wol');
-                },
-              ),
-              ToolCard(
-                toolName: 'IP Geolocation',
-                toolDesc: Constants.ipGeoDesc,
-                onPressed: () {
-                  Navigator.pushNamed(context, '/tools/ip_geo');
-                },
-              ),
-              ToolCard(
-                toolName: 'Whois',
-                toolDesc: Constants.whoisDesc,
-                onPressed: () {
-                  // TODO: Implement onTap()
-
-                  Constants.showToast(
-                    context.read<ToastNotificationModel>().fToast,
-                    Constants.permissionGrantedToast,
-                  );
-                },
-              ),
-              ToolCard(
-                toolName: 'DNS Lookup',
-                toolDesc: Constants.dnsDesc,
-                onPressed: () {
-                  // TODO: Implement onTap()
-
-                  Constants.showToast(
-                    context.read<ToastNotificationModel>().fToast,
-                    Constants.permissionDeniedToast,
-                  );
-                },
-              ),
-            ],
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

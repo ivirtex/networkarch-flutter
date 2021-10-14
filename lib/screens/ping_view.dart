@@ -84,13 +84,19 @@ class _PingViewState extends State<PingView>
         child: SlideTransition(
           position: animation.drive(pingModel.pingData.slideTween),
           child: DataCard(
+            padding: EdgeInsets.zero,
             child: ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 5.0),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
               leading: const StatusCard(
                 color: Colors.red,
                 text: 'Error',
               ),
-              title: Text(pingModel.getHost ?? 'N/A'),
+              title: Text(
+                pingModel.getHost ?? 'N/A',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -118,7 +124,7 @@ class _PingViewState extends State<PingView>
           child: DataCard(
             padding: EdgeInsets.zero,
             child: ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 5.0),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
               leading: const StatusCard(
                 color: Colors.green,
                 text: 'Online',
@@ -158,6 +164,8 @@ class _PingViewState extends State<PingView>
   }
 
   Future<void> _handleStartButtonPressed(BuildContext context) async {
+    hideKeyboard(context);
+
     final PingModel pingModel = context.read<PingModel>();
 
     await pingModel.pingData.removeAllElements(context);
@@ -179,7 +187,6 @@ class _PingViewState extends State<PingView>
     });
 
     targetHostController.clear();
-    hideKeyboard(context);
   }
 
   Widget _buildAndroid(BuildContext context) {

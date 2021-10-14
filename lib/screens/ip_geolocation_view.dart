@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -79,7 +80,7 @@ class _IPGeolocationViewState extends State<IPGeolocationView> {
 
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
-      appBar: context.watch<IPGeoModel>().hasBeenFetchedAtLeastOnce
+      appBar: !context.watch<IPGeoModel>().isFetching
           ? Builders.switchableAppBar(
               context: context,
               title: 'IP Geolocation',
@@ -185,78 +186,80 @@ class _IPGeolocationViewState extends State<IPGeolocationView> {
                 }
               },
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
-  ListView buildDataList(AsyncSnapshot<IpGeoResponse> snapshot) {
-    return ListView(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      children: [
-        DataCard(
-          child: DataLine(
-            textL: const Text('Latitude'),
-            textR: Text(snapshot.data!.latitude.toString()),
+  FadeInUp buildDataList(AsyncSnapshot<IpGeoResponse> snapshot) {
+    return FadeInUp(
+      child: ListView(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        children: [
+          DataCard(
+            child: DataLine(
+              textL: const Text('Latitude'),
+              textR: Text(snapshot.data!.latitude.toString()),
+            ),
           ),
-        ),
-        DataCard(
-          child: DataLine(
-            textL: const Text('Longitude'),
-            textR: Text(snapshot.data!.longitude.toString()),
+          DataCard(
+            child: DataLine(
+              textL: const Text('Longitude'),
+              textR: Text(snapshot.data!.longitude.toString()),
+            ),
           ),
-        ),
-        DataCard(
-          child: DataLine(
-            textL: const Text('City'),
-            textR: Text(snapshot.data!.city ?? 'N/A'),
+          DataCard(
+            child: DataLine(
+              textL: const Text('City'),
+              textR: Text(snapshot.data!.city ?? 'N/A'),
+            ),
           ),
-        ),
-        DataCard(
-          child: DataLine(
-            textL: const Text('Country code'),
-            textR: Text(snapshot.data!.countryCode ?? 'N/A'),
+          DataCard(
+            child: DataLine(
+              textL: const Text('Country code'),
+              textR: Text(snapshot.data!.countryCode ?? 'N/A'),
+            ),
           ),
-        ),
-        DataCard(
-          child: DataLine(
-            textL: const Text('Country name'),
-            textR: Text(snapshot.data!.countryName ?? 'N/A'),
+          DataCard(
+            child: DataLine(
+              textL: const Text('Country name'),
+              textR: Text(snapshot.data!.countryName ?? 'N/A'),
+            ),
           ),
-        ),
-        DataCard(
-          child: DataLine(
-            textL: const Text('IP'),
-            textR: Text(snapshot.data!.ip ?? 'N/A'),
+          DataCard(
+            child: DataLine(
+              textL: const Text('IP'),
+              textR: Text(snapshot.data!.ip ?? 'N/A'),
+            ),
           ),
-        ),
-        DataCard(
-          child: DataLine(
-            textL: const Text('Metro code'),
-            textR: Text(snapshot.data!.metroCode.toString()),
+          DataCard(
+            child: DataLine(
+              textL: const Text('Metro code'),
+              textR: Text(snapshot.data!.metroCode.toString()),
+            ),
           ),
-        ),
-        DataCard(
-          child: DataLine(
-            textL: const Text('Region code'),
-            textR: Text(snapshot.data!.regionCode ?? 'N/A'),
+          DataCard(
+            child: DataLine(
+              textL: const Text('Region code'),
+              textR: Text(snapshot.data!.regionCode ?? 'N/A'),
+            ),
           ),
-        ),
-        DataCard(
-          child: DataLine(
-            textL: const Text('Region name'),
-            textR: Text(snapshot.data!.regionName ?? 'N/A'),
+          DataCard(
+            child: DataLine(
+              textL: const Text('Region name'),
+              textR: Text(snapshot.data!.regionName ?? 'N/A'),
+            ),
           ),
-        ),
-        DataCard(
-          child: DataLine(
-            textL: const Text('Time zone'),
-            textR: Text(snapshot.data!.timeZone ?? 'N/A'),
+          DataCard(
+            child: DataLine(
+              textL: const Text('Time zone'),
+              textR: Text(snapshot.data!.timeZone ?? 'N/A'),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
