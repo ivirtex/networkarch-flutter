@@ -1,6 +1,8 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:network_arch/constants.dart';
+import 'package:network_arch/services/widgets/rounded_list.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
@@ -66,107 +68,89 @@ class _WiFiDetailViewState extends State<WiFiDetailView> {
     );
   }
 
-  Padding _buildDataList(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: Wrap(
-        spacing: 5,
-        children: [
-          DataCard(
-            child: DataLine(
-              textL: const Text('SSID'),
-              textR: Text(
-                context.watch<ConnectivityModel>().globalWifiInfo.wifiSSID ??
-                    'N/A',
-              ),
-            ),
+  RoundedList _buildDataList(BuildContext context) {
+    return RoundedList(
+      children: [
+        DataLine(
+          textL: const Text('SSID'),
+          textR: Text(
+            context.watch<ConnectivityModel>().globalWifiInfo.wifiSSID ?? 'N/A',
           ),
-          DataCard(
-            child: DataLine(
-              textL: const Text('BSSID'),
-              textR: Text(
-                context.watch<ConnectivityModel>().globalWifiInfo.wifiBSSID ??
-                    'N/A',
-              ),
-            ),
+          padding: Constants.listPaddding,
+        ),
+        DataLine(
+          textL: const Text('BSSID'),
+          textR: Text(
+            context.watch<ConnectivityModel>().globalWifiInfo.wifiBSSID ??
+                'N/A',
           ),
-          DataCard(
-            child: DataLine(
-              textL: const Text('Local IPv4'),
-              textR: Text(
-                context.watch<ConnectivityModel>().globalWifiInfo.wifiIPv4 ??
-                    'N/A',
-              ),
-            ),
+          padding: Constants.listPaddding,
+        ),
+        DataLine(
+          textL: const Text('Local IPv4'),
+          textR: Text(
+            context.watch<ConnectivityModel>().globalWifiInfo.wifiIPv4 ?? 'N/A',
           ),
-          DataCard(
-            child: DataLine(
-              textL: const Text('Local IPv6'),
-              textR: Text(
-                context.watch<ConnectivityModel>().globalWifiInfo.wifiIPv6 ??
-                    'N/A',
-              ),
-            ),
+          padding: Constants.listPaddding,
+        ),
+        DataLine(
+          textL: const Text('Local IPv6'),
+          textR: Text(
+            context.watch<ConnectivityModel>().globalWifiInfo.wifiIPv6 ?? 'N/A',
           ),
-          DataCard(
-            child: DataLine(
-              textL: const Text('Public IPv4'),
-              textR: FutureBuilder(
-                future: futureIpModel,
-                initialData: null,
-                builder:
-                    (BuildContext ctx, AsyncSnapshot<PublicIpModel?> snapshot) {
-                  if (snapshot.hasError) {
-                    return const Text('Error when fetching IP');
-                  }
+          padding: Constants.listPaddding,
+        ),
+        DataLine(
+          textL: const Text('Public IPv4'),
+          textR: FutureBuilder(
+            future: futureIpModel,
+            initialData: null,
+            builder:
+                (BuildContext ctx, AsyncSnapshot<PublicIpModel?> snapshot) {
+              if (snapshot.hasError) {
+                return const Text('Error when fetching IP');
+              }
 
-                  if (snapshot.hasData) {
-                    return Text(snapshot.data!.ip ?? 'N/A');
-                  } else {
-                    return const SizedBox(
-                      height: 15.0,
-                      width: 15.0,
-                      child: Center(
-                        child: CircularProgressIndicator.adaptive(),
-                      ),
-                    );
-                  }
-                },
-              ),
-            ),
+              if (snapshot.hasData) {
+                return Text(snapshot.data!.ip ?? 'N/A');
+              } else {
+                return const SizedBox(
+                  height: 15.0,
+                  width: 15.0,
+                  child: Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                );
+              }
+            },
           ),
-          DataCard(
-            child: DataLine(
-              textL: const Text('Broadcast address'),
-              textR: Text(
-                context
-                        .watch<ConnectivityModel>()
-                        .globalWifiInfo
-                        .wifiBroadcast ??
-                    'N/A',
-              ),
-            ),
+          padding: Constants.listPaddding,
+        ),
+        DataLine(
+          textL: const Text('Broadcast address'),
+          textR: Text(
+            context.watch<ConnectivityModel>().globalWifiInfo.wifiBroadcast ??
+                'N/A',
           ),
-          DataCard(
-            child: DataLine(
-              textL: const Text('Gateway'),
-              textR: Text(
-                context.watch<ConnectivityModel>().globalWifiInfo.wifiGateway ??
-                    'N/A',
-              ),
-            ),
+          padding: Constants.listPaddding,
+        ),
+        DataLine(
+          textL: const Text('Gateway'),
+          textR: Text(
+            context.watch<ConnectivityModel>().globalWifiInfo.wifiGateway ??
+                'N/A',
           ),
-          DataCard(
-            child: DataLine(
-              textL: const Text('Submask'),
-              textR: Text(
-                context.watch<ConnectivityModel>().globalWifiInfo.wifiSubmask ??
-                    'N/A',
-              ),
-            ),
+          padding: Constants.listPaddding,
+        ),
+        DataLine(
+          textL: const Text('Submask'),
+          textR: Text(
+            context.watch<ConnectivityModel>().globalWifiInfo.wifiSubmask ??
+                'N/A',
           ),
-        ],
-      ),
+          padding: Constants.listPaddding,
+        ),
+      ],
     );
   }
 }

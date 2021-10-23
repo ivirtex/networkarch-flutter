@@ -5,20 +5,25 @@ class DataLine extends StatelessWidget {
   const DataLine({
     required this.textL,
     required this.textR,
+    this.padding = EdgeInsets.zero,
     Key? key,
   }) : super(key: key);
 
   final Widget textL;
   final Widget? textR;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        textL,
-        const Spacer(),
-        textR ?? const Text('N/A'),
-      ],
+    return Padding(
+      padding: padding,
+      child: Row(
+        children: [
+          textL,
+          const Spacer(),
+          textR ?? const Text('N/A'),
+        ],
+      ),
     );
   }
 }

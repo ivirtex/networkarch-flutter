@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -45,6 +47,15 @@ abstract class Constants {
     ),
   );
 
+  // Styles
+  static EdgeInsets listPaddding = const EdgeInsets.all(10.0);
+
+  static Divider listDivider = const Divider(
+    height: 2,
+    indent: 10,
+    endIndent: 0,
+  );
+
   // Colors
   static Color lightBgColor = Colors.grey[100]!;
   static Color iOSlightBgColor = CupertinoColors.white;
@@ -57,6 +68,18 @@ abstract class Constants {
 
   static Color darkBtnColor = Colors.grey[800]!;
   static Color iOSdarkBtnColor = CupertinoColors.systemGrey4.darkColor;
+
+  static Color getPlatformBgColor(BuildContext context) {
+    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+
+    return isDarkModeOn
+        ? Platform.isAndroid
+            ? Constants.darkBgColor
+            : Constants.iOSdarkBgColor
+        : Platform.isAndroid
+            ? Constants.lightBgColor
+            : Constants.iOSlightBgColor;
+  }
 
   // Description styles
   static TextStyle descStyleLight = TextStyle(color: Colors.grey[600]);

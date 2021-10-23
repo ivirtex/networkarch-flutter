@@ -34,32 +34,36 @@ class _DashboardState extends State<Dashboard> {
 
     context.read<ToastNotificationModel>().fToast.init(context);
 
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
-      final permissions = context.read<PermissionsModel>();
+    final permissions = context.read<PermissionsModel>();
 
-      await permissions.initPrefs();
-
-      Permission.location.isGranted.then((bool isGranted) {
-        if (isGranted) {
-          permissions.isLocationPermissionGranted = true;
-        } else if (!isGranted &&
-            (permissions.prefs!
-                    .getBool('hasLocationPermissionsBeenRequested') ??
-                false)) {
-          Future.delayed(
-            Duration.zero,
-            () {
-              Constants.showToast(
-                context.read<ToastNotificationModel>().fToast,
-                Constants.permissionDeniedToast,
-              );
-            },
-          );
-        } else {
-          Navigator.of(context).pushReplacementNamed('/permissions');
-        }
-      });
-    });
+    Future.microtask(
+      () async => {
+        await permissions.initPrefs(),
+      },
+    ).whenComplete(
+      () => {
+        Permission.location.isGranted.then((bool isGranted) {
+          if (isGranted) {
+            permissions.isLocationPermissionGranted = true;
+          } else if (!isGranted &&
+              (permissions.prefs!
+                      .getBool('hasLocationPermissionsBeenRequested') ??
+                  false)) {
+            Future.delayed(
+              Duration.zero,
+              () {
+                Constants.showToast(
+                  context.read<ToastNotificationModel>().fToast,
+                  Constants.permissionDeniedToast,
+                );
+              },
+            );
+          } else {
+            Navigator.of(context).pushReplacementNamed('/permissions');
+          }
+        })
+      },
+    );
   }
 
   @override
