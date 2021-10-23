@@ -1,22 +1,23 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:network_arch/constants.dart';
 
 class DataLine extends StatelessWidget {
   const DataLine({
     required this.textL,
     required this.textR,
-    this.padding = EdgeInsets.zero,
+    this.padding,
     Key? key,
   }) : super(key: key);
 
   final Widget textL;
   final Widget? textR;
-  final EdgeInsets padding;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding,
+      padding: padding ?? Constants.listPadding,
       child: Row(
         children: [
           textL,

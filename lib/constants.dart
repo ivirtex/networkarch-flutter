@@ -1,6 +1,7 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:io';
 
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,7 +49,7 @@ abstract class Constants {
   );
 
   // Styles
-  static EdgeInsets listPaddding = const EdgeInsets.all(10.0);
+  static EdgeInsets listPadding = const EdgeInsets.all(10.0);
 
   static Divider listDivider = const Divider(
     height: 2,

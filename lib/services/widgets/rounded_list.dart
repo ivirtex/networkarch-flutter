@@ -1,6 +1,10 @@
+// Dart imports:
 import 'dart:io';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:network_arch/constants.dart';
 
 class RoundedList extends StatelessWidget {
@@ -24,15 +28,17 @@ class RoundedList extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      padding: padding ?? const EdgeInsets.symmetric(horizontal: 10.0),
       child: Card(
+        margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
         elevation: Platform.isAndroid ? 1.0 : 0.0,
         color: bgColor ?? Constants.getPlatformBgColor(context),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: ListView(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
           children: children,
         ),
       ),

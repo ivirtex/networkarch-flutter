@@ -1,15 +1,15 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/services/widgets/rounded_list.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/connectivity_model.dart';
 import 'package:network_arch/services/widgets/platform_widget.dart';
+import 'package:network_arch/services/widgets/rounded_list.dart';
 import 'package:network_arch/services/widgets/shared_widgets.dart';
 
 class WiFiDetailView extends StatefulWidget {
@@ -76,7 +76,6 @@ class _WiFiDetailViewState extends State<WiFiDetailView> {
           textR: Text(
             context.watch<ConnectivityModel>().globalWifiInfo.wifiSSID ?? 'N/A',
           ),
-          padding: Constants.listPaddding,
         ),
         DataLine(
           textL: const Text('BSSID'),
@@ -84,21 +83,18 @@ class _WiFiDetailViewState extends State<WiFiDetailView> {
             context.watch<ConnectivityModel>().globalWifiInfo.wifiBSSID ??
                 'N/A',
           ),
-          padding: Constants.listPaddding,
         ),
         DataLine(
           textL: const Text('Local IPv4'),
           textR: Text(
             context.watch<ConnectivityModel>().globalWifiInfo.wifiIPv4 ?? 'N/A',
           ),
-          padding: Constants.listPaddding,
         ),
         DataLine(
           textL: const Text('Local IPv6'),
           textR: Text(
             context.watch<ConnectivityModel>().globalWifiInfo.wifiIPv6 ?? 'N/A',
           ),
-          padding: Constants.listPaddding,
         ),
         DataLine(
           textL: const Text('Public IPv4'),
@@ -124,7 +120,6 @@ class _WiFiDetailViewState extends State<WiFiDetailView> {
               }
             },
           ),
-          padding: Constants.listPaddding,
         ),
         DataLine(
           textL: const Text('Broadcast address'),
@@ -132,7 +127,6 @@ class _WiFiDetailViewState extends State<WiFiDetailView> {
             context.watch<ConnectivityModel>().globalWifiInfo.wifiBroadcast ??
                 'N/A',
           ),
-          padding: Constants.listPaddding,
         ),
         DataLine(
           textL: const Text('Gateway'),
@@ -140,7 +134,6 @@ class _WiFiDetailViewState extends State<WiFiDetailView> {
             context.watch<ConnectivityModel>().globalWifiInfo.wifiGateway ??
                 'N/A',
           ),
-          padding: Constants.listPaddding,
         ),
         DataLine(
           textL: const Text('Submask'),
@@ -148,7 +141,6 @@ class _WiFiDetailViewState extends State<WiFiDetailView> {
             context.watch<ConnectivityModel>().globalWifiInfo.wifiSubmask ??
                 'N/A',
           ),
-          padding: Constants.listPaddding,
         ),
       ],
     );

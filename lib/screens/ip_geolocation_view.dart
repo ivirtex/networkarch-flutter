@@ -1,11 +1,13 @@
 // Flutter imports:
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:animate_do/animate_do.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:network_arch/constants.dart';
+import 'package:network_arch/services/widgets/rounded_list.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -194,69 +196,49 @@ class _IPGeolocationViewState extends State<IPGeolocationView> {
 
   FadeInUp buildDataList(AsyncSnapshot<IpGeoResponse> snapshot) {
     return FadeInUp(
-      child: ListView(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+      child: RoundedList(
+        padding: EdgeInsets.zero,
         children: [
-          DataCard(
-            child: DataLine(
-              textL: const Text('Latitude'),
-              textR: Text(snapshot.data!.latitude.toString()),
-            ),
+          DataLine(
+            textL: const Text('Latitude'),
+            textR: Text(snapshot.data!.latitude.toString()),
+            padding: Constants.listPadding,
           ),
-          DataCard(
-            child: DataLine(
-              textL: const Text('Longitude'),
-              textR: Text(snapshot.data!.longitude.toString()),
-            ),
+          DataLine(
+            textL: const Text('Longitude'),
+            textR: Text(snapshot.data!.longitude.toString()),
           ),
-          DataCard(
-            child: DataLine(
-              textL: const Text('City'),
-              textR: Text(snapshot.data!.city ?? 'N/A'),
-            ),
+          DataLine(
+            textL: const Text('City'),
+            textR: Text(snapshot.data!.city ?? 'N/A'),
           ),
-          DataCard(
-            child: DataLine(
-              textL: const Text('Country code'),
-              textR: Text(snapshot.data!.countryCode ?? 'N/A'),
-            ),
+          DataLine(
+            textL: const Text('Country code'),
+            textR: Text(snapshot.data!.countryCode ?? 'N/A'),
           ),
-          DataCard(
-            child: DataLine(
-              textL: const Text('Country name'),
-              textR: Text(snapshot.data!.countryName ?? 'N/A'),
-            ),
+          DataLine(
+            textL: const Text('Country name'),
+            textR: Text(snapshot.data!.countryName ?? 'N/A'),
           ),
-          DataCard(
-            child: DataLine(
-              textL: const Text('IP'),
-              textR: Text(snapshot.data!.ip ?? 'N/A'),
-            ),
+          DataLine(
+            textL: const Text('IP'),
+            textR: Text(snapshot.data!.ip ?? 'N/A'),
           ),
-          DataCard(
-            child: DataLine(
-              textL: const Text('Metro code'),
-              textR: Text(snapshot.data!.metroCode.toString()),
-            ),
+          DataLine(
+            textL: const Text('Metro code'),
+            textR: Text(snapshot.data!.metroCode.toString()),
           ),
-          DataCard(
-            child: DataLine(
-              textL: const Text('Region code'),
-              textR: Text(snapshot.data!.regionCode ?? 'N/A'),
-            ),
+          DataLine(
+            textL: const Text('Region code'),
+            textR: Text(snapshot.data!.regionCode ?? 'N/A'),
           ),
-          DataCard(
-            child: DataLine(
-              textL: const Text('Region name'),
-              textR: Text(snapshot.data!.regionName ?? 'N/A'),
-            ),
+          DataLine(
+            textL: const Text('Region name'),
+            textR: Text(snapshot.data!.regionName ?? 'N/A'),
           ),
-          DataCard(
-            child: DataLine(
-              textL: const Text('Time zone'),
-              textR: Text(snapshot.data!.timeZone ?? 'N/A'),
-            ),
+          DataLine(
+            textL: const Text('Time zone'),
+            textR: Text(snapshot.data!.timeZone ?? 'N/A'),
           ),
         ],
       ),
