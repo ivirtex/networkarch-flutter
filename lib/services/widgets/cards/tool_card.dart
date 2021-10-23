@@ -59,13 +59,7 @@ class ToolCard extends StatelessWidget {
               style: TextButton.styleFrom(
                 shape: const CircleBorder(),
                 primary: Colors.white,
-                backgroundColor: isDarkModeOn
-                    ? Platform.isAndroid
-                        ? Constants.darkBtnColor
-                        : Constants.iOSdarkBtnColor
-                    : Platform.isAndroid
-                        ? Constants.lightBtnColor
-                        : Constants.iOSlightBtnColor,
+                backgroundColor: Constants.getPlatformBtnColor(context),
               ),
               onPressed: onPressed as void Function()?,
               child: FaIcon(

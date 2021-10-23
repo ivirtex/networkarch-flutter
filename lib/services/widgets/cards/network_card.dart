@@ -71,13 +71,7 @@ class NetworkCard extends StatelessWidget {
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
-                  backgroundColor: isDarkModeOn
-                      ? Platform.isAndroid
-                          ? Constants.darkBtnColor
-                          : Constants.iOSdarkBtnColor
-                      : Platform.isAndroid
-                          ? Constants.lightBtnColor
-                          : Constants.iOSlightBtnColor,
+                  backgroundColor: Constants.getPlatformBtnColor(context),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

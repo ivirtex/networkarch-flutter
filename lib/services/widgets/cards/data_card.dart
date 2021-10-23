@@ -22,21 +22,13 @@ class DataCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
-
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
       margin: margin,
       elevation: Platform.isAndroid ? 1.0 : 0.0,
-      color: isDarkModeOn
-          ? Platform.isAndroid
-              ? Constants.darkBgColor
-              : Constants.iOSdarkBgColor
-          : Platform.isAndroid
-              ? Constants.lightBgColor
-              : Constants.iOSlightBgColor,
+      color: Constants.getPlatformBgColor(context),
       child: Padding(
         padding: padding,
         child: child,

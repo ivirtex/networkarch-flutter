@@ -81,6 +81,18 @@ abstract class Constants {
             : Constants.iOSlightBgColor;
   }
 
+  static Color getPlatformBtnColor(BuildContext context) {
+    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+
+    return isDarkModeOn
+        ? Platform.isAndroid
+            ? Constants.darkBtnColor
+            : Constants.iOSdarkBtnColor
+        : Platform.isAndroid
+            ? Constants.lightBtnColor
+            : Constants.iOSlightBtnColor;
+  }
+
   // Description styles
   static TextStyle descStyleLight = TextStyle(color: Colors.grey[600]);
 
