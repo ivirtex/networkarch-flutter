@@ -12,8 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/permissions_model.dart';
 import 'package:network_arch/models/toast_notification_model.dart';
-import 'package:network_arch/services/widgets/platform_widget.dart';
-import 'package:network_arch/services/widgets/shared_widgets.dart';
+import 'package:network_arch/shared/shared_widgets.dart';
 
 class PermissionsView extends StatefulWidget {
   const PermissionsView({Key? key}) : super(key: key);

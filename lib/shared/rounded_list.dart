@@ -22,7 +22,7 @@ class RoundedList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     for (var i = 1; i < children.length; i++) {
-      if ((i + 1) % 2 == 0) {
+      if ((i + 1).isEven) {
         children.insert(i, Constants.listDivider);
       }
     }

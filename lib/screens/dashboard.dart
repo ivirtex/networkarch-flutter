@@ -1,7 +1,6 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 
 // Package imports:
 import 'package:animate_do/animate_do.dart';
@@ -14,10 +13,8 @@ import 'package:network_arch/models/connectivity_model.dart';
 import 'package:network_arch/models/lan_scanner_model.dart';
 import 'package:network_arch/models/permissions_model.dart';
 import 'package:network_arch/models/toast_notification_model.dart';
-import 'package:network_arch/services/utils/enums.dart';
-import 'package:network_arch/services/widgets/drawer.dart';
-import 'package:network_arch/services/widgets/platform_widget.dart';
-import 'package:network_arch/services/widgets/shared_widgets.dart';
+import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/utils/enums.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -74,18 +71,8 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
-  Scaffold _buildAndroid(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Dashboard',
-        ),
-        iconTheme: Theme.of(context).iconTheme,
-        titleTextStyle: Theme.of(context).textTheme.headline6,
-      ),
-      drawer: const DrawerWidget(),
-      body: _buildBody(context),
-    );
+  FadeInUp _buildAndroid(BuildContext context) {
+    return _buildBody(context);
   }
 
   CupertinoPageScaffold _buildIOS(BuildContext context) {
@@ -119,6 +106,8 @@ class _DashboardState extends State<Dashboard> {
                   initialData: null,
                   builder:
                       (context, AsyncSnapshot<SynchronousWifiInfo?> snapshot) {
+                    // print('reloading wifi data');
+
                     if (snapshot.hasError) {
                       return const NetworkCard(
                         networkType: NetworkType.wifi,
@@ -148,48 +137,6 @@ class _DashboardState extends State<Dashboard> {
                         firstLine: Text(snapshot.data!.wifiSSID ?? 'N/A'),
                         onPressed: () {
                           Navigator.of(context).pushNamed('/wifi');
-                        },
-                      );
-                    }
-                  },
-                ),
-                StreamBuilder(
-                  stream:
-                      context.read<ConnectivityModel>().getCellularInfoStream,
-                  initialData: null,
-                  builder: (context,
-                      AsyncSnapshot<SynchronousCarrierInfo?> snapshot) {
-                    if (snapshot.hasError) {
-                      if (snapshot.error is NoSimCardException) {
-                        return const NetworkCard(
-                          networkType: NetworkType.cellular,
-                          snapshotHasError: true,
-                          firstLine: Text(Constants.simError),
-                        );
-                      } else {
-                        return const NetworkCard(
-                          networkType: NetworkType.cellular,
-                          snapshotHasError: true,
-                          firstLine: Text('N/A'),
-                        );
-                      }
-                    }
-
-                    if (!snapshot.hasData) {
-                      return const NetworkCard(
-                        networkType: NetworkType.cellular,
-                        firstLine: Text('N/A'),
-                      );
-                    } else {
-                      final bool isCellularConnected =
-                          snapshot.data!.carrierName != null;
-
-                      return NetworkCard(
-                        isNetworkConnected: isCellularConnected,
-                        networkType: NetworkType.cellular,
-                        firstLine: Text(snapshot.data!.carrierName ?? 'N/A'),
-                        onPressed: () {
-                          // TODO: Implement onTap()
                         },
                       );
                     }

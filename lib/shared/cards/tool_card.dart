@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -9,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
-import 'package:network_arch/services/widgets/cards/data_card.dart';
+import 'package:network_arch/shared/shared_widgets.dart';
 
 class ToolCard extends StatelessWidget {
   const ToolCard({

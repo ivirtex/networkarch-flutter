@@ -6,11 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/connectivity_model.dart';
-import 'package:network_arch/services/widgets/platform_widget.dart';
-import 'package:network_arch/services/widgets/rounded_list.dart';
-import 'package:network_arch/services/widgets/shared_widgets.dart';
+import 'package:network_arch/shared/shared_widgets.dart';
 
 class WiFiDetailView extends StatefulWidget {
   const WiFiDetailView({Key? key}) : super(key: key);

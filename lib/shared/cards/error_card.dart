@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
-import 'package:network_arch/services/widgets/cards/data_card.dart';
+import 'package:network_arch/shared/shared_widgets.dart';
 
 class ErrorCard extends StatelessWidget {
   const ErrorCard({

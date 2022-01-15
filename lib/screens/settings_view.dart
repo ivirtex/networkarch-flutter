@@ -8,7 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
-import 'package:network_arch/services/widgets/platform_widget.dart';
+import 'package:network_arch/shared/shared_widgets.dart';
 
 class Settings extends StatelessWidget {
   const Settings({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class Settings extends StatelessWidget {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
     return PlatformWidget(
-      androidBuilder: (context) => Scaffold(),
+      androidBuilder: (context) => const Scaffold(),
       iosBuilder: (context) => CupertinoPageScaffold(
         child: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [

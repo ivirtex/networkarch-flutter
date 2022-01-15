@@ -11,9 +11,8 @@ import 'package:network_arch/models/lan_scanner_model.dart';
 import 'package:network_arch/models/list_model.dart';
 import 'package:network_arch/models/toast_notification_model.dart';
 import 'package:network_arch/models/wake_on_lan_model.dart';
-import 'package:network_arch/services/utils/enums.dart';
-import 'package:network_arch/services/widgets/platform_widget.dart';
-import 'package:network_arch/services/widgets/shared_widgets.dart';
+import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/utils/enums.dart';
 
 class WakeOnLanView extends StatefulWidget {
   const WakeOnLanView({Key? key}) : super(key: key);

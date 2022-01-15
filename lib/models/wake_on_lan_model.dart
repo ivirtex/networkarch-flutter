@@ -9,7 +9,7 @@ import 'package:wake_on_lan/wake_on_lan.dart';
 
 // Project imports:
 import 'package:network_arch/models/list_model.dart';
-import 'package:network_arch/services/utils/enums.dart';
+import 'package:network_arch/utils/enums.dart';
 
 class WakeOnLanModel extends ChangeNotifier {
   late String ipv4;

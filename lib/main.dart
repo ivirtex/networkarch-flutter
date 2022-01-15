@@ -1,8 +1,5 @@
 // Flutter imports:
-
-// Flutter imports:
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -27,7 +24,7 @@ import 'package:network_arch/screens/ping_view.dart';
 import 'package:network_arch/screens/settings_view.dart';
 import 'package:network_arch/screens/wake_on_lan_view.dart';
 import 'package:network_arch/screens/wifi_detail_view.dart';
-import 'package:network_arch/services/widgets/platform_widget.dart';
+import 'package:network_arch/shared/shared_widgets.dart';
 
 void main() {
   // Provider.debugCheckInvalidValueType = null;
@@ -83,8 +80,16 @@ class NetworkArch extends StatelessWidget {
   }
 }
 
-class PlatformAdaptingHomePage extends StatelessWidget {
+class PlatformAdaptingHomePage extends StatefulWidget {
   const PlatformAdaptingHomePage({Key? key}) : super(key: key);
+
+  @override
+  State<PlatformAdaptingHomePage> createState() =>
+      _PlatformAdaptingHomePageState();
+}
+
+class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +100,31 @@ class PlatformAdaptingHomePage extends StatelessWidget {
   }
 
   Widget _androidBuilder(BuildContext context) {
-    return const Dashboard();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Dashboard'),
+        iconTheme: Theme.of(context).iconTheme,
+        titleTextStyle: Theme.of(context).textTheme.headline6,
+      ),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pages,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Overview',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: (index) => setState(() => _selectedIndex = index),
+      ),
+    );
   }
 
   Widget _iosBuilder(BuildContext context) {
@@ -117,13 +146,13 @@ class PlatformAdaptingHomePage extends StatelessWidget {
           case 0:
             return CupertinoTabView(
               defaultTitle: 'Dashboard',
-              routes: cupertinoRoutes,
+              routes: _cupertinoRoutes,
               builder: (context) => const Dashboard(),
             );
           case 1:
             return CupertinoTabView(
               defaultTitle: 'Settings',
-              routes: cupertinoRoutes,
+              routes: _cupertinoRoutes,
               builder: (context) => const Settings(),
             );
           default:
@@ -135,7 +164,12 @@ class PlatformAdaptingHomePage extends StatelessWidget {
   }
 }
 
-Map<String, Widget Function(BuildContext)> cupertinoRoutes = {
+const List<Widget> _pages = <Widget>[
+  Dashboard(),
+  Settings(),
+];
+
+Map<String, Widget Function(BuildContext)> _cupertinoRoutes = {
   '/permissions': (context) => const PermissionsView(),
   '/wifi': (context) => const WiFiDetailView(),
   '/cellular': (context) => const CellularDetailView(),

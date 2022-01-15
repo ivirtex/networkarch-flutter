@@ -7,16 +7,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_icmp_ping/flutter_icmp_ping.dart';
+import 'package:dart_ping/dart_ping.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:network_arch/models/list_model.dart';
 import 'package:network_arch/models/ping_model.dart';
-import 'package:network_arch/services/utils/keyboard_hider.dart';
-import 'package:network_arch/services/widgets/builders.dart';
-import 'package:network_arch/services/widgets/platform_widget.dart';
-import 'package:network_arch/services/widgets/shared_widgets.dart';
+import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/utils/keyboard_hider.dart';
 
 class PingView extends StatefulWidget {
   const PingView({Key? key}) : super(key: key);

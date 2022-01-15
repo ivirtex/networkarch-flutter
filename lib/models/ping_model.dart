@@ -2,7 +2,7 @@
 import 'package:flutter/foundation.dart';
 
 // Package imports:
-import 'package:flutter_icmp_ping/flutter_icmp_ping.dart';
+import 'package:dart_ping/dart_ping.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
@@ -39,13 +39,15 @@ class PingModel extends ChangeNotifier {
   }
 
   String getErrorDesc(PingError error) {
-    switch (error) {
-      case PingError.Unknown:
+    switch (error.error) {
+      case ErrorType.Unknown:
         return Constants.unknownError;
-      case PingError.UnknownHost:
+      case ErrorType.UnknownHost:
         return Constants.unknownHostError;
-      case PingError.RequestTimedOut:
+      case ErrorType.RequestTimedOut:
         return Constants.requestTimedOutError;
+      case ErrorType.NoReply:
+        return Constants.noReplyError;
     }
   }
 

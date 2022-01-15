@@ -12,7 +12,7 @@ import 'package:network_info_plus/network_info_plus.dart';
 
 class ConnectivityModel {
   late SynchronousWifiInfo globalWifiInfo;
-  late SynchronousCarrierInfo globalCarrierInfo;
+  late CarrierData globalCarrierInfo;
 
   Future<SynchronousWifiInfo> _getDataForIOS() async {
     return SynchronousWifiInfo(
@@ -40,6 +40,20 @@ class ConnectivityModel {
       wifiGateway: await NetworkInfo().getWifiGatewayIP(),
       wifiSubmask: await NetworkInfo().getWifiSubmask(),
     );
+  }
+
+  Future<CarrierData?> _getCellularData() async {
+    // return SynchronousCarrierInfo(
+    //   allowsVOIP: await CarrierInfo.allowsVOIP,
+    //   carrierName: await CarrierInfo.carrierName,
+    //   isoCountryCode: await CarrierInfo.isoCountryCode,
+    //   mobileCountryCode: await CarrierInfo.mobileCountryCode,
+    //   mobileNetworkCode: await CarrierInfo.mobileNetworkCode,
+    //   networkGeneration: await CarrierInfo.networkGeneration,
+    //   radioType: await CarrierInfo.radioType,
+    // );
+
+    return CarrierInfo.all;
   }
 
   Stream<SynchronousWifiInfo> _wifiInfoStream() {
@@ -85,34 +99,23 @@ class ConnectivityModel {
     return controller.stream;
   }
 
-  Stream<SynchronousCarrierInfo> _cellularInfoStream() {
-    late StreamController<SynchronousCarrierInfo> controller;
+  Stream<CarrierData> _cellularInfoStream() {
+    late StreamController<CarrierData> controller;
     Timer? timer;
 
+    CarrierData? carrierInfo;
+
     Future<void> fetchData(_) async {
-      SynchronousCarrierInfo carrierInfo;
+      //! Not working
+      carrierInfo = await _getCellularData();
 
-      try {
-        carrierInfo = SynchronousCarrierInfo(
-          allowsVOIP: await CarrierInfo.allowsVOIP,
-          carrierName: await CarrierInfo.carrierName,
-          isoCountryCode: await CarrierInfo.isoCountryCode,
-          mobileCountryCode: await CarrierInfo.mobileCountryCode,
-          mobileNetworkCode: await CarrierInfo.mobileNetworkCode,
-          networkGeneration: await CarrierInfo.networkGeneration,
-          radioType: await CarrierInfo.radioType,
-        );
-
-        controller.add(carrierInfo);
-      } on PlatformException catch (_) {
-        // print("exception catched: " + err.toString());
-
-        controller.addError(NoSimCardException());
-      }
+      carrierInfo != null
+          ? controller.add(carrierInfo!)
+          : controller.addError('Error fetching cellular data');
     }
 
     void startTimer() {
-      timer = Timer.periodic(const Duration(seconds: 1), fetchData);
+      timer = Timer.periodic(const Duration(seconds: 5), fetchData);
     }
 
     void stopTimer() {
@@ -120,7 +123,7 @@ class ConnectivityModel {
       timer = null;
     }
 
-    controller = StreamController<SynchronousCarrierInfo>(
+    controller = StreamController<CarrierData>(
       onCancel: stopTimer,
       onListen: startTimer,
       onPause: stopTimer,
@@ -134,7 +137,7 @@ class ConnectivityModel {
     return _wifiInfoStream();
   }
 
-  Stream<SynchronousCarrierInfo> get getCellularInfoStream {
+  Stream<CarrierData> get getCellularInfoStream {
     return _cellularInfoStream();
   }
 
@@ -179,25 +182,25 @@ class SynchronousWifiInfo {
   final String? wifiSubmask;
 }
 
-class SynchronousCarrierInfo {
-  SynchronousCarrierInfo({
-    required this.allowsVOIP,
-    this.carrierName,
-    this.isoCountryCode,
-    this.mobileCountryCode,
-    this.mobileNetworkCode,
-    this.networkGeneration,
-    this.radioType,
-  });
+// class SynchronousCarrierInfo {
+//   SynchronousCarrierInfo({
+//     required this.allowsVOIP,
+//     this.carrierName,
+//     this.isoCountryCode,
+//     this.mobileCountryCode,
+//     this.mobileNetworkCode,
+//     this.networkGeneration,
+//     this.radioType,
+//   });
 
-  final bool allowsVOIP;
-  final String? carrierName;
-  final String? isoCountryCode;
-  final String? mobileCountryCode;
-  final String? mobileNetworkCode;
-  final String? networkGeneration;
-  final String? radioType;
-}
+//   final bool allowsVOIP;
+//   final String? carrierName;
+//   final String? isoCountryCode;
+//   final String? mobileCountryCode;
+//   final String? mobileNetworkCode;
+//   final String? networkGeneration;
+//   final String? radioType;
+// }
 
 class PublicIpModel {
   PublicIpModel({this.ip});

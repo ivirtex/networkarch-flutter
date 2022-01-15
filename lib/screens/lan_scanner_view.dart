@@ -8,9 +8,8 @@ import 'package:toggle_switch/toggle_switch.dart';
 
 // Project imports:
 import 'package:network_arch/models/lan_scanner_model.dart';
-import 'package:network_arch/services/utils/enums.dart';
-import 'package:network_arch/services/widgets/builders.dart';
-import 'package:network_arch/services/widgets/shared_widgets.dart';
+import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/utils/enums.dart';
 
 //! Not really working yet.
 class LanScannerView extends StatefulWidget {
