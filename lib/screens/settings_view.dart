@@ -15,55 +15,40 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
-
     return PlatformWidget(
-      androidBuilder: (context) => const Scaffold(),
-      iosBuilder: (context) => CupertinoPageScaffold(
-        child: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) => [
-            const CupertinoSliverNavigationBar(
-              stretch: true,
-              border: null,
-              largeTitle: Text(
-                'Settings',
-              ),
-            )
-          ],
-          body: _buildBody(isDarkModeOn),
-        ),
+      androidBuilder: _buildAndroid,
+      iosBuilder: _buildIOS,
+    );
+  }
+
+  SingleChildScrollView _buildAndroid(BuildContext context) {
+    return SingleChildScrollView(
+      child: _buildBody(context),
+    );
+  }
+
+  CupertinoPageScaffold _buildIOS(BuildContext context) {
+    return CupertinoPageScaffold(
+      child: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          const CupertinoSliverNavigationBar(
+            stretch: true,
+            border: null,
+            largeTitle: Text(
+              'Settings',
+            ),
+          )
+        ],
+        body: _buildBody(context),
       ),
     );
   }
 
-  ListView _buildBody(bool isDarkModeOn) {
-    return ListView(
-      padding: const EdgeInsets.all(16),
+  RoundedList _buildBody(BuildContext context) {
+    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+
+    return RoundedList(
       children: [
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color:
-                isDarkModeOn ? Constants.darkBgColor : Constants.lightBgColor,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-            ),
-          ),
-          child: const Text('h'),
-        ),
-        const Divider(
-          indent: 30,
-          height: 1,
-        ),
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color:
-                isDarkModeOn ? Constants.darkBgColor : Constants.lightBgColor,
-          ),
-          child: const Text('h'),
-        ),
         ListTile(
           leading: FaIcon(
             FontAwesomeIcons.adjust,
@@ -71,6 +56,22 @@ class Settings extends StatelessWidget {
           ),
           title: const Text('Theme'),
           trailing: EasyDynamicThemeBtn(),
+        ),
+        ListTile(
+          leading: FaIcon(
+            FontAwesomeIcons.language,
+            color: isDarkModeOn ? Colors.white : Colors.black,
+          ),
+          title: const Text('Language'),
+          trailing: const Text('English'),
+        ),
+        ListTile(
+          leading: FaIcon(
+            FontAwesomeIcons.infoCircle,
+            color: isDarkModeOn ? Colors.white : Colors.black,
+          ),
+          title: const Text('About'),
+          // onTap: () => Navigator.pushNamed(context, '/about'),
         ),
       ],
     );

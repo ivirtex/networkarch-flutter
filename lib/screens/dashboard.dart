@@ -71,8 +71,10 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
-  FadeInUp _buildAndroid(BuildContext context) {
-    return _buildBody(context);
+  SingleChildScrollView _buildAndroid(BuildContext context) {
+    return SingleChildScrollView(
+      child: _buildBody(context),
+    );
   }
 
   CupertinoPageScaffold _buildIOS(BuildContext context) {
@@ -95,6 +97,8 @@ class _DashboardState extends State<Dashboard> {
   FadeInUp _buildBody(BuildContext context) {
     return FadeInUp(
       child: ListView(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -153,13 +157,13 @@ class _DashboardState extends State<Dashboard> {
                     Navigator.pushNamed(context, '/tools/ping', arguments: '');
                   },
                 ),
-                // ToolCard(
-                //   toolName: 'LAN Scanner',
-                //   toolDesc: Constants.lanScannerDesc,
-                //   onPressed: () {
-                //     Navigator.pushNamed(context, '/tools/lan');
-                //   },
-                // ),
+                ToolCard(
+                  toolName: 'LAN Scanner',
+                  toolDesc: Constants.lanScannerDesc,
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/tools/lan');
+                  },
+                ),
                 ToolCard(
                   toolName: 'Wake On LAN',
                   toolDesc: Constants.wolDesc,

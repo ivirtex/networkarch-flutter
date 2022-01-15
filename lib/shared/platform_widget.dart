@@ -21,9 +21,7 @@ class PlatformWidget extends StatelessWidget {
       case TargetPlatform.iOS:
         return iosBuilder(context);
       default:
-        assert(false, 'Unexpected platform $defaultTargetPlatform');
-
-        return const SizedBox.shrink();
+        throw 'Unexpected platform $defaultTargetPlatform';
     }
   }
 }

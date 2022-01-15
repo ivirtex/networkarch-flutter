@@ -12,7 +12,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 abstract class Constants {
   static ThemeData themeDataLight = ThemeData.light().copyWith(
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: lightBgColor,
     brightness: Brightness.light,
     appBarTheme: const AppBarTheme(
       centerTitle: true,
@@ -23,7 +23,7 @@ abstract class Constants {
   );
 
   static ThemeData themeDataDark = ThemeData.dark().copyWith(
-    scaffoldBackgroundColor: Colors.black,
+    scaffoldBackgroundColor: darkBgColor,
     brightness: Brightness.dark,
     appBarTheme: const AppBarTheme(
       centerTitle: true,
@@ -61,10 +61,10 @@ abstract class Constants {
   static Color darkBgColor = Colors.grey[900]!;
   static Color iOSdarkBgColor = CupertinoColors.systemGrey6.darkColor;
 
-  static Color lightBtnColor = Colors.grey[300]!;
+  static Color lightBtnColor = Colors.grey[200]!;
   static Color iOSlightBtnColor = CupertinoColors.systemGrey5.color;
 
-  static Color darkBtnColor = Colors.grey[800]!;
+  static Color darkBtnColor = Colors.grey[850]!;
   static Color iOSdarkBtnColor = CupertinoColors.systemGrey4.darkColor;
 
   static Color getPlatformBgColor(BuildContext context) {
