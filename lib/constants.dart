@@ -57,14 +57,17 @@ abstract class Constants {
   // Colors
   static Color lightBgColor = Colors.grey[100]!;
   static Color iOSlightBgColor = CupertinoColors.white;
-
   static Color darkBgColor = Colors.grey[900]!;
   static Color iOSdarkBgColor = CupertinoColors.systemGrey6.darkColor;
 
-  static Color lightBtnColor = Colors.grey[200]!;
-  static Color iOSlightBtnColor = CupertinoColors.systemGrey5.color;
+  static Color lightCardColor = Colors.grey[200]!;
+  static Color iOSlightCardColor = CupertinoColors.systemGrey5.color;
+  static Color darkCardColor = Colors.grey[850]!;
+  static Color iOSdarkCardColor = CupertinoColors.systemGrey5.darkColor;
 
-  static Color darkBtnColor = Colors.grey[850]!;
+  static Color lightBtnColor = Colors.grey[300]!;
+  static Color iOSlightBtnColor = CupertinoColors.systemGrey6.color;
+  static Color darkBtnColor = Colors.grey[800]!;
   static Color iOSdarkBtnColor = CupertinoColors.systemGrey4.darkColor;
 
   static Color getPlatformBgColor(BuildContext context) {
@@ -77,6 +80,18 @@ abstract class Constants {
         : Platform.isAndroid
             ? Constants.lightBgColor
             : Constants.iOSlightBgColor;
+  }
+
+  static Color getPlatformCardColor(BuildContext context) {
+    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+
+    return isDarkModeOn
+        ? Platform.isAndroid
+            ? Constants.darkCardColor
+            : Constants.iOSdarkCardColor
+        : Platform.isAndroid
+            ? Constants.lightCardColor
+            : Constants.iOSlightCardColor;
   }
 
   static Color getPlatformBtnColor(BuildContext context) {
@@ -229,7 +244,7 @@ abstract class Constants {
     instance.showToast(
       child: toastBody,
       gravity: ToastGravity.BOTTOM,
-      toastDuration: const Duration(seconds: 4),
+      toastDuration: const Duration(seconds: 3),
     );
   }
 

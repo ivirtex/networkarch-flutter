@@ -35,7 +35,7 @@ class RoundedList extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
         ),
         elevation: Platform.isAndroid ? 1.0 : 0.0,
-        color: bgColor ?? Constants.getPlatformBtnColor(context),
+        color: bgColor ?? Constants.getPlatformCardColor(context),
         child: ListView(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,

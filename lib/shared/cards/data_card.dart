@@ -27,7 +27,7 @@ class DataCard extends StatelessWidget {
       ),
       margin: margin,
       elevation: Platform.isAndroid ? 1.0 : 0.0,
-      color: Constants.getPlatformBtnColor(context),
+      color: Constants.getPlatformCardColor(context),
       child: Padding(
         padding: padding,
         child: child,

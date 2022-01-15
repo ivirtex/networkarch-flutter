@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -29,22 +30,30 @@ import 'package:network_arch/shared/shared_widgets.dart';
 void main() {
   // Provider.debugCheckInvalidValueType = null;
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => PingModel()),
-        ChangeNotifierProvider(create: (context) => LanScannerModel()),
-        ChangeNotifierProvider(create: (context) => WakeOnLanModel()),
-        ChangeNotifierProvider(create: (context) => PermissionsModel()),
-        ChangeNotifierProvider(create: (context) => IPGeoModel()),
-        Provider(create: (context) => ConnectivityModel()),
-        Provider(create: (context) => ToastNotificationModel()),
-      ],
-      child: EasyDynamicThemeWidget(
-        child: const NetworkArch(),
-      ),
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.transparent,
     ),
   );
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge).then((_) {
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => PingModel()),
+          ChangeNotifierProvider(create: (context) => LanScannerModel()),
+          ChangeNotifierProvider(create: (context) => WakeOnLanModel()),
+          ChangeNotifierProvider(create: (context) => PermissionsModel()),
+          ChangeNotifierProvider(create: (context) => IPGeoModel()),
+          Provider(create: (context) => ConnectivityModel()),
+          Provider(create: (context) => ToastNotificationModel()),
+        ],
+        child: EasyDynamicThemeWidget(
+          child: const NetworkArch(),
+        ),
+      ),
+    );
+  });
 }
 
 class NetworkArch extends StatelessWidget {
@@ -101,10 +110,15 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
 
   Widget _androidBuilder(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       appBar: AppBar(
         title: const Text('Dashboard'),
         iconTheme: Theme.of(context).iconTheme,
         titleTextStyle: Theme.of(context).textTheme.headline6,
+        // systemOverlayStyle: const SystemUiOverlayStyle(
+        //   systemNavigationBarDividerColor: Colors.white,
+        //   systemNavigationBarColor: Colors.white,
+        // ),
       ),
       body: IndexedStack(
         index: _selectedIndex,
