@@ -71,6 +71,7 @@ class Settings extends StatelessWidget {
             color: isDarkModeOn ? Colors.white : Colors.black,
           ),
           title: const Text('About'),
+          trailing: const Text('Version 1.0.0'),
           // onTap: () => Navigator.pushNamed(context, '/about'),
         ),
       ],

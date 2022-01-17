@@ -1,8 +1,3 @@
-enum ScannerMode {
-  quick,
-  precise,
-}
-
 enum NetworkType {
   wifi,
   cellular,

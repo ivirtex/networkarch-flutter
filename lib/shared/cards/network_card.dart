@@ -30,6 +30,7 @@ class NetworkCard extends StatelessWidget {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
     return DataCard(
+      margin: EdgeInsetsDirectional.zero,
       child: Column(
         children: [
           Row(

@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:lan_scanner/lan_scanner.dart';
 import 'package:provider/provider.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 // Project imports:
 import 'package:network_arch/models/lan_scanner_model.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
-import 'package:network_arch/utils/enums.dart';
 
 //! Not really working yet.
 class LanScannerView extends StatefulWidget {
@@ -53,23 +51,6 @@ class _LanScannerViewState extends State<LanScannerView> {
             ),
       body: Column(
         children: [
-          ToggleSwitch(
-            totalSwitches: 2,
-            initialLabelIndex: lanModel.mode == ScannerMode.quick ? 0 : 1,
-            inactiveBgColor: Colors.grey[800],
-            activeBgColor: [Colors.grey[900]!],
-            activeFgColor: Colors.white,
-            labels: const ['Quick', 'Precise'],
-            onToggle: (index) {
-              print('Switched to $index');
-
-              if (index == 0) {
-                lanModel.mode = ScannerMode.quick;
-              } else {
-                lanModel.mode = ScannerMode.precise;
-              }
-            },
-          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: LinearProgressIndicator(
@@ -82,7 +63,7 @@ class _LanScannerViewState extends State<LanScannerView> {
               stream: context.read<LanScannerModel>().getStream(),
               initialData: null,
               builder:
-                  (BuildContext context, AsyncSnapshot<DeviceModel?> snapshot) {
+                  (BuildContext context, AsyncSnapshot<HostModel?> snapshot) {
                 if (snapshot.hasError) {
                   // print(snapshot.error);
                 }
@@ -117,18 +98,18 @@ class _LanScannerViewState extends State<LanScannerView> {
         shrinkWrap: true,
         itemCount: model.hosts.length,
         itemBuilder: (context, index) {
-          final DeviceModel currData = model.hosts.elementAt(index);
+          final HostModel currData = model.hosts.elementAt(index);
 
           return Card(
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             child: ListTile(
-              leading: StatusCard(
-                color: currData.exists ? Colors.greenAccent : Colors.redAccent,
-                text: currData.exists ? 'Online' : 'Offline',
+              leading: const StatusCard(
+                color: Colors.greenAccent,
+                text: 'Online',
               ),
-              title: Text(currData.ip ?? 'N/A'),
+              title: Text(currData.ip),
             ),
           );
         },

@@ -372,7 +372,7 @@ packages:
       name: lan_scanner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "3.1.1"
   lint:
     dependency: "direct dev"
     description:

@@ -157,12 +157,18 @@ class _DashboardState extends State<Dashboard> {
                     Navigator.pushNamed(context, '/tools/ping', arguments: '');
                   },
                 ),
+                SizedBox(
+                  height: Constants.listSpacing,
+                ),
                 ToolCard(
                   toolName: 'LAN Scanner',
                   toolDesc: Constants.lanScannerDesc,
                   onPressed: () {
                     Navigator.pushNamed(context, '/tools/lan');
                   },
+                ),
+                SizedBox(
+                  height: Constants.listSpacing,
                 ),
                 ToolCard(
                   toolName: 'Wake On LAN',
@@ -171,12 +177,18 @@ class _DashboardState extends State<Dashboard> {
                     Navigator.pushNamed(context, '/tools/wol');
                   },
                 ),
+                SizedBox(
+                  height: Constants.listSpacing,
+                ),
                 ToolCard(
                   toolName: 'IP Geolocation',
                   toolDesc: Constants.ipGeoDesc,
                   onPressed: () {
                     Navigator.pushNamed(context, '/tools/ip_geo');
                   },
+                ),
+                SizedBox(
+                  height: Constants.listSpacing,
                 ),
                 ToolCard(
                   toolName: 'Whois',
@@ -189,6 +201,9 @@ class _DashboardState extends State<Dashboard> {
                       Constants.permissionGrantedToast,
                     );
                   },
+                ),
+                SizedBox(
+                  height: Constants.listSpacing,
                 ),
                 ToolCard(
                   toolName: 'DNS Lookup',

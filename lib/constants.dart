@@ -48,6 +48,8 @@ abstract class Constants {
   // Styles
   static EdgeInsets listPadding = const EdgeInsets.all(10.0);
 
+  static double listSpacing = 10.0;
+
   static Divider listDivider = const Divider(
     height: 2,
     indent: 10,
