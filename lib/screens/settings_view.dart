@@ -7,7 +7,6 @@ import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
 class Settings extends StatelessWidget {

@@ -37,6 +37,7 @@ class RoundedList extends StatelessWidget {
         elevation: Platform.isAndroid ? 1.0 : 0.0,
         color: bgColor ?? Constants.getPlatformCardColor(context),
         child: ListView(
+          padding: EdgeInsets.zero,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           children: children,
