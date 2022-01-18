@@ -28,8 +28,6 @@ import 'package:network_arch/screens/wifi_detail_view.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
 void main() {
-  // Provider.debugCheckInvalidValueType = null;
-
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(

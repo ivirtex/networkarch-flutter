@@ -94,134 +94,132 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
-  FadeInUp _buildBody(BuildContext context) {
-    return FadeInUp(
-      child: ListView(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                StreamBuilder(
-                  stream: context.read<ConnectivityModel>().getWifiInfoStream,
-                  initialData: null,
-                  builder:
-                      (context, AsyncSnapshot<SynchronousWifiInfo?> snapshot) {
-                    // print('reloading wifi data');
+  ListView _buildBody(BuildContext context) {
+    return ListView(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              StreamBuilder(
+                stream: context.read<ConnectivityModel>().getWifiInfoStream,
+                initialData: null,
+                builder:
+                    (context, AsyncSnapshot<SynchronousWifiInfo?> snapshot) {
+                  // print('reloading wifi data');
 
-                    if (snapshot.hasError) {
-                      return const NetworkCard(
-                        networkType: NetworkType.wifi,
-                        snapshotHasError: true,
-                        firstLine: Text('N/A'),
-                      );
+                  if (snapshot.hasError) {
+                    return const NetworkCard(
+                      networkType: NetworkType.wifi,
+                      snapshotHasError: true,
+                      firstLine: Text('N/A'),
+                    );
+                  }
+
+                  if (!snapshot.hasData) {
+                    return const NetworkCard(
+                      networkType: NetworkType.wifi,
+                      firstLine: Text('N/A'),
+                    );
+                  } else {
+                    final bool isWifiConnected =
+                        snapshot.data!.wifiIPv4 != null;
+
+                    if (isWifiConnected) {
+                      final model = context.read<LanScannerModel>();
+
+                      model.configure(ip: snapshot.data!.wifiIPv4);
                     }
 
-                    if (!snapshot.hasData) {
-                      return const NetworkCard(
-                        networkType: NetworkType.wifi,
-                        firstLine: Text('N/A'),
-                      );
-                    } else {
-                      final bool isWifiConnected =
-                          snapshot.data!.wifiIPv4 != null;
-
-                      if (isWifiConnected) {
-                        final model = context.read<LanScannerModel>();
-
-                        model.configure(ip: snapshot.data!.wifiIPv4);
-                      }
-
-                      return NetworkCard(
-                        isNetworkConnected: isWifiConnected,
-                        networkType: NetworkType.wifi,
-                        firstLine: Text(snapshot.data!.wifiSSID ?? 'N/A'),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed('/wifi');
-                        },
-                      );
-                    }
-                  },
-                ),
-                const Divider(
-                  indent: 15,
-                  endIndent: 15,
-                ),
-                ToolCard(
-                  toolName: 'Ping',
-                  toolDesc: Constants.pingDesc,
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/tools/ping', arguments: '');
-                  },
-                ),
-                SizedBox(
-                  height: Constants.listSpacing,
-                ),
-                ToolCard(
-                  toolName: 'LAN Scanner',
-                  toolDesc: Constants.lanScannerDesc,
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/tools/lan');
-                  },
-                ),
-                SizedBox(
-                  height: Constants.listSpacing,
-                ),
-                ToolCard(
-                  toolName: 'Wake On LAN',
-                  toolDesc: Constants.wolDesc,
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/tools/wol');
-                  },
-                ),
-                SizedBox(
-                  height: Constants.listSpacing,
-                ),
-                ToolCard(
-                  toolName: 'IP Geolocation',
-                  toolDesc: Constants.ipGeoDesc,
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/tools/ip_geo');
-                  },
-                ),
-                SizedBox(
-                  height: Constants.listSpacing,
-                ),
-                ToolCard(
-                  toolName: 'Whois',
-                  toolDesc: Constants.whoisDesc,
-                  onPressed: () {
-                    // TODO: Implement onTap()
-
-                    Constants.showToast(
-                      context.read<ToastNotificationModel>().fToast,
-                      Constants.permissionGrantedToast,
+                    return NetworkCard(
+                      isNetworkConnected: isWifiConnected,
+                      networkType: NetworkType.wifi,
+                      firstLine: Text(snapshot.data!.wifiSSID ?? 'N/A'),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/wifi');
+                      },
                     );
-                  },
-                ),
-                SizedBox(
-                  height: Constants.listSpacing,
-                ),
-                ToolCard(
-                  toolName: 'DNS Lookup',
-                  toolDesc: Constants.dnsDesc,
-                  onPressed: () {
-                    // TODO: Implement onTap()
+                  }
+                },
+              ),
+              const Divider(
+                indent: 15,
+                endIndent: 15,
+              ),
+              ToolCard(
+                toolName: 'Ping',
+                toolDesc: Constants.pingDesc,
+                onPressed: () {
+                  Navigator.pushNamed(context, '/tools/ping', arguments: '');
+                },
+              ),
+              SizedBox(
+                height: Constants.listSpacing,
+              ),
+              ToolCard(
+                toolName: 'LAN Scanner',
+                toolDesc: Constants.lanScannerDesc,
+                onPressed: () {
+                  Navigator.pushNamed(context, '/tools/lan');
+                },
+              ),
+              SizedBox(
+                height: Constants.listSpacing,
+              ),
+              ToolCard(
+                toolName: 'Wake On LAN',
+                toolDesc: Constants.wolDesc,
+                onPressed: () {
+                  Navigator.pushNamed(context, '/tools/wol');
+                },
+              ),
+              SizedBox(
+                height: Constants.listSpacing,
+              ),
+              ToolCard(
+                toolName: 'IP Geolocation',
+                toolDesc: Constants.ipGeoDesc,
+                onPressed: () {
+                  Navigator.pushNamed(context, '/tools/ip_geo');
+                },
+              ),
+              SizedBox(
+                height: Constants.listSpacing,
+              ),
+              ToolCard(
+                toolName: 'Whois',
+                toolDesc: Constants.whoisDesc,
+                onPressed: () {
+                  // TODO: Implement onTap()
 
-                    Constants.showToast(
-                      context.read<ToastNotificationModel>().fToast,
-                      Constants.permissionDeniedToast,
-                    );
-                  },
-                ),
-              ],
-            ),
+                  Constants.showToast(
+                    context.read<ToastNotificationModel>().fToast,
+                    Constants.permissionGrantedToast,
+                  );
+                },
+              ),
+              SizedBox(
+                height: Constants.listSpacing,
+              ),
+              ToolCard(
+                toolName: 'DNS Lookup',
+                toolDesc: Constants.dnsDesc,
+                onPressed: () {
+                  // TODO: Implement onTap()
+
+                  Constants.showToast(
+                    context.read<ToastNotificationModel>().fToast,
+                    Constants.permissionDeniedToast,
+                  );
+                },
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -50,45 +50,40 @@ class NetworkCard extends StatelessWidget {
               )
             ],
           ),
-          const SizedBox(height: 5.0),
-          Column(
+          const SizedBox(height: 15.0),
+          Row(
             children: [
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  Text(networkType == NetworkType.wifi ? 'SSID' : 'Carrier'),
-                  const Spacer(),
-                  firstLine,
-                ],
-              ),
-              const SizedBox(height: 10),
-              TextButton(
-                onPressed: onPressed as void Function()?,
-                style: TextButton.styleFrom(
-                  primary: isDarkModeOn ? Colors.white : Colors.black,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  backgroundColor: Constants.getPlatformBtnColor(context),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const SizedBox(),
-                    Text(
-                      'Detailed view',
-                      style: TextStyle(
-                        color: isDarkModeOn ? Colors.white : Colors.black,
-                      ),
-                    ),
-                    FaIcon(
-                      FontAwesomeIcons.arrowCircleRight,
-                      color: isDarkModeOn ? Colors.white : Colors.black,
-                    )
-                  ],
-                ),
-              ),
+              Text(networkType == NetworkType.wifi ? 'SSID' : 'Carrier'),
+              const Spacer(),
+              firstLine,
             ],
+          ),
+          const SizedBox(height: 10),
+          TextButton(
+            onPressed: onPressed as void Function()?,
+            style: TextButton.styleFrom(
+              primary: isDarkModeOn ? Colors.white : Colors.black,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              backgroundColor: Constants.getPlatformBtnColor(context),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox(),
+                Text(
+                  'Detailed view',
+                  style: TextStyle(
+                    color: isDarkModeOn ? Colors.white : Colors.black,
+                  ),
+                ),
+                FaIcon(
+                  FontAwesomeIcons.arrowCircleRight,
+                  color: isDarkModeOn ? Colors.white : Colors.black,
+                )
+              ],
+            ),
           )
         ],
       ),
@@ -100,6 +95,8 @@ Row _buildConnectionState({
   required bool? isNetworkConnected,
   required bool? snapshotHasError,
 }) {
+  const double iconSize = 20.0;
+
   if (isNetworkConnected != null) {
     return Row(
       children: [
@@ -111,10 +108,9 @@ Row _buildConnectionState({
           ),
         ),
         const SizedBox(width: 10.0),
-        FaIcon(
-          isNetworkConnected
-              ? FontAwesomeIcons.checkCircle
-              : FontAwesomeIcons.timesCircle,
+        Icon(
+          isNetworkConnected ? Icons.check_circle : Icons.cancel,
+          size: iconSize,
           color: isNetworkConnected ? Colors.green : Colors.red,
         )
       ],
@@ -130,9 +126,9 @@ Row _buildConnectionState({
           ),
         ),
         SizedBox(width: 10.0),
-        FaIcon(
-          FontAwesomeIcons.timesCircle,
-          color: Colors.red,
+        Icon(
+          Icons.cancel,
+          size: iconSize,
         )
       ],
     );
@@ -148,8 +144,8 @@ Row _buildConnectionState({
         ),
         SizedBox(width: 10.0),
         SizedBox(
-          height: 20.0,
-          width: 20.0,
+          height: 10.0,
+          width: 10.0,
           child: Center(
             child: CircularProgressIndicator.adaptive(),
           ),
