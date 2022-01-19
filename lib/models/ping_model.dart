@@ -1,12 +1,13 @@
 // Flutter imports:
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
 
 // Package imports:
 import 'package:dart_ping/dart_ping.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
-import 'package:network_arch/models/list_model.dart';
+import 'package:network_arch/models/animated_list_model.dart';
+import 'package:network_arch/utils/keyboard_hider.dart';
 
 class PingModel extends ChangeNotifier {
   Ping _ping = Ping('');
@@ -15,11 +16,11 @@ class PingModel extends ChangeNotifier {
   late AnimatedListModel<PingData?> pingData;
   String? _host;
 
-  void setHost(String? host) {
-    _ping = Ping(host ?? '');
+  void setHost(String host) {
+    _ping = Ping(host);
     _host = host;
 
-    notifyListeners();
+    // notifyListeners();
   }
 
   String? get getHost => _host;
@@ -53,5 +54,31 @@ class PingModel extends ChangeNotifier {
 
   Stream<PingData> getStream() {
     return _ping.stream.asBroadcastStream();
+  }
+
+  void handleStartButtonPressed(
+    BuildContext context,
+    TextEditingController controller,
+  ) {
+    hideKeyboard(context);
+
+    pingData.removeAllElements(context);
+
+    setHost(controller.text);
+    isPingingStarted = true;
+
+    final stream = getStream();
+    stream.listen((PingData event) {
+      pingData.insert(pingData.length, event);
+    });
+
+    controller.clear();
+  }
+
+  void handleStopButtonPressed() {
+    _ping.stop();
+    isPingingStarted = false;
+
+    notifyListeners();
   }
 }

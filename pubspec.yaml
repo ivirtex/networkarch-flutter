@@ -26,31 +26,30 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons:
-  carrier_info:
-  dart_ping:
-  dart_ping_ios:
-  easy_dynamic_theme:
-  fluttertoast:
-  font_awesome_flutter:
-  google_maps_flutter:
-  lan_scanner:
-  http:
-  network_info_plus:
-  permission_handler:
-  provider:
-  styled_widget:
-  shared_preferences:
-  toggle_switch:
-  animate_do:
-  wake_on_lan:
-  # device_preview: ^0.8.0
+  cupertino_icons: ^1.0.4
+  carrier_info: ^2.0.4
+  dart_ping: ^6.1.1
+  dart_ping_ios: ^1.0.0
+  easy_dynamic_theme: ^2.2.0
+  fluttertoast: ^8.0.8
+  font_awesome_flutter: ^9.2.0
+  google_maps_flutter: ^2.1.1
+  lan_scanner: ^3.1.1
+  http: ^0.13.4
+  network_info_plus: ^2.1.2
+  permission_handler: ^8.3.0
+  provider: ^6.0.2
+  styled_widget: ^0.4.0+3
+  shared_preferences: ^2.0.12
+  animate_do: ^2.1.0
+  wake_on_lan: ^2.0.2+1
+  device_preview: ^1.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  build_runner:
+  build_runner: ^2.1.7
   import_sorter: ^4.6.0
   lint: ^1.8.1
 

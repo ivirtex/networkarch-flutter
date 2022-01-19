@@ -11,10 +11,9 @@ import 'package:dart_ping/dart_ping.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:network_arch/models/list_model.dart';
+import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/models/ping_model.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
-import 'package:network_arch/utils/keyboard_hider.dart';
 
 class PingView extends StatefulWidget {
   const PingView({Key? key}) : super(key: key);
@@ -67,126 +66,6 @@ class _PingViewState extends State<PingView>
     );
   }
 
-  Widget _buildItem(
-    BuildContext context,
-    Animation<double> animation,
-    PingData? item,
-  ) {
-    final pingModel = context.read<PingModel>();
-
-    print('building for $item element');
-
-    if (item!.error != null) {
-      return FadeTransition(
-        opacity: animation.drive(pingModel.pingData.fadeTween),
-        child: SlideTransition(
-          position: animation.drive(pingModel.pingData.slideTween),
-          child: DataCard(
-            padding: EdgeInsets.zero,
-            child: ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-              leading: const StatusCard(
-                color: Colors.red,
-                text: 'Error',
-              ),
-              title: Text(
-                pingModel.getHost ?? 'N/A',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Seq. pos.: ${pingModel.pingData.indexOf(item) + 1}'),
-                  const Text('TTL: N/A'),
-                ],
-              ),
-              trailing: SizedBox(
-                width: 110,
-                child: Text(
-                  pingModel.getErrorDesc(item.error!),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
-    if (item.response != null) {
-      return FadeTransition(
-        opacity: animation.drive(pingModel.pingData.fadeTween),
-        child: SlideTransition(
-          position: animation.drive(pingModel.pingData.slideTween),
-          child: DataCard(
-            padding: EdgeInsets.zero,
-            child: ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-              leading: const StatusCard(
-                color: Colors.green,
-                text: 'Online',
-              ),
-              title: Text(
-                item.response!.ip!,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Seq. pos.: ${item.response!.seq.toString()} '),
-                  Text('TTL: ${item.response!.ttl.toString()}')
-                ],
-              ),
-              trailing: Text(
-                '${item.response!.time!.inMilliseconds.toString()} ms',
-              ),
-            ),
-          ),
-        ),
-      );
-    } else {
-      return const SizedBox();
-    }
-  }
-
-  void _handleStopButtonPressed(BuildContext context) {
-    final PingModel pingModel = context.read<PingModel>();
-
-    setState(() {
-      pingModel.stopStream();
-      pingModel.isPingingStarted = false;
-    });
-  }
-
-  Future<void> _handleStartButtonPressed(BuildContext context) async {
-    hideKeyboard(context);
-
-    final PingModel pingModel = context.read<PingModel>();
-
-    await pingModel.pingData.removeAllElements(context);
-
-    setState(() {
-      pingModel.setHost(
-        targetHostController.text.isEmpty ? null : targetHostController.text,
-      );
-      pingModel.isPingingStarted = true;
-    });
-
-    final stream = pingModel.getStream();
-
-    stream.listen((PingData event) {
-      // final int length =
-      //     pingModel.pingData.length == 0 ? 0 : pingModel.pingData.length - 1;
-
-      pingModel.pingData.insert(pingModel.pingData.length, event);
-    });
-
-    targetHostController.clear();
-  }
-
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: context.read<PingModel>().isPingingStarted
@@ -195,14 +74,18 @@ class _PingViewState extends State<PingView>
               title: 'Ping',
               action: ButtonActions.stop,
               isActive: true,
-              onPressed: () => _handleStopButtonPressed(context),
+              onPressed: context.read<PingModel>().handleStopButtonPressed,
             )
           : Builders.switchableAppBar(
               context: context,
               title: 'Ping',
               action: ButtonActions.start,
               isActive: targetHostController.text.isNotEmpty,
-              onPressed: () => _handleStartButtonPressed(context),
+              onPressed: () =>
+                  context.read<PingModel>().handleStartButtonPressed(
+                        context,
+                        targetHostController,
+                      ),
             ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
@@ -219,7 +102,11 @@ class _PingViewState extends State<PingView>
             trailing: CupertinoButton(
               padding: EdgeInsets.zero,
               child: const Text('Ping'),
-              onPressed: () => _handleStartButtonPressed(context),
+              onPressed: () =>
+                  context.read<PingModel>().handleStartButtonPressed(
+                        context,
+                        targetHostController,
+                      ),
             ),
             stretch: true,
             border: null,
@@ -269,7 +156,8 @@ class _PingViewState extends State<PingView>
               ),
               const SizedBox(width: 10),
               TextButton(
-                onPressed: context.watch<PingModel>().isPingingStarted
+                onPressed: context.watch<PingModel>().isPingingStarted ||
+                        context.read<PingModel>().pingData.isEmpty
                     ? null
                     : () => context
                         .read<PingModel>()
@@ -296,5 +184,92 @@ class _PingViewState extends State<PingView>
         ],
       ),
     );
+  }
+
+  Widget _buildItem(
+    BuildContext context,
+    Animation<double> animation,
+    PingData? item,
+  ) {
+    final pingModel = context.read<PingModel>();
+
+    // print('building for $item element');
+
+    if (item!.error != null) {
+      return FadeTransition(
+        opacity: animation.drive(pingModel.pingData.fadeTween),
+        child: SlideTransition(
+          position: animation.drive(pingModel.pingData.slideTween),
+          child: DataCard(
+            padding: EdgeInsets.zero,
+            margin: EdgeInsets.zero,
+            child: ListTile(
+              contentPadding: const EdgeInsets.only(left: 8.0, right: 16.0),
+              leading: const StatusCard(
+                color: Colors.red,
+                text: 'Error',
+              ),
+              title: Text(
+                pingModel.getHost ?? 'N/A',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Seq. pos.: ${pingModel.pingData.indexOf(item) + 1}'),
+                  const Text('TTL: N/A'),
+                ],
+              ),
+              trailing: SizedBox(
+                width: 110,
+                child: Text(
+                  pingModel.getErrorDesc(item.error!),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    if (item.response != null) {
+      return FadeTransition(
+        opacity: animation.drive(pingModel.pingData.fadeTween),
+        child: SlideTransition(
+          position: animation.drive(pingModel.pingData.slideTween),
+          child: DataCard(
+            padding: EdgeInsets.zero,
+            margin: const EdgeInsets.symmetric(vertical: 5.0),
+            child: ListTile(
+              contentPadding: const EdgeInsets.only(left: 8.0, right: 16.0),
+              leading: const StatusCard(
+                color: Colors.green,
+                text: 'Online',
+              ),
+              title: Text(
+                item.response!.ip!,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Seq. pos.: ${item.response!.seq.toString()} '),
+                  Text('TTL: ${item.response!.ttl.toString()}')
+                ],
+              ),
+              trailing: Text(
+                '${item.response!.time!.inMilliseconds.toString()} ms',
+              ),
+            ),
+          ),
+        ),
+      );
+    } else {
+      return const SizedBox();
+    }
   }
 }

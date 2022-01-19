@@ -105,9 +105,10 @@ Row _buildConnectionState({
           style: TextStyle(
             color: isNetworkConnected ? Colors.green : Colors.red,
             fontWeight: FontWeight.bold,
+            fontSize: 16.0,
           ),
         ),
-        const SizedBox(width: 10.0),
+        const SizedBox(width: 5.0),
         Icon(
           isNetworkConnected ? Icons.check_circle : Icons.cancel,
           size: iconSize,
@@ -123,9 +124,10 @@ Row _buildConnectionState({
           style: TextStyle(
             color: Colors.red,
             fontWeight: FontWeight.bold,
+            fontSize: 16.0,
           ),
         ),
-        SizedBox(width: 10.0),
+        SizedBox(width: 5.0),
         Icon(
           Icons.cancel,
           size: iconSize,
@@ -140,9 +142,10 @@ Row _buildConnectionState({
           style: TextStyle(
             color: Colors.blue,
             fontWeight: FontWeight.bold,
+            fontSize: 16.0,
           ),
         ),
-        SizedBox(width: 10.0),
+        SizedBox(width: 5.0),
         SizedBox(
           height: 10.0,
           width: 10.0,

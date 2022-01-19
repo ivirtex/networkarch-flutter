@@ -111,7 +111,9 @@ class _WiFiDetailViewState extends State<WiFiDetailView> {
                   height: 15.0,
                   width: 15.0,
                   child: Center(
-                    child: CircularProgressIndicator.adaptive(),
+                    child: CircularProgressIndicator.adaptive(
+                      strokeWidth: 2.5,
+                    ),
                   ),
                 );
               }

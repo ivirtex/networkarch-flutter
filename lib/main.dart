@@ -34,6 +34,7 @@ void main() {
       systemNavigationBarColor: Colors.transparent,
     ),
   );
+
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge).then((_) {
     runApp(
       MultiProvider(
