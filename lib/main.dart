@@ -1,9 +1,11 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:device_preview/device_preview.dart';
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:provider/provider.dart';
 
@@ -64,6 +66,8 @@ class NetworkArch extends StatelessWidget {
     // debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
     return MaterialApp(
+      // useInheritedMediaQuery: true,
+      // locale: DevicePreview.locale(context),
       title: 'Dashboard',
       theme: Constants.themeDataLight,
       darkTheme: Constants.themeDataDark,

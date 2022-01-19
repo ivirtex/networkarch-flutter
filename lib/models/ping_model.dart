@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:async';
+
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 
@@ -14,6 +17,8 @@ class PingModel extends ChangeNotifier {
 
   bool isPingingStarted = false;
   late AnimatedListModel<PingData?> pingData;
+  Stream<PingData>? _stream;
+  StreamSubscription<PingData>? _subscription;
   String? _host;
 
   void setHost(String host) {
@@ -35,8 +40,8 @@ class PingModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void stopStream() {
-    _ping.stop();
+  void onDispose() {
+    _subscription?.cancel();
   }
 
   String getErrorDesc(PingError error) {
@@ -67,8 +72,8 @@ class PingModel extends ChangeNotifier {
     setHost(controller.text);
     isPingingStarted = true;
 
-    final stream = getStream();
-    stream.listen((PingData event) {
+    _stream = getStream();
+    _subscription = _stream!.listen((PingData event) {
       pingData.insert(pingData.length, event);
     });
 

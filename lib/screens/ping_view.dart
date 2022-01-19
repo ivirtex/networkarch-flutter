@@ -55,7 +55,7 @@ class _PingViewState extends State<PingView>
     super.dispose();
 
     targetHostController.dispose();
-    provider.stopStream();
+    provider.onDispose();
   }
 
   @override
