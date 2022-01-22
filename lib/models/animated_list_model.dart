@@ -1,7 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-typedef ItemBuilder<T> = Widget Function(
+typedef RemovedItemBuilder<T> = Widget Function(
   BuildContext context,
   Animation<double> animation,
   T item,
@@ -10,12 +10,12 @@ typedef ItemBuilder<T> = Widget Function(
 class AnimatedListModel<T> {
   AnimatedListModel({
     required this.listKey,
-    required this.itemBuilder,
+    required this.removedItemBuilder,
     Iterable<T>? initialItems,
   }) : _items = List<T>.from(initialItems ?? <T>[]);
 
   final GlobalKey<AnimatedListState> listKey;
-  final ItemBuilder<T> itemBuilder;
+  final RemovedItemBuilder<T> removedItemBuilder;
   final List<T> _items;
 
   final Animatable<Offset> slideTween = Tween<Offset>(
@@ -57,7 +57,7 @@ class AnimatedListModel<T> {
       _animatedListState!.removeItem(
         index,
         (BuildContext context, Animation<double> animation) {
-          return itemBuilder(context, animation, removedItem);
+          return removedItemBuilder(context, animation, removedItem);
         },
       );
     }
@@ -76,7 +76,8 @@ class AnimatedListModel<T> {
 
       _animatedListState!.removeItem(
         i,
-        (context, animation) => itemBuilder(context, animation, removedItem),
+        (context, animation) =>
+            removedItemBuilder(context, animation, removedItem),
       );
 
       await Future.delayed(const Duration(milliseconds: 100));

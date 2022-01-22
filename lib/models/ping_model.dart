@@ -17,7 +17,7 @@ class PingModel extends ChangeNotifier {
 
   bool isPingingStarted = false;
   late AnimatedListModel<PingData?> pingData;
-  Stream<PingData>? _stream;
+  late Stream<PingData>? _stream;
   StreamSubscription<PingData>? _subscription;
   String? _host;
 
@@ -61,13 +61,13 @@ class PingModel extends ChangeNotifier {
     return _ping.stream.asBroadcastStream();
   }
 
-  void handleStartButtonPressed(
+  Future<void> handleStartButtonPressed(
     BuildContext context,
     TextEditingController controller,
-  ) {
+  ) async {
     hideKeyboard(context);
 
-    pingData.removeAllElements(context);
+    await pingData.removeAllElements(context);
 
     setHost(controller.text);
     isPingingStarted = true;

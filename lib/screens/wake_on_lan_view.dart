@@ -38,7 +38,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
 
     context.read<WakeOnLanModel>().wolResponses = AnimatedListModel(
       listKey: _listKey,
-      itemBuilder: _buildItem,
+      removedItemBuilder: _buildItem,
     );
   }
 

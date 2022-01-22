@@ -1,8 +1,4 @@
 // Flutter imports:
-
-// Flutter imports:
-
-// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,10 +18,7 @@ class PingView extends StatefulWidget {
   _PingViewState createState() => _PingViewState();
 }
 
-class _PingViewState extends State<PingView>
-    with SingleTickerProviderStateMixin {
-  late final PingModel provider;
-
+class _PingViewState extends State<PingView> {
   final targetHostController = TextEditingController();
   final _listKey = GlobalKey<AnimatedListState>();
 
@@ -35,9 +28,8 @@ class _PingViewState extends State<PingView>
 
     context.read<PingModel>().pingData = AnimatedListModel<PingData>(
       listKey: _listKey,
-      itemBuilder: _buildItem,
+      removedItemBuilder: _buildItem,
     );
-    provider = context.read<PingModel>();
   }
 
   @override
@@ -55,7 +47,7 @@ class _PingViewState extends State<PingView>
     super.dispose();
 
     targetHostController.dispose();
-    provider.onDispose();
+    context.read<PingModel>().onDispose();
   }
 
   @override

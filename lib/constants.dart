@@ -115,7 +115,7 @@ abstract class Constants {
 
   // Tools descriptions
   static const String pingDesc =
-      'Send packets to specific IP address or domain';
+      'Send ICMP pings to specific IP address or domain';
 
   static const String lanScannerDesc =
       'Discover network devices in local network';
