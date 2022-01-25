@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/models/ping_model.dart';
+import 'package:network_arch/ping/widgets/widgets.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
 class PingView extends StatefulWidget {
@@ -21,12 +22,13 @@ class PingView extends StatefulWidget {
 class _PingViewState extends State<PingView> {
   final targetHostController = TextEditingController();
   final _listKey = GlobalKey<AnimatedListState>();
+  late final AnimatedListModel<PingData?> listModel;
 
   @override
   void initState() {
     super.initState();
 
-    context.read<PingModel>().pingData = AnimatedListModel<PingData>(
+    listModel = AnimatedListModel<PingData>(
       listKey: _listKey,
       removedItemBuilder: _buildItem,
     );
@@ -47,7 +49,6 @@ class _PingViewState extends State<PingView> {
     super.dispose();
 
     targetHostController.dispose();
-    context.read<PingModel>().onDispose();
   }
 
   @override
@@ -185,79 +186,22 @@ class _PingViewState extends State<PingView> {
   ) {
     final pingModel = context.read<PingModel>();
 
-    // print('building for $item element');
-
     if (item!.error != null) {
       return FadeTransition(
-        opacity: animation.drive(pingModel.pingData.fadeTween),
+        opacity: animation.drive(listModel.fadeTween),
         child: SlideTransition(
           position: animation.drive(pingModel.pingData.slideTween),
-          child: DataCard(
-            padding: EdgeInsets.zero,
-            margin: EdgeInsets.zero,
-            child: ListTile(
-              contentPadding: const EdgeInsets.only(left: 8.0, right: 16.0),
-              leading: const StatusCard(
-                color: Colors.red,
-                text: 'Error',
-              ),
-              title: Text(
-                pingModel.getHost ?? 'N/A',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Seq. pos.: ${pingModel.pingData.indexOf(item) + 1}'),
-                  const Text('TTL: N/A'),
-                ],
-              ),
-              trailing: SizedBox(
-                width: 110,
-                child: Text(
-                  pingModel.getErrorDesc(item.error!),
-                ),
-              ),
-            ),
-          ),
+          child: PingCard(hasError: true, list: listModel, item: item),
         ),
       );
     }
 
     if (item.response != null) {
       return FadeTransition(
-        opacity: animation.drive(pingModel.pingData.fadeTween),
+        opacity: animation.drive(listModel.fadeTween),
         child: SlideTransition(
           position: animation.drive(pingModel.pingData.slideTween),
-          child: DataCard(
-            padding: EdgeInsets.zero,
-            margin: const EdgeInsets.symmetric(vertical: 5.0),
-            child: ListTile(
-              contentPadding: const EdgeInsets.only(left: 8.0, right: 16.0),
-              leading: const StatusCard(
-                color: Colors.green,
-                text: 'Online',
-              ),
-              title: Text(
-                item.response!.ip!,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Seq. pos.: ${item.response!.seq.toString()} '),
-                  Text('TTL: ${item.response!.ttl.toString()}')
-                ],
-              ),
-              trailing: Text(
-                '${item.response!.time!.inMilliseconds.toString()} ms',
-              ),
-            ),
-          ),
+          child: PingCard(hasError: false, list: listModel, item: item),
         ),
       );
     } else {
