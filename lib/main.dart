@@ -6,18 +6,20 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:network_arch/ping/ping.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:network_arch/app.dart';
 import 'package:network_arch/constants.dart';
+import 'package:network_arch/lan_scanner/bloc/lan_scanner_bloc.dart';
+import 'package:network_arch/lan_scanner/repository/lan_scanner_repository.dart';
 import 'package:network_arch/models/connectivity_model.dart';
 import 'package:network_arch/models/ip_geo_model.dart';
 import 'package:network_arch/models/lan_scanner_model.dart';
 import 'package:network_arch/models/permissions_model.dart';
 import 'package:network_arch/models/toast_notification_model.dart';
 import 'package:network_arch/models/wake_on_lan_model.dart';
+import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/screens/screens.dart';
 
 void main() {
@@ -30,11 +32,11 @@ void main() {
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge).whenComplete(() {
     final PingRepository pingRepository = PingRepository();
+    final LanScannerRepository lanScannerRepository = LanScannerRepository();
 
     runApp(
       MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => LanScannerModel()),
           ChangeNotifierProvider(create: (context) => WakeOnLanModel()),
           ChangeNotifierProvider(create: (context) => PermissionsModel()),
           ChangeNotifierProvider(create: (context) => IPGeoModel()),
@@ -44,12 +46,16 @@ void main() {
         child: MultiRepositoryProvider(
           providers: [
             RepositoryProvider.value(value: pingRepository),
+            RepositoryProvider.value(value: lanScannerRepository),
           ],
           child: MultiBlocProvider(
             providers: [
               BlocProvider(
                 create: (context) => PingBloc(pingRepository),
-              )
+              ),
+              BlocProvider(
+                create: (context) => LanScannerBloc(lanScannerRepository),
+              ),
             ],
             child: EasyDynamicThemeWidget(
               child: const NetworkArch(),
@@ -82,15 +88,7 @@ class NetworkArch extends StatelessWidget {
           child: Material(child: child),
         );
       },
-      routes: {
-        '/permissions': (context) => const PermissionsView(),
-        '/wifi': (context) => const WiFiDetailView(),
-        '/cellular': (context) => const CellularDetailView(),
-        '/tools/ping': (context) => const PingView(),
-        // '/tools/lan': (context) => const LanScannerView(),
-        '/tools/wol': (context) => const WakeOnLanView(),
-        // '/tools/ip_geo': (context) => const IPGeolocationView(),
-      },
+      routes: Constants.routes,
       home: const App(),
     );
   }

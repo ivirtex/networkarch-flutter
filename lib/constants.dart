@@ -10,7 +10,21 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+// Project imports:
+import 'package:network_arch/ping/ping.dart';
+import 'package:network_arch/screens/screens.dart';
+
 abstract class Constants {
+  static Map<String, Widget Function(BuildContext)> routes = {
+    '/permissions': (context) => const PermissionsView(),
+    '/wifi': (context) => const WiFiDetailView(),
+    '/cellular': (context) => const CellularDetailView(),
+    '/tools/ping': (context) => const PingView(),
+    '/tools/lan': (context) => const LanScannerView(),
+    '/tools/wol': (context) => const WakeOnLanView(),
+    // '/tools/ip_geo': (context) => const IPGeolocationView(),
+  };
+
   static ThemeData themeDataLight = ThemeData.light().copyWith(
     scaffoldBackgroundColor: lightBgColor,
     brightness: Brightness.light,

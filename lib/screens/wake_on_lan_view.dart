@@ -187,7 +187,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             key: _listKey,
-            initialItemCount: context.read<LanScannerModel>().hosts.length,
+            // initialItemCount: context.read<LanScannerModel>().hosts.length,
             itemBuilder: (context, index, animation) {
               return _buildItem(
                 context,

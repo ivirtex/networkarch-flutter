@@ -1,9 +1,9 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:network_arch/ping/ping.dart';
 
 // Project imports:
+import 'package:network_arch/constants.dart';
 import 'package:network_arch/screens/screens.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
@@ -72,13 +72,13 @@ class _AppState extends State<App> {
           case 0:
             return CupertinoTabView(
               defaultTitle: 'Dashboard',
-              routes: _cupertinoRoutes,
+              routes: Constants.routes,
               builder: (context) => const Dashboard(),
             );
           case 1:
             return CupertinoTabView(
               defaultTitle: 'Settings',
-              routes: _cupertinoRoutes,
+              routes: Constants.routes,
               builder: (context) => const Settings(),
             );
           default:
@@ -94,13 +94,3 @@ const List<Widget> _pages = <Widget>[
   Dashboard(),
   Settings(),
 ];
-
-Map<String, Widget Function(BuildContext)> _cupertinoRoutes = {
-  '/permissions': (context) => const PermissionsView(),
-  '/wifi': (context) => const WiFiDetailView(),
-  '/cellular': (context) => const CellularDetailView(),
-  '/tools/ping': (context) => const PingView(),
-  // '/tools/lan': (context) => const LanScannerView(),
-  '/tools/wol': (context) => const WakeOnLanView(),
-  // '/tools/ip_geo': (context) => const IPGeolocationView(),
-};

@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+// Project imports:
 import 'package:network_arch/utils/enums.dart';
 
 class ActionAppBar extends StatelessWidget with PreferredSizeWidget {

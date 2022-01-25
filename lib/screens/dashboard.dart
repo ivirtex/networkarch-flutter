@@ -127,12 +127,6 @@ class _DashboardState extends State<Dashboard> {
                     final bool isWifiConnected =
                         snapshot.data!.wifiIPv4 != null;
 
-                    if (isWifiConnected) {
-                      final model = context.read<LanScannerModel>();
-
-                      model.configure(ip: snapshot.data!.wifiIPv4);
-                    }
-
                     return NetworkCard(
                       isNetworkConnected: isWifiConnected,
                       networkType: NetworkType.wifi,
