@@ -23,7 +23,7 @@ class LanScannerModel extends ChangeNotifier {
   late AnimatedListModel<InternetAddress> hosts;
   double scanProgress = 0.0;
 
-  Stream<HostModel>? _stream;
+  late Stream<HostModel>? _stream;
   StreamSubscription<HostModel>? _subscription;
 
   void updateProgress(double progress) {

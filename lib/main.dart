@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:network_arch/ping/ping.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -15,13 +16,9 @@ import 'package:network_arch/models/connectivity_model.dart';
 import 'package:network_arch/models/ip_geo_model.dart';
 import 'package:network_arch/models/lan_scanner_model.dart';
 import 'package:network_arch/models/permissions_model.dart';
-import 'package:network_arch/models/ping_model.dart';
 import 'package:network_arch/models/toast_notification_model.dart';
 import 'package:network_arch/models/wake_on_lan_model.dart';
-import 'package:network_arch/ping/bloc/ping_bloc.dart';
-import 'package:network_arch/ping/repository/ping_repository.dart';
 import 'package:network_arch/screens/screens.dart';
-import 'ping/ping.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

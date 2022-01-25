@@ -32,7 +32,7 @@ class WakeOnLanModel extends ChangeNotifier {
       final WakeOnLAN wol = WakeOnLAN.from(ipv4Address, macAddress);
 
       await wol.wake().then((_) {
-        print('sent');
+        // print('sent');
 
         wolResponses.insert(
           wolResponses.length,

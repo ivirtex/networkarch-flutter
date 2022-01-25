@@ -1,11 +1,11 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:network_arch/ping/ping.dart';
 
 // Project imports:
 import 'package:network_arch/screens/screens.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
-import 'ping/ping.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
