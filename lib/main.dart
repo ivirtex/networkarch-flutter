@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:network_arch/simple_bloc_observer.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -34,35 +35,40 @@ void main() {
     final PingRepository pingRepository = PingRepository();
     final LanScannerRepository lanScannerRepository = LanScannerRepository();
 
-    runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (context) => WakeOnLanModel()),
-          ChangeNotifierProvider(create: (context) => PermissionsModel()),
-          ChangeNotifierProvider(create: (context) => IPGeoModel()),
-          Provider(create: (context) => ConnectivityModel()),
-          Provider(create: (context) => ToastNotificationModel()),
-        ],
-        child: MultiRepositoryProvider(
-          providers: [
-            RepositoryProvider.value(value: pingRepository),
-            RepositoryProvider.value(value: lanScannerRepository),
-          ],
-          child: MultiBlocProvider(
+    BlocOverrides.runZoned(
+      () {
+        runApp(
+          MultiProvider(
             providers: [
-              BlocProvider(
-                create: (context) => PingBloc(pingRepository),
-              ),
-              BlocProvider(
-                create: (context) => LanScannerBloc(lanScannerRepository),
-              ),
+              ChangeNotifierProvider(create: (context) => WakeOnLanModel()),
+              ChangeNotifierProvider(create: (context) => PermissionsModel()),
+              ChangeNotifierProvider(create: (context) => IPGeoModel()),
+              Provider(create: (context) => ConnectivityModel()),
+              Provider(create: (context) => ToastNotificationModel()),
             ],
-            child: EasyDynamicThemeWidget(
-              child: const NetworkArch(),
+            child: MultiRepositoryProvider(
+              providers: [
+                RepositoryProvider.value(value: pingRepository),
+                RepositoryProvider.value(value: lanScannerRepository),
+              ],
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => PingBloc(pingRepository),
+                  ),
+                  BlocProvider(
+                    create: (context) => LanScannerBloc(lanScannerRepository),
+                  ),
+                ],
+                child: EasyDynamicThemeWidget(
+                  child: const NetworkArch(),
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
+      blocObserver: SimpleBlocObserver(),
     );
   });
 }

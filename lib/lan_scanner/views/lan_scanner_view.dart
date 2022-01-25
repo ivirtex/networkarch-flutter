@@ -1,4 +1,6 @@
 // Dart imports:
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 // Flutter imports:
@@ -126,6 +128,8 @@ class _LanScannerViewState extends State<LanScannerView> {
     await _hosts.removeAllElements(context);
 
     context.read<LanScannerBloc>().add(LanScannerStarted(0.0));
+    await Future.delayed(Duration.zero);
+    //! hmm?
 
     final state = context.read<LanScannerBloc>().state;
     if (state is LanScannerRunStarted) {
