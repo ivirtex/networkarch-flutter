@@ -90,9 +90,9 @@ class NetworkArch extends StatelessWidget {
         '/wifi': (context) => const WiFiDetailView(),
         '/cellular': (context) => const CellularDetailView(),
         '/tools/ping': (context) => const PingView(),
-        '/tools/lan': (context) => const LanScannerView(),
+        // '/tools/lan': (context) => const LanScannerView(),
         '/tools/wol': (context) => const WakeOnLanView(),
-        '/tools/ip_geo': (context) => const IPGeolocationView(),
+        // '/tools/ip_geo': (context) => const IPGeolocationView(),
       },
       home: const App(),
     );

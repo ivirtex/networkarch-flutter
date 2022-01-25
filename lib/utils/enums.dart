@@ -7,3 +7,8 @@ enum WolStatus {
   success,
   fail,
 }
+
+enum ButtonActions {
+  start,
+  stop,
+}

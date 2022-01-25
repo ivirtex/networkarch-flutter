@@ -15,18 +15,20 @@ class PingCard extends StatelessWidget {
     required this.hasError,
     required this.list,
     required this.item,
+    required this.addr,
     Key? key,
   }) : super(key: key);
 
   final bool hasError;
   final AnimatedListModel<PingData?> list;
   final PingData item;
+  final String addr;
 
   @override
   Widget build(BuildContext context) {
     return DataCard(
       padding: EdgeInsets.zero,
-      margin: EdgeInsets.zero,
+      margin: const EdgeInsets.only(bottom: 10),
       child: ListTile(
         contentPadding: const EdgeInsets.only(left: 8.0, right: 16.0),
         leading: hasError
@@ -38,6 +40,12 @@ class PingCard extends StatelessWidget {
                 color: Colors.green,
                 text: 'Online',
               ),
+        title: Text(
+          addr,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         subtitle: hasError
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +62,6 @@ class PingCard extends StatelessWidget {
                 ],
               ),
         trailing: SizedBox(
-          width: 110,
           child: hasError
               ? Text(
                   context.read<PingRepository>().getErrorDesc(item.error!),

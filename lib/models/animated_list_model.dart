@@ -35,6 +35,8 @@ class AnimatedListModel<T> {
 
   bool get isEmpty => _items.isEmpty;
 
+  bool get isNotEmpty => _items.isNotEmpty;
+
   T operator [](int index) => _items[index];
 
   int indexOf(T item) => _items.indexOf(item);

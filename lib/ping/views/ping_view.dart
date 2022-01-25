@@ -1,16 +1,20 @@
 // Flutter imports:
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:dart_ping/dart_ping.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:network_arch/ping/ping.dart';
+import 'package:network_arch/shared/action_app_bar.dart';
 
 // Project imports:
 import 'package:network_arch/models/animated_list_model.dart';
-import 'package:network_arch/models/ping_model.dart';
-import 'package:network_arch/ping/widgets/widgets.dart';
+import 'package:network_arch/shared/cupertino_action_app_bar.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/utils/enums.dart';
 
 class PingView extends StatefulWidget {
   const PingView({Key? key}) : super(key: key);
@@ -20,15 +24,17 @@ class PingView extends StatefulWidget {
 }
 
 class _PingViewState extends State<PingView> {
-  final targetHostController = TextEditingController();
   final _listKey = GlobalKey<AnimatedListState>();
-  late final AnimatedListModel<PingData?> listModel;
+  final _targetHostController = TextEditingController();
+  late final AnimatedListModel<PingData?> _pingData;
+
+  late String _targetHost;
 
   @override
   void initState() {
     super.initState();
 
-    listModel = AnimatedListModel<PingData>(
+    _pingData = AnimatedListModel<PingData>(
       listKey: _listKey,
       removedItemBuilder: _buildItem,
     );
@@ -41,14 +47,14 @@ class _PingViewState extends State<PingView> {
     final String routedAddr =
         // ignore: cast_nullable_to_non_nullable
         ModalRoute.of(context)!.settings.arguments as String;
-    targetHostController.text = routedAddr;
+    _targetHostController.text = routedAddr;
   }
 
   @override
   void dispose() {
     super.dispose();
 
-    targetHostController.dispose();
+    _targetHostController.dispose();
   }
 
   @override
@@ -60,30 +66,43 @@ class _PingViewState extends State<PingView> {
   }
 
   Widget _buildAndroid(BuildContext context) {
-    return Scaffold(
-      appBar: context.read<PingModel>().isPingingStarted
-          ? Builders.switchableAppBar(
-              context: context,
+    return BlocBuilder<PingBloc, PingState>(
+      builder: (context, state) {
+        if (state is PingRunInProgress) {
+          final repository = context.read<PingRepository>();
+
+          repository.subscription = state.pingStream.listen((event) {
+            log(event.toString());
+            _pingData.insert(_pingData.length, event);
+          });
+
+          return Scaffold(
+            appBar: ActionAppBar(
+              context,
               title: 'Ping',
               action: ButtonActions.stop,
-              isActive: true,
-              onPressed: context.read<PingModel>().handleStopButtonPressed,
-            )
-          : Builders.switchableAppBar(
-              context: context,
+              isActive: _targetHostController.text.isNotEmpty,
+              onPressed: _handleStop,
+            ),
+            body: SingleChildScrollView(
+              child: _buildBody(context),
+            ),
+          );
+        } else {
+          return Scaffold(
+            appBar: ActionAppBar(
+              context,
               title: 'Ping',
               action: ButtonActions.start,
-              isActive: targetHostController.text.isNotEmpty,
-              onPressed: () =>
-                  context.read<PingModel>().handleStartButtonPressed(
-                        context,
-                        targetHostController,
-                      ),
+              isActive: _targetHostController.text.isNotEmpty,
+              onPressed: _handleStart,
             ),
-      body: SingleChildScrollView(
-        physics: const ScrollPhysics(),
-        child: _buildBody(context),
-      ),
+            body: SingleChildScrollView(
+              child: _buildBody(context),
+            ),
+          );
+        }
+      },
     );
   }
 
@@ -91,21 +110,26 @@ class _PingViewState extends State<PingView> {
     return CupertinoPageScaffold(
       child: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          CupertinoSliverNavigationBar(
-            trailing: CupertinoButton(
-              padding: EdgeInsets.zero,
-              child: const Text('Ping'),
-              onPressed: () =>
-                  context.read<PingModel>().handleStartButtonPressed(
-                        context,
-                        targetHostController,
-                      ),
-            ),
-            stretch: true,
-            border: null,
-            largeTitle: const Text(
-              'Ping',
-            ),
+          BlocBuilder<PingBloc, PingState>(
+            builder: (context, state) {
+              if (state is PingRunInProgress) {
+                return CupertinoActionAppBar(
+                  context,
+                  title: 'Ping',
+                  action: ButtonActions.stop,
+                  isActive: _targetHostController.text.isNotEmpty,
+                  onPressed: _handleStop,
+                );
+              } else {
+                return CupertinoActionAppBar(
+                  context,
+                  title: 'Ping',
+                  action: ButtonActions.start,
+                  isActive: _targetHostController.text.isNotEmpty,
+                  onPressed: _handleStart,
+                );
+              }
+            },
           )
         ],
         body: _buildBody(context),
@@ -121,42 +145,51 @@ class _PingViewState extends State<PingView> {
           Row(
             children: [
               Expanded(
-                child: PlatformWidget(
-                  androidBuilder: (context) => TextField(
-                    autocorrect: false,
-                    controller: targetHostController,
-                    enabled: !context.read<PingModel>().isPingingStarted,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                child: BlocBuilder<PingBloc, PingState>(
+                  builder: (context, state) {
+                    return PlatformWidget(
+                      androidBuilder: (context) => TextField(
+                        autocorrect: false,
+                        controller: _targetHostController,
+                        enabled: state is! PingRunInProgress,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          labelText: 'IP address (e.g. 1.1.1.1)',
+                        ),
+                        onChanged: (_) {
+                          setState(() {});
+                        },
                       ),
-                      labelText: 'IP address (e.g. 1.1.1.1)',
-                    ),
-                    onChanged: (_) {
-                      setState(() {});
-                    },
-                  ),
-                  iosBuilder: (context) => CupertinoSearchTextField(
-                    autocorrect: false,
-                    controller: targetHostController,
-                    enabled: !context.read<PingModel>().isPingingStarted,
-                    placeholder: 'IP address (e.g. 1.1.1.1)',
-                    onChanged: (_) {
-                      setState(() {});
-                    },
-                  ),
+                      iosBuilder: (context) => CupertinoSearchTextField(
+                        autocorrect: false,
+                        controller: _targetHostController,
+                        enabled: state is! PingRunInProgress,
+                        placeholder: 'IP address (e.g. 1.1.1.1)',
+                        onChanged: (_) {
+                          setState(() {});
+                        },
+                      ),
+                    );
+                  },
                 ),
               ),
               const SizedBox(width: 10),
-              TextButton(
-                onPressed: context.watch<PingModel>().isPingingStarted ||
-                        context.read<PingModel>().pingData.isEmpty
-                    ? null
-                    : () => context
-                        .read<PingModel>()
-                        .pingData
-                        .removeAllElements(context),
-                child: const Text('Clear list'),
+              BlocBuilder<PingBloc, PingState>(
+                builder: (context, state) {
+                  if (state is PingRunComplete && _pingData.isNotEmpty) {
+                    return TextButton(
+                      onPressed: () => _pingData.removeAllElements(context),
+                      child: const Text('Clear list'),
+                    );
+                  }
+
+                  return const TextButton(
+                    onPressed: null,
+                    child: Text('Clear list'),
+                  );
+                },
               ),
             ],
           ),
@@ -165,12 +198,12 @@ class _PingViewState extends State<PingView> {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             key: _listKey,
-            initialItemCount: context.read<PingModel>().pingData.length,
+            initialItemCount: _pingData.length,
             itemBuilder: (context, index, animation) {
               return _buildItem(
                 context,
                 animation,
-                context.read<PingModel>().pingData[index],
+                _pingData[index],
               );
             },
           )
@@ -184,28 +217,49 @@ class _PingViewState extends State<PingView> {
     Animation<double> animation,
     PingData? item,
   ) {
-    final pingModel = context.read<PingModel>();
-
     if (item!.error != null) {
+      context.read<PingBloc>().add(PingStopped());
+
       return FadeTransition(
-        opacity: animation.drive(listModel.fadeTween),
+        opacity: animation.drive(_pingData.fadeTween),
         child: SlideTransition(
-          position: animation.drive(pingModel.pingData.slideTween),
-          child: PingCard(hasError: true, list: listModel, item: item),
+          position: animation.drive(_pingData.slideTween),
+          child: PingCard(
+            hasError: true,
+            list: _pingData,
+            item: item,
+            addr: _targetHost,
+          ),
         ),
       );
     }
 
     if (item.response != null) {
       return FadeTransition(
-        opacity: animation.drive(listModel.fadeTween),
+        opacity: animation.drive(_pingData.fadeTween),
         child: SlideTransition(
-          position: animation.drive(pingModel.pingData.slideTween),
-          child: PingCard(hasError: false, list: listModel, item: item),
+          position: animation.drive(_pingData.slideTween),
+          child: PingCard(
+            hasError: false,
+            list: _pingData,
+            item: item,
+            addr: _targetHost,
+          ),
         ),
       );
     } else {
-      return const SizedBox();
+      throw Exception('Unexpected item type');
     }
+  }
+
+  Future<void> _handleStart() async {
+    await _pingData.removeAllElements(context);
+
+    _targetHost = _targetHostController.text;
+    context.read<PingBloc>().add(PingStarted(_targetHostController.text));
+  }
+
+  void _handleStop() {
+    context.read<PingBloc>().add(PingStopped());
   }
 }
