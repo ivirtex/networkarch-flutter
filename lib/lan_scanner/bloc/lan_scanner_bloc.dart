@@ -17,6 +17,7 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
   LanScannerBloc(this._lanScannerRepository)
       : super(const LanScannerInitial(0.0)) {
     on<LanScannerStarted>(_onStarted);
+    on<LanScannerProgressUpdated>(_onProgressUpdated);
     on<LanScannerStopped>(_onStopped);
   }
 
@@ -31,12 +32,21 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
 
     final stream = _lanScannerRepository.getLanScannerStream(
       subnet: subnet,
-      callback: (progress) {
-        emit(LanScannerRunProgressUpdated(double.parse(progress)));
-      },
+      callback: event.callback,
     );
 
     emit(LanScannerRunStarted(stream, 0.0));
+  }
+
+  void _onProgressUpdated(
+    LanScannerProgressUpdated event,
+    Emitter<LanScannerState> emit,
+  ) {
+    if (event.progress == 1.0) {
+      emit(const LanScannerRunComplete(1.0));
+    } else {
+      emit(LanScannerRunProgressUpdated(event.progress));
+    }
   }
 
   void _onStopped(LanScannerStopped event, Emitter<LanScannerState> emit) {

@@ -31,6 +31,8 @@ class _PingViewState extends State<PingView> {
 
   late String _targetHost;
 
+  String get _target => _targetHostController.text;
+
   @override
   void initState() {
     super.initState();
@@ -82,7 +84,7 @@ class _PingViewState extends State<PingView> {
               context,
               title: 'Ping',
               action: ButtonActions.stop,
-              isActive: _targetHostController.text.isNotEmpty,
+              isActive: _target.isNotEmpty,
               onPressed: _handleStop,
             ),
             body: SingleChildScrollView(
@@ -95,7 +97,7 @@ class _PingViewState extends State<PingView> {
               context,
               title: 'Ping',
               action: ButtonActions.start,
-              isActive: _targetHostController.text.isNotEmpty,
+              isActive: _target.isNotEmpty,
               onPressed: _handleStart,
             ),
             body: SingleChildScrollView(
@@ -118,7 +120,7 @@ class _PingViewState extends State<PingView> {
                   context,
                   title: 'Ping',
                   action: ButtonActions.stop,
-                  isActive: _targetHostController.text.isNotEmpty,
+                  isActive: _target.isNotEmpty,
                   onPressed: _handleStop,
                 );
               } else {
@@ -126,7 +128,7 @@ class _PingViewState extends State<PingView> {
                   context,
                   title: 'Ping',
                   action: ButtonActions.start,
-                  isActive: _targetHostController.text.isNotEmpty,
+                  isActive: _target.isNotEmpty,
                   onPressed: _handleStart,
                 );
               }
@@ -256,8 +258,8 @@ class _PingViewState extends State<PingView> {
   Future<void> _handleStart() async {
     await _pingData.removeAllElements(context);
 
-    _targetHost = _targetHostController.text;
-    context.read<PingBloc>().add(PingStarted(_targetHostController.text));
+    _targetHost = _target;
+    context.read<PingBloc>().add(PingStarted(_target));
   }
 
   void _handleStop() {

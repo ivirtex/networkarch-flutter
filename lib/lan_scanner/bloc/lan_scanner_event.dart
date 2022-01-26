@@ -1,16 +1,20 @@
 part of 'lan_scanner_bloc.dart';
 
 @immutable
-abstract class LanScannerEvent {
-  const LanScannerEvent(this.progress);
+abstract class LanScannerEvent {}
+
+class LanScannerStarted extends LanScannerEvent {
+  LanScannerStarted({required this.callback});
+
+  final ProgressCallback callback;
+}
+
+class LanScannerProgressUpdated extends LanScannerEvent {
+  LanScannerProgressUpdated(this.progress);
 
   final double progress;
 }
 
-class LanScannerStarted extends LanScannerEvent {
-  const LanScannerStarted(double progress) : super(progress);
-}
-
 class LanScannerStopped extends LanScannerEvent {
-  const LanScannerStopped(double progress) : super(progress);
+  LanScannerStopped();
 }

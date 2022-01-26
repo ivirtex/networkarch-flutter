@@ -4,6 +4,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -14,6 +15,7 @@ import 'package:network_arch/lan_scanner/bloc/lan_scanner_bloc.dart';
 import 'package:network_arch/lan_scanner/repository/lan_scanner_repository.dart';
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/shared/action_app_bar.dart';
+import 'package:network_arch/shared/cupertino_action_app_bar.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 import 'package:network_arch/utils/enums.dart';
 
@@ -40,49 +42,112 @@ class _LanScannerViewState extends State<LanScannerView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: context.watch<LanScannerBloc>().state is LanScannerRunStarted
-          ? ActionAppBar(
+    return PlatformWidget(
+      androidBuilder: _buildAndroid,
+      iosBuilder: _buildIOS,
+    );
+  }
+
+  Widget _buildAndroid(BuildContext context) {
+    return BlocBuilder<LanScannerBloc, LanScannerState>(
+      builder: (context, state) {
+        if (state is LanScannerRunStarted ||
+            state is LanScannerRunProgressUpdated) {
+          return Scaffold(
+            appBar: ActionAppBar(
               context,
               title: 'Lan Scanner',
               action: ButtonActions.stop,
               isActive: true,
-              onPressed: _handleStopPressed,
-            )
-          : ActionAppBar(
+              onPressed: _handleStop,
+            ),
+            body: _buildBody(),
+          );
+        } else {
+          return Scaffold(
+            appBar: ActionAppBar(
               context,
               title: 'Lan Scanner',
               action: ButtonActions.start,
               isActive: true,
-              onPressed: _handleStartPressed,
+              onPressed: _handleStart,
             ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: BlocBuilder<LanScannerBloc, LanScannerState>(
-              builder: (context, state) {
-                return LinearProgressIndicator(
-                  value: state.progress,
+            body: _buildBody(),
+          );
+        }
+      },
+    );
+  }
+
+  Widget _buildIOS(BuildContext context) {
+    return CupertinoPageScaffold(
+      child: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          BlocBuilder<LanScannerBloc, LanScannerState>(
+            builder: (context, state) {
+              if (state is LanScannerRunStarted ||
+                  state is LanScannerRunProgressUpdated) {
+                return CupertinoActionAppBar(
+                  context,
+                  title: 'Ping',
+                  action: ButtonActions.stop,
+                  isActive: true,
+                  onPressed: _handleStop,
                 );
-              },
-            ),
-          ),
-          AnimatedList(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            key: _listKey,
-            initialItemCount: _hosts.length,
-            itemBuilder: (context, index, animation) {
-              return _buildItem(
-                context,
-                animation,
-                _hosts[index],
-              );
+              } else {
+                return CupertinoActionAppBar(
+                  context,
+                  title: 'Ping',
+                  action: ButtonActions.start,
+                  isActive: true,
+                  onPressed: _handleStart,
+                );
+              }
             },
           )
         ],
+        body: _buildBody(),
       ),
+    );
+  }
+
+  Column _buildBody() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: BlocBuilder<LanScannerBloc, LanScannerState>(
+            builder: (context, state) {
+              if (state is LanScannerRunStarted) {
+                final repository = context.read<LanScannerRepository>();
+
+                repository.subscription = state.stream.listen((event) {
+                  final host = InternetAddress(event.ip);
+
+                  _hosts.insert(_hosts.length, host);
+                });
+              }
+              return LinearProgressIndicator(
+                // TODO: animate progress
+                value: state.progress,
+              );
+            },
+          ),
+        ),
+        AnimatedList(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          key: _listKey,
+          initialItemCount: _hosts.length,
+          itemBuilder: (context, index, animation) {
+            return _buildItem(
+              context,
+              animation,
+              _hosts[index],
+            );
+          },
+        )
+      ],
     );
   }
 
@@ -120,26 +185,21 @@ class _LanScannerViewState extends State<LanScannerView> {
     );
   }
 
-  void _handleStopPressed() {
-    context.read<LanScannerBloc>().add(LanScannerStopped(currProgress));
+  void _handleStop() {
+    context.read<LanScannerBloc>().add(LanScannerStopped());
   }
 
-  Future<void> _handleStartPressed() async {
+  Future<void> _handleStart() async {
     await _hosts.removeAllElements(context);
 
-    context.read<LanScannerBloc>().add(LanScannerStarted(0.0));
+    final bloc = context.read<LanScannerBloc>();
+    bloc.add(
+      LanScannerStarted(
+        callback: (progress) {
+          bloc.add(LanScannerProgressUpdated(progress));
+        },
+      ),
+    );
     await Future.delayed(Duration.zero);
-    //! hmm?
-
-    final state = context.read<LanScannerBloc>().state;
-    if (state is LanScannerRunStarted) {
-      final repository = context.read<LanScannerRepository>();
-
-      repository.subscription = state.stream.listen((event) {
-        final host = InternetAddress(event.ip);
-
-        _hosts.insert(_hosts.length, host);
-      });
-    }
   }
 }

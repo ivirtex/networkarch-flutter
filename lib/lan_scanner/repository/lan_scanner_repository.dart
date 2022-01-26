@@ -12,7 +12,7 @@ class LanScannerRepository {
 
   Stream<HostModel> getLanScannerStream({
     required String subnet,
-    void Function(String)? callback,
+    ProgressCallback? callback,
   }) {
     return _scanner.icmpScan(subnet, progressCallback: callback);
   }
