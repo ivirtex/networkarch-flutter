@@ -1,6 +1,7 @@
 // Dart imports:
 // ignore_for_file: use_build_context_synchronously
 
+// Dart imports:
 import 'dart:io';
 
 // Flutter imports:
@@ -13,6 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // Project imports:
 import 'package:network_arch/lan_scanner/bloc/lan_scanner_bloc.dart';
 import 'package:network_arch/lan_scanner/repository/lan_scanner_repository.dart';
+import 'package:network_arch/lan_scanner/widgets/host_card.dart';
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/shared/action_app_bar.dart';
 import 'package:network_arch/shared/cupertino_action_app_bar.dart';
@@ -111,12 +113,12 @@ class _LanScannerViewState extends State<LanScannerView> {
     );
   }
 
-  Column _buildBody() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: BlocBuilder<LanScannerBloc, LanScannerState>(
+  Padding _buildBody() {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          BlocBuilder<LanScannerBloc, LanScannerState>(
             builder: (context, state) {
               if (state is LanScannerRunStarted) {
                 final repository = context.read<LanScannerRepository>();
@@ -127,27 +129,31 @@ class _LanScannerViewState extends State<LanScannerView> {
                   _hosts.insert(_hosts.length, host);
                 });
               }
-              return LinearProgressIndicator(
-                // TODO: animate progress
-                value: state.progress,
+              return ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: LinearProgressIndicator(
+                  // TODO: animate progress
+                  value: state.progress,
+                ),
               );
             },
           ),
-        ),
-        AnimatedList(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          key: _listKey,
-          initialItemCount: _hosts.length,
-          itemBuilder: (context, index, animation) {
-            return _buildItem(
-              context,
-              animation,
-              _hosts[index],
-            );
-          },
-        )
-      ],
+          const SizedBox(height: 10),
+          AnimatedList(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            key: _listKey,
+            initialItemCount: _hosts.length,
+            itemBuilder: (context, index, animation) {
+              return _buildItem(
+                context,
+                animation,
+                _hosts[index],
+              );
+            },
+          )
+        ],
+      ),
     );
   }
 
@@ -160,27 +166,7 @@ class _LanScannerViewState extends State<LanScannerView> {
       opacity: animation.drive(_hosts.fadeTween),
       child: SlideTransition(
         position: animation.drive(_hosts.slideTween),
-        child: Card(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: ListTile(
-            leading: const StatusCard(
-              color: Colors.greenAccent,
-              text: 'Online',
-            ),
-            title: Text(item.address),
-            trailing: TextButton(
-              onPressed: () {
-                Navigator.of(context).popAndPushNamed(
-                  '/tools/ping',
-                  arguments: item.address,
-                );
-              },
-              child: const Text('Ping'),
-            ),
-          ),
-        ),
+        child: HostCard(item: item),
       ),
     );
   }
