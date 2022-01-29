@@ -43,8 +43,6 @@ void main() {
       storageDirectory: await getApplicationDocumentsDirectory(),
     );
 
-    await storage.clear();
-
     HydratedBlocOverrides.runZoned(
       () async {
         runApp(

@@ -62,7 +62,7 @@ class _SettingsState extends State<Settings> {
             color: isDarkModeOn ? Colors.white : Colors.black,
           ),
           title: const Text('Dark Mode'),
-          trailing: Switch(
+          trailing: Switch.adaptive(
             value: _isDarkModeSwitched,
             onChanged: _handleDarkModeSwitched,
           ),

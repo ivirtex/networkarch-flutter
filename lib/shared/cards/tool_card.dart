@@ -30,7 +30,7 @@ class ToolCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
-            flex: 2,
+            flex: 3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -44,6 +44,8 @@ class ToolCard extends StatelessWidget {
                 ),
                 Text(
                   toolDesc,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: isDarkModeOn
                       ? Constants.descStyleDark
                       : Constants.descStyleLight,
