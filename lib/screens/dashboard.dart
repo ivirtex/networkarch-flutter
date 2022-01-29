@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/connectivity_model.dart';
-import 'package:network_arch/models/lan_scanner_model.dart';
 import 'package:network_arch/models/permissions_model.dart';
 import 'package:network_arch/models/toast_notification_model.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
