@@ -44,7 +44,7 @@ class _SettingsState extends State<Settings> {
             largeTitle: Text(
               'Settings',
             ),
-          )
+          ),
         ],
         body: _buildBody(context),
       ),

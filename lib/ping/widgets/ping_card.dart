@@ -58,7 +58,7 @@ class PingCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Seq. pos.: ${item.response!.seq.toString()} '),
-                  Text('TTL: ${item.response!.ttl.toString()}')
+                  Text('TTL: ${item.response!.ttl.toString()}'),
                 ],
               ),
         trailing: SizedBox(

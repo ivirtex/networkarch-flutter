@@ -49,7 +49,7 @@ class ActionAppBar extends StatelessWidget with PreferredSizeWidget {
               color: isActive ? Colors.red : Colors.grey,
             ),
             onPressed: isActive ? onPressed : null,
-          )
+          ),
       ],
     );
   }

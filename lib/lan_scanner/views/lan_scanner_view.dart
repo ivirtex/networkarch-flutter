@@ -53,34 +53,28 @@ class _LanScannerViewState extends State<LanScannerView> {
   Widget _buildAndroid(BuildContext context) {
     return BlocBuilder<LanScannerBloc, LanScannerState>(
       builder: (context, state) {
-        if (state is LanScannerRunStarted ||
-            state is LanScannerRunProgressUpdated) {
-          return Scaffold(
-            appBar: ActionAppBar(
-              context,
-              title: 'Lan Scanner',
-              action: ButtonActions.stop,
-              isActive: true,
-              onPressed: _handleStop,
-            ),
-            body: SingleChildScrollView(
-              child: _buildBody(),
-            ),
-          );
-        } else {
-          return Scaffold(
-            appBar: ActionAppBar(
-              context,
-              title: 'Lan Scanner',
-              action: ButtonActions.start,
-              isActive: true,
-              onPressed: _handleStart,
-            ),
-            body: SingleChildScrollView(
-              child: _buildBody(),
-            ),
-          );
-        }
+        return state is LanScannerRunStarted ||
+                state is LanScannerRunProgressUpdated
+            ? Scaffold(
+                appBar: ActionAppBar(
+                  context,
+                  title: 'Lan Scanner',
+                  action: ButtonActions.stop,
+                  isActive: true,
+                  onPressed: _handleStop,
+                ),
+                body: SingleChildScrollView(child: _buildBody()),
+              )
+            : Scaffold(
+                appBar: ActionAppBar(
+                  context,
+                  title: 'Lan Scanner',
+                  action: ButtonActions.start,
+                  isActive: true,
+                  onPressed: _handleStart,
+                ),
+                body: SingleChildScrollView(child: _buildBody()),
+              );
       },
     );
   }
@@ -91,26 +85,24 @@ class _LanScannerViewState extends State<LanScannerView> {
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           BlocBuilder<LanScannerBloc, LanScannerState>(
             builder: (context, state) {
-              if (state is LanScannerRunStarted ||
-                  state is LanScannerRunProgressUpdated) {
-                return CupertinoActionAppBar(
-                  context,
-                  title: 'Ping',
-                  action: ButtonActions.stop,
-                  isActive: true,
-                  onPressed: _handleStop,
-                );
-              } else {
-                return CupertinoActionAppBar(
-                  context,
-                  title: 'Ping',
-                  action: ButtonActions.start,
-                  isActive: true,
-                  onPressed: _handleStart,
-                );
-              }
+              return state is LanScannerRunStarted ||
+                      state is LanScannerRunProgressUpdated
+                  ? CupertinoActionAppBar(
+                      context,
+                      title: 'Ping',
+                      action: ButtonActions.stop,
+                      isActive: true,
+                      onPressed: _handleStop,
+                    )
+                  : CupertinoActionAppBar(
+                      context,
+                      title: 'Ping',
+                      action: ButtonActions.start,
+                      isActive: true,
+                      onPressed: _handleStart,
+                    );
             },
-          )
+          ),
         ],
         body: _buildBody(),
       ),
@@ -133,6 +125,7 @@ class _LanScannerViewState extends State<LanScannerView> {
                   _hosts.insert(_hosts.length, host);
                 });
               }
+
               return ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: LinearProgressIndicator(
@@ -155,7 +148,7 @@ class _LanScannerViewState extends State<LanScannerView> {
                 _hosts[index],
               );
             },
-          )
+          ),
         ],
       ),
     );

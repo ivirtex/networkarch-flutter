@@ -218,7 +218,7 @@ abstract class Constants {
             'Open Settings',
             style: TextStyle(color: Colors.white),
           ),
-        )
+        ),
       ],
     ),
   );
@@ -250,7 +250,7 @@ abstract class Constants {
             'Open Settings',
             style: TextStyle(color: Colors.white),
           ),
-        )
+        ),
       ],
     ),
   );

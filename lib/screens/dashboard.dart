@@ -56,7 +56,7 @@ class _DashboardState extends State<Dashboard> {
           } else {
             Navigator.of(context).pushReplacementNamed('/permissions');
           }
-        })
+        }),
       },
     );
   }
@@ -85,7 +85,7 @@ class _DashboardState extends State<Dashboard> {
             largeTitle: Text(
               'Dashboard',
             ),
-          )
+          ),
         ],
         body: _buildBody(context),
       ),

@@ -45,7 +45,7 @@ class _WiFiDetailViewState extends State<WiFiDetailView> {
             largeTitle: Text(
               'Wi-Fi Details',
             ),
-          )
+          ),
         ],
         body: _buildDataList(context),
       ),
@@ -104,19 +104,17 @@ class _WiFiDetailViewState extends State<WiFiDetailView> {
                 return const Text('Error when fetching IP');
               }
 
-              if (snapshot.hasData) {
-                return Text(snapshot.data!.ip ?? 'N/A');
-              } else {
-                return const SizedBox(
-                  height: 15.0,
-                  width: 15.0,
-                  child: Center(
-                    child: CircularProgressIndicator.adaptive(
-                      strokeWidth: 2.5,
-                    ),
-                  ),
-                );
-              }
+              return snapshot.hasData
+                  ? Text(snapshot.data!.ip ?? 'N/A')
+                  : const SizedBox(
+                      height: 15.0,
+                      width: 15.0,
+                      child: Center(
+                        child: CircularProgressIndicator.adaptive(
+                          strokeWidth: 2.5,
+                        ),
+                      ),
+                    );
             },
           ),
         ),

@@ -115,25 +115,23 @@ class _PingViewState extends State<PingView> {
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           BlocBuilder<PingBloc, PingState>(
             builder: (context, state) {
-              if (state is PingRunInProgress) {
-                return CupertinoActionAppBar(
-                  context,
-                  title: 'Ping',
-                  action: ButtonActions.stop,
-                  isActive: _target.isNotEmpty,
-                  onPressed: _handleStop,
-                );
-              } else {
-                return CupertinoActionAppBar(
-                  context,
-                  title: 'Ping',
-                  action: ButtonActions.start,
-                  isActive: _target.isNotEmpty,
-                  onPressed: _handleStart,
-                );
-              }
+              return state is PingRunInProgress
+                  ? CupertinoActionAppBar(
+                      context,
+                      title: 'Ping',
+                      action: ButtonActions.stop,
+                      isActive: _target.isNotEmpty,
+                      onPressed: _handleStop,
+                    )
+                  : CupertinoActionAppBar(
+                      context,
+                      title: 'Ping',
+                      action: ButtonActions.start,
+                      isActive: _target.isNotEmpty,
+                      onPressed: _handleStart,
+                    );
             },
-          )
+          ),
         ],
         body: _buildBody(context),
       ),
@@ -209,7 +207,7 @@ class _PingViewState extends State<PingView> {
                 _pingData[index],
               );
             },
-          )
+          ),
         ],
       ),
     );

@@ -63,7 +63,7 @@ class _PermissionsViewState extends State<PermissionsView> {
                   : null,
               child: const Text('Continue'),
             ),
-          )
+          ),
         ],
         body: _buildBody(isDarkModeOn, context),
       ),
@@ -134,7 +134,7 @@ class _PermissionsViewState extends State<PermissionsView> {
                             style: isDarkModeOn
                                 ? Constants.descStyleDark
                                 : Constants.descStyleLight,
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -178,7 +178,7 @@ class _PermissionsViewState extends State<PermissionsView> {
                         );
                       },
                       child: const Text('Request'),
-                    )
+                    ),
                   ],
                 );
               },

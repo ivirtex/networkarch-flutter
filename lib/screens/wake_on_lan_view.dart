@@ -124,7 +124,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
                     fontSize: 16,
                   ),
                 ),
-              )
+              ),
             ],
           ),
           body: SingleChildScrollView(
@@ -142,7 +142,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
                 largeTitle: Text(
                   'Wake On LAN',
                 ),
-              )
+              ),
             ],
             body: _buildBody(context),
           ),
@@ -194,7 +194,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
                 context.read<WakeOnLanModel>().wolResponses[index],
               );
             },
-          )
+          ),
         ],
       ),
     );

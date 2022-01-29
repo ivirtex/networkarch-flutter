@@ -32,7 +32,7 @@ class ErrorCard extends StatelessWidget {
             Text(
               message ?? Constants.defaultError,
               style: const TextStyle(fontSize: 15),
-            )
+            ),
           ],
         ),
       ),

@@ -49,7 +49,7 @@ class ToolCard extends StatelessWidget {
                   style: isDarkModeOn
                       ? Constants.descStyleDark
                       : Constants.descStyleLight,
-                )
+                ),
               ],
             ),
           ),
@@ -67,7 +67,7 @@ class ToolCard extends StatelessWidget {
                 color: isDarkModeOn ? Colors.white : Colors.black,
               ),
             ),
-          )
+          ),
         ],
       ),
     );

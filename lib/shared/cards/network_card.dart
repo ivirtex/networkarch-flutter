@@ -47,7 +47,7 @@ class NetworkCard extends StatelessWidget {
               _buildConnectionState(
                 isNetworkConnected: isNetworkConnected,
                 snapshotHasError: snapshotHasError,
-              )
+              ),
             ],
           ),
           const SizedBox(height: 15.0),
@@ -81,10 +81,10 @@ class NetworkCard extends StatelessWidget {
                 FaIcon(
                   FontAwesomeIcons.arrowCircleRight,
                   color: isDarkModeOn ? Colors.white : Colors.black,
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -113,7 +113,7 @@ Row _buildConnectionState({
           isNetworkConnected ? Icons.check_circle : Icons.cancel,
           size: iconSize,
           color: isNetworkConnected ? Colors.green : Colors.red,
-        )
+        ),
       ],
     );
   } else if (snapshotHasError != null) {
@@ -131,7 +131,7 @@ Row _buildConnectionState({
         Icon(
           Icons.cancel,
           size: iconSize,
-        )
+        ),
       ],
     );
   } else {
@@ -152,7 +152,7 @@ Row _buildConnectionState({
           child: Center(
             child: CircularProgressIndicator.adaptive(),
           ),
-        )
+        ),
       ],
     );
   }
