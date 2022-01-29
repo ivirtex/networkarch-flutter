@@ -14,8 +14,10 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/screens/screens.dart';
 
+// ignore_for_file: avoid-global-state
+
 abstract class Constants {
-  static Map<String, Widget Function(BuildContext)> routes = {
+  static final Map<String, Widget Function(BuildContext)> routes = {
     '/permissions': (context) => const PermissionsView(),
     '/wifi': (context) => const WiFiDetailView(),
     '/cellular': (context) => const CellularDetailView(),
@@ -25,7 +27,7 @@ abstract class Constants {
     // '/tools/ip_geo': (context) => const IPGeolocationView(),
   };
 
-  static ThemeData lightThemeData = ThemeData.light().copyWith(
+  static final ThemeData lightThemeData = ThemeData.light().copyWith(
     scaffoldBackgroundColor: lightBgColor,
     brightness: Brightness.light,
     appBarTheme: const AppBarTheme(
@@ -36,7 +38,7 @@ abstract class Constants {
     ),
   );
 
-  static ThemeData darkThemeData = ThemeData.dark().copyWith(
+  static final ThemeData darkThemeData = ThemeData.dark().copyWith(
     scaffoldBackgroundColor: darkBgColor,
     brightness: Brightness.dark,
     appBarTheme: const AppBarTheme(
@@ -46,7 +48,7 @@ abstract class Constants {
     ),
   );
 
-  static CupertinoThemeData cupertinoThemeData = CupertinoThemeData(
+  static final CupertinoThemeData cupertinoThemeData = CupertinoThemeData(
     primaryColor: CupertinoColors.activeBlue,
     scaffoldBackgroundColor: const CupertinoDynamicColor.withBrightness(
       color: CupertinoColors.systemGrey6,
@@ -59,31 +61,31 @@ abstract class Constants {
   );
 
   // Styles
-  static EdgeInsets listPadding = const EdgeInsets.all(10.0);
+  static const EdgeInsets listPadding = EdgeInsets.all(10.0);
 
-  static double listSpacing = 10.0;
+  static const double listSpacing = 10.0;
 
-  static Divider listDivider = const Divider(
+  static const Divider listDivider = Divider(
     height: 2,
     indent: 10,
     endIndent: 0,
   );
 
   // Colors
-  static Color lightBgColor = Colors.grey[100]!;
-  static Color iOSlightBgColor = CupertinoColors.white;
-  static Color darkBgColor = Colors.grey[900]!;
-  static Color iOSdarkBgColor = CupertinoColors.systemGrey6.darkColor;
+  static final Color lightBgColor = Colors.grey[100]!;
+  static final Color iOSlightBgColor = CupertinoColors.white;
+  static final Color darkBgColor = Colors.grey[900]!;
+  static final Color iOSdarkBgColor = CupertinoColors.systemGrey6.darkColor;
 
-  static Color lightCardColor = Colors.grey[200]!;
-  static Color iOSlightCardColor = CupertinoColors.systemGrey5.color;
-  static Color darkCardColor = Colors.grey[850]!;
-  static Color iOSdarkCardColor = CupertinoColors.systemGrey5.darkColor;
+  static final Color lightCardColor = Colors.grey[200]!;
+  static final Color iOSlightCardColor = CupertinoColors.systemGrey5.color;
+  static final Color darkCardColor = Colors.grey[850]!;
+  static final Color iOSdarkCardColor = CupertinoColors.systemGrey5.darkColor;
 
-  static Color lightBtnColor = Colors.grey[300]!;
-  static Color iOSlightBtnColor = CupertinoColors.systemGrey6.color;
-  static Color darkBtnColor = Colors.grey[800]!;
-  static Color iOSdarkBtnColor = CupertinoColors.systemGrey4.darkColor;
+  static final Color lightBtnColor = Colors.grey[300]!;
+  static final Color iOSlightBtnColor = CupertinoColors.systemGrey6.color;
+  static final Color darkBtnColor = Colors.grey[800]!;
+  static final Color iOSdarkBtnColor = CupertinoColors.systemGrey4.darkColor;
 
   static Color getPlatformBgColor(BuildContext context) {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
@@ -122,9 +124,9 @@ abstract class Constants {
   }
 
   // Description styles
-  static TextStyle descStyleLight = TextStyle(color: Colors.grey[600]);
+  static final TextStyle descStyleLight = TextStyle(color: Colors.grey[600]);
 
-  static TextStyle descStyleDark = TextStyle(color: Colors.grey[400]);
+  static final TextStyle descStyleDark = TextStyle(color: Colors.grey[400]);
 
   // Tools descriptions
   static const String pingDesc =
@@ -168,7 +170,7 @@ abstract class Constants {
   static const String _permissionDefault =
       'Something gone wrong, check app permissions.';
 
-  static Widget permissionGrantedToast = Container(
+  static final Widget permissionGrantedToast = Container(
     padding: const EdgeInsets.all(10),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
@@ -191,7 +193,7 @@ abstract class Constants {
     ),
   );
 
-  static Widget permissionDeniedToast = Container(
+  static final Widget permissionDeniedToast = Container(
     padding: const EdgeInsets.all(10),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
@@ -223,7 +225,7 @@ abstract class Constants {
     ),
   );
 
-  static Widget permissionDefaultToast = Container(
+  static final Widget permissionDefaultToast = Container(
     padding: const EdgeInsets.all(10),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
@@ -267,7 +269,7 @@ abstract class Constants {
   static const String _wolValidationError =
       '''The IP address or MAC address is not valid, please check it and try again.''';
 
-  static Widget wolValidationFault = SnackBar(
+  static final Widget wolValidationFault = SnackBar(
     content: Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
