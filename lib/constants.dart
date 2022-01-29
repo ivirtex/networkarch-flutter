@@ -25,7 +25,7 @@ abstract class Constants {
     // '/tools/ip_geo': (context) => const IPGeolocationView(),
   };
 
-  static ThemeData themeDataLight = ThemeData.light().copyWith(
+  static ThemeData lightThemeData = ThemeData.light().copyWith(
     scaffoldBackgroundColor: lightBgColor,
     brightness: Brightness.light,
     appBarTheme: const AppBarTheme(
@@ -36,7 +36,7 @@ abstract class Constants {
     ),
   );
 
-  static ThemeData themeDataDark = ThemeData.dark().copyWith(
+  static ThemeData darkThemeData = ThemeData.dark().copyWith(
     scaffoldBackgroundColor: darkBgColor,
     brightness: Brightness.dark,
     appBarTheme: const AppBarTheme(

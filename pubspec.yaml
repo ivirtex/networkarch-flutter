@@ -32,12 +32,12 @@ dependencies:
   carrier_info: ^2.0.4
   dart_ping: ^6.1.1
   dart_ping_ios: ^1.0.0
-  easy_dynamic_theme: ^2.2.0
   fluttertoast: ^8.0.8
   font_awesome_flutter: ^9.2.0
   google_maps_flutter: ^2.1.1
   lan_scanner: ^3.2.0
   http: ^0.13.4
+  hydrated_bloc: ^8.0.0
   network_info_plus: ^2.1.2
   permission_handler: ^8.3.0
   percent_indicator: ^4.0.0
@@ -47,6 +47,8 @@ dependencies:
   animate_do: ^2.1.0
   wake_on_lan: ^2.0.2+1
   device_preview: ^1.0.0
+  equatable: ^2.0.3
+  path_provider: ^2.0.8
 
 dev_dependencies:
   flutter_test:

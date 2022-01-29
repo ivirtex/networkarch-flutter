@@ -63,7 +63,9 @@ class _LanScannerViewState extends State<LanScannerView> {
               isActive: true,
               onPressed: _handleStop,
             ),
-            body: _buildBody(),
+            body: SingleChildScrollView(
+              child: _buildBody(),
+            ),
           );
         } else {
           return Scaffold(
@@ -74,7 +76,9 @@ class _LanScannerViewState extends State<LanScannerView> {
               isActive: true,
               onPressed: _handleStart,
             ),
-            body: _buildBody(),
+            body: SingleChildScrollView(
+              child: _buildBody(),
+            ),
           );
         }
       },

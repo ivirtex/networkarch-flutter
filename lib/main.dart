@@ -1,11 +1,15 @@
 // Flutter imports:
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:network_arch/theme/theme.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -15,7 +19,6 @@ import 'package:network_arch/lan_scanner/bloc/lan_scanner_bloc.dart';
 import 'package:network_arch/lan_scanner/repository/lan_scanner_repository.dart';
 import 'package:network_arch/models/connectivity_model.dart';
 import 'package:network_arch/models/ip_geo_model.dart';
-import 'package:network_arch/models/lan_scanner_model.dart';
 import 'package:network_arch/models/permissions_model.dart';
 import 'package:network_arch/models/toast_notification_model.dart';
 import 'package:network_arch/models/wake_on_lan_model.dart';
@@ -25,18 +28,25 @@ import 'package:network_arch/simple_bloc_observer.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.transparent,
     ),
   );
-
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge).whenComplete(() {
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge)
+      .whenComplete(() async {
     final PingRepository pingRepository = PingRepository();
     final LanScannerRepository lanScannerRepository = LanScannerRepository();
 
-    BlocOverrides.runZoned(
-      () {
+    final storage = await HydratedStorage.build(
+      storageDirectory: await getApplicationDocumentsDirectory(),
+    );
+
+    await storage.clear();
+
+    HydratedBlocOverrides.runZoned(
+      () async {
         runApp(
           MultiProvider(
             providers: [
@@ -54,21 +64,23 @@ void main() {
               child: MultiBlocProvider(
                 providers: [
                   BlocProvider(
+                    create: (context) => ThemeBloc(),
+                  ),
+                  BlocProvider(
                     create: (context) => PingBloc(pingRepository),
                   ),
                   BlocProvider(
                     create: (context) => LanScannerBloc(lanScannerRepository),
                   ),
                 ],
-                child: EasyDynamicThemeWidget(
-                  child: const NetworkArch(),
-                ),
+                child: const NetworkArch(),
               ),
             ),
           ),
         );
       },
       blocObserver: SimpleBlocObserver(),
+      storage: storage,
     );
   });
 }
@@ -81,21 +93,25 @@ class NetworkArch extends StatelessWidget {
     //! Debug, remove in production
     // debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
-    return MaterialApp(
-      // useInheritedMediaQuery: true,
-      // locale: DevicePreview.locale(context),
-      title: 'Dashboard',
-      theme: Constants.themeDataLight,
-      darkTheme: Constants.themeDataDark,
-      themeMode: EasyDynamicTheme.of(context).themeMode,
-      builder: (context, child) {
-        return CupertinoTheme(
-          data: Constants.cupertinoThemeData,
-          child: Material(child: child),
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, state) {
+        return MaterialApp(
+          // useInheritedMediaQuery: true,
+          // locale: DevicePreview.locale(context),
+          title: 'Dashboard',
+          theme: state.mode == AppThemeMode.light
+              ? Constants.lightThemeData
+              : Constants.darkThemeData,
+          builder: (context, child) {
+            return CupertinoTheme(
+              data: Constants.cupertinoThemeData,
+              child: Material(child: child),
+            );
+          },
+          routes: Constants.routes,
+          home: const App(),
         );
       },
-      routes: Constants.routes,
-      home: const App(),
     );
   }
 }

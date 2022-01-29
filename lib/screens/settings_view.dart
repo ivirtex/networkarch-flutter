@@ -3,14 +3,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/theme/theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Settings extends StatelessWidget {
+class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
+
+  @override
+  State<Settings> createState() => _SettingsState();
+}
+
+class _SettingsState extends State<Settings> {
+  bool _isDarkModeSwitched = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +61,21 @@ class Settings extends StatelessWidget {
             FontAwesomeIcons.adjust,
             color: isDarkModeOn ? Colors.white : Colors.black,
           ),
-          title: const Text('Theme'),
-          trailing: EasyDynamicThemeBtn(),
+          title: const Text('Dark Mode'),
+          trailing: Switch(
+            value: _isDarkModeSwitched,
+            onChanged: (isSwitched) {
+              setState(() {
+                _isDarkModeSwitched = isSwitched;
+              });
+
+              context.read<ThemeBloc>().add(
+                    _isDarkModeSwitched
+                        ? UpdateToDarkThemeEvent()
+                        : UpdateToLightThemeEvent(),
+                  );
+            },
+          ),
         ),
         ListTile(
           leading: FaIcon(
