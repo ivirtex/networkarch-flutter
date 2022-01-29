@@ -99,9 +99,9 @@ class NetworkArch extends StatelessWidget {
           // useInheritedMediaQuery: true,
           // locale: DevicePreview.locale(context),
           title: 'Dashboard',
-          theme: state.mode == AppThemeMode.light
-              ? Constants.lightThemeData
-              : Constants.darkThemeData,
+          theme: Constants.lightThemeData,
+          darkTheme: Constants.darkThemeData,
+          themeMode: state.mode,
           builder: (context, child) {
             return CupertinoTheme(
               data: Constants.cupertinoThemeData,

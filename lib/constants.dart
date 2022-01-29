@@ -29,7 +29,7 @@ abstract class Constants {
     scaffoldBackgroundColor: lightBgColor,
     brightness: Brightness.light,
     appBarTheme: const AppBarTheme(
-      centerTitle: true,
+      foregroundColor: Colors.black,
       backgroundColor: Colors.transparent,
       shadowColor: Colors.transparent,
       elevation: 0,
@@ -40,7 +40,6 @@ abstract class Constants {
     scaffoldBackgroundColor: darkBgColor,
     brightness: Brightness.dark,
     appBarTheme: const AppBarTheme(
-      centerTitle: true,
       backgroundColor: Colors.transparent,
       shadowColor: Colors.transparent,
       elevation: 0,

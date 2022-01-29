@@ -64,17 +64,7 @@ class _SettingsState extends State<Settings> {
           title: const Text('Dark Mode'),
           trailing: Switch(
             value: _isDarkModeSwitched,
-            onChanged: (isSwitched) {
-              setState(() {
-                _isDarkModeSwitched = isSwitched;
-              });
-
-              context.read<ThemeBloc>().add(
-                    _isDarkModeSwitched
-                        ? UpdateToDarkThemeEvent()
-                        : UpdateToLightThemeEvent(),
-                  );
-            },
+            onChanged: _handleDarkModeSwitched,
           ),
         ),
         ListTile(
@@ -96,5 +86,17 @@ class _SettingsState extends State<Settings> {
         ),
       ],
     );
+  }
+
+  void _handleDarkModeSwitched(bool isSwitched) {
+    setState(() {
+      _isDarkModeSwitched = isSwitched;
+    });
+
+    context.read<ThemeBloc>().add(
+          _isDarkModeSwitched
+              ? UpdateToDarkThemeEvent()
+              : UpdateToLightThemeEvent(),
+        );
   }
 }

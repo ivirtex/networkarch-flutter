@@ -4,14 +4,14 @@ part of 'theme_bloc.dart';
 
 class ThemeState extends Equatable {
   const ThemeState(this.mode);
-  final AppThemeMode mode;
+  final ThemeMode mode;
 
   @override
   List<Object> get props => [mode];
 
   factory ThemeState.fromJson(Map<String, dynamic> map) {
     return ThemeState(
-      map['mode'] as AppThemeMode,
+      map['mode'] as ThemeMode,
     );
   }
 
@@ -21,5 +21,3 @@ class ThemeState extends Equatable {
     };
   }
 }
-
-enum AppThemeMode { light, dark }

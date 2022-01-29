@@ -27,10 +27,8 @@ class _AppState extends State<App> {
 
   Widget _androidBuilder(BuildContext context) {
     return Scaffold(
-      extendBody: true,
       appBar: AppBar(
         title: const Text('Dashboard'),
-        iconTheme: Theme.of(context).iconTheme,
       ),
       body: IndexedStack(
         index: _selectedIndex,
