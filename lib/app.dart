@@ -77,7 +77,7 @@ class _AppState extends State<App> {
             return CupertinoTabView(
               defaultTitle: 'Settings',
               routes: Constants.routes,
-              builder: (context) => const Settings(),
+              builder: (context) => const SettingsView(),
             );
           default:
             assert(false, 'Unexpected tab');
@@ -90,5 +90,5 @@ class _AppState extends State<App> {
 
 const List<Widget> _pages = <Widget>[
   Dashboard(),
-  Settings(),
+  SettingsView(),
 ];

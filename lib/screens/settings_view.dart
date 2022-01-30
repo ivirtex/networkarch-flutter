@@ -10,14 +10,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 import 'package:network_arch/theme/theme.dart';
 
-class Settings extends StatefulWidget {
-  const Settings({Key? key}) : super(key: key);
+class SettingsView extends StatefulWidget {
+  const SettingsView({Key? key}) : super(key: key);
 
   @override
-  State<Settings> createState() => _SettingsState();
+  State<SettingsView> createState() => _SettingsViewState();
 }
 
-class _SettingsState extends State<Settings> {
+class _SettingsViewState extends State<SettingsView> {
   bool _isDarkModeSwitched = false;
 
   @override
