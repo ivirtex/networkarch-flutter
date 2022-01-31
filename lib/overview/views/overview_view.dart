@@ -1,4 +1,7 @@
 // Flutter imports:
+import 'dart:developer';
+
+import 'package:carrier_info/carrier_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:network_arch/network_status/bloc/bloc.dart';
@@ -104,6 +107,8 @@ class _OverviewViewState extends State<OverviewView> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const WifiStatusCard(),
+              const SizedBox(height: Constants.listSpacing),
+              const CarrierStatusCard(),
               const Divider(
                 indent: 15,
                 endIndent: 15,
@@ -115,9 +120,7 @@ class _OverviewViewState extends State<OverviewView> {
                   Navigator.pushNamed(context, '/tools/ping', arguments: '');
                 },
               ),
-              const SizedBox(
-                height: Constants.listSpacing,
-              ),
+              const SizedBox(height: Constants.listSpacing),
               ToolCard(
                 toolName: 'LAN Scanner',
                 toolDesc: Constants.lanScannerDesc,
@@ -125,9 +128,7 @@ class _OverviewViewState extends State<OverviewView> {
                   Navigator.pushNamed(context, '/tools/lan');
                 },
               ),
-              const SizedBox(
-                height: Constants.listSpacing,
-              ),
+              const SizedBox(height: Constants.listSpacing),
               ToolCard(
                 toolName: 'Wake On LAN',
                 toolDesc: Constants.wolDesc,
@@ -135,9 +136,7 @@ class _OverviewViewState extends State<OverviewView> {
                   Navigator.pushNamed(context, '/tools/wol');
                 },
               ),
-              const SizedBox(
-                height: Constants.listSpacing,
-              ),
+              const SizedBox(height: Constants.listSpacing),
               ToolCard(
                 toolName: 'IP Geolocation',
                 toolDesc: Constants.ipGeoDesc,
@@ -145,9 +144,7 @@ class _OverviewViewState extends State<OverviewView> {
                   Navigator.pushNamed(context, '/tools/ip_geo');
                 },
               ),
-              const SizedBox(
-                height: Constants.listSpacing,
-              ),
+              const SizedBox(height: Constants.listSpacing),
               ToolCard(
                 toolName: 'Whois',
                 toolDesc: Constants.whoisDesc,
@@ -160,19 +157,15 @@ class _OverviewViewState extends State<OverviewView> {
                   );
                 },
               ),
-              const SizedBox(
-                height: Constants.listSpacing,
-              ),
+              const SizedBox(height: Constants.listSpacing),
               ToolCard(
                 toolName: 'DNS Lookup',
                 toolDesc: Constants.dnsDesc,
-                onPressed: () {
+                onPressed: () async {
                   // TODO: Implement onTap()
+                  final data = await CarrierInfo.isoCountryCode;
 
-                  Constants.showToast(
-                    context.read<ToastNotificationModel>().fToast,
-                    Constants.permissionDeniedToast,
-                  );
+                  print(data);
                 },
               ),
             ],

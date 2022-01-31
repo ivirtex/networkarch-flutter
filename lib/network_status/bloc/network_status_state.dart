@@ -23,9 +23,6 @@ class NetworkStatusUpdateSuccess extends NetworkStatusState {
     required WifiInfoModel wifiInfo,
     required CarrierInfoModel carrierInfo,
   }) : super(wifiInfo: wifiInfo, carrierInfo: carrierInfo);
-
-  @override
-  List<Object> get props => [wifiInfo.hashCode, carrierInfo.hashCode];
 }
 
 class NetworkStatusUpdateWithExtIPSuccess extends NetworkStatusState {

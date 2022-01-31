@@ -36,7 +36,7 @@ class CarrierStatusCard extends StatelessWidget {
                       ConnectionStatus(
                         state,
                         connectionChecker: () =>
-                            state.carrierInfo!.radioType != null,
+                            state.carrierInfo!.isoCountryCode != null,
                       ),
                     ],
                   ),
@@ -46,7 +46,7 @@ class CarrierStatusCard extends StatelessWidget {
                       const Text('Network Generation'),
                       const Spacer(),
                       if (state is NetworkStatusUpdateSuccess)
-                        Text(state.carrierInfo!.radioType ?? 'N/A')
+                        Text(state.carrierInfo!.networkGeneration ?? 'N/A')
                       else
                         const Expanded(child: LinearProgressIndicator()),
                     ],
