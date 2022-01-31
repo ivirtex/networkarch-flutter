@@ -46,10 +46,14 @@ class NetworkStatusRepository {
       } catch (e) {
         rethrow;
       }
+
+      wifiInfo != null
+          ? controller.add(wifiInfo!)
+          : controller.addError('Error fetching Wi-Fi data');
     }
 
     void startTimer() {
-      timer = Timer.periodic(const Duration(seconds: 5), fetchData);
+      timer = Timer.periodic(const Duration(seconds: 1), fetchData);
     }
 
     void stopTimer() {
@@ -82,7 +86,7 @@ class NetworkStatusRepository {
     }
 
     void startTimer() {
-      timer = Timer.periodic(const Duration(seconds: 5), fetchData);
+      timer = Timer.periodic(const Duration(seconds: 1), fetchData);
     }
 
     void stopTimer() {

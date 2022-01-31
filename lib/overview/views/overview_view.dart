@@ -1,6 +1,8 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:network_arch/network_status/bloc/bloc.dart';
+import 'package:network_arch/network_status/views/views.dart';
 
 // Package imports:
 import 'package:permission_handler/permission_handler.dart';
@@ -26,6 +28,7 @@ class _OverviewViewState extends State<OverviewView> {
     super.initState();
 
     context.read<ToastNotificationModel>().fToast.init(context);
+    context.read<NetworkStatusBloc>().add(NetworkStatusStreamStarted());
 
     final permissions = context.read<PermissionsModel>();
 
@@ -100,41 +103,7 @@ class _OverviewViewState extends State<OverviewView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // StreamBuilder(
-              //   stream: context.read<ConnectivityModel>().getWifiInfoStream,
-              //   initialData: null,
-              //   builder:
-              //       (context, AsyncSnapshot<SynchronousWifiInfo?> snapshot) {
-              //     // print('reloading wifi data');
-
-              //     if (snapshot.hasError) {
-              //       return const NetworkCard(
-              //         networkType: NetworkType.wifi,
-              //         snapshotHasError: true,
-              //         firstLine: Text('N/A'),
-              //       );
-              //     }
-
-              //     if (!snapshot.hasData) {
-              //       return const NetworkCard(
-              //         networkType: NetworkType.wifi,
-              //         firstLine: Text('N/A'),
-              //       );
-              //     } else {
-              //       final bool isWifiConnected =
-              //           snapshot.data!.wifiIPv4 != null;
-
-              //       return NetworkCard(
-              //         isNetworkConnected: isWifiConnected,
-              //         networkType: NetworkType.wifi,
-              //         firstLine: Text(snapshot.data!.wifiSSID ?? 'N/A'),
-              //         onPressed: () {
-              //           Navigator.of(context).pushNamed('/wifi');
-              //         },
-              //       );
-              //     }
-              //   },
-              // ),
+              const WifiStatusCard(),
               const Divider(
                 indent: 15,
                 endIndent: 15,
@@ -146,7 +115,7 @@ class _OverviewViewState extends State<OverviewView> {
                   Navigator.pushNamed(context, '/tools/ping', arguments: '');
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: Constants.listSpacing,
               ),
               ToolCard(
@@ -156,7 +125,7 @@ class _OverviewViewState extends State<OverviewView> {
                   Navigator.pushNamed(context, '/tools/lan');
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: Constants.listSpacing,
               ),
               ToolCard(
@@ -166,7 +135,7 @@ class _OverviewViewState extends State<OverviewView> {
                   Navigator.pushNamed(context, '/tools/wol');
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: Constants.listSpacing,
               ),
               ToolCard(
@@ -176,7 +145,7 @@ class _OverviewViewState extends State<OverviewView> {
                   Navigator.pushNamed(context, '/tools/ip_geo');
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: Constants.listSpacing,
               ),
               ToolCard(
@@ -191,7 +160,7 @@ class _OverviewViewState extends State<OverviewView> {
                   );
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: Constants.listSpacing,
               ),
               ToolCard(

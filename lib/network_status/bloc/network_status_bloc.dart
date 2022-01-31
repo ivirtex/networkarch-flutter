@@ -27,7 +27,7 @@ class NetworkStatusBloc extends Bloc<NetworkStatusEvent, NetworkStatusState> {
   ) async {
     emit(const NetworkStatusUpdateInProgress());
 
-    await emit.onEach(
+    await emit.onEach<NetworkInfoModel>(
       _repository.getNetworkInfoStream(),
       onData: (NetworkInfoModel networkInfo) {
         add(

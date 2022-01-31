@@ -42,6 +42,8 @@ void main() {
       storageDirectory: await getApplicationDocumentsDirectory(),
     );
 
+    // storage.clear();
+
     HydratedBlocOverrides.runZoned(
       () async {
         runApp(
@@ -62,6 +64,10 @@ void main() {
                 providers: [
                   BlocProvider(
                     create: (context) => ThemeBloc(),
+                  ),
+                  BlocProvider(
+                    create: (context) =>
+                        NetworkStatusBloc(networkStatusRepository),
                   ),
                   BlocProvider(
                     create: (context) => PingBloc(pingRepository),

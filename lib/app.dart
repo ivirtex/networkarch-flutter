@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
+import 'package:network_arch/overview/views/overview_view.dart';
 import 'package:network_arch/screens/screens.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
@@ -71,7 +72,7 @@ class _AppState extends State<App> {
             return CupertinoTabView(
               defaultTitle: 'Overview',
               routes: Constants.routes,
-              builder: (context) => const Dashboard(),
+              builder: (context) => const OverviewView(),
             );
           case 1:
             return CupertinoTabView(
@@ -89,6 +90,6 @@ class _AppState extends State<App> {
 }
 
 const List<Widget> _pages = <Widget>[
-  Dashboard(),
+  OverviewView(),
   SettingsView(),
 ];

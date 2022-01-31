@@ -52,7 +52,7 @@ class WifiStatusCard extends StatelessWidget {
                       if (state is NetworkStatusUpdateSuccess)
                         Text(state.wifiInfo!.wifiIPv4 ?? 'N/A')
                       else
-                        const LinearProgressIndicator(),
+                        Expanded(child: const LinearProgressIndicator()),
                     ],
                   ),
                 ],
