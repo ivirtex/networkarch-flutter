@@ -1,5 +1,8 @@
-import 'package:network_arch/network_status/models/models.dart';
+// Package imports:
 import 'package:network_info_plus/network_info_plus.dart';
+
+// Project imports:
+import 'package:network_arch/network_status/models/models.dart';
 
 class WifiDataProvider {
   NetworkInfo networkInfo = NetworkInfo();

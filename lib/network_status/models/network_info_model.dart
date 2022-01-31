@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:network_arch/network_status/models/models.dart';
 
 class NetworkInfoModel {

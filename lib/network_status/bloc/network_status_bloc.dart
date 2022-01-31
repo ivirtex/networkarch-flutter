@@ -1,7 +1,11 @@
+// Dart imports:
 import 'dart:async';
 
+// Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+
+// Project imports:
 import 'package:network_arch/network_status/models/models.dart';
 import 'package:network_arch/network_status/repository/repository.dart';
 
