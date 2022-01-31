@@ -51,10 +51,7 @@ class _OverviewViewState extends State<OverviewView> {
             Future.delayed(
               Duration.zero,
               () {
-                Constants.showToast(
-                  context.read<ToastNotificationModel>().fToast,
-                  Constants.permissionDeniedToast,
-                );
+                Constants.permissionDeniedNotification.show(context);
               },
             );
           } else {
@@ -106,6 +103,7 @@ class _OverviewViewState extends State<OverviewView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              const SizedBox(height: Constants.listSpacing),
               const WifiStatusCard(),
               const SizedBox(height: Constants.listSpacing),
               const CarrierStatusCard(),
@@ -150,11 +148,6 @@ class _OverviewViewState extends State<OverviewView> {
                 toolDesc: Constants.whoisDesc,
                 onPressed: () {
                   // TODO: Implement onTap()
-
-                  Constants.showToast(
-                    context.read<ToastNotificationModel>().fToast,
-                    Constants.permissionGrantedToast,
-                  );
                 },
               ),
               const SizedBox(height: Constants.listSpacing),
@@ -163,11 +156,10 @@ class _OverviewViewState extends State<OverviewView> {
                 toolDesc: Constants.dnsDesc,
                 onPressed: () async {
                   // TODO: Implement onTap()
-                  final data = await CarrierInfo.isoCountryCode;
-
-                  print(data);
+                  Constants.permissionGrantedNotification.show(context);
                 },
               ),
+              const SizedBox(height: Constants.listSpacing),
             ],
           ),
         ),

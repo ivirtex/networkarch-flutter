@@ -2,6 +2,8 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -162,7 +164,7 @@ abstract class Constants {
       'We need your location permission in order to access Wi-Fi information';
 
   // Permissions snackbars
-  static const String _permissioGranted = 'Permission granted.';
+  static const String _permissionGranted = 'Permission granted.';
 
   static const String _permissionDenied =
       '''Permission denied, the app may not function properly, check the app's settings.''';
@@ -170,126 +172,48 @@ abstract class Constants {
   static const String _permissionDefault =
       'Something gone wrong, check app permissions.';
 
-  static final Widget permissionGrantedToast = Container(
-    padding: const EdgeInsets.all(10),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      color: Colors.greenAccent[400],
-    ),
-    child: Row(
-      children: const [
-        FaIcon(
-          FontAwesomeIcons.checkCircle,
-          color: Colors.white,
-        ),
-        SizedBox(width: 10),
-        Expanded(
-          child: Text(
-            _permissioGranted,
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      ],
+  static final ElegantNotification permissionGrantedNotification =
+      ElegantNotification.success(
+    title: const Text('Success'),
+    description: const Text(_permissionGranted),
+    notificationPosition: NOTIFICATION_POSITION.bottom,
+    animation: ANIMATION.fromBottom,
+  );
+
+  static final ElegantNotification permissionDeniedNotification =
+      ElegantNotification.error(
+    title: const Text('Error'),
+    description: const Text(_permissionDenied),
+    notificationPosition: NOTIFICATION_POSITION.bottom,
+    animation: ANIMATION.fromBottom,
+    action: TextButton(
+      onPressed: () {
+        openAppSettings();
+      },
+      child: const Text(
+        'Open Settings',
+      ),
     ),
   );
 
-  static final Widget permissionDeniedToast = Container(
-    padding: const EdgeInsets.all(10),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      color: Colors.red,
-    ),
-    child: Row(
-      children: [
-        const FaIcon(
-          FontAwesomeIcons.timesCircle,
-          color: Colors.white,
-        ),
-        const SizedBox(width: 10),
-        const Expanded(
-          child: Text(
-            _permissionDenied,
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-        TextButton(
-          onPressed: () {
-            openAppSettings();
-          },
-          child: const Text(
-            'Open Settings',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      ],
-    ),
+  static final ElegantNotification permissionDefaultNotification =
+      ElegantNotification.error(
+    title: const Text('Warning'),
+    description: const Text(_permissionDefault),
+    notificationPosition: NOTIFICATION_POSITION.bottom,
+    animation: ANIMATION.fromBottom,
   );
-
-  static final Widget permissionDefaultToast = Container(
-    padding: const EdgeInsets.all(10),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      color: Colors.yellow[600],
-    ),
-    child: Row(
-      children: [
-        const FaIcon(
-          FontAwesomeIcons.exclamationTriangle,
-          color: Colors.white,
-        ),
-        const SizedBox(width: 10),
-        const Expanded(
-          child: Text(
-            _permissionDefault,
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-        TextButton(
-          onPressed: () {
-            openAppSettings();
-          },
-          child: const Text(
-            'Open Settings',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      ],
-    ),
-  );
-
-  static void showToast(FToast instance, Widget toastBody) {
-    instance.showToast(
-      child: toastBody,
-      gravity: ToastGravity.BOTTOM,
-      toastDuration: const Duration(seconds: 3),
-    );
-  }
 
   // Wake On Lan snackbars
   static const String _wolValidationError =
       '''The IP address or MAC address is not valid, please check it and try again.''';
 
-  static final Widget wolValidationFault = SnackBar(
-    content: Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.red,
-      ),
-      child: Row(
-        children: const [
-          FaIcon(
-            FontAwesomeIcons.timesCircle,
-            color: Colors.red,
-          ),
-          SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              _wolValidationError,
-            ),
-          ),
-        ],
-      ),
-    ),
+  static final ElegantNotification wolValidationErrorNotification =
+      ElegantNotification.error(
+    title: const Text('Validation error'),
+    description: const Text(_wolValidationError),
+    notificationPosition: NOTIFICATION_POSITION.bottom,
+    animation: ANIMATION.fromBottom,
+    toastDuration: const Duration(milliseconds: 4000),
   );
 }

@@ -111,10 +111,8 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
                         if (model.areTextFieldsValid()) {
                           await model.sendPacket();
                         } else {
-                          Constants.showToast(
-                            context.read<ToastNotificationModel>().fToast,
-                            Constants.wolValidationFault,
-                          );
+                          Constants.wolValidationErrorNotification
+                              .show(context);
                         }
                       },
                 child: Text(

@@ -143,30 +143,21 @@ class _PermissionsViewState extends State<PermissionsView> {
                         final PermissionStatus status =
                             await Permission.locationWhenInUse.request();
 
-                        final toastInstance =
-                            context.read<ToastNotificationModel>().fToast;
-
                         model.setLocationStatusIcon(status);
 
                         switch (status) {
                           case PermissionStatus.granted:
-                            Constants.showToast(
-                              toastInstance,
-                              Constants.permissionGrantedToast,
-                            );
+                            Constants.permissionGrantedNotification
+                                .show(context);
                             break;
                           case PermissionStatus.denied:
                           case PermissionStatus.permanentlyDenied:
-                            Constants.showToast(
-                              toastInstance,
-                              Constants.permissionDeniedToast,
-                            );
+                            Constants.permissionDeniedNotification
+                                .show(context);
                             break;
                           default:
-                            Constants.showToast(
-                              toastInstance,
-                              Constants.permissionDefaultToast,
-                            );
+                            Constants.permissionDefaultNotification
+                                .show(context);
                             break;
                         }
 

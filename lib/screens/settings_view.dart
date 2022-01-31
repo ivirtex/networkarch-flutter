@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:network_arch/constants.dart';
 
 // Project imports:
 import 'package:network_arch/shared/shared_widgets.dart';
@@ -51,40 +52,43 @@ class _SettingsViewState extends State<SettingsView> {
     );
   }
 
-  RoundedList _buildBody(BuildContext context) {
+  Padding _buildBody(BuildContext context) {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
-    return RoundedList(
-      children: [
-        ListTile(
-          leading: FaIcon(
-            FontAwesomeIcons.adjust,
-            color: isDarkModeOn ? Colors.white : Colors.black,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: Constants.listSpacing),
+      child: RoundedList(
+        children: [
+          ListTile(
+            leading: FaIcon(
+              FontAwesomeIcons.adjust,
+              color: isDarkModeOn ? Colors.white : Colors.black,
+            ),
+            title: const Text('Dark Mode'),
+            trailing: Switch.adaptive(
+              value: _isDarkModeSwitched,
+              onChanged: _handleDarkModeSwitched,
+            ),
           ),
-          title: const Text('Dark Mode'),
-          trailing: Switch.adaptive(
-            value: _isDarkModeSwitched,
-            onChanged: _handleDarkModeSwitched,
+          ListTile(
+            leading: FaIcon(
+              FontAwesomeIcons.language,
+              color: isDarkModeOn ? Colors.white : Colors.black,
+            ),
+            title: const Text('Language'),
+            trailing: const Text('English'),
           ),
-        ),
-        ListTile(
-          leading: FaIcon(
-            FontAwesomeIcons.language,
-            color: isDarkModeOn ? Colors.white : Colors.black,
+          ListTile(
+            leading: FaIcon(
+              FontAwesomeIcons.infoCircle,
+              color: isDarkModeOn ? Colors.white : Colors.black,
+            ),
+            title: const Text('About'),
+            trailing: const Text('Version 1.0.0'),
+            // onTap: () => Navigator.pushNamed(context, '/about'),
           ),
-          title: const Text('Language'),
-          trailing: const Text('English'),
-        ),
-        ListTile(
-          leading: FaIcon(
-            FontAwesomeIcons.infoCircle,
-            color: isDarkModeOn ? Colors.white : Colors.black,
-          ),
-          title: const Text('About'),
-          trailing: const Text('Version 1.0.0'),
-          // onTap: () => Navigator.pushNamed(context, '/about'),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
