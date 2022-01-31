@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:network_arch/network_status/network_status.dart';
 import 'package:network_arch/shared/platform_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,6 @@ import 'package:network_arch/models/ip_geo_model.dart';
 import 'package:network_arch/models/permissions_model.dart';
 import 'package:network_arch/models/toast_notification_model.dart';
 import 'package:network_arch/models/wake_on_lan_model.dart';
-import 'package:network_arch/network_status/netword_status.dart';
 import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/simple_bloc_observer.dart';
 import 'package:network_arch/theme/theme.dart';

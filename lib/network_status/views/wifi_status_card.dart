@@ -7,8 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
-import 'package:network_arch/network_status/netword_status.dart';
-import 'package:network_arch/network_status/widgets/connection_status.dart';
+import 'package:network_arch/network_status/network_status.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
 class WifiStatusCard extends StatelessWidget {

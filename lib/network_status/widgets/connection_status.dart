@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:network_arch/network_status/netword_status.dart';
+import 'package:network_arch/network_status/network_status.dart';
 
 class ConnectionStatus extends StatelessWidget {
   const ConnectionStatus(
@@ -17,7 +17,6 @@ class ConnectionStatus extends StatelessWidget {
 
     if (state is NetworkStatusUpdateSuccess ||
         state is NetworkStatusUpdateWithExtIPSuccess) {
-      // final isNetworkConnected = state.wifiInfo!.wifiIPv4 != null;
       final isNetworkConnected = connectionChecker();
 
       return Row(
