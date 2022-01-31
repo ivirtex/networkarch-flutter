@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:network_arch/network_status/network_status.dart';
 
 class ConnectionStatus extends StatelessWidget {

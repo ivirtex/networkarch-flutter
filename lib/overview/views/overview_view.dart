@@ -1,11 +1,6 @@
 // Flutter imports:
-import 'dart:developer';
-
-import 'package:carrier_info/carrier_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:network_arch/network_status/bloc/bloc.dart';
-import 'package:network_arch/network_status/views/views.dart';
 
 // Package imports:
 import 'package:permission_handler/permission_handler.dart';
@@ -15,6 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/permissions_model.dart';
 import 'package:network_arch/models/toast_notification_model.dart';
+import 'package:network_arch/network_status/bloc/bloc.dart';
+import 'package:network_arch/network_status/views/views.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
 class OverviewView extends StatefulWidget {
