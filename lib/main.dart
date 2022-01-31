@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:network_arch/shared/platform_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -33,11 +34,6 @@ void main() {
   );
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge)
       .whenComplete(() async {
-    final NetworkStatusRepository networkStatusRepository =
-        NetworkStatusRepository();
-    final PingRepository pingRepository = PingRepository();
-    final LanScannerRepository lanScannerRepository = LanScannerRepository();
-
     final storage = await HydratedStorage.build(
       storageDirectory: await getApplicationDocumentsDirectory(),
     );
@@ -54,31 +50,7 @@ void main() {
               ChangeNotifierProvider(create: (context) => IPGeoModel()),
               Provider(create: (context) => ToastNotificationModel()),
             ],
-            child: MultiRepositoryProvider(
-              providers: [
-                RepositoryProvider.value(value: networkStatusRepository),
-                RepositoryProvider.value(value: pingRepository),
-                RepositoryProvider.value(value: lanScannerRepository),
-              ],
-              child: MultiBlocProvider(
-                providers: [
-                  BlocProvider(
-                    create: (context) => ThemeBloc(),
-                  ),
-                  BlocProvider(
-                    create: (context) =>
-                        NetworkStatusBloc(networkStatusRepository),
-                  ),
-                  BlocProvider(
-                    create: (context) => PingBloc(pingRepository),
-                  ),
-                  BlocProvider(
-                    create: (context) => LanScannerBloc(lanScannerRepository),
-                  ),
-                ],
-                child: const NetworkArch(),
-              ),
-            ),
+            child: NetworkArch(),
           ),
         );
       },
@@ -89,13 +61,48 @@ void main() {
 }
 
 class NetworkArch extends StatelessWidget {
-  const NetworkArch({Key? key}) : super(key: key);
+  NetworkArch({Key? key}) : super(key: key);
+
+  final NetworkStatusRepository networkStatusRepository =
+      NetworkStatusRepository();
+  final PingRepository pingRepository = PingRepository();
+  final LanScannerRepository lanScannerRepository = LanScannerRepository();
 
   @override
   Widget build(BuildContext context) {
     //! Debug, remove in production
     // debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider.value(value: networkStatusRepository),
+        RepositoryProvider.value(value: pingRepository),
+        RepositoryProvider.value(value: lanScannerRepository),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => ThemeBloc(),
+          ),
+          BlocProvider(
+            create: (context) => NetworkStatusBloc(networkStatusRepository),
+          ),
+          BlocProvider(
+            create: (context) => PingBloc(pingRepository),
+          ),
+          BlocProvider(
+            create: (context) => LanScannerBloc(lanScannerRepository),
+          ),
+        ],
+        child: PlatformWidget(
+          androidBuilder: _buildAndroid,
+          iosBuilder: _buildIOS,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAndroid(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         return MaterialApp(
@@ -105,12 +112,21 @@ class NetworkArch extends StatelessWidget {
           theme: Constants.lightThemeData,
           darkTheme: Constants.darkThemeData,
           themeMode: state.mode,
-          builder: (context, child) {
-            return CupertinoTheme(
-              data: Constants.cupertinoThemeData,
-              child: Material(child: child),
-            );
-          },
+          routes: Constants.routes,
+          home: const App(),
+        );
+      },
+    );
+  }
+
+  Widget _buildIOS(BuildContext context) {
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, state) {
+        return CupertinoApp(
+          // useInheritedMediaQuery: true,
+          // locale: DevicePreview.locale(context),
+          title: 'Dashboard',
+          theme: Constants.cupertinoThemeData,
           routes: Constants.routes,
           home: const App(),
         );
