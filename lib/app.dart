@@ -69,7 +69,7 @@ class _AppState extends State<App> {
         switch (index) {
           case 0:
             return CupertinoTabView(
-              defaultTitle: 'Dashboard',
+              defaultTitle: 'Overview',
               routes: Constants.routes,
               builder: (context) => const Dashboard(),
             );

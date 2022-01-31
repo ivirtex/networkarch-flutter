@@ -211,6 +211,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.10.0-dev.2"
+  dart_ipify:
+    dependency: "direct main"
+    description:
+      name: dart_ipify
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
   dart_ping:
     dependency: "direct main"
     description:
@@ -700,6 +707,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  rxdart:
+    dependency: "direct main"
+    description:
+      name: rxdart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.27.3"
   shared_preferences:
     dependency: "direct main"
     description:

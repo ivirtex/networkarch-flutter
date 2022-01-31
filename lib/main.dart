@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:network_arch/network_status/netword_status.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +15,6 @@ import 'package:network_arch/app.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/lan_scanner/bloc/lan_scanner_bloc.dart';
 import 'package:network_arch/lan_scanner/repository/lan_scanner_repository.dart';
-import 'package:network_arch/models/connectivity_model.dart';
 import 'package:network_arch/models/ip_geo_model.dart';
 import 'package:network_arch/models/permissions_model.dart';
 import 'package:network_arch/models/toast_notification_model.dart';
@@ -33,6 +33,8 @@ void main() {
   );
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge)
       .whenComplete(() async {
+    final NetworkStatusRepository networkStatusRepository =
+        NetworkStatusRepository();
     final PingRepository pingRepository = PingRepository();
     final LanScannerRepository lanScannerRepository = LanScannerRepository();
 
@@ -48,11 +50,11 @@ void main() {
               ChangeNotifierProvider(create: (context) => WakeOnLanModel()),
               ChangeNotifierProvider(create: (context) => PermissionsModel()),
               ChangeNotifierProvider(create: (context) => IPGeoModel()),
-              Provider(create: (context) => ConnectivityModel()),
               Provider(create: (context) => ToastNotificationModel()),
             ],
             child: MultiRepositoryProvider(
               providers: [
+                RepositoryProvider.value(value: networkStatusRepository),
                 RepositoryProvider.value(value: pingRepository),
                 RepositoryProvider.value(value: lanScannerRepository),
               ],

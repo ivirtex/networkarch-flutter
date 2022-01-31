@@ -35,7 +35,7 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
       callback: event.callback,
     );
 
-    emit(LanScannerRunStarted(stream, 0.0));
+    emit(LanScannerRunStart(stream, 0.0));
   }
 
   void _onProgressUpdated(
@@ -45,7 +45,7 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
     if (event.progress == 1.0) {
       emit(const LanScannerRunComplete(1.0));
     } else {
-      emit(LanScannerRunProgressUpdated(event.progress));
+      emit(LanScannerRunProgressUpdate(event.progress));
     }
   }
 

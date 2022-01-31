@@ -12,14 +12,14 @@ import 'package:network_arch/models/permissions_model.dart';
 import 'package:network_arch/models/toast_notification_model.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
-class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key}) : super(key: key);
+class OverviewView extends StatefulWidget {
+  const OverviewView({Key? key}) : super(key: key);
 
   @override
-  _DashboardState createState() => _DashboardState();
+  _OverviewViewState createState() => _OverviewViewState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _OverviewViewState extends State<OverviewView> {
   @override
   void initState() {
     // TODO: implement initState
@@ -100,6 +100,41 @@ class _DashboardState extends State<Dashboard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // StreamBuilder(
+              //   stream: context.read<ConnectivityModel>().getWifiInfoStream,
+              //   initialData: null,
+              //   builder:
+              //       (context, AsyncSnapshot<SynchronousWifiInfo?> snapshot) {
+              //     // print('reloading wifi data');
+
+              //     if (snapshot.hasError) {
+              //       return const NetworkCard(
+              //         networkType: NetworkType.wifi,
+              //         snapshotHasError: true,
+              //         firstLine: Text('N/A'),
+              //       );
+              //     }
+
+              //     if (!snapshot.hasData) {
+              //       return const NetworkCard(
+              //         networkType: NetworkType.wifi,
+              //         firstLine: Text('N/A'),
+              //       );
+              //     } else {
+              //       final bool isWifiConnected =
+              //           snapshot.data!.wifiIPv4 != null;
+
+              //       return NetworkCard(
+              //         isNetworkConnected: isWifiConnected,
+              //         networkType: NetworkType.wifi,
+              //         firstLine: Text(snapshot.data!.wifiSSID ?? 'N/A'),
+              //         onPressed: () {
+              //           Navigator.of(context).pushNamed('/wifi');
+              //         },
+              //       );
+              //     }
+              //   },
+              // ),
               const Divider(
                 indent: 15,
                 endIndent: 15,
@@ -111,7 +146,7 @@ class _DashboardState extends State<Dashboard> {
                   Navigator.pushNamed(context, '/tools/ping', arguments: '');
                 },
               ),
-              const SizedBox(
+              SizedBox(
                 height: Constants.listSpacing,
               ),
               ToolCard(
@@ -121,7 +156,7 @@ class _DashboardState extends State<Dashboard> {
                   Navigator.pushNamed(context, '/tools/lan');
                 },
               ),
-              const SizedBox(
+              SizedBox(
                 height: Constants.listSpacing,
               ),
               ToolCard(
@@ -131,7 +166,7 @@ class _DashboardState extends State<Dashboard> {
                   Navigator.pushNamed(context, '/tools/wol');
                 },
               ),
-              const SizedBox(
+              SizedBox(
                 height: Constants.listSpacing,
               ),
               ToolCard(
@@ -141,7 +176,7 @@ class _DashboardState extends State<Dashboard> {
                   Navigator.pushNamed(context, '/tools/ip_geo');
                 },
               ),
-              const SizedBox(
+              SizedBox(
                 height: Constants.listSpacing,
               ),
               ToolCard(
@@ -156,7 +191,7 @@ class _DashboardState extends State<Dashboard> {
                   );
                 },
               ),
-              const SizedBox(
+              SizedBox(
                 height: Constants.listSpacing,
               ),
               ToolCard(

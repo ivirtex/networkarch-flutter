@@ -32,6 +32,7 @@ dependencies:
   carrier_info: ^2.0.4
   dart_ping: ^6.1.1
   dart_ping_ios: ^1.0.0
+  dart_ipify: ^1.1.1
   fluttertoast: ^8.0.8
   font_awesome_flutter: ^9.2.0
   google_maps_flutter: ^2.1.1
@@ -49,6 +50,7 @@ dependencies:
   device_preview: ^1.0.0
   equatable: ^2.0.3
   path_provider: ^2.0.8
+  rxdart: ^0.27.3
 
 dev_dependencies:
   flutter_test:

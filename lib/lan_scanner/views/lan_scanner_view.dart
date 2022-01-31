@@ -53,8 +53,8 @@ class _LanScannerViewState extends State<LanScannerView> {
   Widget _buildAndroid(BuildContext context) {
     return BlocBuilder<LanScannerBloc, LanScannerState>(
       builder: (context, state) {
-        return state is LanScannerRunStarted ||
-                state is LanScannerRunProgressUpdated
+        return state is LanScannerRunStart ||
+                state is LanScannerRunProgressUpdate
             ? Scaffold(
                 appBar: ActionAppBar(
                   context,
@@ -85,8 +85,8 @@ class _LanScannerViewState extends State<LanScannerView> {
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           BlocBuilder<LanScannerBloc, LanScannerState>(
             builder: (context, state) {
-              return state is LanScannerRunStarted ||
-                      state is LanScannerRunProgressUpdated
+              return state is LanScannerRunStart ||
+                      state is LanScannerRunProgressUpdate
                   ? CupertinoActionAppBar(
                       context,
                       title: 'Ping',
@@ -116,7 +116,7 @@ class _LanScannerViewState extends State<LanScannerView> {
         children: [
           BlocBuilder<LanScannerBloc, LanScannerState>(
             builder: (context, state) {
-              if (state is LanScannerRunStarted) {
+              if (state is LanScannerRunStart) {
                 final repository = context.read<LanScannerRepository>();
 
                 repository.subscription = state.stream.listen((event) {

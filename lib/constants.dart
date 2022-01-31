@@ -19,7 +19,7 @@ import 'package:network_arch/screens/screens.dart';
 abstract class Constants {
   static final Map<String, Widget Function(BuildContext)> routes = {
     '/permissions': (context) => const PermissionsView(),
-    '/wifi': (context) => const WiFiDetailView(),
+    // '/wifi': (context) => const WiFiDetailView(),
     '/cellular': (context) => const CellularDetailView(),
     '/tools/ping': (context) => const PingView(),
     '/tools/lan': (context) => const LanScannerView(),

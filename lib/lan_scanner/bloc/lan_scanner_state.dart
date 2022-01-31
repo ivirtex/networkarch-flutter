@@ -11,14 +11,14 @@ class LanScannerInitial extends LanScannerState {
   const LanScannerInitial(double progress) : super(progress);
 }
 
-class LanScannerRunStarted extends LanScannerState {
-  const LanScannerRunStarted(this.stream, double progress) : super(progress);
+class LanScannerRunStart extends LanScannerState {
+  const LanScannerRunStart(this.stream, double progress) : super(progress);
 
   final Stream<HostModel> stream;
 }
 
-class LanScannerRunProgressUpdated extends LanScannerState {
-  const LanScannerRunProgressUpdated(double progress) : super(progress);
+class LanScannerRunProgressUpdate extends LanScannerState {
+  const LanScannerRunProgressUpdate(double progress) : super(progress);
 }
 
 class LanScannerRunComplete extends LanScannerState {
