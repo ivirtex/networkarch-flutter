@@ -73,7 +73,7 @@ abstract class Constants {
 
   // Colors
   static final Color lightBgColor = Colors.grey[100]!;
-  static final Color iOSlightBgColor = CupertinoColors.white;
+  static const Color iOSlightBgColor = CupertinoColors.white;
   static final Color darkBgColor = Colors.grey[900]!;
   static final Color iOSdarkBgColor = CupertinoColors.systemGrey6.darkColor;
 
