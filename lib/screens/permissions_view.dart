@@ -11,26 +11,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/permissions_model.dart';
-import 'package:network_arch/models/toast_notification_model.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
-class PermissionsView extends StatefulWidget {
+class PermissionsView extends StatelessWidget {
   const PermissionsView({Key? key}) : super(key: key);
-
-  @override
-  State<PermissionsView> createState() => _PermissionsViewState();
-}
-
-class _PermissionsViewState extends State<PermissionsView> {
   void goToDashboard(BuildContext context) {
     Navigator.of(context).pushReplacementNamed('/');
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    context.read<ToastNotificationModel>().fToast.init(context);
   }
 
   @override

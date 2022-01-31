@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/permissions_model.dart';
-import 'package:network_arch/models/toast_notification_model.dart';
 import 'package:network_arch/network_status/bloc/bloc.dart';
 import 'package:network_arch/network_status/views/views.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
@@ -26,8 +25,6 @@ class _OverviewViewState extends State<OverviewView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    context.read<ToastNotificationModel>().fToast.init(context);
     context.read<NetworkStatusBloc>().add(NetworkStatusStreamStarted());
 
     final permissions = context.read<PermissionsModel>();

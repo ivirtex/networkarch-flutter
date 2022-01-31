@@ -17,7 +17,6 @@ import 'package:network_arch/lan_scanner/bloc/lan_scanner_bloc.dart';
 import 'package:network_arch/lan_scanner/repository/lan_scanner_repository.dart';
 import 'package:network_arch/models/ip_geo_model.dart';
 import 'package:network_arch/models/permissions_model.dart';
-import 'package:network_arch/models/toast_notification_model.dart';
 import 'package:network_arch/models/wake_on_lan_model.dart';
 import 'package:network_arch/network_status/network_status.dart';
 import 'package:network_arch/ping/ping.dart';
@@ -49,7 +48,6 @@ void main() {
               ChangeNotifierProvider(create: (context) => WakeOnLanModel()),
               ChangeNotifierProvider(create: (context) => PermissionsModel()),
               ChangeNotifierProvider(create: (context) => IPGeoModel()),
-              Provider(create: (context) => ToastNotificationModel()),
             ],
             child: NetworkArch(),
           ),
