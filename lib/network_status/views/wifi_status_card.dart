@@ -11,12 +11,7 @@ import 'package:network_arch/network_status/network_status.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
 class WifiStatusCard extends StatelessWidget {
-  const WifiStatusCard({
-    this.onPressed,
-    Key? key,
-  }) : super(key: key);
-
-  final Function? onPressed;
+  const WifiStatusCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +60,7 @@ class WifiStatusCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           TextButton(
-            onPressed: onPressed as void Function()?,
+            onPressed: () => Navigator.of(context).pushNamed('/wifi'),
             style: TextButton.styleFrom(
               primary: isDarkModeOn ? Colors.white : Colors.black,
               shape: const RoundedRectangleBorder(

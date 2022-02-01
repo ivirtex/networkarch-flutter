@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
+import 'package:network_arch/network_status/network_status.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
@@ -19,7 +20,7 @@ import 'package:network_arch/screens/screens.dart';
 abstract class Constants {
   static final Map<String, Widget Function(BuildContext)> routes = {
     '/permissions': (context) => const PermissionsView(),
-    // '/wifi': (context) => const WiFiDetailView(),
+    '/wifi': (context) => const WifiDetailsView(),
     '/cellular': (context) => const CellularDetailView(),
     '/tools/ping': (context) => const PingView(),
     '/tools/lan': (context) => const LanScannerView(),
