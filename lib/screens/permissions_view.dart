@@ -1,4 +1,6 @@
 // Flutter imports:
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -133,17 +135,20 @@ class PermissionsView extends StatelessWidget {
 
                         switch (status) {
                           case PermissionStatus.granted:
-                            Constants.permissionGrantedNotification
-                                .show(context);
+                            Constants.showPermissionGrantedNotification(
+                              context,
+                            );
                             break;
                           case PermissionStatus.denied:
                           case PermissionStatus.permanentlyDenied:
-                            Constants.permissionDeniedNotification
-                                .show(context);
+                            Constants.showPermissionDeniedNotification(
+                              context,
+                            );
                             break;
                           default:
-                            Constants.permissionDefaultNotification
-                                .show(context);
+                            Constants.showPermissionDefaultNotification(
+                              context,
+                            );
                             break;
                         }
 

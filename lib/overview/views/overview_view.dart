@@ -45,7 +45,7 @@ class _OverviewViewState extends State<OverviewView> {
             Future.delayed(
               Duration.zero,
               () {
-                Constants.permissionDeniedNotification.show(context);
+                Constants.showPermissionDeniedNotification(context);
               },
             );
           } else {
@@ -77,9 +77,7 @@ class _OverviewViewState extends State<OverviewView> {
           const CupertinoSliverNavigationBar(
             stretch: true,
             border: null,
-            largeTitle: Text(
-              'Dashboard',
-            ),
+            largeTitle: Text('Overview'),
           ),
         ],
         body: _buildBody(context),
@@ -93,18 +91,17 @@ class _OverviewViewState extends State<OverviewView> {
       shrinkWrap: true,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10.0,
+            vertical: Constants.listSpacing,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: Constants.listSpacing),
               const WifiStatusCard(),
               const SizedBox(height: Constants.listSpacing),
               const CarrierStatusCard(),
-              const Divider(
-                indent: 15,
-                endIndent: 15,
-              ),
+              const Divider(indent: 15, endIndent: 15),
               ToolCard(
                 toolName: 'Ping',
                 toolDesc: Constants.pingDesc,
@@ -133,7 +130,8 @@ class _OverviewViewState extends State<OverviewView> {
                 toolName: 'IP Geolocation',
                 toolDesc: Constants.ipGeoDesc,
                 onPressed: () {
-                  Navigator.pushNamed(context, '/tools/ip_geo');
+                  // Navigator.pushNamed(context, '/tools/ip_geo');
+                  Constants.showPermissionDefaultNotification(context);
                 },
               ),
               const SizedBox(height: Constants.listSpacing),
@@ -142,6 +140,8 @@ class _OverviewViewState extends State<OverviewView> {
                 toolDesc: Constants.whoisDesc,
                 onPressed: () {
                   // TODO: Implement onTap()
+
+                  Constants.showPermissionGrantedNotification(context);
                 },
               ),
               const SizedBox(height: Constants.listSpacing),
@@ -150,10 +150,10 @@ class _OverviewViewState extends State<OverviewView> {
                 toolDesc: Constants.dnsDesc,
                 onPressed: () async {
                   // TODO: Implement onTap()
-                  Constants.permissionGrantedNotification.show(context);
+
+                  Constants.showPermissionDeniedNotification(context);
                 },
               ),
-              const SizedBox(height: Constants.listSpacing),
             ],
           ),
         ),

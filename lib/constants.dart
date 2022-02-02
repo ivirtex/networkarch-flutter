@@ -171,7 +171,17 @@ abstract class Constants {
   static const String _permissionDefault =
       'Something gone wrong, check app permissions.';
 
-  static final ElegantNotification permissionGrantedNotification =
+  static void showPermissionGrantedNotification(
+    BuildContext context,
+  ) {
+    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+
+    isDarkModeOn
+        ? _permissionGrantedNotificationDark.show(context)
+        : _permissionGrantedNotification.show(context);
+  }
+
+  static final ElegantNotification _permissionGrantedNotification =
       ElegantNotification.success(
     title: const Text('Success'),
     description: const Text(_permissionGranted),
@@ -179,29 +189,102 @@ abstract class Constants {
     animation: ANIMATION.fromBottom,
   );
 
-  static final ElegantNotification permissionDeniedNotification =
+  static final ElegantNotification _permissionGrantedNotificationDark =
+      ElegantNotification.success(
+    title: const Text('Success'),
+    description: const Text(_permissionGranted),
+    background: Constants.darkCardColor,
+    notificationPosition: NOTIFICATION_POSITION.bottom,
+    animation: ANIMATION.fromBottom,
+  );
+
+  // -----------------------------------------------
+
+  static void showPermissionDeniedNotification(
+    BuildContext context,
+  ) {
+    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+
+    isDarkModeOn
+        ? _permissionDeniedNotificationDark.show(context)
+        : _permissionDeniedNotification.show(context);
+  }
+
+  static final ElegantNotification _permissionDeniedNotification =
       ElegantNotification.error(
     title: const Text('Error'),
     description: const Text(_permissionDenied),
     notificationPosition: NOTIFICATION_POSITION.bottom,
     animation: ANIMATION.fromBottom,
-    action: TextButton(
-      onPressed: () {
-        openAppSettings();
-      },
-      child: const Text(
+    toastDuration: const Duration(milliseconds: 4000),
+    height: 140.0,
+    action: const Padding(
+      padding: EdgeInsets.only(top: 10.0),
+      child: Text(
         'Open Settings',
+        style: TextStyle(
+          color: Colors.blue,
+        ),
       ),
     ),
+    onActionPressed: () {
+      openAppSettings();
+    },
   );
 
-  static final ElegantNotification permissionDefaultNotification =
+  static final ElegantNotification _permissionDeniedNotificationDark =
+      ElegantNotification.error(
+    title: const Text('Error'),
+    description: const Text(_permissionDenied),
+    background: Constants.darkCardColor,
+    notificationPosition: NOTIFICATION_POSITION.bottom,
+    animation: ANIMATION.fromBottom,
+    toastDuration: const Duration(milliseconds: 4000),
+    height: 140.0,
+    action: const Padding(
+      padding: EdgeInsets.only(top: 10.0),
+      child: Text(
+        'Open Settings',
+        style: TextStyle(
+          color: Colors.blue,
+        ),
+      ),
+    ),
+    onActionPressed: () {
+      openAppSettings();
+    },
+  );
+
+  // -----------------------------------------------
+
+  static void showPermissionDefaultNotification(
+    BuildContext context,
+  ) {
+    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+
+    isDarkModeOn
+        ? _permissionDefaultNotificationDark.show(context)
+        : _permissionDefaultNotification.show(context);
+  }
+
+  static final ElegantNotification _permissionDefaultNotification =
       ElegantNotification.error(
     title: const Text('Warning'),
     description: const Text(_permissionDefault),
     notificationPosition: NOTIFICATION_POSITION.bottom,
     animation: ANIMATION.fromBottom,
   );
+
+  static final ElegantNotification _permissionDefaultNotificationDark =
+      ElegantNotification.error(
+    title: const Text('Warning'),
+    description: const Text(_permissionDefault),
+    background: Constants.darkCardColor,
+    notificationPosition: NOTIFICATION_POSITION.bottom,
+    animation: ANIMATION.fromBottom,
+  );
+
+  // -----------------------------------------------
 
   // Wake On Lan snackbars
   static const String _wolValidationError =
