@@ -13,7 +13,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
 import 'package:network_arch/lan_scanner/bloc/lan_scanner_bloc.dart';
-import 'package:network_arch/lan_scanner/repository/lan_scanner_repository.dart';
 import 'package:network_arch/lan_scanner/widgets/host_card.dart';
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/shared/action_app_bar.dart';
@@ -29,10 +28,11 @@ class LanScannerView extends StatefulWidget {
 }
 
 class _LanScannerViewState extends State<LanScannerView> {
+  final _appBarKey = GlobalKey<ActionAppBarState>();
   final _listKey = GlobalKey<AnimatedListState>();
   late final AnimatedListModel<InternetAddress> _hosts;
 
-  late double currProgress;
+  double currProgress = 0.0;
 
   @override
   void initState() {
@@ -57,6 +57,7 @@ class _LanScannerViewState extends State<LanScannerView> {
         isActive: true,
         onStartPressed: _handleStart,
         onStopPressed: _handleStop,
+        key: _appBarKey,
       ),
       body: SingleChildScrollView(
         child: _buildBody(),
@@ -99,32 +100,39 @@ class _LanScannerViewState extends State<LanScannerView> {
       padding: const EdgeInsets.all(10.0),
       child: Column(
         children: [
-          BlocBuilder<LanScannerBloc, LanScannerState>(
-            builder: (context, state) {
-              if (state is LanScannerRunStart) {
-                final repository = context.read<LanScannerRepository>();
-
-                repository.subscription = state.stream.listen((event) {
-                  final host = InternetAddress(event.ip);
-
-                  _hosts.insert(_hosts.length, host);
-                });
+          BlocConsumer<LanScannerBloc, LanScannerState>(
+            listener: (context, state) {
+              if (state is LanScannerRunProgressUpdate) {
+                currProgress = state.progress;
               }
 
+              if (state is LanScannerRunComplete) {
+                currProgress = 1.0;
+
+                _appBarKey.currentState!.toggleAnimation();
+              }
+
+              if (state is LanScannerRunHostFound) {
+                final host = InternetAddress(state.host.ip);
+
+                _hosts.insert(_hosts.length, host);
+              }
+            },
+            builder: (context, state) {
               return ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: LinearProgressIndicator(
                   // TODO: animate progress
-                  value: state.progress,
+                  value: currProgress,
                 ),
               );
             },
           ),
           const SizedBox(height: 10),
           AnimatedList(
+            key: _listKey,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            key: _listKey,
             initialItemCount: _hosts.length,
             itemBuilder: (context, index, animation) {
               return _buildItem(
@@ -160,14 +168,8 @@ class _LanScannerViewState extends State<LanScannerView> {
   Future<void> _handleStart() async {
     await _hosts.removeAllElements(context);
 
-    final bloc = context.read<LanScannerBloc>();
-    bloc.add(
-      LanScannerStarted(
-        callback: (progress) {
-          bloc.add(LanScannerProgressUpdated(progress));
-        },
-      ),
-    );
+    context.read<LanScannerBloc>().add(LanScannerStarted());
+
     await Future.delayed(Duration.zero);
   }
 }

@@ -1,10 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-
-// Project imports:
-
 class ActionAppBar extends StatefulWidget with PreferredSizeWidget {
   const ActionAppBar({
     required this.title,
@@ -23,10 +19,10 @@ class ActionAppBar extends StatefulWidget with PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
-  State<ActionAppBar> createState() => _ActionAppBarState();
+  State<ActionAppBar> createState() => ActionAppBarState();
 }
 
-class _ActionAppBarState extends State<ActionAppBar>
+class ActionAppBarState extends State<ActionAppBar>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
@@ -45,7 +41,6 @@ class _ActionAppBarState extends State<ActionAppBar>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
 
     _controller.dispose();
@@ -61,14 +56,13 @@ class _ActionAppBarState extends State<ActionAppBar>
           splashRadius: 25.0,
           icon: AnimatedIcon(
             icon: AnimatedIcons.play_pause,
-            size: 35.0,
+            size: 30.0,
             progress: _controller,
           ),
           onPressed: () async {
             isStartActionActive
                 ? widget.onStartPressed()
                 : widget.onStopPressed();
-            isStartActionActive = !isStartActionActive;
 
             toggleAnimation();
           },
@@ -78,6 +72,8 @@ class _ActionAppBarState extends State<ActionAppBar>
   }
 
   void toggleAnimation() {
+    isStartActionActive = !isStartActionActive;
+
     isAnimating = !isAnimating;
     isAnimating ? _controller.forward() : _controller.reverse();
   }

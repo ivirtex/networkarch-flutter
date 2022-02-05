@@ -4,15 +4,19 @@ part of 'lan_scanner_bloc.dart';
 abstract class LanScannerEvent {}
 
 class LanScannerStarted extends LanScannerEvent {
-  LanScannerStarted({required this.callback});
-
-  final ProgressCallback callback;
+  LanScannerStarted();
 }
 
 class LanScannerProgressUpdated extends LanScannerEvent {
   LanScannerProgressUpdated(this.progress);
 
   final double progress;
+}
+
+class LanScannerNewHostDetected extends LanScannerEvent {
+  LanScannerNewHostDetected(this.host);
+
+  final HostModel host;
 }
 
 class LanScannerStopped extends LanScannerEvent {

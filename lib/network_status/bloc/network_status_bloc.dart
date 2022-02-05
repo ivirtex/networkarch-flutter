@@ -16,6 +16,7 @@ part 'network_status_event.dart';
 part 'network_status_state.dart';
 
 class NetworkStatusBloc extends Bloc<NetworkStatusEvent, NetworkStatusState> {
+  // TODO: Start listening to the stream by default
   NetworkStatusBloc(this._repository) : super(const NetworkStatusInitial()) {
     on<NetworkStatusStreamStarted>(_onStarted);
     on<NetworkStatusUpdatedEvent>(_onUpdated);

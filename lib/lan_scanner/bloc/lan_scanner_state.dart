@@ -2,25 +2,31 @@ part of 'lan_scanner_bloc.dart';
 
 @immutable
 abstract class LanScannerState {
-  const LanScannerState(this.progress);
+  const LanScannerState();
+}
+
+class LanScannerInitial extends LanScannerState {
+  const LanScannerInitial();
+}
+
+class LanScannerRunStart extends LanScannerState {
+  const LanScannerRunStart();
+}
+
+class LanScannerRunProgressUpdate extends LanScannerState {
+  const LanScannerRunProgressUpdate(this.progress);
 
   final double progress;
 }
 
-class LanScannerInitial extends LanScannerState {
-  const LanScannerInitial(double progress) : super(progress);
-}
+class LanScannerRunHostFound extends LanScannerState {
+  const LanScannerRunHostFound(this.host);
 
-class LanScannerRunStart extends LanScannerState {
-  const LanScannerRunStart(this.stream, double progress) : super(progress);
-
-  final Stream<HostModel> stream;
-}
-
-class LanScannerRunProgressUpdate extends LanScannerState {
-  const LanScannerRunProgressUpdate(double progress) : super(progress);
+  final HostModel host;
 }
 
 class LanScannerRunComplete extends LanScannerState {
-  const LanScannerRunComplete(double progress) : super(progress);
+  const LanScannerRunComplete();
+
+  final double progress = 1.0;
 }

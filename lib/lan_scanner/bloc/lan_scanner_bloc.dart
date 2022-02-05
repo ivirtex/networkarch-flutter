@@ -18,9 +18,10 @@ part 'lan_scanner_state.dart';
 
 class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
   LanScannerBloc(this._lanScannerRepository)
-      : super(const LanScannerInitial(0.0)) {
+      : super(const LanScannerInitial()) {
     on<LanScannerStarted>(_onStarted);
     on<LanScannerProgressUpdated>(_onProgressUpdated);
+    on<LanScannerNewHostDetected>(_onNewHostDetected);
     on<LanScannerStopped>(_onStopped);
   }
 
@@ -42,26 +43,38 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
 
     final stream = _lanScannerRepository.getLanScannerStream(
       subnet: subnet,
-      callback: event.callback,
+      callback: (progress) {
+        add(LanScannerProgressUpdated(progress));
+      },
     );
 
-    emit(LanScannerRunStart(stream, 0.0));
+    await emit.onEach(
+      stream,
+      onData: (HostModel host) {
+        add(LanScannerNewHostDetected(host));
+      },
+    );
+
+    emit(const LanScannerRunComplete());
+  }
+
+  void _onNewHostDetected(
+    LanScannerNewHostDetected event,
+    Emitter<LanScannerState> emit,
+  ) {
+    emit(LanScannerRunHostFound(event.host));
   }
 
   void _onProgressUpdated(
     LanScannerProgressUpdated event,
     Emitter<LanScannerState> emit,
   ) {
-    if (event.progress == 1.0) {
-      emit(const LanScannerRunComplete(1.0));
-    } else {
-      emit(LanScannerRunProgressUpdate(event.progress));
-    }
+    emit(LanScannerRunProgressUpdate(event.progress));
   }
 
   void _onStopped(LanScannerStopped event, Emitter<LanScannerState> emit) {
     _lanScannerRepository.dispose();
 
-    emit(const LanScannerRunComplete(1.0));
+    emit(const LanScannerRunComplete());
   }
 }
