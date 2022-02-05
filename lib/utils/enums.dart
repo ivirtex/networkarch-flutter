@@ -8,7 +8,7 @@ enum WolStatus {
   fail,
 }
 
-enum ButtonActions {
+enum ButtonAction {
   start,
   stop,
 }

@@ -51,31 +51,16 @@ class _LanScannerViewState extends State<LanScannerView> {
   }
 
   Widget _buildAndroid(BuildContext context) {
-    return BlocBuilder<LanScannerBloc, LanScannerState>(
-      builder: (context, state) {
-        return state is LanScannerRunStart ||
-                state is LanScannerRunProgressUpdate
-            ? Scaffold(
-                appBar: ActionAppBar(
-                  context,
-                  title: 'Lan Scanner',
-                  action: ButtonActions.stop,
-                  isActive: true,
-                  onPressed: _handleStop,
-                ),
-                body: SingleChildScrollView(child: _buildBody()),
-              )
-            : Scaffold(
-                appBar: ActionAppBar(
-                  context,
-                  title: 'Lan Scanner',
-                  action: ButtonActions.start,
-                  isActive: true,
-                  onPressed: _handleStart,
-                ),
-                body: SingleChildScrollView(child: _buildBody()),
-              );
-      },
+    return Scaffold(
+      appBar: ActionAppBar(
+        title: 'Lan Scanner',
+        isActive: true,
+        onStartPressed: _handleStart,
+        onStopPressed: _handleStop,
+      ),
+      body: SingleChildScrollView(
+        child: _buildBody(),
+      ),
     );
   }
 
@@ -90,14 +75,14 @@ class _LanScannerViewState extends State<LanScannerView> {
                   ? CupertinoActionAppBar(
                       context,
                       title: 'Ping',
-                      action: ButtonActions.stop,
+                      action: ButtonAction.stop,
                       isActive: true,
                       onPressed: _handleStop,
                     )
                   : CupertinoActionAppBar(
                       context,
                       title: 'Ping',
-                      action: ButtonActions.start,
+                      action: ButtonAction.start,
                       isActive: true,
                       onPressed: _handleStart,
                     );

@@ -2,55 +2,83 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:network_arch/utils/enums.dart';
 
-class ActionAppBar extends StatelessWidget with PreferredSizeWidget {
-  const ActionAppBar(
-    this.context, {
+class ActionAppBar extends StatefulWidget with PreferredSizeWidget {
+  const ActionAppBar({
     required this.title,
-    required this.action,
     required this.isActive,
-    this.onPressed,
+    required this.onStartPressed,
+    required this.onStopPressed,
     Key? key,
   }) : super(key: key);
 
-  final BuildContext context;
   final String title;
-  final ButtonActions action;
   final bool isActive;
-  final VoidCallback? onPressed;
+  final VoidCallback onStartPressed;
+  final VoidCallback onStopPressed;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
+  State<ActionAppBar> createState() => _ActionAppBarState();
+}
+
+class _ActionAppBarState extends State<ActionAppBar>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  bool isAnimating = false;
+  bool isStartActionActive = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+    _controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title),
+      title: Text(widget.title),
       iconTheme: Theme.of(context).iconTheme,
       actions: [
-        if (action == ButtonActions.start)
-          IconButton(
-            splashRadius: 25.0,
-            icon: FaIcon(
-              FontAwesomeIcons.play,
-              color: isActive ? Colors.green : Colors.grey,
-            ),
-            onPressed: isActive ? onPressed : null,
-          )
-        else
-          IconButton(
-            splashRadius: 25.0,
-            icon: FaIcon(
-              FontAwesomeIcons.stopCircle,
-              color: isActive ? Colors.red : Colors.grey,
-            ),
-            onPressed: isActive ? onPressed : null,
+        IconButton(
+          splashRadius: 25.0,
+          icon: AnimatedIcon(
+            icon: AnimatedIcons.play_pause,
+            size: 35.0,
+            progress: _controller,
           ),
+          onPressed: () async {
+            isStartActionActive
+                ? widget.onStartPressed()
+                : widget.onStopPressed();
+            isStartActionActive = !isStartActionActive;
+
+            toggleAnimation();
+          },
+        )
       ],
     );
+  }
+
+  void toggleAnimation() {
+    isAnimating = !isAnimating;
+    isAnimating ? _controller.forward() : _controller.reverse();
   }
 }

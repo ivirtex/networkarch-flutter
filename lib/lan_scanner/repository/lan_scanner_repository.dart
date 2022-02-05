@@ -8,12 +8,21 @@ class LanScannerRepository {
   LanScannerRepository();
 
   final LanScanner _scanner = LanScanner();
-  StreamSubscription<HostModel>? subscription;
+  StreamSubscription<HostModel>? _subscription;
 
   Stream<HostModel> getLanScannerStream({
     required String subnet,
     ProgressCallback? callback,
   }) {
     return _scanner.icmpScan(subnet, progressCallback: callback);
+  }
+
+  // ignore: avoid_setters_without_getters
+  set subscription(StreamSubscription<HostModel> subscription) {
+    _subscription = subscription;
+  }
+
+  void dispose() {
+    _subscription?.cancel();
   }
 }

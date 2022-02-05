@@ -22,7 +22,7 @@ class PingBloc extends Bloc<PingEvent, PingState> {
 
   @override
   Future<void> close() {
-    _pingRepository.subscription?.cancel();
+    _pingRepository.dispose();
 
     return super.close();
   }
@@ -34,9 +34,8 @@ class PingBloc extends Bloc<PingEvent, PingState> {
   }
 
   void _onStopped(PingStopped event, Emitter<PingState> emit) {
-    final subscription = _pingRepository.subscription;
+    _pingRepository.dispose();
 
-    subscription?.cancel();
     emit(PingRunComplete());
   }
 }

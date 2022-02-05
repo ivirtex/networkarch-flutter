@@ -19,7 +19,7 @@ class CupertinoActionAppBar extends StatelessWidget {
 
   final BuildContext context;
   final String title;
-  final ButtonActions action;
+  final ButtonAction action;
   final bool isActive;
   final VoidCallback? onPressed;
 
@@ -29,7 +29,7 @@ class CupertinoActionAppBar extends StatelessWidget {
       stretch: true,
       border: null,
       largeTitle: Text(title),
-      trailing: action == ButtonActions.start
+      trailing: action == ButtonAction.start
           ? CupertinoButton(
               padding: EdgeInsets.zero,
               onPressed: isActive ? onPressed : null,

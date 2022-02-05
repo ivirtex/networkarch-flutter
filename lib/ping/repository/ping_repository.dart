@@ -11,12 +11,21 @@ class PingRepository {
   PingRepository();
 
   Ping? ping;
-  StreamSubscription<PingData>? subscription;
+  StreamSubscription<PingData>? _subscription;
 
   Stream<PingData> getPingStream({required String host}) {
     ping = Ping(host);
 
     return ping!.stream;
+  }
+
+  // ignore: avoid_setters_without_getters
+  set subscription(StreamSubscription<PingData> subscription) {
+    _subscription = subscription;
+  }
+
+  void dispose() {
+    _subscription?.cancel();
   }
 
   String getErrorDesc(PingError error) {

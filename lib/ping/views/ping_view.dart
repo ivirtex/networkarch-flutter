@@ -69,43 +69,16 @@ class _PingViewState extends State<PingView> {
   }
 
   Widget _buildAndroid(BuildContext context) {
-    return BlocBuilder<PingBloc, PingState>(
-      builder: (context, state) {
-        if (state is PingRunInProgress) {
-          final repository = context.read<PingRepository>();
-
-          repository.subscription = state.pingStream.listen((event) {
-            log(event.toString());
-            _pingData.insert(_pingData.length, event);
-          });
-
-          return Scaffold(
-            appBar: ActionAppBar(
-              context,
-              title: 'Ping',
-              action: ButtonActions.stop,
-              isActive: _target.isNotEmpty,
-              onPressed: _handleStop,
-            ),
-            body: SingleChildScrollView(
-              child: _buildBody(context),
-            ),
-          );
-        } else {
-          return Scaffold(
-            appBar: ActionAppBar(
-              context,
-              title: 'Ping',
-              action: ButtonActions.start,
-              isActive: _target.isNotEmpty,
-              onPressed: _handleStart,
-            ),
-            body: SingleChildScrollView(
-              child: _buildBody(context),
-            ),
-          );
-        }
-      },
+    return Scaffold(
+      appBar: ActionAppBar(
+        title: 'Ping',
+        isActive: true,
+        onStartPressed: _handleStart,
+        onStopPressed: _handleStop,
+      ),
+      body: SingleChildScrollView(
+        child: _buildBody(),
+      ),
     );
   }
 
@@ -119,26 +92,26 @@ class _PingViewState extends State<PingView> {
                   ? CupertinoActionAppBar(
                       context,
                       title: 'Ping',
-                      action: ButtonActions.stop,
+                      action: ButtonAction.stop,
                       isActive: _target.isNotEmpty,
                       onPressed: _handleStop,
                     )
                   : CupertinoActionAppBar(
                       context,
                       title: 'Ping',
-                      action: ButtonActions.start,
+                      action: ButtonAction.start,
                       isActive: _target.isNotEmpty,
                       onPressed: _handleStart,
                     );
             },
           ),
         ],
-        body: _buildBody(context),
+        body: _buildBody(),
       ),
     );
   }
 
-  Padding _buildBody(BuildContext context) {
+  Padding _buildBody() {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
@@ -148,6 +121,16 @@ class _PingViewState extends State<PingView> {
               Expanded(
                 child: BlocBuilder<PingBloc, PingState>(
                   builder: (context, state) {
+                    if (state is PingRunInProgress) {
+                      final repository = context.read<PingRepository>();
+
+                      repository.subscription =
+                          state.pingStream.listen((event) {
+                        log(event.toString());
+                        _pingData.insert(_pingData.length, event);
+                      });
+                    }
+
                     return PlatformWidget(
                       androidBuilder: (context) => TextField(
                         autocorrect: false,
@@ -256,11 +239,15 @@ class _PingViewState extends State<PingView> {
   Future<void> _handleStart() async {
     await _pingData.removeAllElements(context);
 
+    print('called start');
+
     _targetHost = _target;
     context.read<PingBloc>().add(PingStarted(_target));
   }
 
   void _handleStop() {
     context.read<PingBloc>().add(PingStopped());
+
+    print('called stop');
   }
 }

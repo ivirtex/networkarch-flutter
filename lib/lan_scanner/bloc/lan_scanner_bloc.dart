@@ -26,6 +26,13 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
 
   final LanScannerRepository _lanScannerRepository;
 
+  @override
+  Future<void> close() {
+    _lanScannerRepository.dispose();
+
+    return super.close();
+  }
+
   Future<void> _onStarted(
     LanScannerStarted event,
     Emitter<LanScannerState> emit,
@@ -53,9 +60,8 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
   }
 
   void _onStopped(LanScannerStopped event, Emitter<LanScannerState> emit) {
-    final subscription = _lanScannerRepository.subscription;
+    _lanScannerRepository.dispose();
 
-    subscription?.cancel();
     emit(const LanScannerRunComplete(1.0));
   }
 }

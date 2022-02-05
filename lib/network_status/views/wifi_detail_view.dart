@@ -1,6 +1,11 @@
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/network_status/network_status.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
@@ -84,35 +89,58 @@ class WifiDetailsView extends StatelessWidget {
               ],
             );
           } else {
-            return const RoundedList(
+            // ignore: prefer_const_constructors
+            return RoundedList(
+              // ignore: prefer_const_literals_to_create_immutables
               children: [
-                DataLine(
+                const DataLine(
                   textL: Text('SSID'),
-                  textR: CircularProgressIndicator.adaptive(),
+                  textR: SizedBox(
+                    width: Constants.linearProgressWidth,
+                    child: LinearProgressIndicator(),
+                  ),
                 ),
-                DataLine(
+                const DataLine(
                   textL: Text('BSSID'),
-                  textR: CircularProgressIndicator.adaptive(),
+                  textR: SizedBox(
+                    width: Constants.linearProgressWidth,
+                    child: LinearProgressIndicator(),
+                  ),
                 ),
-                DataLine(
+                const DataLine(
                   textL: Text('Local IPv4'),
-                  textR: CircularProgressIndicator.adaptive(),
+                  textR: SizedBox(
+                    width: Constants.linearProgressWidth,
+                    child: LinearProgressIndicator(),
+                  ),
                 ),
-                DataLine(
+                const DataLine(
                   textL: Text('Local IPv6'),
-                  textR: CircularProgressIndicator.adaptive(),
+                  textR: SizedBox(
+                    width: Constants.linearProgressWidth,
+                    child: LinearProgressIndicator(),
+                  ),
                 ),
-                DataLine(
+                const DataLine(
                   textL: Text('Broadcast address'),
-                  textR: CircularProgressIndicator.adaptive(),
+                  textR: SizedBox(
+                    width: Constants.linearProgressWidth,
+                    child: LinearProgressIndicator(),
+                  ),
                 ),
-                DataLine(
+                const DataLine(
                   textL: Text('Gateway'),
-                  textR: CircularProgressIndicator.adaptive(),
+                  textR: SizedBox(
+                    width: Constants.linearProgressWidth,
+                    child: LinearProgressIndicator(),
+                  ),
                 ),
-                DataLine(
+                const DataLine(
                   textL: Text('Submask'),
-                  textR: CircularProgressIndicator.adaptive(),
+                  textR: SizedBox(
+                    width: Constants.linearProgressWidth,
+                    child: LinearProgressIndicator(),
+                  ),
                 ),
               ],
             );
