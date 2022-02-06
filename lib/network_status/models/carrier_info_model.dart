@@ -1,5 +1,7 @@
-class CarrierInfoModel {
-  CarrierInfoModel({
+import 'package:equatable/equatable.dart';
+
+class CarrierInfoModel extends Equatable {
+  const CarrierInfoModel({
     required this.allowsVOIP,
     this.carrierName,
     this.isoCountryCode,
@@ -16,4 +18,15 @@ class CarrierInfoModel {
   final String? mobileNetworkCode;
   final String? networkGeneration;
   final String? radioType;
+
+  @override
+  List<Object?> get props => [
+        allowsVOIP,
+        carrierName,
+        isoCountryCode,
+        mobileCountryCode,
+        mobileNetworkCode,
+        networkGeneration,
+        radioType,
+      ];
 }

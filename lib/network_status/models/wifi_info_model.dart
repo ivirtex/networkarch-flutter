@@ -1,8 +1,9 @@
 // Package imports:
+import 'package:equatable/equatable.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 
-class WifiInfoModel {
-  WifiInfoModel({
+class WifiInfoModel extends Equatable {
+  const WifiInfoModel({
     this.locationServiceAuthorizationStatus,
     this.locationServiceAuthorization,
     this.wifiSSID,
@@ -23,4 +24,17 @@ class WifiInfoModel {
   final String? wifiBroadcast;
   final String? wifiGateway;
   final String? wifiSubmask;
+
+  @override
+  List<Object?> get props => [
+        locationServiceAuthorizationStatus,
+        locationServiceAuthorization,
+        wifiSSID,
+        wifiBSSID,
+        wifiIPv4,
+        wifiIPv6,
+        wifiBroadcast,
+        wifiGateway,
+        wifiSubmask,
+      ];
 }

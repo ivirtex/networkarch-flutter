@@ -239,15 +239,11 @@ class _PingViewState extends State<PingView> {
   Future<void> _handleStart() async {
     await _pingData.removeAllElements(context);
 
-    print('called start');
-
     _targetHost = _target;
     context.read<PingBloc>().add(PingStarted(_target));
   }
 
   void _handleStop() {
     context.read<PingBloc>().add(PingStopped());
-
-    print('called stop');
   }
 }

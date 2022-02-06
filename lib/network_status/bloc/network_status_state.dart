@@ -7,7 +7,7 @@ abstract class NetworkStatusState extends Equatable {
   final CarrierInfoModel? carrierInfo;
 
   @override
-  List<Object> get props => [wifiInfo.hashCode, carrierInfo.hashCode];
+  List<Object?> get props => [wifiInfo, carrierInfo];
 }
 
 class NetworkStatusInitial extends NetworkStatusState {

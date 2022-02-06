@@ -17,6 +17,9 @@ class NetworkStatusUpdatedEvent extends NetworkStatusEvent {
 
   final WifiInfoModel wifiInfoModel;
   final CarrierInfoModel carrierInfoModel;
+
+  @override
+  List<Object> get props => [wifiInfoModel, carrierInfoModel];
 }
 
 class NetworkStatusUpdatedWithExtIPEvent extends NetworkStatusEvent {
@@ -29,4 +32,7 @@ class NetworkStatusUpdatedWithExtIPEvent extends NetworkStatusEvent {
   final WifiInfoModel wifiInfoModel;
   final CarrierInfoModel carrierInfoModel;
   final String extIP;
+
+  @override
+  List<Object> get props => [wifiInfoModel, carrierInfoModel, extIP];
 }
