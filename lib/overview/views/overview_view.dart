@@ -25,7 +25,6 @@ class _OverviewViewState extends State<OverviewView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<NetworkStatusBloc>().add(NetworkStatusStreamStarted());
 
     final permissions = context.read<PermissionsModel>();
 
@@ -38,6 +37,7 @@ class _OverviewViewState extends State<OverviewView> {
         Permission.location.isGranted.then((bool isGranted) {
           if (isGranted) {
             permissions.isLocationPermissionGranted = true;
+            context.read<NetworkStatusBloc>().add(NetworkStatusStreamStarted());
           } else if (!isGranted &&
               (permissions.prefs!
                       .getBool('hasLocationPermissionsBeenRequested') ??

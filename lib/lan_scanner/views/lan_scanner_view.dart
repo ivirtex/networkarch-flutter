@@ -107,8 +107,6 @@ class _LanScannerViewState extends State<LanScannerView> {
               }
 
               if (state is LanScannerRunComplete) {
-                currProgress = 1.0;
-
                 _appBarKey.currentState!.toggleAnimation();
               }
 
@@ -118,6 +116,8 @@ class _LanScannerViewState extends State<LanScannerView> {
                 _hosts.insert(_hosts.length, host);
               }
             },
+            buildWhen: (previous, current) =>
+                current is LanScannerRunProgressUpdate,
             builder: (context, state) {
               return ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),

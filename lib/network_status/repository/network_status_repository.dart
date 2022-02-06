@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/services.dart';
@@ -35,18 +36,10 @@ class NetworkStatusRepository {
     WifiInfoModel? wifiInfo;
 
     Future<void> fetchData(_) async {
-      try {
+      if (Platform.isIOS) {
         wifiInfo = await _wifiDataProvider.getDataForIOS();
-      } on MissingPluginException catch (_) {
-        // print("exception catched: " + err.toString());
-
+      } else {
         wifiInfo = await _wifiDataProvider.getDataForAndroid();
-      } on PlatformException catch (_) {
-        // print("exception catched: " + err.toString());
-
-        wifiInfo = await _wifiDataProvider.getDataForAndroid();
-      } catch (e) {
-        rethrow;
       }
 
       wifiInfo != null

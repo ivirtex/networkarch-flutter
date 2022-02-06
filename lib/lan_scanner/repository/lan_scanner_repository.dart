@@ -10,13 +10,6 @@ class LanScannerRepository {
   final LanScanner _scanner = LanScanner();
   StreamSubscription<HostModel>? _subscription;
 
-  Stream<HostModel> getLanScannerStream({
-    required String subnet,
-    ProgressCallback? callback,
-  }) {
-    return _scanner.icmpScan(subnet, progressCallback: callback);
-  }
-
   // ignore: avoid_setters_without_getters
   set subscription(StreamSubscription<HostModel> subscription) {
     _subscription = subscription;
@@ -24,5 +17,12 @@ class LanScannerRepository {
 
   void dispose() {
     _subscription?.cancel();
+  }
+
+  Stream<HostModel> getLanScannerStream({
+    required String subnet,
+    ProgressCallback? callback,
+  }) {
+    return _scanner.icmpScan(subnet, progressCallback: callback);
   }
 }

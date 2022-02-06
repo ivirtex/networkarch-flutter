@@ -59,7 +59,7 @@ class ActionAppBarState extends State<ActionAppBar>
             size: 30.0,
             progress: _controller,
           ),
-          onPressed: () async {
+          onPressed: () {
             isStartActionActive
                 ? widget.onStartPressed()
                 : widget.onStopPressed();
@@ -72,6 +72,7 @@ class ActionAppBarState extends State<ActionAppBar>
   }
 
   void toggleAnimation() {
+    print('toggled animation');
     isStartActionActive = !isStartActionActive;
 
     isAnimating = !isAnimating;

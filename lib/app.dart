@@ -81,8 +81,7 @@ class _AppState extends State<App> {
               builder: (context) => const SettingsView(),
             );
           default:
-            assert(false, 'Unexpected tab');
-            return const SizedBox.shrink();
+            throw 'Unexpected tab';
         }
       },
     );

@@ -21,18 +21,12 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
       : super(const LanScannerInitial()) {
     on<LanScannerStarted>(_onStarted);
     on<LanScannerProgressUpdated>(_onProgressUpdated);
-    on<LanScannerNewHostDetected>(_onNewHostDetected);
+    on<LanScannerHostFound>(_onHostFound);
     on<LanScannerStopped>(_onStopped);
+    on<LanScannerCompleted>(_onCompleted);
   }
 
   final LanScannerRepository _lanScannerRepository;
-
-  @override
-  Future<void> close() {
-    _lanScannerRepository.dispose();
-
-    return super.close();
-  }
 
   Future<void> _onStarted(
     LanScannerStarted event,
@@ -44,25 +38,29 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
     final stream = _lanScannerRepository.getLanScannerStream(
       subnet: subnet,
       callback: (progress) {
-        add(LanScannerProgressUpdated(progress));
+        if (!isClosed) {
+          add(LanScannerProgressUpdated(progress));
+        }
       },
     );
 
-    await emit.onEach(
-      stream,
-      onData: (HostModel host) {
-        add(LanScannerNewHostDetected(host));
+    // await emit.forEach(
+    //   stream,
+    //   onData: (HostModel host) {
+    //     return LanScannerRunHostFound(host);
+    //   },
+    // );
+
+    _lanScannerRepository.subscription = stream.listen(
+      (HostModel host) {
+        add(LanScannerHostFound(host));
+      },
+      onDone: () {
+        add(LanScannerCompleted());
       },
     );
 
-    emit(const LanScannerRunComplete());
-  }
-
-  void _onNewHostDetected(
-    LanScannerNewHostDetected event,
-    Emitter<LanScannerState> emit,
-  ) {
-    emit(LanScannerRunHostFound(event.host));
+    // emit(const LanScannerRunComplete());
   }
 
   void _onProgressUpdated(
@@ -72,9 +70,23 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
     emit(LanScannerRunProgressUpdate(event.progress));
   }
 
+  FutureOr<void> _onHostFound(
+    LanScannerHostFound event,
+    Emitter<LanScannerState> emit,
+  ) {
+    emit(LanScannerRunHostFound(event.host));
+  }
+
   void _onStopped(LanScannerStopped event, Emitter<LanScannerState> emit) {
     _lanScannerRepository.dispose();
 
+    emit(const LanScannerRunStopped());
+  }
+
+  FutureOr<void> _onCompleted(
+    LanScannerCompleted event,
+    Emitter<LanScannerState> emit,
+  ) {
     emit(const LanScannerRunComplete());
   }
 }
