@@ -72,7 +72,6 @@ class ActionAppBarState extends State<ActionAppBar>
   }
 
   void toggleAnimation() {
-    print('toggled animation');
     isStartActionActive = !isStartActionActive;
 
     isAnimating = !isAnimating;

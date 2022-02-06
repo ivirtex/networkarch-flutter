@@ -28,7 +28,6 @@ class PingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DataCard(
       padding: EdgeInsets.zero,
-      margin: const EdgeInsets.only(bottom: 10),
       child: ListTile(
         contentPadding: const EdgeInsets.only(left: 8.0, right: 16.0),
         leading: hasError

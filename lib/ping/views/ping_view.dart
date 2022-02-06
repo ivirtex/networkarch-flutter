@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:network_arch/constants.dart';
 
 // Project imports:
 import 'package:network_arch/models/animated_list_model.dart';
@@ -131,48 +132,47 @@ class _PingViewState extends State<PingView> {
                       });
                     }
 
-                    return PlatformWidget(
-                      androidBuilder: (context) => TextField(
-                        autocorrect: false,
-                        controller: _targetHostController,
-                        enabled: state is! PingRunInProgress,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                    return SizedBox(
+                      height: 60,
+                      child: PlatformWidget(
+                        androidBuilder: (context) => TextField(
+                          autocorrect: false,
+                          controller: _targetHostController,
+                          enabled: state is! PingRunInProgress,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            labelText: 'IP address (e.g. 1.1.1.1)',
                           ),
-                          labelText: 'IP address (e.g. 1.1.1.1)',
+                          onChanged: (_) {
+                            setState(() {});
+                          },
                         ),
-                        onChanged: (_) {
-                          setState(() {});
-                        },
-                      ),
-                      iosBuilder: (context) => CupertinoSearchTextField(
-                        autocorrect: false,
-                        controller: _targetHostController,
-                        enabled: state is! PingRunInProgress,
-                        placeholder: 'IP address (e.g. 1.1.1.1)',
-                        onChanged: (_) {
-                          setState(() {});
-                        },
+                        iosBuilder: (context) => CupertinoSearchTextField(
+                          autocorrect: false,
+                          controller: _targetHostController,
+                          enabled: state is! PingRunInProgress,
+                          placeholder: 'IP address (e.g. 1.1.1.1)',
+                          onChanged: (_) {
+                            setState(() {});
+                          },
+                        ),
                       ),
                     );
                   },
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 5.0),
               BlocBuilder<PingBloc, PingState>(
                 builder: (context, state) {
                   if (state is PingRunComplete && _pingData.isNotEmpty) {
-                    return TextButton(
+                    return ClearListButton(
                       onPressed: () => _pingData.removeAllElements(context),
-                      child: const Text('Clear list'),
                     );
                   }
 
-                  return const TextButton(
-                    onPressed: null,
-                    child: Text('Clear list'),
-                  );
+                  return const ClearListButton();
                 },
               ),
             ],
@@ -245,5 +245,32 @@ class _PingViewState extends State<PingView> {
 
   void _handleStop() {
     context.read<PingBloc>().add(PingStopped());
+  }
+}
+
+class ClearListButton extends StatelessWidget {
+  const ClearListButton({
+    this.onPressed,
+    Key? key,
+  }) : super(key: key);
+
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: Constants.darkBtnColor,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10.0,
+          vertical: 21.0,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+      onPressed: onPressed,
+      child: const Text('Clear list'),
+    );
   }
 }

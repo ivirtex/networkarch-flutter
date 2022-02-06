@@ -11,7 +11,7 @@ class DataCard extends StatelessWidget {
   const DataCard({
     Key? key,
     this.child,
-    this.margin = const EdgeInsets.symmetric(vertical: 6.0),
+    this.margin = const EdgeInsets.only(bottom: 10.0),
     this.padding = const EdgeInsets.all(8.0),
   }) : super(key: key);
 

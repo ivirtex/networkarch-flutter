@@ -17,10 +17,9 @@ class HostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
+    return DataCard(
+      padding: EdgeInsets.zero,
+      margin: const EdgeInsets.symmetric(vertical: 5.0),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
         leading: const StatusCard(
