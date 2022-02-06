@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:

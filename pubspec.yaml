@@ -52,6 +52,7 @@ dependencies:
   rxdart: ^0.27.3
   elegant_notification: ^1.4.0
   debug_friend: ^0.4.0
+  enum_to_string: ^2.0.1
 
 dev_dependencies:
   flutter_test:

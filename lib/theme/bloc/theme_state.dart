@@ -11,7 +11,7 @@ class ThemeState extends Equatable {
 
   factory ThemeState.fromJson(Map<String, dynamic> map) {
     return ThemeState(
-      map['mode'] as ThemeMode,
+      EnumToString.fromString(ThemeMode.values, map['mode'] as String)!,
     );
   }
 
