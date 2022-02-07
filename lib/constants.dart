@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
+import 'package:network_arch/permissions/views/permissions_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
@@ -30,7 +31,6 @@ abstract class Constants {
 
   static final ThemeData lightThemeData = ThemeData.light().copyWith(
     scaffoldBackgroundColor: lightBgColor,
-    brightness: Brightness.light,
     appBarTheme: const AppBarTheme(
       foregroundColor: Colors.black,
       backgroundColor: Colors.transparent,
@@ -41,7 +41,6 @@ abstract class Constants {
 
   static final ThemeData darkThemeData = ThemeData.dark().copyWith(
     scaffoldBackgroundColor: darkBgColor,
-    brightness: Brightness.dark,
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,
       shadowColor: Colors.transparent,

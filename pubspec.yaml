@@ -53,6 +53,8 @@ dependencies:
   elegant_notification: ^1.4.0
   debug_friend: ^0.4.0
   enum_to_string: ^2.0.1
+  hive: ^2.0.5
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:

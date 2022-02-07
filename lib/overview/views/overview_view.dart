@@ -26,34 +26,14 @@ class _OverviewViewState extends State<OverviewView> {
     // TODO: implement initState
     super.initState();
 
-    final permissions = context.read<PermissionsModel>();
-
-    Future.microtask(
-      () async => {
-        await permissions.initPrefs(),
-      },
-    ).whenComplete(
-      () => {
-        Permission.location.isGranted.then((bool isGranted) {
-          if (isGranted) {
-            permissions.isLocationPermissionGranted = true;
-            context.read<NetworkStatusBloc>().add(NetworkStatusStreamStarted());
-          } else if (!isGranted &&
-              (permissions.prefs!
-                      .getBool('hasLocationPermissionsBeenRequested') ??
-                  false)) {
-            Future.delayed(
-              Duration.zero,
-              () {
-                Constants.showPermissionDeniedNotification(context);
-              },
-            );
-          } else {
-            Navigator.of(context).pushReplacementNamed('/permissions');
-          }
-        }),
-      },
-    );
+    Permission.location.isGranted.then((bool isGranted) {
+      if (isGranted) {
+        context.read<NetworkStatusBloc>().add(NetworkStatusStreamStarted());
+      } else if (!isGranted) {
+        Navigator.of(context).pushReplacementNamed('/permissions');
+        // Constants.showPermissionDeniedNotification(context);
+      } else {}
+    });
   }
 
   @override

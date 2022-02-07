@@ -1,8 +1,8 @@
 // Flutter imports:
-import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 

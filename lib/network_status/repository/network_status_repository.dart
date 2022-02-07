@@ -2,16 +2,11 @@
 import 'dart:async';
 import 'dart:io';
 
-// Flutter imports:
-import 'package:flutter/services.dart';
-
 // Package imports:
 import 'package:rxdart/rxdart.dart';
 
 // Project imports:
 import 'package:network_arch/network_status/network_status.dart';
-
-// Project imports:
 
 class NetworkStatusRepository {
   final _wifiDataProvider = WifiDataProvider();

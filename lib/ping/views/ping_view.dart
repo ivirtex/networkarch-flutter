@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:network_arch/constants.dart';
 
 // Project imports:
 import 'package:network_arch/models/animated_list_model.dart';
@@ -245,32 +244,5 @@ class _PingViewState extends State<PingView> {
 
   void _handleStop() {
     context.read<PingBloc>().add(PingStopped());
-  }
-}
-
-class ClearListButton extends StatelessWidget {
-  const ClearListButton({
-    this.onPressed,
-    Key? key,
-  }) : super(key: key);
-
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        primary: Constants.darkBtnColor,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10.0,
-          vertical: 21.0,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-      onPressed: onPressed,
-      child: const Text('Clear list'),
-    );
   }
 }
