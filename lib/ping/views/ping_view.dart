@@ -25,6 +25,7 @@ class PingView extends StatefulWidget {
 }
 
 class _PingViewState extends State<PingView> {
+  final _appBarKey = GlobalKey<ActionAppBarState>();
   final _listKey = GlobalKey<AnimatedListState>();
   final _targetHostController = TextEditingController();
   late final AnimatedListModel<PingData?> _pingData;
@@ -75,6 +76,7 @@ class _PingViewState extends State<PingView> {
         isActive: true,
         onStartPressed: _handleStart,
         onStopPressed: _handleStop,
+        key: _appBarKey,
       ),
       body: SingleChildScrollView(
         child: _buildBody(),
@@ -88,7 +90,7 @@ class _PingViewState extends State<PingView> {
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           BlocBuilder<PingBloc, PingState>(
             builder: (context, state) {
-              return state is PingRunInProgress
+              return state is PingRunNewData
                   ? CupertinoActionAppBar(
                       context,
                       title: 'Ping',
@@ -119,25 +121,25 @@ class _PingViewState extends State<PingView> {
           Row(
             children: [
               Expanded(
-                child: BlocBuilder<PingBloc, PingState>(
-                  builder: (context, state) {
-                    if (state is PingRunInProgress) {
-                      final repository = context.read<PingRepository>();
+                child: BlocConsumer<PingBloc, PingState>(
+                  listener: (context, state) {
+                    if (state is PingRunNewData) {
+                      _pingData.insert(_pingData.length, state.pingData);
 
-                      repository.subscription =
-                          state.pingStream.listen((event) {
-                        log(event.toString());
-                        _pingData.insert(_pingData.length, event);
-                      });
+                      if (state.pingData.error != null) {
+                        _appBarKey.currentState?.toggleAnimation();
+                      }
                     }
-
+                  },
+                  builder: (context, state) {
                     return SizedBox(
                       height: 60,
                       child: PlatformWidget(
                         androidBuilder: (context) => TextField(
                           autocorrect: false,
                           controller: _targetHostController,
-                          enabled: state is! PingRunInProgress,
+                          enabled:
+                              state is PingInitial || state is PingRunComplete,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -151,7 +153,8 @@ class _PingViewState extends State<PingView> {
                         iosBuilder: (context) => CupertinoSearchTextField(
                           autocorrect: false,
                           controller: _targetHostController,
-                          enabled: state is! PingRunInProgress,
+                          enabled:
+                              state is PingInitial || state is PingRunComplete,
                           placeholder: 'IP address (e.g. 1.1.1.1)',
                           onChanged: (_) {
                             setState(() {});
@@ -200,9 +203,9 @@ class _PingViewState extends State<PingView> {
     Animation<double> animation,
     PingData? item,
   ) {
-    if (item!.error != null) {
-      context.read<PingBloc>().add(PingStopped());
+    _targetHost = _targetHost.isEmpty ? 'N/A' : _targetHost;
 
+    if (item!.error != null) {
       return FadeTransition(
         opacity: animation.drive(_pingData.fadeTween),
         child: SlideTransition(

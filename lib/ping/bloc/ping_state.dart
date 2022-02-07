@@ -5,10 +5,10 @@ abstract class PingState {}
 
 class PingInitial extends PingState {}
 
-class PingRunInProgress extends PingState {
-  PingRunInProgress(this.pingStream);
+class PingRunNewData extends PingState {
+  PingRunNewData(this.pingData);
 
-  final Stream<PingData> pingStream;
+  final PingData pingData;
 }
 
 class PingRunComplete extends PingState {}

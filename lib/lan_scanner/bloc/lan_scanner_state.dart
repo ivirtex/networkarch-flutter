@@ -19,14 +19,14 @@ class LanScannerRunProgressUpdate extends LanScannerState {
   final double progress;
 }
 
-class LanScannerRunHostFound extends LanScannerState {
-  const LanScannerRunHostFound(this.host);
+class LanScannerRunNewHost extends LanScannerState {
+  const LanScannerRunNewHost(this.host);
 
   final HostModel host;
 }
 
-class LanScannerRunStopped extends LanScannerState {
-  const LanScannerRunStopped();
+class LanScannerRunStop extends LanScannerState {
+  const LanScannerRunStop();
 }
 
 class LanScannerRunComplete extends LanScannerState {

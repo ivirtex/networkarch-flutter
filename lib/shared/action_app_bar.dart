@@ -35,7 +35,7 @@ class ActionAppBarState extends State<ActionAppBar>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 500),
     );
   }
 

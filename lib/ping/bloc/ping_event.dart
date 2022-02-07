@@ -9,6 +9,12 @@ class PingStarted extends PingEvent {
   final String host;
 }
 
+class PingNewDataAdded extends PingEvent {
+  PingNewDataAdded(this.data);
+
+  final PingData data;
+}
+
 class PingStopped extends PingEvent {
   PingStopped();
 }

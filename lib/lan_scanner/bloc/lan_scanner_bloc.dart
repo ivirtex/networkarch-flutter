@@ -74,13 +74,13 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
     LanScannerHostFound event,
     Emitter<LanScannerState> emit,
   ) {
-    emit(LanScannerRunHostFound(event.host));
+    emit(LanScannerRunNewHost(event.host));
   }
 
   void _onStopped(LanScannerStopped event, Emitter<LanScannerState> emit) {
     _lanScannerRepository.dispose();
 
-    emit(const LanScannerRunStopped());
+    emit(const LanScannerRunStop());
   }
 
   FutureOr<void> _onCompleted(

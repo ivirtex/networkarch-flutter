@@ -110,7 +110,7 @@ class _LanScannerViewState extends State<LanScannerView> {
                 _appBarKey.currentState!.toggleAnimation();
               }
 
-              if (state is LanScannerRunHostFound) {
+              if (state is LanScannerRunNewHost) {
                 final host = InternetAddress(state.host.ip);
 
                 _hosts.insert(_hosts.length, host);
