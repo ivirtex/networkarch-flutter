@@ -1,12 +1,9 @@
-// Dart imports:
-import 'dart:developer';
-
 // Flutter imports:
+import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
@@ -126,8 +123,12 @@ class _PingViewState extends State<PingView> {
                     if (state is PingRunNewData) {
                       _pingData.insert(_pingData.length, state.pingData);
 
-                      if (state.pingData.error != null) {
+                      if (state.pingData.error != null &&
+                          state.pingData.error?.error !=
+                              ErrorType.RequestTimedOut) {
                         _appBarKey.currentState?.toggleAnimation();
+
+                        context.read<PingBloc>().add(PingStopped());
                       }
                     }
                   },
@@ -170,7 +171,11 @@ class _PingViewState extends State<PingView> {
                 builder: (context, state) {
                   if (state is PingRunComplete && _pingData.isNotEmpty) {
                     return ClearListButton(
-                      onPressed: () => _pingData.removeAllElements(context),
+                      onPressed: () async {
+                        await _pingData.removeAllElements(context);
+
+                        setState(() {});
+                      },
                     );
                   }
 

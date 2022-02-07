@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:debug_friend/debug_friend.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:network_arch/permissions/bloc/permissions_bloc.dart';

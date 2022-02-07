@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
-import 'package:network_arch/models/permissions_model.dart';
 import 'package:network_arch/network_status/bloc/bloc.dart';
 import 'package:network_arch/network_status/views/views.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
