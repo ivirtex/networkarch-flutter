@@ -3,16 +3,16 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/permissions/bloc/permissions_bloc.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class PermissionsView extends StatelessWidget {
   const PermissionsView({Key? key}) : super(key: key);

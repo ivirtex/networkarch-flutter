@@ -8,17 +8,19 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
-import 'package:network_arch/permissions/views/permissions_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
 import 'package:network_arch/network_status/network_status.dart';
+import 'package:network_arch/permissions/views/permissions_view.dart';
 import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/screens/screens.dart';
 
 // ignore_for_file: avoid-global-state
 
 abstract class Constants {
+  static const String appName = 'NetworkArch';
+
   static final Map<String, Widget Function(BuildContext)> routes = {
     '/permissions': (context) => const PermissionsView(),
     '/wifi': (context) => const WifiDetailsView(),

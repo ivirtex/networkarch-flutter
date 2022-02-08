@@ -19,7 +19,16 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  bool _isDarkModeSwitched = false;
+  // TODO: Implement system theme toggle
+  late bool _isDarkModeSwitched;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _isDarkModeSwitched =
+        context.read<ThemeBloc>().state.mode == ThemeMode.dark;
+  }
 
   @override
   Widget build(BuildContext context) {
