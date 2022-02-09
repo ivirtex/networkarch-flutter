@@ -11,9 +11,7 @@ import 'package:network_arch/network_status/network_status.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
 class CarrierStatusCard extends StatelessWidget {
-  const CarrierStatusCard({this.onPressed, Key? key}) : super(key: key);
-
-  final Function? onPressed;
+  const CarrierStatusCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +48,7 @@ class CarrierStatusCard extends StatelessWidget {
                     children: [
                       const Text('Network Generation'),
                       const Spacer(),
-                      if (state is NetworkStatusUpdateSuccess)
+                      if (state is NetworkStatusUpdate)
                         Text(state.carrierInfo!.networkGeneration ?? 'N/A')
                       else
                         const Expanded(child: LinearProgressIndicator()),
@@ -62,7 +60,7 @@ class CarrierStatusCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           TextButton(
-            onPressed: onPressed as void Function()?,
+            onPressed: () => Navigator.pushNamed(context, '/carrier'),
             style: TextButton.styleFrom(
               primary: isDarkModeOn ? Colors.white : Colors.black,
               shape: const RoundedRectangleBorder(

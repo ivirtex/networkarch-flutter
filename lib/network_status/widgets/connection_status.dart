@@ -18,8 +18,7 @@ class ConnectionStatus extends StatelessWidget {
   Widget build(BuildContext context) {
     const double iconSize = 20.0;
 
-    if (state is NetworkStatusUpdateSuccess ||
-        state is NetworkStatusUpdateWithExtIPSuccess) {
+    if (state is NetworkStatusUpdate || state is NetworkStatusUpdateWithExtIP) {
       final isNetworkConnected = connectionChecker();
 
       return Row(

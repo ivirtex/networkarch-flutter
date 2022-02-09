@@ -49,7 +49,7 @@ class NetworkStatusBloc extends Bloc<NetworkStatusEvent, NetworkStatusState> {
     Emitter<NetworkStatusState> emit,
   ) {
     emit(
-      NetworkStatusUpdateSuccess(
+      NetworkStatusUpdate(
         wifiInfo: event.wifiInfoModel,
         carrierInfo: event.carrierInfoModel,
       ),
@@ -61,7 +61,7 @@ class NetworkStatusBloc extends Bloc<NetworkStatusEvent, NetworkStatusState> {
     Emitter<NetworkStatusState> emit,
   ) {
     emit(
-      NetworkStatusUpdateWithExtIPSuccess(
+      NetworkStatusUpdateWithExtIP(
         wifiInfo: event.wifiInfoModel,
         carrierInfo: event.carrierInfoModel,
         extIP: event.extIP,

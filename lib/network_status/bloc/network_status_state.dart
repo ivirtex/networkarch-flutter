@@ -18,15 +18,15 @@ class NetworkStatusUpdateInProgress extends NetworkStatusState {
   const NetworkStatusUpdateInProgress();
 }
 
-class NetworkStatusUpdateSuccess extends NetworkStatusState {
-  const NetworkStatusUpdateSuccess({
+class NetworkStatusUpdate extends NetworkStatusState {
+  const NetworkStatusUpdate({
     required WifiInfoModel wifiInfo,
     required CarrierInfoModel carrierInfo,
   }) : super(wifiInfo: wifiInfo, carrierInfo: carrierInfo);
 }
 
-class NetworkStatusUpdateWithExtIPSuccess extends NetworkStatusState {
-  const NetworkStatusUpdateWithExtIPSuccess({
+class NetworkStatusUpdateWithExtIP extends NetworkStatusState {
+  const NetworkStatusUpdateWithExtIP({
     required WifiInfoModel wifiInfo,
     required CarrierInfoModel carrierInfo,
     required this.extIP,
@@ -35,9 +35,9 @@ class NetworkStatusUpdateWithExtIPSuccess extends NetworkStatusState {
   final String extIP;
 
   @override
-  List<Object> get props => [
-        wifiInfo.hashCode,
-        carrierInfo.hashCode,
+  List<Object?> get props => [
+        wifiInfo,
+        carrierInfo,
         extIP,
       ];
 }

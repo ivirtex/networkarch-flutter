@@ -133,40 +133,37 @@ class _PingViewState extends State<PingView> {
                     }
                   },
                   builder: (context, state) {
-                    return SizedBox(
-                      height: 60,
-                      child: PlatformWidget(
-                        androidBuilder: (context) => TextField(
-                          autocorrect: false,
-                          controller: _targetHostController,
-                          enabled:
-                              state is PingInitial || state is PingRunComplete,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            labelText: 'IP address (e.g. 1.1.1.1)',
+                    return PlatformWidget(
+                      androidBuilder: (context) => TextField(
+                        autocorrect: false,
+                        controller: _targetHostController,
+                        enabled:
+                            state is PingInitial || state is PingRunComplete,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
-                          onChanged: (_) {
-                            setState(() {});
-                          },
+                          labelText: 'IP address (e.g. 1.1.1.1)',
                         ),
-                        iosBuilder: (context) => CupertinoSearchTextField(
-                          autocorrect: false,
-                          controller: _targetHostController,
-                          enabled:
-                              state is PingInitial || state is PingRunComplete,
-                          placeholder: 'IP address (e.g. 1.1.1.1)',
-                          onChanged: (_) {
-                            setState(() {});
-                          },
-                        ),
+                        onChanged: (_) {
+                          setState(() {});
+                        },
+                      ),
+                      iosBuilder: (context) => CupertinoSearchTextField(
+                        autocorrect: false,
+                        controller: _targetHostController,
+                        enabled:
+                            state is PingInitial || state is PingRunComplete,
+                        placeholder: 'IP address (e.g. 1.1.1.1)',
+                        onChanged: (_) {
+                          setState(() {});
+                        },
                       ),
                     );
                   },
                 ),
               ),
-              const SizedBox(width: 5.0),
+              const SizedBox(width: 10.0),
               BlocBuilder<PingBloc, PingState>(
                 builder: (context, state) {
                   if (state is PingRunComplete && _pingData.isNotEmpty) {
@@ -186,9 +183,9 @@ class _PingViewState extends State<PingView> {
           ),
           const SizedBox(height: 10),
           AnimatedList(
+            key: _listKey,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            key: _listKey,
             initialItemCount: _pingData.length,
             itemBuilder: (context, index, animation) {
               return _buildItem(

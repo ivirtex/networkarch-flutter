@@ -55,7 +55,7 @@ class WifiDetailsView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: Constants.listSpacing),
       child: BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
         builder: (context, state) {
-          if (state is NetworkStatusUpdateSuccess) {
+          if (state is NetworkStatusUpdate) {
             return RoundedList(
               children: [
                 DataLine(
