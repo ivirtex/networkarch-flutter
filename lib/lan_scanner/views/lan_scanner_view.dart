@@ -31,6 +31,7 @@ class _LanScannerViewState extends State<LanScannerView> {
   final _appBarKey = GlobalKey<ActionAppBarState>();
   final _listKey = GlobalKey<AnimatedListState>();
   late final AnimatedListModel<InternetAddress> _hosts;
+  late final LanScannerBloc _bloc;
 
   double currProgress = 0.0;
 
@@ -40,6 +41,14 @@ class _LanScannerViewState extends State<LanScannerView> {
 
     _hosts =
         AnimatedListModel(listKey: _listKey, removedItemBuilder: _buildItem);
+    _bloc = context.read<LanScannerBloc>();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _bloc.add(LanScannerStopped());
   }
 
   @override

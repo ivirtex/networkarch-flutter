@@ -29,7 +29,9 @@ class _AppState extends State<App> {
   Widget _androidBuilder(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Overview'),
+        title: _selectedIndex == 0
+            ? const Text('Overview')
+            : const Text('Settings'),
       ),
       body: IndexedStack(
         index: _selectedIndex,
