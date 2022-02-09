@@ -46,6 +46,7 @@ class AnimatedListModel<T> {
     _animatedListState!.insertItem(index);
   }
 
+  /// No animation
   void add(T element) {
     _items.add(element);
   }

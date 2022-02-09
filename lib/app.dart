@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/overview/views/overview_view.dart';
 import 'package:network_arch/screens/screens.dart';
+import 'package:network_arch/settings/settings.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
 class App extends StatefulWidget {

@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:network_arch/wake_on_lan/bloc/wake_on_lan_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
 // Project imports:
@@ -83,6 +84,9 @@ class NetworkArch extends StatelessWidget {
           BlocProvider(
             create: (context) => LanScannerBloc(lanScannerRepository),
           ),
+          BlocProvider(
+            create: (context) => WakeOnLanBloc(),
+          )
         ],
         child: PlatformWidget(
           androidBuilder: _buildAndroid,
