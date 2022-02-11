@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:network_arch/wake_on_lan/bloc/wake_on_lan_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
 // Project imports:
@@ -21,6 +20,7 @@ import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/shared/platform_widget.dart';
 import 'package:network_arch/simple_bloc_observer.dart';
 import 'package:network_arch/theme/theme.dart';
+import 'package:network_arch/wake_on_lan/bloc/wake_on_lan_bloc.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

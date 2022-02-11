@@ -8,15 +8,15 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
-import 'package:network_arch/network_status/views/carrier_detail_view.dart';
-import 'package:network_arch/wake_on_lan/views/wake_on_lan_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
 import 'package:network_arch/network_status/network_status.dart';
+import 'package:network_arch/network_status/views/carrier_detail_view.dart';
 import 'package:network_arch/permissions/views/permissions_view.dart';
 import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/screens/screens.dart';
+import 'package:network_arch/wake_on_lan/views/wake_on_lan_view.dart';
 
 // ignore_for_file: avoid-global-state
 

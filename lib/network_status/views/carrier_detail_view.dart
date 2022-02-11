@@ -1,7 +1,11 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/network_status/network_status.dart';
 import 'package:network_arch/shared/shared_widgets.dart';

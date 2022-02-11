@@ -1,13 +1,17 @@
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:network_arch/wake_on_lan/bloc/wake_on_lan_bloc.dart';
-import 'package:network_arch/wake_on_lan/models/wol_response_model.dart';
 
 // Project imports:
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 import 'package:network_arch/utils/enums.dart';
+import 'package:network_arch/wake_on_lan/bloc/wake_on_lan_bloc.dart';
+import 'package:network_arch/wake_on_lan/models/wol_response_model.dart';
+import 'package:network_arch/wake_on_lan/views/wol_packet_details_view.dart';
 
 class WakeOnLanView extends StatefulWidget {
   const WakeOnLanView({Key? key}) : super(key: key);
@@ -40,7 +44,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
     );
 
     //! debug
-    ipv4TextFieldController.text = '192.168.0.100';
+    ipv4TextFieldController.text = '192.168.0.99';
     macTextFieldController.text = '2A:D8:BB:E3:33:D1';
   }
 
@@ -216,31 +220,29 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
   Widget _buildItem(
     BuildContext context,
     Animation<double> animation,
-    WolResponse? item,
+    WolResponse item,
   ) {
     return FadeTransition(
       opacity: animation.drive(wolResponses.fadeTween),
       child: SlideTransition(
         position: animation.drive(wolResponses.slideTween),
         child: DataCard(
-          child: ExpansionTile(
-            leading: item!.status == WolStatus.success
-                ? const StatusCard(text: 'Success', color: Colors.green)
-                : const StatusCard(text: 'Fail', color: Colors.red),
-            title: Text(item.ipv4.address),
-            subtitle: Text(item.mac.address),
-            trailing: TextButton(
-              onPressed: item.status == WolStatus.success
-                  ? () {
-                      Navigator.popAndPushNamed(
-                        context,
-                        '/tools/ping',
-                        arguments: item.ipv4,
-                      );
-                    }
-                  : null,
-              child: const Text('Ping address'),
-            ),
+          padding: EdgeInsets.zero,
+          child: ListTile(
+            contentPadding: const EdgeInsets.only(left: 8.0, right: 16.0),
+            leading: item.status == WolStatus.success
+                ? const StatusCard(
+                    color: Colors.green,
+                    text: 'Online',
+                  )
+                : const StatusCard(
+                    color: Colors.red,
+                    text: 'Error',
+                  ),
+            title: Text(item.mac.address),
+            subtitle: Text(item.ipv4.address),
+            trailing: const Icon(Icons.navigate_next),
+            onTap: () => _handleCardTap(item),
           ),
         ),
       ),
@@ -259,5 +261,14 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
             macAddress: mac,
           ),
         );
+  }
+
+  void _handleCardTap(WolResponse response) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => WolPacketDetailsView(response),
+      ),
+    );
   }
 }

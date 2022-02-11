@@ -54,6 +54,7 @@ dependencies:
   enum_to_string: ^2.0.1
   hive: ^2.0.5
   hive_flutter: ^1.1.0
+  google_fonts: ^2.3.1
 
 dev_dependencies:
   flutter_test:
