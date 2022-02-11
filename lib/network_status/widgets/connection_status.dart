@@ -11,14 +11,14 @@ class ConnectionStatus extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final NetworkStatusState state;
+  final NetworkState state;
   final bool Function() connectionChecker;
 
   @override
   Widget build(BuildContext context) {
     const double iconSize = 20.0;
 
-    if (state is NetworkStatusUpdate || state is NetworkStatusUpdateWithExtIP) {
+    if (state.status == NetworkStatus.success) {
       final isNetworkConnected = connectionChecker();
 
       return Row(
@@ -39,7 +39,7 @@ class ConnectionStatus extends StatelessWidget {
           ),
         ],
       );
-    } else if (state is NetworkStatusUpdateFailure) {
+    } else if (state.status == NetworkStatus.failure) {
       return Row(
         children: const [
           Text(

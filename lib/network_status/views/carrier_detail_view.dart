@@ -53,9 +53,9 @@ class CarrierDetailView extends StatelessWidget {
   Widget _buildDataList(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: Constants.listSpacing),
-      child: BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
+      child: BlocBuilder<NetworkStateBloc, NetworkState>(
         builder: (context, state) {
-          if (state is NetworkStatusUpdate) {
+          if (state.status == NetworkStatus.success) {
             return RoundedList(
               children: [
                 DataLine(

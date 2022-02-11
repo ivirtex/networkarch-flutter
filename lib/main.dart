@@ -75,7 +75,7 @@ class NetworkArch extends StatelessWidget {
             create: (context) => PermissionsBloc(),
           ),
           BlocProvider(
-            create: (context) => NetworkStatusBloc(networkStatusRepository),
+            create: (context) => NetworkStateBloc(networkStatusRepository),
           ),
           BlocProvider(
             create: (context) => PingBloc(pingRepository),

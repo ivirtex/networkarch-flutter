@@ -21,7 +21,7 @@ class CarrierStatusCard extends StatelessWidget {
       margin: EdgeInsetsDirectional.zero,
       child: Column(
         children: [
-          BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
+          BlocBuilder<NetworkStateBloc, NetworkState>(
             builder: (context, state) {
               return Column(
                 children: [
@@ -48,7 +48,7 @@ class CarrierStatusCard extends StatelessWidget {
                     children: [
                       const Text('Network Generation'),
                       const Spacer(),
-                      if (state is NetworkStatusUpdate)
+                      if (state.status == NetworkStatus.success)
                         Text(state.carrierInfo!.networkGeneration ?? 'N/A')
                       else
                         const Expanded(child: LinearProgressIndicator()),

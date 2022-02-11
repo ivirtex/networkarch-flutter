@@ -1,1 +1,1 @@
-export 'network_status_bloc.dart';
+export 'network_state_bloc.dart';

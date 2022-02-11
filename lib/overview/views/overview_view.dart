@@ -27,7 +27,7 @@ class _OverviewViewState extends State<OverviewView> {
 
     Permission.location.isGranted.then((bool isGranted) {
       if (isGranted) {
-        context.read<NetworkStatusBloc>().add(NetworkStatusStreamStarted());
+        context.read<NetworkStateBloc>().add(NetworkStateStreamStarted());
       } else {
         Navigator.of(context).pushReplacementNamed('/permissions');
         // Constants.showPermissionDeniedNotification(context);

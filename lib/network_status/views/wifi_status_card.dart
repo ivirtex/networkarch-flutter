@@ -21,7 +21,7 @@ class WifiStatusCard extends StatelessWidget {
       margin: EdgeInsetsDirectional.zero,
       child: Column(
         children: [
-          BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
+          BlocBuilder<NetworkStateBloc, NetworkState>(
             builder: (context, state) {
               return Column(
                 children: [
@@ -48,7 +48,7 @@ class WifiStatusCard extends StatelessWidget {
                     children: [
                       const Text('Local IP'),
                       const Spacer(),
-                      if (state is NetworkStatusUpdate)
+                      if (state.status == NetworkStatus.success)
                         Text(state.wifiInfo!.wifiIPv4 ?? 'N/A')
                       else
                         const Expanded(child: LinearProgressIndicator()),
@@ -60,7 +60,13 @@ class WifiStatusCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           TextButton(
-            onPressed: () => Navigator.of(context).pushNamed('/wifi'),
+            onPressed: () {
+              Navigator.of(context).pushNamed('/wifi');
+
+              context
+                  .read<NetworkStateBloc>()
+                  .add(NetworkStateExtIPRequested());
+            },
             style: TextButton.styleFrom(
               primary: isDarkModeOn ? Colors.white : Colors.black,
               shape: const RoundedRectangleBorder(

@@ -53,14 +53,14 @@ class WifiDetailsView extends StatelessWidget {
   Widget _buildDataList(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: Constants.listSpacing),
-      child: BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
+      child: BlocBuilder<NetworkStateBloc, NetworkState>(
         builder: (context, state) {
-          if (state is NetworkStatusUpdate) {
+          if (state.status == NetworkStatus.success) {
             return RoundedList(
               children: [
                 DataLine(
                   textL: const Text('SSID'),
-                  textR: Text(state.wifiInfo!.wifiBSSID ?? 'N/A'),
+                  textR: Text(state.wifiInfo!.wifiSSID ?? 'N/A'),
                 ),
                 DataLine(
                   textL: const Text('BSSID'),
@@ -86,6 +86,31 @@ class WifiDetailsView extends StatelessWidget {
                   textL: const Text('Submask'),
                   textR: Text(state.wifiInfo!.wifiSubmask ?? 'N/A'),
                 ),
+                DataLine(
+                  textL: const Text('External IP'),
+                  textR: state.extIpStatus == ExtIpStatus.success
+                      ? Row(
+                          children: [
+                            IconButton(
+                              constraints: const BoxConstraints(),
+                              padding: const EdgeInsets.only(right: 4),
+                              iconSize: 16.0,
+                              icon:
+                                  const Icon(Icons.refresh, color: Colors.blue),
+                              onPressed: () {
+                                context
+                                    .read<NetworkStateBloc>()
+                                    .add(NetworkStateExtIPRequested());
+                              },
+                            ),
+                            Text(state.extIP!),
+                          ],
+                        )
+                      : const SizedBox(
+                          width: Constants.linearProgressWidth,
+                          child: LinearProgressIndicator(),
+                        ),
+                )
               ],
             );
           } else {
@@ -137,6 +162,13 @@ class WifiDetailsView extends StatelessWidget {
                 ),
                 const DataLine(
                   textL: Text('Submask'),
+                  textR: SizedBox(
+                    width: Constants.linearProgressWidth,
+                    child: LinearProgressIndicator(),
+                  ),
+                ),
+                const DataLine(
+                  textL: Text('External IP'),
                   textR: SizedBox(
                     width: Constants.linearProgressWidth,
                     child: LinearProgressIndicator(),
