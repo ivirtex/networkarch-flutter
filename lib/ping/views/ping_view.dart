@@ -213,10 +213,10 @@ class _PingViewState extends State<PingView> {
         child: SlideTransition(
           position: animation.drive(_pingData.slideTween),
           child: PingCard(
-            hasError: true,
             list: _pingData,
             item: item,
             addr: _targetHost,
+            hasError: true,
           ),
         ),
       );
@@ -228,7 +228,6 @@ class _PingViewState extends State<PingView> {
         child: SlideTransition(
           position: animation.drive(_pingData.slideTween),
           child: PingCard(
-            hasError: false,
             list: _pingData,
             item: item,
             addr: _targetHost,
@@ -244,6 +243,7 @@ class _PingViewState extends State<PingView> {
     await _pingData.removeAllElements(context);
 
     _targetHost = _target;
+    // ignore: use_build_context_synchronously
     context.read<PingBloc>().add(PingStarted(_target));
   }
 

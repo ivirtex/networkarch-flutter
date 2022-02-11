@@ -12,15 +12,14 @@ import 'package:path_provider/path_provider.dart';
 // Project imports:
 import 'package:network_arch/app.dart';
 import 'package:network_arch/constants.dart';
-import 'package:network_arch/lan_scanner/bloc/lan_scanner_bloc.dart';
-import 'package:network_arch/lan_scanner/repository/lan_scanner_repository.dart';
+import 'package:network_arch/lan_scanner/lan_scanner.dart';
 import 'package:network_arch/network_status/network_status.dart';
-import 'package:network_arch/permissions/bloc/permissions_bloc.dart';
+import 'package:network_arch/permissions/permissions.dart';
 import 'package:network_arch/ping/ping.dart';
-import 'package:network_arch/shared/platform_widget.dart';
+import 'package:network_arch/shared/shared_widgets.dart';
 import 'package:network_arch/simple_bloc_observer.dart';
 import 'package:network_arch/theme/theme.dart';
-import 'package:network_arch/wake_on_lan/bloc/wake_on_lan_bloc.dart';
+import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

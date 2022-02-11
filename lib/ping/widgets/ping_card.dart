@@ -12,17 +12,17 @@ import 'package:network_arch/shared/shared_widgets.dart';
 
 class PingCard extends StatelessWidget {
   const PingCard({
-    required this.hasError,
     required this.list,
     required this.item,
     required this.addr,
+    this.hasError = false,
     Key? key,
   }) : super(key: key);
 
-  final bool hasError;
   final AnimatedListModel<PingData?> list;
   final PingData item;
   final String addr;
+  final bool hasError;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class PingCard extends StatelessWidget {
         leading: hasError
             ? const StatusCard(
                 color: Colors.red,
-                text: 'Error',
+                text: 'Offline',
               )
             : const StatusCard(
                 color: Colors.green,

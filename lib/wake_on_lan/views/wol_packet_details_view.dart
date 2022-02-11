@@ -58,7 +58,10 @@ class WolPacketDetailsView extends StatelessWidget {
           textL: const Text('IP address'),
           textR: Text(response.ipv4.address),
         ),
-        HexBytesViewer(title: 'Magic packet bytes', bytes: response.packetBytes)
+        HexBytesViewer(
+          title: 'Magic packet bytes',
+          bytes: response.packetBytes,
+        )
       ],
     );
   }

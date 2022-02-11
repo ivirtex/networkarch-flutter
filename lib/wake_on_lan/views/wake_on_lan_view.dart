@@ -229,11 +229,10 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
         child: DataCard(
           padding: EdgeInsets.zero,
           child: ListTile(
-            contentPadding: const EdgeInsets.only(left: 8.0, right: 16.0),
             leading: item.status == WolStatus.success
                 ? const StatusCard(
                     color: Colors.green,
-                    text: 'Online',
+                    text: 'Success',
                   )
                 : const StatusCard(
                     color: Colors.red,
