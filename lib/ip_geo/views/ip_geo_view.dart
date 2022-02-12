@@ -13,7 +13,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/ip_geo/bloc/ip_geo_bloc.dart';
-import 'package:network_arch/shared/action_app_bar.dart';
 import 'package:network_arch/shared/data_line.dart';
 import 'package:network_arch/shared/list_circular_progress_indicator.dart';
 import 'package:network_arch/shared/platform_widget.dart';
