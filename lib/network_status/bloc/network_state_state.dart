@@ -10,6 +10,7 @@ class NetworkState extends Equatable {
     this.wifiInfo,
     this.carrierInfo,
     this.extIP,
+    this.error,
   });
 
   final NetworkStatus status;
@@ -17,6 +18,7 @@ class NetworkState extends Equatable {
   final WifiInfoModel? wifiInfo;
   final CarrierInfoModel? carrierInfo;
   final String? extIP;
+  final Object? error;
 
   @override
   List<Object?> get props =>
@@ -28,6 +30,7 @@ class NetworkState extends Equatable {
     WifiInfoModel? wifiInfo,
     CarrierInfoModel? carrierInfo,
     String? extIP,
+    Object? error,
   }) {
     return NetworkState(
       status: status ?? this.status,
@@ -35,6 +38,7 @@ class NetworkState extends Equatable {
       wifiInfo: wifiInfo ?? this.wifiInfo,
       carrierInfo: carrierInfo ?? this.carrierInfo,
       extIP: extIP ?? this.extIP,
+      error: error ?? this.error,
     );
   }
 }

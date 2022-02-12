@@ -1,6 +1,5 @@
 // Dart imports:
 import 'dart:async';
-import 'dart:io';
 
 // Package imports:
 import 'package:rxdart/rxdart.dart';
@@ -28,18 +27,12 @@ class NetworkStatusRepository {
     late StreamController<WifiInfoModel> controller;
     Timer? timer;
 
-    WifiInfoModel? wifiInfo;
+    WifiInfoModel wifiInfo;
 
     Future<void> fetchData(_) async {
-      if (Platform.isIOS) {
-        wifiInfo = await _wifiDataProvider.getDataForIOS();
-      } else {
-        wifiInfo = await _wifiDataProvider.getDataForAndroid();
-      }
+      wifiInfo = await _wifiDataProvider.getWifiData();
 
-      wifiInfo != null
-          ? controller.add(wifiInfo!)
-          : controller.addError('Error fetching Wi-Fi data');
+      controller.add(wifiInfo);
     }
 
     void startTimer() {
@@ -65,14 +58,12 @@ class NetworkStatusRepository {
     late StreamController<CarrierInfoModel> controller;
     Timer? timer;
 
-    CarrierInfoModel? carrierInfo;
+    CarrierInfoModel carrierInfo;
 
     Future<void> fetchData(_) async {
       carrierInfo = await _carrierDataProvider.getCellularData();
 
-      carrierInfo != null
-          ? controller.add(carrierInfo!)
-          : controller.addError('Error fetching cellular data');
+      controller.add(carrierInfo);
     }
 
     void startTimer() {
