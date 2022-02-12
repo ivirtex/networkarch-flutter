@@ -1,7 +1,11 @@
+// Dart imports:
 import 'dart:convert';
 
-import 'package:network_arch/ip_geo/models/ip_geo_response.dart';
+// Package imports:
 import 'package:http/http.dart' as http;
+
+// Project imports:
+import 'package:network_arch/ip_geo/models/ip_geo_response.dart';
 
 class IpGeoRequestFailure implements Exception {}
 

@@ -7,13 +7,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:network_arch/ip_geo/bloc/ip_geo_bloc.dart';
-import 'package:network_arch/ip_geo/repository/ip_geo_repository.dart';
 import 'package:path_provider/path_provider.dart';
 
 // Project imports:
 import 'package:network_arch/app.dart';
 import 'package:network_arch/constants.dart';
+import 'package:network_arch/ip_geo/bloc/ip_geo_bloc.dart';
+import 'package:network_arch/ip_geo/repository/ip_geo_repository.dart';
 import 'package:network_arch/lan_scanner/lan_scanner.dart';
 import 'package:network_arch/network_status/network_status.dart';
 import 'package:network_arch/permissions/permissions.dart';

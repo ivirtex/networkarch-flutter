@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:network_arch/constants.dart';
 
 // Project imports:
+import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 import 'package:network_arch/utils/enums.dart';

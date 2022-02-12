@@ -5,15 +5,16 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:network_arch/constants.dart';
 
 // Project imports:
+import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/shared/action_app_bar.dart';
 import 'package:network_arch/shared/cupertino_action_app_bar.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 import 'package:network_arch/utils/enums.dart';
+import 'package:network_arch/utils/keyboard_hider.dart';
 
 class PingView extends StatefulWidget {
   const PingView({Key? key}) : super(key: key);
@@ -240,6 +241,7 @@ class _PingViewState extends State<PingView> {
   }
 
   Future<void> _handleStart() async {
+    hideKeyboard(context);
     await _pingData.removeAllElements(context);
 
     _targetHost = _target;

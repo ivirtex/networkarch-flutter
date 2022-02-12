@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
-import 'package:network_arch/ip_geo/views/ip_geo_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
+import 'package:network_arch/ip_geo/views/ip_geo_view.dart';
 import 'package:network_arch/network_status/network_status.dart';
 import 'package:network_arch/permissions/views/permissions_view.dart';
 import 'package:network_arch/ping/ping.dart';

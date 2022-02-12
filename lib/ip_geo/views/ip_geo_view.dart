@@ -1,10 +1,16 @@
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+// Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/ip_geo/bloc/ip_geo_bloc.dart';
 import 'package:network_arch/shared/action_app_bar.dart';
@@ -13,6 +19,7 @@ import 'package:network_arch/shared/list_circular_progress_indicator.dart';
 import 'package:network_arch/shared/platform_widget.dart';
 import 'package:network_arch/shared/rounded_list.dart';
 import 'package:network_arch/theme/theme.dart';
+import 'package:network_arch/utils/keyboard_hider.dart';
 
 class IpGeoView extends StatefulWidget {
   const IpGeoView({Key? key}) : super(key: key);
@@ -227,5 +234,7 @@ class _IpGeoViewState extends State<IpGeoView> {
 
   void _handleCheck() {
     context.read<IpGeoBloc>().add(IpGeoRequested(ip: _target));
+
+    hideKeyboard(context);
   }
 }
