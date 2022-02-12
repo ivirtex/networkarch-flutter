@@ -70,10 +70,10 @@ class ConnectionStatus extends StatelessWidget {
           ),
           SizedBox(width: 5.0),
           SizedBox(
-            height: 10.0,
-            width: 10.0,
-            child: Center(
-              child: CircularProgressIndicator.adaptive(),
+            height: 16.0,
+            width: 16.0,
+            child: CircularProgressIndicator.adaptive(
+              strokeWidth: 3.0,
             ),
           ),
         ],

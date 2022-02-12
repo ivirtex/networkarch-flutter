@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/network_status/network_status.dart';
+import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
 class WifiDetailsView extends StatelessWidget {
@@ -106,10 +107,7 @@ class WifiDetailsView extends StatelessWidget {
                             Text(state.extIP!),
                           ],
                         )
-                      : const SizedBox(
-                          width: Constants.linearProgressWidth,
-                          child: LinearProgressIndicator(),
-                        ),
+                      : const ListCircularProgressIndicator(),
                 )
               ],
             );
@@ -122,56 +120,56 @@ class WifiDetailsView extends StatelessWidget {
                   textL: Text('SSID'),
                   textR: SizedBox(
                     width: Constants.linearProgressWidth,
-                    child: LinearProgressIndicator(),
+                    child: ListCircularProgressIndicator(),
                   ),
                 ),
                 const DataLine(
                   textL: Text('BSSID'),
                   textR: SizedBox(
                     width: Constants.linearProgressWidth,
-                    child: LinearProgressIndicator(),
+                    child: ListCircularProgressIndicator(),
                   ),
                 ),
                 const DataLine(
                   textL: Text('Local IPv4'),
                   textR: SizedBox(
                     width: Constants.linearProgressWidth,
-                    child: LinearProgressIndicator(),
+                    child: ListCircularProgressIndicator(),
                   ),
                 ),
                 const DataLine(
                   textL: Text('Local IPv6'),
                   textR: SizedBox(
                     width: Constants.linearProgressWidth,
-                    child: LinearProgressIndicator(),
+                    child: ListCircularProgressIndicator(),
                   ),
                 ),
                 const DataLine(
                   textL: Text('Broadcast address'),
                   textR: SizedBox(
                     width: Constants.linearProgressWidth,
-                    child: LinearProgressIndicator(),
+                    child: ListCircularProgressIndicator(),
                   ),
                 ),
                 const DataLine(
                   textL: Text('Gateway'),
                   textR: SizedBox(
                     width: Constants.linearProgressWidth,
-                    child: LinearProgressIndicator(),
+                    child: ListCircularProgressIndicator(),
                   ),
                 ),
                 const DataLine(
                   textL: Text('Submask'),
                   textR: SizedBox(
                     width: Constants.linearProgressWidth,
-                    child: LinearProgressIndicator(),
+                    child: ListCircularProgressIndicator(),
                   ),
                 ),
                 const DataLine(
                   textL: Text('External IP'),
                   textR: SizedBox(
                     width: Constants.linearProgressWidth,
-                    child: LinearProgressIndicator(),
+                    child: ListCircularProgressIndicator(),
                   ),
                 ),
               ],

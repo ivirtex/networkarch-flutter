@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/network_status/network_status.dart';
+import 'package:network_arch/shared/list_circular_progress_indicator.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
 class WifiStatusCard extends StatelessWidget {
@@ -51,7 +52,7 @@ class WifiStatusCard extends StatelessWidget {
                       if (state.status == NetworkStatus.success)
                         Text(state.wifiInfo!.wifiIPv4 ?? 'N/A')
                       else
-                        const Expanded(child: LinearProgressIndicator()),
+                        const ListCircularProgressIndicator(),
                     ],
                   ),
                 ],

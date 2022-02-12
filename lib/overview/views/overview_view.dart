@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:network_arch/overview/overview.dart';
 
 // Package imports:
 import 'package:permission_handler/permission_handler.dart';
@@ -109,8 +110,7 @@ class _OverviewViewState extends State<OverviewView> {
                 toolName: 'IP Geolocation',
                 toolDesc: Constants.ipGeoDesc,
                 onPressed: () {
-                  // Navigator.pushNamed(context, '/tools/ip_geo');
-                  Constants.showPermissionDefaultNotification(context);
+                  Navigator.pushNamed(context, '/tools/ip_geo');
                 },
               ),
               const SizedBox(height: Constants.listSpacing),

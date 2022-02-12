@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/network_status/network_status.dart';
+import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
 class CarrierDetailView extends StatelessWidget {
@@ -97,49 +98,49 @@ class CarrierDetailView extends StatelessWidget {
                   textL: Text('VoIP Support'),
                   textR: SizedBox(
                     width: Constants.linearProgressWidth,
-                    child: LinearProgressIndicator(),
+                    child: ListCircularProgressIndicator(),
                   ),
                 ),
                 const DataLine(
                   textL: Text('Carrier Name'),
                   textR: SizedBox(
                     width: Constants.linearProgressWidth,
-                    child: LinearProgressIndicator(),
+                    child: ListCircularProgressIndicator(),
                   ),
                 ),
                 const DataLine(
                   textL: Text('ISO Country Code'),
                   textR: SizedBox(
                     width: Constants.linearProgressWidth,
-                    child: LinearProgressIndicator(),
+                    child: ListCircularProgressIndicator(),
                   ),
                 ),
                 const DataLine(
                   textL: Text('Mobile Country Code'),
                   textR: SizedBox(
                     width: Constants.linearProgressWidth,
-                    child: LinearProgressIndicator(),
+                    child: ListCircularProgressIndicator(),
                   ),
                 ),
                 const DataLine(
                   textL: Text('Mobile Network Code'),
                   textR: SizedBox(
                     width: Constants.linearProgressWidth,
-                    child: LinearProgressIndicator(),
+                    child: ListCircularProgressIndicator(),
                   ),
                 ),
                 const DataLine(
                   textL: Text('Network Generation'),
                   textR: SizedBox(
                     width: Constants.linearProgressWidth,
-                    child: LinearProgressIndicator(),
+                    child: ListCircularProgressIndicator(),
                   ),
                 ),
                 const DataLine(
                   textL: Text('Radio Access Technology'),
                   textR: SizedBox(
                     width: Constants.linearProgressWidth,
-                    child: LinearProgressIndicator(),
+                    child: ListCircularProgressIndicator(),
                   ),
                 ),
               ],
