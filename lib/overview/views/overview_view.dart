@@ -71,10 +71,7 @@ class _OverviewViewState extends State<OverviewView> {
       shrinkWrap: true,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10.0,
-            vertical: Constants.listSpacing,
-          ),
+          padding: const EdgeInsets.all(Constants.bodyPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

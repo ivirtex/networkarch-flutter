@@ -6,3 +6,12 @@ abstract class IpGeoEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class IpGeoRequested extends IpGeoEvent {
+  const IpGeoRequested({required this.ip});
+
+  final String ip;
+
+  @override
+  List<Object> get props => [ip];
+}

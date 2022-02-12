@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:network_arch/constants.dart';
 
 // Project imports:
 import 'package:network_arch/models/animated_list_model.dart';
@@ -64,28 +65,10 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
     );
   }
 
-  CupertinoPageScaffold _buildIOS(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          const CupertinoSliverNavigationBar(
-            stretch: true,
-            border: null,
-            largeTitle: Text(
-              'Wake On LAN',
-            ),
-          ),
-        ],
-        body: _buildBody(context),
-      ),
-    );
-  }
-
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Wake on LAN'),
-        iconTheme: Theme.of(context).iconTheme,
         actions: [
           TextButton(
             onPressed: !_areTextFieldsNotEmpty() ? null : _handleSend,
@@ -105,9 +88,24 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
     );
   }
 
+  CupertinoPageScaffold _buildIOS(BuildContext context) {
+    return CupertinoPageScaffold(
+      child: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          const CupertinoSliverNavigationBar(
+            stretch: true,
+            border: null,
+            largeTitle: Text('Wake On LAN'),
+          ),
+        ],
+        body: _buildBody(context),
+      ),
+    );
+  }
+
   Widget _buildBody(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(Constants.bodyPadding),
       child: Column(
         children: [
           BlocConsumer<WakeOnLanBloc, WakeOnLanState>(

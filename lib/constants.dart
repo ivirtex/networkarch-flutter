@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
+import 'package:network_arch/ip_geo/views/ip_geo_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
@@ -29,7 +30,7 @@ abstract class Constants {
     '/tools/ping': (context) => const PingView(),
     '/tools/lan': (context) => const LanScannerView(),
     '/tools/wol': (context) => const WakeOnLanView(),
-    // '/tools/ip_geo': (context) => const IPGeolocationView(),
+    '/tools/ip_geo': (context) => const IpGeoView(),
   };
 
   static final ThemeData lightThemeData = ThemeData.light().copyWith(
@@ -65,6 +66,8 @@ abstract class Constants {
 
   // Styles
   static const EdgeInsets listPadding = EdgeInsets.all(10.0);
+
+  static const double bodyPadding = 10.0;
 
   static const double listSpacing = 10.0;
 

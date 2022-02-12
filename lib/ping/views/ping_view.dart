@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:network_arch/constants.dart';
 
 // Project imports:
 import 'package:network_arch/models/animated_list_model.dart';
@@ -46,7 +47,6 @@ class _PingViewState extends State<PingView> {
     super.didChangeDependencies();
 
     final String routedAddr =
-        // ignore: cast_nullable_to_non_nullable
         ModalRoute.of(context)!.settings.arguments as String;
     _targetHostController.text = routedAddr;
   }
@@ -110,9 +110,9 @@ class _PingViewState extends State<PingView> {
     );
   }
 
-  Padding _buildBody() {
+  Widget _buildBody() {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(Constants.bodyPadding),
       child: Column(
         children: [
           Row(

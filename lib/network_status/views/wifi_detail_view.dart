@@ -53,7 +53,7 @@ class WifiDetailsView extends StatelessWidget {
 
   Widget _buildDataList(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: Constants.listSpacing),
+      padding: const EdgeInsets.all(Constants.bodyPadding),
       child: BlocBuilder<NetworkStateBloc, NetworkState>(
         builder: (context, state) {
           if (state.status == NetworkStatus.success) {
@@ -87,28 +87,22 @@ class WifiDetailsView extends StatelessWidget {
                   textL: const Text('Submask'),
                   textR: Text(state.wifiInfo!.wifiSubmask ?? 'N/A'),
                 ),
-                DataLine(
-                  textL: const Text('External IP'),
-                  textR: state.extIpStatus == ExtIpStatus.success
-                      ? Row(
-                          children: [
-                            IconButton(
-                              constraints: const BoxConstraints(),
-                              padding: const EdgeInsets.only(right: 4),
-                              iconSize: 16.0,
-                              icon:
-                                  const Icon(Icons.refresh, color: Colors.blue),
-                              onPressed: () {
-                                context
-                                    .read<NetworkStateBloc>()
-                                    .add(NetworkStateExtIPRequested());
-                              },
-                            ),
-                            Text(state.extIP!),
-                          ],
-                        )
-                      : const ListCircularProgressIndicator(),
-                )
+                if (state.extIpStatus == ExtIpStatus.success)
+                  DataLine(
+                    textL: const Text('External IPv4'),
+                    textR: Text(state.extIP.toString()),
+                    onRefreshTap: () => _handleExtIPRefresh(context),
+                  )
+                else if (state.extIpStatus == ExtIpStatus.loading)
+                  const DataLine(
+                    textL: Text('External IPv4'),
+                  )
+                else
+                  DataLine(
+                    textL: const Text('External IPv4'),
+                    textR: const Text('N/A'),
+                    onRefreshTap: () => _handleExtIPRefresh(context),
+                  ),
               ],
             );
           } else {
@@ -118,59 +112,27 @@ class WifiDetailsView extends StatelessWidget {
               children: [
                 const DataLine(
                   textL: Text('SSID'),
-                  textR: SizedBox(
-                    width: Constants.linearProgressWidth,
-                    child: ListCircularProgressIndicator(),
-                  ),
                 ),
                 const DataLine(
                   textL: Text('BSSID'),
-                  textR: SizedBox(
-                    width: Constants.linearProgressWidth,
-                    child: ListCircularProgressIndicator(),
-                  ),
                 ),
                 const DataLine(
                   textL: Text('Local IPv4'),
-                  textR: SizedBox(
-                    width: Constants.linearProgressWidth,
-                    child: ListCircularProgressIndicator(),
-                  ),
                 ),
                 const DataLine(
                   textL: Text('Local IPv6'),
-                  textR: SizedBox(
-                    width: Constants.linearProgressWidth,
-                    child: ListCircularProgressIndicator(),
-                  ),
                 ),
                 const DataLine(
                   textL: Text('Broadcast address'),
-                  textR: SizedBox(
-                    width: Constants.linearProgressWidth,
-                    child: ListCircularProgressIndicator(),
-                  ),
                 ),
                 const DataLine(
                   textL: Text('Gateway'),
-                  textR: SizedBox(
-                    width: Constants.linearProgressWidth,
-                    child: ListCircularProgressIndicator(),
-                  ),
                 ),
                 const DataLine(
                   textL: Text('Submask'),
-                  textR: SizedBox(
-                    width: Constants.linearProgressWidth,
-                    child: ListCircularProgressIndicator(),
-                  ),
                 ),
                 const DataLine(
                   textL: Text('External IP'),
-                  textR: SizedBox(
-                    width: Constants.linearProgressWidth,
-                    child: ListCircularProgressIndicator(),
-                  ),
                 ),
               ],
             );
@@ -178,5 +140,9 @@ class WifiDetailsView extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _handleExtIPRefresh(BuildContext context) {
+    context.read<NetworkStateBloc>().add(NetworkStateExtIPRequested());
   }
 }

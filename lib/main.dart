@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:network_arch/ip_geo/bloc/ip_geo_bloc.dart';
+import 'package:network_arch/ip_geo/repository/ip_geo_repository.dart';
 import 'package:path_provider/path_provider.dart';
 
 // Project imports:
@@ -54,6 +56,7 @@ class NetworkArch extends StatelessWidget {
       NetworkStatusRepository();
   final PingRepository pingRepository = PingRepository();
   final LanScannerRepository lanScannerRepository = LanScannerRepository();
+  final IpGeoRepository ipGeoRepository = IpGeoRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +68,7 @@ class NetworkArch extends StatelessWidget {
         RepositoryProvider.value(value: networkStatusRepository),
         RepositoryProvider.value(value: pingRepository),
         RepositoryProvider.value(value: lanScannerRepository),
+        RepositoryProvider.value(value: ipGeoRepository),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -85,7 +89,10 @@ class NetworkArch extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => WakeOnLanBloc(),
-          )
+          ),
+          BlocProvider(
+            create: (context) => IpGeoBloc(ipGeoRepository),
+          ),
         ],
         child: PlatformWidget(
           androidBuilder: _buildAndroid,

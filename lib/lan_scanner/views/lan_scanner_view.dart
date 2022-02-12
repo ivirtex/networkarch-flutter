@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:network_arch/constants.dart';
 
 // Project imports:
 import 'package:network_arch/lan_scanner/bloc/lan_scanner_bloc.dart';
@@ -106,7 +107,7 @@ class _LanScannerViewState extends State<LanScannerView> {
 
   Padding _buildBody() {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(Constants.bodyPadding),
       child: Column(
         children: [
           BlocConsumer<LanScannerBloc, LanScannerState>(
