@@ -3,6 +3,8 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -29,11 +31,12 @@ class IpGeoView extends StatefulWidget {
 
 class _IpGeoViewState extends State<IpGeoView> {
   final Completer<GoogleMapController> _controller = Completer();
-  final _targetHostController = TextEditingController();
-
-  String get _target => _targetHostController.text;
+  final Map<String, Marker> _markers = {};
 
   late final String _darkModeMapStyle;
+
+  final _targetHostController = TextEditingController();
+  String get _target => _targetHostController.text;
 
   @override
   void initState() {
@@ -98,8 +101,18 @@ class _IpGeoViewState extends State<IpGeoView> {
       child: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
-            const CupertinoSliverNavigationBar(
-              largeTitle: Text('IP Geolocation'),
+            BlocBuilder<IpGeoBloc, IpGeoState>(
+              builder: (context, state) {
+                return CupertinoSliverNavigationBar(
+                  largeTitle: const Text('IP Geolocation'),
+                  trailing: state is IpGeoLoadInProgress
+                      ? const ListCircularProgressIndicator()
+                      : CupertinoButton(
+                          onPressed: _handleCheck,
+                          child: const Text('Check'),
+                        ),
+                );
+              },
             ),
           ];
         },
@@ -146,8 +159,14 @@ class _IpGeoViewState extends State<IpGeoView> {
             child: SizedBox(
               height: 300,
               child: GoogleMap(
+                markers: _markers.values.toSet(),
                 initialCameraPosition:
                     const CameraPosition(target: LatLng(0, 0)),
+                gestureRecognizers: {
+                  Factory<OneSequenceGestureRecognizer>(
+                    () => EagerGestureRecognizer(),
+                  ),
+                },
                 onMapCreated: (GoogleMapController controller) {
                   _controller.complete(controller);
 
@@ -159,7 +178,12 @@ class _IpGeoViewState extends State<IpGeoView> {
             ),
           ),
           const SizedBox(height: Constants.listSpacing),
-          BlocBuilder<IpGeoBloc, IpGeoState>(
+          BlocConsumer<IpGeoBloc, IpGeoState>(
+            listener: (context, state) {
+              if (state is IpGeoLoadSuccess) {
+                _onSuccesfullUpdate(state);
+              }
+            },
             builder: (context, state) {
               if (state is IpGeoLoadSuccess) {
                 return RoundedList(
@@ -235,5 +259,37 @@ class _IpGeoViewState extends State<IpGeoView> {
     context.read<IpGeoBloc>().add(IpGeoRequested(ip: _target));
 
     hideKeyboard(context);
+  }
+
+  void _onSuccesfullUpdate(IpGeoLoadSuccess state) {
+    _controller.future.then((controller) {
+      controller.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(
+              state.ipGeoModel.lat!,
+              state.ipGeoModel.lon!,
+            ),
+            zoom: 2,
+          ),
+        ),
+      );
+
+      final marker = Marker(
+        markerId: MarkerId(state.ipGeoModel.query!),
+        position: LatLng(
+          state.ipGeoModel.lat!,
+          state.ipGeoModel.lon!,
+        ),
+        infoWindow: InfoWindow(
+          title: state.ipGeoModel.query,
+          snippet: state.ipGeoModel.country,
+        ),
+      );
+
+      setState(() {
+        _markers[state.ipGeoModel.query!] = marker;
+      });
+    });
   }
 }

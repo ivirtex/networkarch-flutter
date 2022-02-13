@@ -48,6 +48,7 @@ class _PingViewState extends State<PingView> {
     super.didChangeDependencies();
 
     final String routedAddr =
+        // ignore: cast_nullable_to_non_nullable
         ModalRoute.of(context)!.settings.arguments as String;
     _targetHostController.text = routedAddr;
   }

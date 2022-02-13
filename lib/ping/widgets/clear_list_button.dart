@@ -26,7 +26,7 @@ class ClearListButton extends StatelessWidget {
         ),
       ),
       onPressed: onPressed,
-      child: const Text('Clear list'),
+      child: Text('Clear list', style: Theme.of(context).textTheme.button),
     );
   }
 }

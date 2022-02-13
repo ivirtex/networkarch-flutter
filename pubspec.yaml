@@ -28,6 +28,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.4
 
+  bloc: ^8.0.2
   flutter_bloc: ^8.0.1
   carrier_info: ^2.0.4
   dart_ping: ^6.1.1
@@ -40,7 +41,6 @@ dependencies:
   network_info_plus: ^2.1.2
   permission_handler: ^8.3.0
   percent_indicator: ^4.0.0
-  provider: ^6.0.2
   styled_widget: ^0.4.0+3
   shared_preferences: ^2.0.13
   animate_do: ^2.1.0
@@ -57,6 +57,7 @@ dependencies:
   google_fonts: ^2.3.1
   json_serializable: ^6.1.4
   json_annotation: ^4.4.0
+  introduction_screen: ^3.0.0
 
 dev_dependencies:
   flutter_test:

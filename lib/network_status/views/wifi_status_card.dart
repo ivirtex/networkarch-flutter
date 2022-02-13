@@ -63,10 +63,6 @@ class WifiStatusCard extends StatelessWidget {
           TextButton(
             onPressed: () {
               Navigator.of(context).pushNamed('/wifi');
-
-              context
-                  .read<NetworkStateBloc>()
-                  .add(NetworkStateExtIPRequested());
             },
             style: TextButton.styleFrom(
               primary: isDarkModeOn ? Colors.white : Colors.black,
