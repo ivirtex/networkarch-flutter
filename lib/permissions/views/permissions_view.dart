@@ -19,68 +19,20 @@ class PermissionsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformWidget(
-      androidBuilder: _buildAndroid,
-      iosBuilder: _buildIOS,
-    );
-  }
-
-  Widget _buildAndroid(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Permissions',
-        ),
-        iconTheme: Theme.of(context).iconTheme,
-        actions: [
-          BlocConsumer<PermissionsBloc, PermissionsState>(
-            listener: (context, state) {
-              // TODO: implement listener
-              if (state is PermissionsLocationStatusChange) {
-                if (state.status.isGranted) {
-                  Constants.showPermissionGrantedNotification(context);
-                }
-              }
-            },
-            builder: (context, state) {
-              return TextButton(
-                child: const Text('Continue'),
-                onPressed: () => goToDashboard(context),
-              );
-            },
-          ),
-        ],
-      ),
-      body: _buildBody(context),
-    );
-  }
-
-  Widget _buildIOS(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          CupertinoSliverNavigationBar(
-            stretch: true,
-            border: null,
-            largeTitle: const Text(
-              'Permissions',
-            ),
-            trailing: CupertinoButton(
-              onPressed: () {},
-              child: const Text('Continue'),
-            ),
-          ),
-        ],
-        body: _buildBody(context),
-      ),
-    );
+    return _buildBody(context);
   }
 
   Widget _buildBody(BuildContext context) {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
-    return Padding(
-      padding: const EdgeInsets.all(Constants.bodyPadding),
+    return BlocListener<PermissionsBloc, PermissionsState>(
+      listener: (context, state) {
+        if (state is PermissionsLocationStatusChange) {
+          state.status == PermissionStatus.granted
+              ? Constants.showPermissionGrantedNotification(context)
+              : Constants.showPermissionDefaultNotification(context);
+        }
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -126,9 +78,5 @@ class PermissionsView extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  void goToDashboard(BuildContext context) {
-    Navigator.of(context).pushReplacementNamed('/');
   }
 }

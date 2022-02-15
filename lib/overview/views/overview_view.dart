@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:hive/hive.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,6 @@ class OverviewView extends StatefulWidget {
 class _OverviewViewState extends State<OverviewView> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     Permission.location.isGranted.then((bool isGranted) {
@@ -119,6 +119,7 @@ class _OverviewViewState extends State<OverviewView> {
                   // TODO: Implement onTap()
 
                   Constants.showPermissionGrantedNotification(context);
+                  Hive.box('settings').clear();
                 },
               ),
               const SizedBox(height: Constants.listSpacing),

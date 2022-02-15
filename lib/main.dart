@@ -38,6 +38,7 @@ void main() {
     );
 
     await Hive.initFlutter();
+    await Hive.openBox('settings');
 
     HydratedBlocOverrides.runZoned(
       () {

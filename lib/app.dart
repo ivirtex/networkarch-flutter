@@ -2,8 +2,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:hive/hive.dart';
+import 'package:introduction_screen/introduction_screen.dart';
+
 // Project imports:
 import 'package:network_arch/constants.dart';
+import 'package:network_arch/introduction/introduction_pages.dart';
 import 'package:network_arch/overview/views/overview_view.dart';
 import 'package:network_arch/settings/settings.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
@@ -20,10 +25,25 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformWidget(
-      androidBuilder: _androidBuilder,
-      iosBuilder: _iosBuilder,
-    );
+    final settingsBox = Hive.box('settings');
+    final bool hasIntroductionBeenShown = settingsBox
+        .get('hasIntroductionBeenShown', defaultValue: false) as bool;
+
+    return hasIntroductionBeenShown
+        ? PlatformWidget(
+            androidBuilder: _androidBuilder,
+            iosBuilder: _iosBuilder,
+          )
+        : IntroductionScreen(
+            pages: pagesList,
+            done: const Text('Done'),
+            next: const Icon(Icons.navigate_next),
+            onDone: () {
+              setState(() {
+                settingsBox.put('hasIntroductionBeenShown', true);
+              });
+            },
+          );
   }
 
   Widget _androidBuilder(BuildContext context) {
