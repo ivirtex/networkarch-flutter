@@ -13,3 +13,10 @@ class PermissionsLocationRequested extends PermissionsEvent {
   @override
   List<Object> get props => [];
 }
+
+class PermissionsPhoneStateRequested extends PermissionsEvent {
+  const PermissionsPhoneStateRequested();
+
+  @override
+  List<Object> get props => [];
+}

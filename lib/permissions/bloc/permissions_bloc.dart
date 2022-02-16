@@ -12,6 +12,7 @@ part 'permissions_state.dart';
 class PermissionsBloc extends Bloc<PermissionsEvent, PermissionsState> {
   PermissionsBloc() : super(PermissionsInitial()) {
     on<PermissionsLocationRequested>(_requestLocationPermission);
+    on<PermissionsPhoneStateRequested>(_requestPhoneStatePermission);
   }
 
   Future<void> _requestLocationPermission(
@@ -23,7 +24,24 @@ class PermissionsBloc extends Bloc<PermissionsEvent, PermissionsState> {
     final status = await permission.request();
 
     emit(
-      PermissionsLocationStatusChange(
+      PermissionsStatusChange(
+        permission: permission,
+        status: status,
+      ),
+    );
+  }
+
+  Future<void> _requestPhoneStatePermission(
+    PermissionsPhoneStateRequested event,
+    Emitter<PermissionsState> emit,
+  ) async {
+    const permission = Permission.phone;
+
+    final status = await permission.request();
+
+    emit(
+      PermissionsStatusChange(
+        permission: permission,
         status: status,
       ),
     );

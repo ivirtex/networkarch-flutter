@@ -9,13 +9,15 @@ abstract class PermissionsState extends Equatable {
 
 class PermissionsInitial extends PermissionsState {}
 
-class PermissionsLocationStatusChange extends PermissionsState {
-  const PermissionsLocationStatusChange({
+class PermissionsStatusChange extends PermissionsState {
+  const PermissionsStatusChange({
+    required this.permission,
     required this.status,
   });
 
+  final Permission permission;
   final PermissionStatus status;
 
   @override
-  List<Object> get props => [status];
+  List<Object> get props => [permission, status];
 }

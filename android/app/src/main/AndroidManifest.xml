@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.network_arch">
 
+  <!-- Permissions for accessing network informations. -->
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
   <uses-permission android:name="android.permission.INTERNET" />
 
   <application android:label="NetworkArch" android:icon="@mipmap/ic_launcher">

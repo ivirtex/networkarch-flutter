@@ -169,6 +169,9 @@ abstract class Constants {
   static const String locationPermissionDesc =
       'We need your location permission in order to access Wi-Fi information';
 
+  static const String phoneStatePermissionDesc =
+      'We need your phone permission in order to access carrier information';
+
   // Permissions snackbars
   static const String _permissionGranted = 'Permission granted.';
 

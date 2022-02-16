@@ -31,7 +31,7 @@ dependencies:
   bloc: ^8.0.2
   flutter_bloc: ^8.0.1
   carrier_info: ^2.0.4
-  dart_ping: ^6.1.1
+  dart_ping: ^6.1.2
   dart_ping_ios: ^1.0.0
   font_awesome_flutter: ^9.2.0
   google_maps_flutter: ^2.1.1
@@ -39,17 +39,16 @@ dependencies:
   http: ^0.13.4
   hydrated_bloc: ^8.0.0
   network_info_plus: ^2.1.2
-  permission_handler: ^8.3.0
+  permission_handler: ^9.0.1
   percent_indicator: ^4.0.0
   styled_widget: ^0.4.0+3
-  shared_preferences: ^2.0.13
   animate_do: ^2.1.0
   wake_on_lan: ^2.0.2+1
   device_preview: ^1.0.0
   equatable: ^2.0.3
   path_provider: ^2.0.9
   rxdart: ^0.27.3
-  elegant_notification: ^1.5.0
+  elegant_notification: ^1.5.1
   debug_friend: ^0.4.0
   enum_to_string: ^2.0.1
   hive: ^2.0.5
