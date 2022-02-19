@@ -1,23 +1,28 @@
 part of 'permissions_bloc.dart';
 
-abstract class PermissionsState extends Equatable {
-  const PermissionsState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class PermissionsInitial extends PermissionsState {}
-
-class PermissionsStatusChange extends PermissionsState {
-  const PermissionsStatusChange({
-    required this.permission,
-    required this.status,
+class PermissionsState extends Equatable {
+  const PermissionsState({
+    this.locationStatus,
+    this.phoneStateStatus,
+    this.latestRequested,
   });
 
-  final Permission permission;
-  final PermissionStatus status;
+  final PermissionStatus? locationStatus;
+  final PermissionStatus? phoneStateStatus;
+  final Permission? latestRequested;
 
   @override
-  List<Object> get props => [permission, status];
+  List<Object?> get props => [locationStatus, phoneStateStatus];
+
+  PermissionsState copyWith({
+    PermissionStatus? locationStatus,
+    PermissionStatus? phoneStateStatus,
+    Permission? latestRequested,
+  }) {
+    return PermissionsState(
+      locationStatus: locationStatus ?? this.locationStatus,
+      phoneStateStatus: phoneStateStatus ?? this.phoneStateStatus,
+      latestRequested: latestRequested ?? this.latestRequested,
+    );
+  }
 }

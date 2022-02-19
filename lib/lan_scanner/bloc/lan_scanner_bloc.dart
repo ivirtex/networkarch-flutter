@@ -6,6 +6,7 @@ import 'dart:async';
 
 // Package imports:
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:lan_scanner/lan_scanner.dart';
 import 'package:meta/meta.dart';
 import 'package:network_info_plus/network_info_plus.dart';

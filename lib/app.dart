@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
@@ -10,6 +11,7 @@ import 'package:introduction_screen/introduction_screen.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/introduction/introduction_pages.dart';
 import 'package:network_arch/overview/views/overview_view.dart';
+import 'package:network_arch/permissions/permissions.dart';
 import 'package:network_arch/settings/settings.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
@@ -22,6 +24,15 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    context
+        .read<PermissionsBloc>()
+        .add(const PermissionsStatusRefreshRequested());
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -10,12 +10,31 @@ part 'permissions_event.dart';
 part 'permissions_state.dart';
 
 class PermissionsBloc extends Bloc<PermissionsEvent, PermissionsState> {
-  PermissionsBloc() : super(PermissionsInitial()) {
-    on<PermissionsLocationRequested>(_requestLocationPermission);
-    on<PermissionsPhoneStateRequested>(_requestPhoneStatePermission);
+  PermissionsBloc() : super(const PermissionsState()) {
+    on<PermissionsStatusRefreshRequested>(_onRefreshPermissionsStatus);
+    on<PermissionsLocationRequested>(_onRequestLocationPermission);
+    on<PermissionsPhoneStateRequested>(_onRequestPhoneStatePermission);
   }
 
-  Future<void> _requestLocationPermission(
+  Future<void> _onRefreshPermissionsStatus(
+    PermissionsStatusRefreshRequested event,
+    Emitter<PermissionsState> emit,
+  ) async {
+    const location = Permission.locationWhenInUse;
+    const phoneState = Permission.phone;
+
+    final locationStatus = await location.status;
+    final phoneStateStatus = await phoneState.status;
+
+    emit(
+      PermissionsState(
+        locationStatus: locationStatus,
+        phoneStateStatus: phoneStateStatus,
+      ),
+    );
+  }
+
+  Future<void> _onRequestLocationPermission(
     PermissionsLocationRequested event,
     Emitter<PermissionsState> emit,
   ) async {
@@ -24,14 +43,14 @@ class PermissionsBloc extends Bloc<PermissionsEvent, PermissionsState> {
     final status = await permission.request();
 
     emit(
-      PermissionsStatusChange(
-        permission: permission,
-        status: status,
+      state.copyWith(
+        locationStatus: status,
+        latestRequested: permission,
       ),
     );
   }
 
-  Future<void> _requestPhoneStatePermission(
+  Future<void> _onRequestPhoneStatePermission(
     PermissionsPhoneStateRequested event,
     Emitter<PermissionsState> emit,
   ) async {
@@ -40,9 +59,9 @@ class PermissionsBloc extends Bloc<PermissionsEvent, PermissionsState> {
     final status = await permission.request();
 
     emit(
-      PermissionsStatusChange(
-        permission: permission,
-        status: status,
+      state.copyWith(
+        phoneStateStatus: status,
+        latestRequested: permission,
       ),
     );
   }

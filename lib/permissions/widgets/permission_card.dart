@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
@@ -13,16 +14,16 @@ class PermissionCard extends StatelessWidget {
     required this.title,
     required this.description,
     required this.icon,
+    required this.status,
     required this.onPressed,
-    this.isGranted = false,
     Key? key,
   }) : super(key: key);
 
   final String title;
   final String description;
   final FaIcon icon;
+  final PermissionStatus status;
   final VoidCallback? onPressed;
-  final bool isGranted;
 
   @override
   Widget build(BuildContext context) {
@@ -59,13 +60,23 @@ class PermissionCard extends StatelessWidget {
                   ],
                 ),
               ),
-              if (isGranted)
+              if (status.isGranted)
                 const Flexible(
                   flex: 2,
                   child: Center(
                     child: FaIcon(
                       FontAwesomeIcons.checkCircle,
                       color: Colors.green,
+                    ),
+                  ),
+                )
+              else if (status.isPermanentlyDenied)
+                const Flexible(
+                  flex: 2,
+                  child: Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.timesCircle,
+                      color: Colors.red,
                     ),
                   ),
                 )

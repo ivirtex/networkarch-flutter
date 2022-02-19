@@ -7,6 +7,10 @@ abstract class PermissionsEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class PermissionsStatusRefreshRequested extends PermissionsEvent {
+  const PermissionsStatusRefreshRequested();
+}
+
 class PermissionsLocationRequested extends PermissionsEvent {
   const PermissionsLocationRequested();
 
