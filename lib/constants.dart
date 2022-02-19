@@ -33,37 +33,6 @@ abstract class Constants {
     '/tools/ip_geo': (context) => const IpGeoView(),
   };
 
-  static final ThemeData lightThemeData = ThemeData.light().copyWith(
-    scaffoldBackgroundColor: lightBgColor,
-    appBarTheme: const AppBarTheme(
-      foregroundColor: Colors.black,
-      backgroundColor: Colors.transparent,
-      shadowColor: Colors.transparent,
-      elevation: 0,
-    ),
-  );
-
-  static final ThemeData darkThemeData = ThemeData.dark().copyWith(
-    scaffoldBackgroundColor: darkBgColor,
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.transparent,
-      shadowColor: Colors.transparent,
-      elevation: 0,
-    ),
-  );
-
-  static final CupertinoThemeData cupertinoThemeData = CupertinoThemeData(
-    primaryColor: CupertinoColors.activeBlue,
-    scaffoldBackgroundColor: const CupertinoDynamicColor.withBrightness(
-      color: CupertinoColors.systemGrey6,
-      darkColor: CupertinoColors.black,
-    ),
-    barBackgroundColor: CupertinoDynamicColor.withBrightness(
-      color: CupertinoColors.systemGrey6.withOpacity(0.8),
-      darkColor: CupertinoColors.black.withOpacity(0.8),
-    ),
-  );
-
   // Styles
   static const EdgeInsets listPadding = EdgeInsets.all(10.0);
 
@@ -83,7 +52,7 @@ abstract class Constants {
   static final Color lightBgColor = Colors.grey[100]!;
   static const Color iOSlightBgColor = CupertinoColors.white;
   static final Color darkBgColor = Colors.grey[900]!;
-  static final Color iOSdarkBgColor = CupertinoColors.systemGrey6.darkColor;
+  static const Color iOSdarkBgColor = CupertinoColors.black;
 
   static final Color lightCardColor = Colors.grey[200]!;
   static final Color iOSlightCardColor = CupertinoColors.systemGrey5.color;
