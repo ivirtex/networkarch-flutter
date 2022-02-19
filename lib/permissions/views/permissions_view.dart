@@ -11,6 +11,8 @@ import 'package:permission_handler/permission_handler.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/permissions/bloc/permissions_bloc.dart';
+import 'package:network_arch/permissions/widgets/usage_desc.dart';
+import 'package:network_arch/permissions/widgets/widgets.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
 class PermissionsView extends StatefulWidget {
@@ -79,87 +81,9 @@ class _PermissionsViewState extends State<PermissionsView> {
               );
             },
           ),
+          const UsageDesc(),
         ],
       ),
-    );
-  }
-}
-
-class PermissionCard extends StatelessWidget {
-  const PermissionCard({
-    required this.title,
-    required this.description,
-    required this.icon,
-    required this.onPressed,
-    this.isGranted = false,
-    Key? key,
-  }) : super(key: key);
-
-  final String title;
-  final String description;
-  final FaIcon icon;
-  final VoidCallback? onPressed;
-  final bool isGranted;
-
-  @override
-  Widget build(BuildContext context) {
-    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        DataCard(
-          child: Row(
-            children: [
-              Flexible(
-                child: Center(child: icon),
-              ),
-              const SizedBox(width: 10),
-              Flexible(
-                flex: 5,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                    Text(
-                      description,
-                      style: isDarkModeOn
-                          ? Constants.descStyleDark
-                          : Constants.descStyleLight,
-                    ),
-                  ],
-                ),
-              ),
-              if (isGranted)
-                const Flexible(
-                  flex: 2,
-                  child: Center(
-                    child: FaIcon(
-                      FontAwesomeIcons.checkCircle,
-                      color: Colors.green,
-                    ),
-                  ),
-                )
-              else
-                Flexible(
-                  flex: 2,
-                  child: Center(
-                    child: TextButton(
-                      onPressed: onPressed,
-                      child: const Text('Request'),
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

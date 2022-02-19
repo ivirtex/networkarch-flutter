@@ -23,6 +23,8 @@ import 'package:network_arch/wake_on_lan/views/wake_on_lan_view.dart';
 abstract class Constants {
   static const String appName = 'NetworkArch';
 
+  static const String usageDesc = 'We never share your data with anyone.';
+
   static final Map<String, Widget Function(BuildContext)> routes = {
     '/permissions': (context) => const PermissionsView(),
     '/wifi': (context) => const WifiDetailsView(),

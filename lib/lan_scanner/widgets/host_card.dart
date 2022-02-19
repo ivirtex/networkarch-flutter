@@ -23,9 +23,30 @@ class HostCard extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
         leading: const StatusCard(
-          color: Colors.greenAccent,
+          color: Colors.green,
           text: 'Online',
         ),
+        // TODO: Add resolving hostname
+        // title: FutureBuilder(
+        //   future: item.reverse(),
+        //   builder:
+        //       (BuildContext context, AsyncSnapshot<InternetAddress> snapshot) {
+        //     if (snapshot.connectionState == ConnectionState.waiting) {
+        //       return const Text('Loading...');
+        //     }
+        //     if (snapshot.hasError) {
+        //       print(snapshot.error);
+
+        //       if (snapshot.error is SocketException) {
+        //         return const Text('N/A');
+        //       }
+
+        //       throw snapshot.error!;
+        //     }
+
+        //     return Text(snapshot.data?.host ?? 'N/A');
+        //   },
+        // ),
         title: Text(item.address),
         trailing: TextButton(
           onPressed: () {
