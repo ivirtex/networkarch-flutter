@@ -15,15 +15,12 @@ class ExternalIpProvider {
         // The request failed with a non-200 code
         // The ipify.org API has a lot of guaranteed uptime
         // promises, so this shouldn't ever actually happen.
-        print(response.statusCode);
-        print(response.body);
 
         return null;
       }
     } catch (e) {
       // Request failed due to an error, most likely because
       // the phone isn't connected to the internet.
-      print(e);
 
       return null;
     }

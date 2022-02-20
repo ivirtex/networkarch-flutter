@@ -22,6 +22,7 @@ import 'package:network_arch/shared/shared_widgets.dart';
 import 'package:network_arch/simple_bloc_observer.dart';
 import 'package:network_arch/theme/theme.dart';
 import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
+import 'package:network_arch/whois/whois.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,9 +56,10 @@ class NetworkArch extends StatelessWidget {
 
   final NetworkStatusRepository networkStatusRepository =
       NetworkStatusRepository();
-  final PingRepository pingRepository = PingRepository();
-  final LanScannerRepository lanScannerRepository = LanScannerRepository();
-  final IpGeoRepository ipGeoRepository = IpGeoRepository();
+  final pingRepository = PingRepository();
+  final lanScannerRepository = LanScannerRepository();
+  final ipGeoRepository = IpGeoRepository();
+  final whoisRepository = WhoisRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +72,7 @@ class NetworkArch extends StatelessWidget {
         RepositoryProvider.value(value: pingRepository),
         RepositoryProvider.value(value: lanScannerRepository),
         RepositoryProvider.value(value: ipGeoRepository),
+        RepositoryProvider.value(value: whoisRepository),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -93,6 +96,9 @@ class NetworkArch extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => IpGeoBloc(ipGeoRepository),
+          ),
+          BlocProvider(
+            create: (context) => WhoisBloc(whoisRepository),
           ),
         ],
         child: PlatformWidget(

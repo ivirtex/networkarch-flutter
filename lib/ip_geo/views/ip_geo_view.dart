@@ -16,7 +16,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/ip_geo/bloc/ip_geo_bloc.dart';
 import 'package:network_arch/shared/data_line.dart';
-import 'package:network_arch/shared/list_circular_progress_indicator.dart';
 import 'package:network_arch/shared/platform_widget.dart';
 import 'package:network_arch/shared/rounded_list.dart';
 import 'package:network_arch/theme/theme.dart';
@@ -71,22 +70,15 @@ class _IpGeoViewState extends State<IpGeoView> {
       appBar: AppBar(
         title: const Text('IP Geolocation'),
         actions: [
-          BlocBuilder<IpGeoBloc, IpGeoState>(
-            builder: (context, state) {
-              return TextButton(
-                onPressed: _target.isNotEmpty ? _handleCheck : null,
-                child: state is IpGeoLoadInProgress
-                    ? const ListCircularProgressIndicator()
-                    : Text(
-                        'Check',
-                        style: TextStyle(
-                          color:
-                              _target.isNotEmpty ? Colors.green : Colors.grey,
-                          fontSize: 16,
-                        ),
-                      ),
-              );
-            },
+          TextButton(
+            onPressed: _target.isNotEmpty ? _handleCheck : null,
+            child: Text(
+              'Check',
+              style: TextStyle(
+                color: _target.isNotEmpty ? Colors.green : Colors.grey,
+                fontSize: 16,
+              ),
+            ),
           ),
         ],
       ),
@@ -101,18 +93,12 @@ class _IpGeoViewState extends State<IpGeoView> {
       child: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
-            BlocBuilder<IpGeoBloc, IpGeoState>(
-              builder: (context, state) {
-                return CupertinoSliverNavigationBar(
-                  largeTitle: const Text('IP Geolocation'),
-                  trailing: state is IpGeoLoadInProgress
-                      ? const ListCircularProgressIndicator()
-                      : CupertinoButton(
-                          onPressed: _handleCheck,
-                          child: const Text('Check'),
-                        ),
-                );
-              },
+            CupertinoSliverNavigationBar(
+              largeTitle: const Text('IP Geolocation'),
+              trailing: CupertinoButton(
+                onPressed: _handleCheck,
+                child: const Text('Check'),
+              ),
             ),
           ];
         },

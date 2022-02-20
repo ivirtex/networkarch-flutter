@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
@@ -116,10 +115,7 @@ class _OverviewViewState extends State<OverviewView> {
                 toolName: 'Whois',
                 toolDesc: Constants.whoisDesc,
                 onPressed: () {
-                  // TODO: Implement onTap()
-
-                  Constants.showPermissionGrantedNotification(context);
-                  Hive.box('settings').clear();
+                  Navigator.pushNamed(context, '/tools/whois');
                 },
               ),
               const SizedBox(height: Constants.listSpacing),

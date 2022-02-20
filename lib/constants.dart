@@ -11,12 +11,13 @@ import 'package:elegant_notification/resources/arrays.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
-import 'package:network_arch/ip_geo/views/ip_geo_view.dart';
+import 'package:network_arch/ip_geo/ip_geo.dart';
+import 'package:network_arch/lan_scanner/lan_scanner.dart';
 import 'package:network_arch/network_status/network_status.dart';
-import 'package:network_arch/permissions/views/permissions_view.dart';
+import 'package:network_arch/permissions/permissions.dart';
 import 'package:network_arch/ping/ping.dart';
-import 'package:network_arch/screens/screens.dart';
-import 'package:network_arch/wake_on_lan/views/wake_on_lan_view.dart';
+import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
+import 'package:network_arch/whois/whois.dart';
 
 // ignore_for_file: avoid-global-state
 
@@ -33,6 +34,7 @@ abstract class Constants {
     '/tools/lan': (context) => const LanScannerView(),
     '/tools/wol': (context) => const WakeOnLanView(),
     '/tools/ip_geo': (context) => const IpGeoView(),
+    '/tools/whois': (context) => const WhoisView(),
   };
 
   // Styles
