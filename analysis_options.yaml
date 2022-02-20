@@ -34,6 +34,9 @@ linter:
     # Blindly follow the Flutter code style, which prefers types everywhere
     # always_specify_types: true
 
+    # False positive?
+    sort_pub_dependencies: false
+
 dart_code_metrics:
   anti-patterns:
     - long-method
