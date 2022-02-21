@@ -22,7 +22,7 @@ class CarrierStatusCard extends StatelessWidget {
       margin: EdgeInsetsDirectional.zero,
       child: Column(
         children: [
-          BlocBuilder<NetworkStateBloc, NetworkState>(
+          BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
             builder: (context, state) {
               return Column(
                 children: [

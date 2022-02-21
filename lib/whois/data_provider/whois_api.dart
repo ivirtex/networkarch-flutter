@@ -4,10 +4,6 @@ import 'dart:convert';
 // Package imports:
 import 'package:http/http.dart' as http;
 
-class WhoisRequestFailure implements Exception {}
-
-class WhoisNotFound implements Exception {}
-
 class WhoisApi {
   WhoisApi({http.Client? client}) : _httpClient = client ?? http.Client();
 
@@ -31,3 +27,7 @@ class WhoisApi {
     return bodyJson['response'] as String;
   }
 }
+
+class WhoisRequestFailure implements Exception {}
+
+class WhoisNotFound implements Exception {}

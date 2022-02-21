@@ -1,0 +1,4 @@
+enum WolStatus {
+  success,
+  fail,
+}

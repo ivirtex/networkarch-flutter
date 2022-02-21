@@ -23,12 +23,16 @@ import 'package:network_arch/whois/whois.dart';
 
 abstract class Constants {
   static const String appName = 'NetworkArch';
+  static const String appDesc = '''
+      NetworkArch is a network diagnostic tool equipped with various utilities, 
+      including pinging specific IP address or hostname, sending Wake on LAN magic packets,
+      whois and DNS Lookup.''';
 
   static const String usageDesc = 'We never share your data with anyone.';
 
   static final Map<String, Widget Function(BuildContext)> routes = {
     '/permissions': (context) => const PermissionsView(),
-    '/wifi': (context) => const WifiDetailsView(),
+    '/wifi': (context) => const WifiDetailedView(),
     '/carrier': (context) => const CarrierDetailView(),
     '/tools/ping': (context) => const PingView(),
     '/tools/lan': (context) => const LanScannerView(),
@@ -40,7 +44,7 @@ abstract class Constants {
   // Styles
   static const EdgeInsets listPadding = EdgeInsets.all(10.0);
 
-  static const double bodyPadding = 10.0;
+  static const EdgeInsets bodyPadding = EdgeInsets.all(10.0);
 
   static const double listSpacing = 10.0;
 

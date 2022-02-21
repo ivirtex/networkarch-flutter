@@ -1,8 +1,8 @@
 include: package:lint/analysis_options.yaml
 
 analyzer:
-  # plugins:
-  #   - dart_code_metrics
+  plugins:
+    - dart_code_metrics
 
 linter:
   rules:

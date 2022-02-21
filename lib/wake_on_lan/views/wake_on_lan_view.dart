@@ -9,10 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
-import 'package:network_arch/utils/enums.dart';
-import 'package:network_arch/wake_on_lan/bloc/wake_on_lan_bloc.dart';
-import 'package:network_arch/wake_on_lan/models/wol_response_model.dart';
-import 'package:network_arch/wake_on_lan/views/wol_packet_details_view.dart';
+import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
 
 class WakeOnLanView extends StatefulWidget {
   const WakeOnLanView({Key? key}) : super(key: key);
@@ -33,7 +30,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
 
   final _listKey = GlobalKey<AnimatedListState>();
 
-  late final AnimatedListModel<WolResponse> wolResponses;
+  late final AnimatedListModel<WolResponseModel> wolResponses;
 
   @override
   void initState() {
@@ -105,7 +102,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
 
   Widget _buildBody(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(Constants.bodyPadding),
+      padding: Constants.bodyPadding,
       child: Column(
         children: [
           BlocConsumer<WakeOnLanBloc, WakeOnLanState>(
@@ -127,7 +124,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
                 _isValidIpv4 = true;
                 _isValidMac = true;
 
-                final WolResponse response = WolResponse(
+                final WolResponseModel response = WolResponseModel(
                   state.ipv4,
                   state.mac,
                   state.packetBytes,
@@ -218,7 +215,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
   Widget _buildItem(
     BuildContext context,
     Animation<double> animation,
-    WolResponse item,
+    WolResponseModel item,
   ) {
     return FadeTransition(
       opacity: animation.drive(wolResponses.fadeTween),
@@ -260,7 +257,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
         );
   }
 
-  void _handleCardTap(WolResponse response) {
+  void _handleCardTap(WolResponseModel response) {
     Navigator.push(
       context,
       MaterialPageRoute(

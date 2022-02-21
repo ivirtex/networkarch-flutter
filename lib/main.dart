@@ -12,8 +12,7 @@ import 'package:path_provider/path_provider.dart';
 // Project imports:
 import 'package:network_arch/app.dart';
 import 'package:network_arch/constants.dart';
-import 'package:network_arch/ip_geo/bloc/ip_geo_bloc.dart';
-import 'package:network_arch/ip_geo/repository/ip_geo_repository.dart';
+import 'package:network_arch/ip_geo/ip_geo.dart';
 import 'package:network_arch/lan_scanner/lan_scanner.dart';
 import 'package:network_arch/network_status/network_status.dart';
 import 'package:network_arch/permissions/permissions.dart';
@@ -83,7 +82,7 @@ class NetworkArch extends StatelessWidget {
             create: (context) => PermissionsBloc(),
           ),
           BlocProvider(
-            create: (context) => NetworkStateBloc(networkStatusRepository),
+            create: (context) => NetworkStatusBloc(networkStatusRepository),
           ),
           BlocProvider(
             create: (context) => PingBloc(pingRepository),

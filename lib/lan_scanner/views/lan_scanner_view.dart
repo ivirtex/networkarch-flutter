@@ -19,7 +19,6 @@ import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/shared/action_app_bar.dart';
 import 'package:network_arch/shared/cupertino_action_app_bar.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
-import 'package:network_arch/utils/enums.dart';
 
 class LanScannerView extends StatefulWidget {
   const LanScannerView({Key? key}) : super(key: key);
@@ -107,7 +106,7 @@ class _LanScannerViewState extends State<LanScannerView> {
 
   Padding _buildBody() {
     return Padding(
-      padding: const EdgeInsets.all(Constants.bodyPadding),
+      padding: Constants.bodyPadding,
       child: Column(
         children: [
           BlocConsumer<LanScannerBloc, LanScannerState>(

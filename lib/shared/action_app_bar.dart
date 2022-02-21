@@ -66,7 +66,7 @@ class ActionAppBarState extends State<ActionAppBar>
 
             toggleAnimation();
           },
-        )
+        ),
       ],
     );
   }

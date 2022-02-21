@@ -12,20 +12,20 @@ import 'package:equatable/equatable.dart';
 import 'package:network_arch/network_status/models/models.dart';
 import 'package:network_arch/network_status/repository/repository.dart';
 
-part 'network_state_event.dart';
-part 'network_state_state.dart';
+part 'network_status_event.dart';
+part 'network_status_state.dart';
 
-class NetworkStateBloc extends Bloc<NetworkStateEvent, NetworkState> {
-  NetworkStateBloc(this._repository) : super(const NetworkState()) {
-    on<NetworkStateStreamStarted>(_onStarted);
-    on<NetworkStateExtIPRequested>(_onExtIPRequested);
+class NetworkStatusBloc extends Bloc<NetworkStatusEvent, NetworkStatusState> {
+  NetworkStatusBloc(this._repository) : super(const NetworkStatusState()) {
+    on<NetworkStatusStreamStarted>(_onStarted);
+    on<NetworkStatusExtIPRequested>(_onExtIPRequested);
   }
 
   final NetworkStatusRepository _repository;
 
   Future<void> _onStarted(
-    NetworkStateStreamStarted event,
-    Emitter<NetworkState> emit,
+    NetworkStatusStreamStarted event,
+    Emitter<NetworkStatusState> emit,
   ) async {
     emit(state.copyWith(status: NetworkStatus.loading));
 
@@ -53,8 +53,8 @@ class NetworkStateBloc extends Bloc<NetworkStateEvent, NetworkState> {
   }
 
   Future<void> _onExtIPRequested(
-    NetworkStateExtIPRequested event,
-    Emitter<NetworkState> emit,
+    NetworkStatusExtIPRequested event,
+    Emitter<NetworkStatusState> emit,
   ) async {
     emit(state.copyWith(extIpStatus: ExtIpStatus.loading));
 

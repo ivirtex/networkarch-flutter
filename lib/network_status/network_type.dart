@@ -1,0 +1,4 @@
+enum NetworkType {
+  wifi,
+  cellular,
+}

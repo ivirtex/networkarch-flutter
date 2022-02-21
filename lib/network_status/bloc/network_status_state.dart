@@ -1,10 +1,7 @@
-part of 'network_state_bloc.dart';
+part of 'network_status_bloc.dart';
 
-enum NetworkStatus { inital, loading, success, failure }
-enum ExtIpStatus { inital, loading, success, failure }
-
-class NetworkState extends Equatable {
-  const NetworkState({
+class NetworkStatusState extends Equatable {
+  const NetworkStatusState({
     this.status = NetworkStatus.inital,
     this.extIpStatus = ExtIpStatus.inital,
     this.wifiInfo,
@@ -24,7 +21,7 @@ class NetworkState extends Equatable {
   List<Object?> get props =>
       [status, extIpStatus, wifiInfo, carrierInfo, extIP];
 
-  NetworkState copyWith({
+  NetworkStatusState copyWith({
     NetworkStatus? status,
     ExtIpStatus? extIpStatus,
     WifiInfoModel? wifiInfo,
@@ -32,7 +29,7 @@ class NetworkState extends Equatable {
     String? extIP,
     Object? error,
   }) {
-    return NetworkState(
+    return NetworkStatusState(
       status: status ?? this.status,
       extIpStatus: extIpStatus ?? this.extIpStatus,
       wifiInfo: wifiInfo ?? this.wifiInfo,
@@ -42,3 +39,6 @@ class NetworkState extends Equatable {
     );
   }
 }
+
+enum NetworkStatus { inital, loading, success, failure }
+enum ExtIpStatus { inital, loading, success, failure }

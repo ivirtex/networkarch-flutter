@@ -10,7 +10,7 @@ import 'package:network_arch/permissions/permissions.dart';
 final List<PageViewModel> pagesList = [
   PageViewModel(
     title: 'Welcome to NetworkArch',
-    body: 'Et deserunt qui adipisicing sit commodo tempor quis esse.',
+    body: '',
     decoration: const PageDecoration(
       bodyAlignment: Alignment.center,
     ),
@@ -21,5 +21,5 @@ final List<PageViewModel> pagesList = [
       contentMargin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0),
     ),
     bodyWidget: const PermissionsView(),
-  )
+  ),
 ];

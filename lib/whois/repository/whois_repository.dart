@@ -1,8 +1,6 @@
 // Project imports:
 import 'package:network_arch/whois/data_provider/whois_api.dart';
 
-class WhoisNoDomainSpecifiedException implements Exception {}
-
 class WhoisRepository {
   WhoisRepository({WhoisApi? api}) : _whoisApi = api ?? WhoisApi();
 
@@ -16,3 +14,5 @@ class WhoisRepository {
     return _whoisApi.getWhois(domain);
   }
 }
+
+class WhoisNoDomainSpecifiedException implements Exception {}

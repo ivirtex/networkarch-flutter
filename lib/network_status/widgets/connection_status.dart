@@ -11,7 +11,7 @@ class ConnectionStatus extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final NetworkState state;
+  final NetworkStatusState state;
   final bool Function() connectionChecker;
 
   @override

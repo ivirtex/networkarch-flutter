@@ -13,7 +13,6 @@ import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/shared/action_app_bar.dart';
 import 'package:network_arch/shared/cupertino_action_app_bar.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
-import 'package:network_arch/utils/enums.dart';
 import 'package:network_arch/utils/keyboard_hider.dart';
 
 class PingView extends StatefulWidget {
@@ -114,7 +113,7 @@ class _PingViewState extends State<PingView> {
 
   Widget _buildBody() {
     return Padding(
-      padding: const EdgeInsets.all(Constants.bodyPadding),
+      padding: Constants.bodyPadding,
       child: Column(
         children: [
           Row(

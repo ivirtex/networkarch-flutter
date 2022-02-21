@@ -80,7 +80,7 @@ class _WhoisViewState extends State<WhoisView> {
 
   Widget _buildBody() {
     return Padding(
-      padding: const EdgeInsets.all(Constants.bodyPadding),
+      padding: Constants.bodyPadding,
       child: Column(
         children: [
           PlatformWidget(
@@ -132,7 +132,7 @@ class _WhoisViewState extends State<WhoisView> {
 
               return const SizedBox();
             },
-          )
+          ),
         ],
       ),
     );

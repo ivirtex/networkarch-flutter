@@ -1,1 +1,1 @@
-export 'hex_byes_viewer.dart';
+export 'hex_bytes_viewer.dart';

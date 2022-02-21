@@ -27,8 +27,8 @@ class _OverviewViewState extends State<OverviewView> {
 
     Permission.location.isGranted.then((bool isGranted) {
       if (isGranted) {
-        context.read<NetworkStateBloc>().add(NetworkStateStreamStarted());
-        context.read<NetworkStateBloc>().add(NetworkStateExtIPRequested());
+        context.read<NetworkStatusBloc>().add(NetworkStatusStreamStarted());
+        context.read<NetworkStatusBloc>().add(NetworkStatusExtIPRequested());
       } else {
         Navigator.of(context).pushReplacementNamed('/permissions');
         // Constants.showPermissionDeniedNotification(context);
@@ -71,7 +71,7 @@ class _OverviewViewState extends State<OverviewView> {
       shrinkWrap: true,
       children: [
         Padding(
-          padding: const EdgeInsets.all(Constants.bodyPadding),
+          padding: Constants.bodyPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

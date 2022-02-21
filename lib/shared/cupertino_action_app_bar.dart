@@ -4,9 +4,6 @@ import 'package:flutter/cupertino.dart';
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-// Project imports:
-import 'package:network_arch/utils/enums.dart';
-
 class CupertinoActionAppBar extends StatelessWidget {
   const CupertinoActionAppBar(
     this.context, {
@@ -48,4 +45,9 @@ class CupertinoActionAppBar extends StatelessWidget {
             ),
     );
   }
+}
+
+enum ButtonAction {
+  start,
+  stop,
 }

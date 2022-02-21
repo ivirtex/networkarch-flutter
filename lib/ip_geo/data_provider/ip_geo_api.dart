@@ -7,10 +7,6 @@ import 'package:http/http.dart' as http;
 // Project imports:
 import 'package:network_arch/ip_geo/models/ip_geo_response.dart';
 
-class IpGeoRequestFailure implements Exception {}
-
-class IpGeoNotFound implements Exception {}
-
 class IpGeoApi {
   IpGeoApi({http.Client? client}) : _httpClient = client ?? http.Client();
 
@@ -34,3 +30,7 @@ class IpGeoApi {
     return IpGeoResponse.fromJson(bodyJson);
   }
 }
+
+class IpGeoRequestFailure implements Exception {}
+
+class IpGeoNotFound implements Exception {}

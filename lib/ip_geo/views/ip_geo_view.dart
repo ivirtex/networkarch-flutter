@@ -109,7 +109,7 @@ class _IpGeoViewState extends State<IpGeoView> {
 
   Widget _buildBody() {
     return Padding(
-      padding: const EdgeInsets.all(Constants.bodyPadding),
+      padding: Constants.bodyPadding,
       child: Column(
         children: [
           PlatformWidget(
@@ -235,7 +235,7 @@ class _IpGeoViewState extends State<IpGeoView> {
 
               return const SizedBox();
             },
-          )
+          ),
         ],
       ),
     );

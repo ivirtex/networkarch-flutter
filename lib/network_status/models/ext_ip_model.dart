@@ -1,5 +1,3 @@
-enum IpStatus { inital, loading, success, error }
-
 class ExtIpModel {
   ExtIpModel({
     required this.status,
@@ -9,3 +7,5 @@ class ExtIpModel {
   final IpStatus status;
   final String ip;
 }
+
+enum IpStatus { inital, loading, success, error }

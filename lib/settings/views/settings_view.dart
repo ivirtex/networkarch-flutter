@@ -65,7 +65,7 @@ class _SettingsViewState extends State<SettingsView> {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
     return Padding(
-      padding: const EdgeInsets.all(Constants.bodyPadding),
+      padding: Constants.bodyPadding,
       child: RoundedList(
         children: [
           ListTile(
