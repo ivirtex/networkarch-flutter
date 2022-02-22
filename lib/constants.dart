@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
+import 'package:network_arch/dns_lookup/dns_lookup.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
@@ -23,7 +24,8 @@ import 'package:network_arch/whois/whois.dart';
 
 abstract class Constants {
   static const String appName = 'NetworkArch';
-  static const String appDesc = '''
+  static const String appDesc =
+      '''
       NetworkArch is a network diagnostic tool equipped with various utilities, 
       including pinging specific IP address or hostname, sending Wake on LAN magic packets,
       whois and DNS Lookup.''';
@@ -39,6 +41,7 @@ abstract class Constants {
     '/tools/wol': (context) => const WakeOnLanView(),
     '/tools/ip_geo': (context) => const IpGeoView(),
     '/tools/whois': (context) => const WhoisView(),
+    '/tools/dns_lookup': (context) => const DnsLookupView(),
   };
 
   // Styles

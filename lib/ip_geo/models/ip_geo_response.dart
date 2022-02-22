@@ -26,7 +26,8 @@ class IpGeoResponse extends Equatable {
   factory IpGeoResponse.fromJson(Map<String, dynamic> json) =>
       _$IpGeoResponseFromJson(json);
 
-  void toJson(Map<String, dynamic> json) => _$IpGeoResponseToJson(this);
+  Map<String, dynamic> toJson(Map<String, dynamic> json) =>
+      _$IpGeoResponseToJson(this);
 
   final String? query;
   final String? status;
