@@ -10,7 +10,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
 // Project imports:
-import 'package:network_arch/app.dart';
+import 'package:network_arch/home.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/ip_geo/ip_geo.dart';
 import 'package:network_arch/lan_scanner/lan_scanner.dart';
@@ -119,7 +119,7 @@ class NetworkArch extends StatelessWidget {
           darkTheme: Themes.darkThemeData,
           themeMode: state.mode,
           routes: Constants.routes,
-          home: const App(),
+          home: const Home(),
         );
       },
     );
@@ -134,7 +134,7 @@ class NetworkArch extends StatelessWidget {
           title: Constants.appName,
           theme: Themes.cupertinoThemeData,
           routes: Constants.routes,
-          home: const App(),
+          home: const Home(),
         );
       },
     );

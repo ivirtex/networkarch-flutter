@@ -37,6 +37,8 @@ class _IpGeoViewState extends State<IpGeoView> {
   final _targetHostController = TextEditingController();
   String get _target => _targetHostController.text;
 
+  bool _shouldCheckBeActive = false;
+
   @override
   void initState() {
     super.initState();
@@ -71,11 +73,11 @@ class _IpGeoViewState extends State<IpGeoView> {
         title: const Text('IP Geolocation'),
         actions: [
           TextButton(
-            onPressed: _target.isNotEmpty ? _handleCheck : null,
+            onPressed: _shouldCheckBeActive ? _handleCheck : null,
             child: Text(
               'Check',
               style: TextStyle(
-                color: _target.isNotEmpty ? Colors.green : Colors.grey,
+                color: _shouldCheckBeActive ? Colors.green : Colors.grey,
                 fontSize: 16,
               ),
             ),
@@ -124,7 +126,9 @@ class _IpGeoViewState extends State<IpGeoView> {
                   labelText: 'IP address (e.g. 1.1.1.1)',
                 ),
                 onChanged: (_) {
-                  setState(() {});
+                  setState(() {
+                    _shouldCheckBeActive = _target.isNotEmpty;
+                  });
                 },
               );
             },
@@ -134,7 +138,9 @@ class _IpGeoViewState extends State<IpGeoView> {
                 controller: _targetHostController,
                 placeholder: 'IP address (e.g. 1.1.1.1)',
                 onChanged: (_) {
-                  setState(() {});
+                  setState(() {
+                    _shouldCheckBeActive = _target.isNotEmpty;
+                  });
                 },
               );
             },

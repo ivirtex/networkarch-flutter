@@ -15,14 +15,14 @@ import 'package:network_arch/permissions/permissions.dart';
 import 'package:network_arch/settings/settings.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
-class App extends StatefulWidget {
-  const App({Key? key}) : super(key: key);
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
-  State<App> createState() => _AppState();
+  State<Home> createState() => _HomeState();
 }
 
-class _AppState extends State<App> {
+class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   @override

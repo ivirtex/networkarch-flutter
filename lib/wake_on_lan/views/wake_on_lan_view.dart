@@ -28,6 +28,8 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
   String get ipv4 => ipv4TextFieldController.text;
   String get mac => macTextFieldController.text;
 
+  bool _shouldSendButtonBeActive = false;
+
   final _listKey = GlobalKey<AnimatedListState>();
 
   late final AnimatedListModel<WolResponseModel> wolResponses;
@@ -42,8 +44,8 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
     );
 
     //! debug
-    ipv4TextFieldController.text = '192.168.0.99';
-    macTextFieldController.text = '2A:D8:BB:E3:33:D1';
+    // ipv4TextFieldController.text = '192.168.0.99';
+    // macTextFieldController.text = '2A:D8:BB:E3:33:D1';
   }
 
   @override
@@ -68,11 +70,11 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
         title: const Text('Wake on LAN'),
         actions: [
           TextButton(
-            onPressed: !_areTextFieldsNotEmpty() ? null : _handleSend,
+            onPressed: _shouldSendButtonBeActive ? _handleSend : null,
             child: Text(
               'Send',
               style: TextStyle(
-                color: _areTextFieldsNotEmpty() ? Colors.green : Colors.grey,
+                color: _shouldSendButtonBeActive ? Colors.green : Colors.grey,
                 fontSize: 16,
               ),
             ),
@@ -149,7 +151,9 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
                         errorText: _isValidIpv4 ? null : 'Invalid IPv4 address',
                       ),
                       onChanged: (_) {
-                        setState(() {});
+                        setState(() {
+                          _shouldSendButtonBeActive = _areTextFieldsNotEmpty();
+                        });
                       },
                     ),
                     iosBuilder: (context) => CupertinoTextField(
@@ -158,7 +162,9 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
                       keyboardType: TextInputType.number,
                       placeholder: 'IPv4 address',
                       onChanged: (_) {
-                        setState(() {});
+                        setState(() {
+                          _shouldSendButtonBeActive = _areTextFieldsNotEmpty();
+                        });
                       },
                     ),
                   ),
@@ -176,7 +182,9 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
                         errorText: _isValidMac ? null : 'Invalid MAC address',
                       ),
                       onChanged: (_) {
-                        setState(() {});
+                        setState(() {
+                          _shouldSendButtonBeActive = _areTextFieldsNotEmpty();
+                        });
                       },
                     ),
                     iosBuilder: (context) => CupertinoTextField(
@@ -185,7 +193,9 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
                       keyboardType: TextInputType.number,
                       placeholder: 'MAC address [XX:XX:XX:XX:XX:XX]',
                       onChanged: (_) {
-                        setState(() {});
+                        setState(() {
+                          _shouldSendButtonBeActive = _areTextFieldsNotEmpty();
+                        });
                       },
                     ),
                   ),

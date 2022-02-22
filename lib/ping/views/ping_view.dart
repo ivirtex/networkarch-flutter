@@ -32,6 +32,8 @@ class _PingViewState extends State<PingView> {
 
   String get _target => _targetHostController.text;
 
+  bool _shouldStartButtonBeActive = false;
+
   @override
   void initState() {
     super.initState();
@@ -93,14 +95,14 @@ class _PingViewState extends State<PingView> {
                       context,
                       title: 'Ping',
                       action: ButtonAction.stop,
-                      isActive: _target.isNotEmpty,
+                      isActive: _shouldStartButtonBeActive,
                       onPressed: _handleStop,
                     )
                   : CupertinoActionAppBar(
                       context,
                       title: 'Ping',
                       action: ButtonAction.start,
-                      isActive: _target.isNotEmpty,
+                      isActive: _shouldStartButtonBeActive,
                       onPressed: _handleStart,
                     );
             },
@@ -147,7 +149,9 @@ class _PingViewState extends State<PingView> {
                           labelText: 'IP address (e.g. 1.1.1.1)',
                         ),
                         onChanged: (_) {
-                          setState(() {});
+                          setState(() {
+                            _shouldStartButtonBeActive = _target.isNotEmpty;
+                          });
                         },
                       ),
                       iosBuilder: (context) => CupertinoSearchTextField(
@@ -157,7 +161,9 @@ class _PingViewState extends State<PingView> {
                             state is PingInitial || state is PingRunComplete,
                         placeholder: 'IP address (e.g. 1.1.1.1)',
                         onChanged: (_) {
-                          setState(() {});
+                          setState(() {
+                            _shouldStartButtonBeActive = _target.isNotEmpty;
+                          });
                         },
                       ),
                     );
@@ -172,7 +178,9 @@ class _PingViewState extends State<PingView> {
                       onPressed: () async {
                         await _pingData.removeAllElements(context);
 
-                        setState(() {});
+                        setState(() {
+                          _shouldStartButtonBeActive = _target.isNotEmpty;
+                        });
                       },
                     );
                   }

@@ -23,6 +23,8 @@ class _WhoisViewState extends State<WhoisView> {
   final _targetHostController = TextEditingController();
   String get _target => _targetHostController.text;
 
+  bool _shouldCheckButtonBeActive = false;
+
   @override
   void dispose() {
     super.dispose();
@@ -44,11 +46,11 @@ class _WhoisViewState extends State<WhoisView> {
         title: const Text('Whois'),
         actions: [
           TextButton(
-            onPressed: _target.isNotEmpty ? _handleCheck : null,
+            onPressed: _shouldCheckButtonBeActive ? _handleCheck : null,
             child: Text(
               'Check',
               style: TextStyle(
-                color: _target.isNotEmpty ? Colors.green : Colors.grey,
+                color: _shouldCheckButtonBeActive ? Colors.green : Colors.grey,
                 fontSize: 16,
               ),
             ),
@@ -95,7 +97,9 @@ class _WhoisViewState extends State<WhoisView> {
                   labelText: 'Domain name',
                 ),
                 onChanged: (_) {
-                  setState(() {});
+                  setState(() {
+                    _shouldCheckButtonBeActive = _target.isNotEmpty;
+                  });
                 },
               );
             },
@@ -105,7 +109,9 @@ class _WhoisViewState extends State<WhoisView> {
                 controller: _targetHostController,
                 placeholder: 'Domain name',
                 onChanged: (_) {
-                  setState(() {});
+                  setState(() {
+                    _shouldCheckButtonBeActive = _target.isNotEmpty;
+                  });
                 },
               );
             },
