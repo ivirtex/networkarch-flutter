@@ -10,8 +10,11 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
 // Project imports:
-import 'package:network_arch/home.dart';
 import 'package:network_arch/constants.dart';
+import 'package:network_arch/dns_lookup/bloc/bloc.dart';
+import 'package:network_arch/dns_lookup/data_provider/data_provider.dart';
+import 'package:network_arch/dns_lookup/dns_lookup.dart';
+import 'package:network_arch/home.dart';
 import 'package:network_arch/ip_geo/ip_geo.dart';
 import 'package:network_arch/lan_scanner/lan_scanner.dart';
 import 'package:network_arch/network_status/network_status.dart';
@@ -59,6 +62,7 @@ class NetworkArch extends StatelessWidget {
   final lanScannerRepository = LanScannerRepository();
   final ipGeoRepository = IpGeoRepository();
   final whoisRepository = WhoisRepository();
+  final dnsLookupRepository = DnsLookupRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +76,7 @@ class NetworkArch extends StatelessWidget {
         RepositoryProvider.value(value: lanScannerRepository),
         RepositoryProvider.value(value: ipGeoRepository),
         RepositoryProvider.value(value: whoisRepository),
+        RepositoryProvider.value(value: dnsLookupRepository),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -98,6 +103,9 @@ class NetworkArch extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => WhoisBloc(whoisRepository),
+          ),
+          BlocProvider(
+            create: (context) => DnsLookupBloc(dnsLookupRepository),
           ),
         ],
         child: PlatformWidget(

@@ -1,7 +1,12 @@
+// Dart imports:
 import 'dart:async';
+import 'dart:developer';
 
+// Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+
+// Project imports:
 import 'package:network_arch/dns_lookup/models/dns_lookup_response.dart';
 import 'package:network_arch/dns_lookup/repository/dns_lookup_repository.dart';
 
@@ -26,6 +31,8 @@ class DnsLookupBloc extends Bloc<DnsLookupEvent, DnsLookupState> {
     try {
       final response =
           await _dnsLookupRepository.lookup(event.hostname, type: event.type);
+
+      log(response.toString());
 
       emit(DnsLookupLoadSuccess(response));
     } on Exception {

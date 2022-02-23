@@ -1,6 +1,10 @@
+// Dart imports:
 import 'dart:convert';
 
+// Package imports:
 import 'package:http/http.dart' as http;
+
+// Project imports:
 import 'package:network_arch/dns_lookup/models/dns_lookup_response.dart';
 
 class DnsLookupApi {

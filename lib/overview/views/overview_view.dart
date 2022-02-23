@@ -122,10 +122,8 @@ class _OverviewViewState extends State<OverviewView> {
               ToolCard(
                 toolName: 'DNS Lookup',
                 toolDesc: Constants.dnsDesc,
-                onPressed: () async {
-                  // TODO: Implement onTap()
-
-                  Constants.showPermissionDeniedNotification(context);
+                onPressed: () {
+                  Navigator.pushNamed(context, '/tools/dns_lookup');
                 },
               ),
             ],

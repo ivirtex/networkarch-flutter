@@ -1,4 +1,4 @@
-String rcodeToString(int rcode) {
+String rCodeToString(int rcode) {
   switch (rcode) {
     case 0:
       return 'NOERROR';
