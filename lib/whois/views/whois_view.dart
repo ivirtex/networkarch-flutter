@@ -8,8 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
-import 'package:network_arch/shared/cards/cards.dart';
-import 'package:network_arch/shared/platform_widget.dart';
+import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/utils/keyboard_hider.dart';
 import 'package:network_arch/whois/whois.dart';
 
@@ -86,36 +85,13 @@ class _WhoisViewState extends State<WhoisView> {
       padding: Constants.bodyPadding,
       child: Column(
         children: [
-          PlatformWidget(
-            androidBuilder: (context) {
-              return TextField(
-                autocorrect: false,
-                controller: _targetHostController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  labelText: 'Domain name',
-                  prefixIcon: const Icon(Icons.language),
-                ),
-                onChanged: (_) {
-                  setState(() {
-                    _shouldCheckButtonBeActive = _target.isNotEmpty;
-                  });
-                },
-              );
-            },
-            iosBuilder: (context) {
-              return CupertinoTextField(
-                autocorrect: false,
-                controller: _targetHostController,
-                placeholder: 'Domain name',
-                onChanged: (_) {
-                  setState(() {
-                    _shouldCheckButtonBeActive = _target.isNotEmpty;
-                  });
-                },
-              );
+          DomainTextField(
+            controller: _targetHostController,
+            label: 'Domain name',
+            onChanged: (_) {
+              setState(() {
+                _shouldCheckButtonBeActive = _target.isNotEmpty;
+              });
             },
           ),
           const SizedBox(height: Constants.listSpacing),
@@ -132,14 +108,11 @@ class _WhoisViewState extends State<WhoisView> {
               }
 
               if (state is WhoisLoadInProgress) {
-                return const Padding(
-                  padding: EdgeInsets.only(top: 50.0),
-                  child: CircularProgressIndicator.adaptive(),
-                );
+                return const LoadingCard();
               }
 
               if (state is WhoisLoadFailure) {
-                return const Text('Failed to load data');
+                return const ErrorCard(message: 'Failed to load data');
               }
 
               return const SizedBox();

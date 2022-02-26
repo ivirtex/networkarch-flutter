@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/animated_list_model.dart';
-import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
 
 class WakeOnLanView extends StatefulWidget {
@@ -138,66 +138,28 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
             builder: (context, state) {
               return Column(
                 children: [
-                  PlatformWidget(
-                    androidBuilder: (context) => TextField(
-                      autocorrect: false,
-                      controller: ipv4TextFieldController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        labelText: 'IPv4 address',
-                        errorText: _isValidIpv4 ? null : 'Invalid IPv4 address',
-                      ),
-                      onChanged: (_) {
-                        setState(() {
-                          _shouldSendButtonBeActive = _areTextFieldsNotEmpty();
-                        });
-                      },
-                    ),
-                    iosBuilder: (context) => CupertinoTextField(
-                      autocorrect: false,
-                      controller: ipv4TextFieldController,
-                      keyboardType: TextInputType.number,
-                      placeholder: 'IPv4 address',
-                      onChanged: (_) {
-                        setState(() {
-                          _shouldSendButtonBeActive = _areTextFieldsNotEmpty();
-                        });
-                      },
-                    ),
+                  DomainTextField(
+                    controller: ipv4TextFieldController,
+                    label: 'IPv4 address',
+                    errorText: _isValidIpv4 ? null : 'Invalid IPv4 address',
+                    keyboardType: TextInputType.number,
+                    onChanged: (_) {
+                      setState(() {
+                        _shouldSendButtonBeActive = _areTextFieldsNotEmpty();
+                      });
+                    },
                   ),
                   const SizedBox(height: 10),
-                  PlatformWidget(
-                    androidBuilder: (context) => TextField(
-                      autocorrect: false,
-                      controller: macTextFieldController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        labelText: 'MAC address [XX:XX:XX:XX:XX:XX]',
-                        errorText: _isValidMac ? null : 'Invalid MAC address',
-                      ),
-                      onChanged: (_) {
-                        setState(() {
-                          _shouldSendButtonBeActive = _areTextFieldsNotEmpty();
-                        });
-                      },
-                    ),
-                    iosBuilder: (context) => CupertinoTextField(
-                      autocorrect: false,
-                      controller: macTextFieldController,
-                      keyboardType: TextInputType.number,
-                      placeholder: 'MAC address [XX:XX:XX:XX:XX:XX]',
-                      onChanged: (_) {
-                        setState(() {
-                          _shouldSendButtonBeActive = _areTextFieldsNotEmpty();
-                        });
-                      },
-                    ),
+                  DomainTextField(
+                    controller: macTextFieldController,
+                    label: 'MAC address [XX:XX:XX:XX:XX:XX]',
+                    errorText: _isValidMac ? null : 'Invalid MAC address',
+                    keyboardType: TextInputType.number,
+                    onChanged: (_) {
+                      setState(() {
+                        _shouldSendButtonBeActive = _areTextFieldsNotEmpty();
+                      });
+                    },
                   ),
                 ],
               );

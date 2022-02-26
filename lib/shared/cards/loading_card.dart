@@ -1,5 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:network_arch/shared/cards/cards.dart';
+import 'package:network_arch/shared/list_circular_progress_indicator.dart';
 
 class LoadingCard extends StatelessWidget {
   const LoadingCard({
@@ -8,10 +10,14 @@ class LoadingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: CircularProgressIndicator.adaptive(),
+    return DataCard(
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        children: const [
+          Spacer(),
+          ListCircularProgressIndicator(),
+          Spacer(),
+        ],
       ),
     );
   }

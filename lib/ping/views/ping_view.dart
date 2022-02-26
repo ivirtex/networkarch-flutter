@@ -10,9 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/ping/ping.dart';
-import 'package:network_arch/shared/action_app_bar.dart';
-import 'package:network_arch/shared/cupertino_action_app_bar.dart';
-import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/utils/keyboard_hider.dart';
 
 class PingView extends StatefulWidget {
@@ -134,36 +132,15 @@ class _PingViewState extends State<PingView> {
                     }
                   },
                   builder: (context, state) {
-                    return PlatformWidget(
-                      androidBuilder: (context) => TextField(
-                        autocorrect: false,
-                        controller: _targetHostController,
-                        enabled:
-                            state is PingInitial || state is PingRunComplete,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          labelText: 'IP address (e.g. 1.1.1.1)',
-                        ),
-                        onChanged: (_) {
-                          setState(() {
-                            _shouldStartButtonBeActive = _target.isNotEmpty;
-                          });
-                        },
-                      ),
-                      iosBuilder: (context) => CupertinoSearchTextField(
-                        autocorrect: false,
-                        controller: _targetHostController,
-                        enabled:
-                            state is PingInitial || state is PingRunComplete,
-                        placeholder: 'IP address (e.g. 1.1.1.1)',
-                        onChanged: (_) {
-                          setState(() {
-                            _shouldStartButtonBeActive = _target.isNotEmpty;
-                          });
-                        },
-                      ),
+                    return DomainTextField(
+                      controller: _targetHostController,
+                      label: 'IP address (e.g. 1.1.1.1)',
+                      enabled: state is PingInitial || state is PingRunComplete,
+                      onChanged: (_) {
+                        setState(() {
+                          _shouldStartButtonBeActive = _target.isNotEmpty;
+                        });
+                      },
                     );
                   },
                 ),

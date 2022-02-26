@@ -1,5 +1,8 @@
 name: network_arch
-description: A new Flutter project.
+description:
+  NetworkArch is a network diagnostic tool equipped with various utilities,
+  including pinging specific IP address or hostname, sending Wake on LAN magic packets,
+  whois and DNS Lookup.
 publish_to: "none"
 version: 1.0.0+1
 
@@ -11,6 +14,7 @@ dependencies:
     sdk: flutter
 
   animate_do: ^2.1.0
+  auto_animated: ^3.0.1
   bloc: ^8.0.2
   carrier_info: ^2.0.4
   cupertino_icons: ^1.0.4
@@ -33,13 +37,13 @@ dependencies:
   json_annotation: ^4.4.0
   lan_scanner: ^3.2.0
   network_info_plus: ^2.1.3
+  package_info_plus: ^1.4.0
   path_provider: ^2.0.9
   percent_indicator: ^4.0.0
   permission_handler: ^9.2.0
   rxdart: ^0.27.3
   styled_widget: ^0.4.0+3
   wake_on_lan: ^2.0.3+1
-  auto_animated: ^3.0.1
 
 dev_dependencies:
   flutter_test:

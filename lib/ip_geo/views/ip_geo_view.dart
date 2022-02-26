@@ -15,9 +15,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/ip_geo/bloc/ip_geo_bloc.dart';
-import 'package:network_arch/shared/data_line.dart';
-import 'package:network_arch/shared/platform_widget.dart';
-import 'package:network_arch/shared/rounded_list.dart';
+import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/theme/theme.dart';
 import 'package:network_arch/utils/keyboard_hider.dart';
 
@@ -114,35 +112,13 @@ class _IpGeoViewState extends State<IpGeoView> {
       padding: Constants.bodyPadding,
       child: Column(
         children: [
-          PlatformWidget(
-            androidBuilder: (context) {
-              return TextField(
-                autocorrect: false,
-                controller: _targetHostController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  labelText: 'IP address (e.g. 1.1.1.1)',
-                ),
-                onChanged: (_) {
-                  setState(() {
-                    _shouldCheckBeActive = _target.isNotEmpty;
-                  });
-                },
-              );
-            },
-            iosBuilder: (context) {
-              return CupertinoTextField(
-                autocorrect: false,
-                controller: _targetHostController,
-                placeholder: 'IP address (e.g. 1.1.1.1)',
-                onChanged: (_) {
-                  setState(() {
-                    _shouldCheckBeActive = _target.isNotEmpty;
-                  });
-                },
-              );
+          DomainTextField(
+            controller: _targetHostController,
+            label: 'IP address (e.g. 1.1.1.1)',
+            onChanged: (_) {
+              setState(() {
+                _shouldCheckBeActive = _target.isNotEmpty;
+              });
             },
           ),
           const SizedBox(height: Constants.listSpacing),
@@ -229,14 +205,13 @@ class _IpGeoViewState extends State<IpGeoView> {
               }
 
               if (state is IpGeoLoadInProgress) {
-                return const Padding(
-                  padding: EdgeInsets.only(top: 50.0),
-                  child: CircularProgressIndicator.adaptive(),
-                );
+                return const LoadingCard();
               }
 
               if (state is IpGeoLoadFailure) {
-                return const Text('Failed to load data');
+                return const ErrorCard(
+                  message: 'Error while loading the data',
+                );
               }
 
               return const SizedBox();

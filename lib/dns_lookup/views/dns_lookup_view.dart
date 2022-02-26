@@ -11,8 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/dns_lookup/dns_lookup.dart';
 import 'package:network_arch/dns_lookup/widgets/dns_record_card.dart';
-import 'package:network_arch/shared/cards/cards.dart';
-import 'package:network_arch/shared/platform_widget.dart';
+import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/utils/keyboard_hider.dart';
 
 class DnsLookupView extends StatefulWidget {
@@ -35,7 +34,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
   void initState() {
     super.initState();
 
-    _targetDomainController.text = 'google.com';
+    // _targetDomainController.text = 'google.com';
     _dnsQueryTypeController.text = 'ANY';
   }
 
@@ -96,72 +95,33 @@ class _DnsLookupViewState extends State<DnsLookupView> {
             children: [
               Flexible(
                 flex: 2,
-                child: PlatformWidget(
-                  androidBuilder: (context) {
-                    return TextField(
-                      autocorrect: false,
-                      controller: _targetDomainController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        labelText: 'Domain name',
-                        prefixIcon: const Icon(Icons.language),
-                      ),
-                      onChanged: (_) {
-                        setState(() {
-                          _shouldCheckButtonBeActive = _target.isNotEmpty;
-                        });
-                      },
-                    );
-                  },
-                  iosBuilder: (context) {
-                    return CupertinoTextField(
-                      autocorrect: false,
-                      controller: _targetDomainController,
-                      placeholder: 'Domain name',
-                      onChanged: (_) {
-                        setState(() {
-                          _shouldCheckButtonBeActive = _target.isNotEmpty;
-                        });
-                      },
-                    );
+                child: DomainTextField(
+                  label: 'Domain',
+                  controller: _targetDomainController,
+                  onChanged: (_) {
+                    setState(() {
+                      _shouldCheckButtonBeActive = _target.isNotEmpty;
+                    });
                   },
                 ),
               ),
               const SizedBox(width: 10),
               Flexible(
-                child: PlatformWidget(
-                  androidBuilder: (context) {
-                    return TextField(
-                      autocorrect: false,
-                      controller: _dnsQueryTypeController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        suffixIcon: IconButton(
-                          icon: const Icon(Icons.arrow_drop_down),
-                          onPressed: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (_) {
-                                return _buildBottomSheet();
-                              },
-                            );
-                          },
-                        ),
-                        labelText: 'Type',
-                      ),
-                    );
-                  },
-                  iosBuilder: (context) {
-                    return CupertinoTextField(
-                      autocorrect: false,
-                      controller: _dnsQueryTypeController,
-                      placeholder: 'Type',
-                    );
-                  },
+                child: DomainTextField(
+                  controller: _dnsQueryTypeController,
+                  label: 'Type',
+                  withoutPrefixIcon: true,
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.arrow_drop_down),
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (_) {
+                          return _buildBottomSheet();
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
@@ -170,9 +130,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
           BlocBuilder<DnsLookupBloc, DnsLookupState>(
             builder: (context, state) {
               if (state is DnsLookupLoadInProgress) {
-                return const DataCard(
-                  child: CircularProgressIndicator.adaptive(),
-                );
+                return const LoadingCard();
               }
 
               if (state is DnsLookupLoadFailure) {
