@@ -22,9 +22,16 @@ class DnsLookupResponse extends Equatable {
 
   Map<String, dynamic> toJson() => _$DnsLookupResponseToJson(this);
 
+  @JsonKey(name: 'Status')
   final int status;
+
+  @JsonKey(name: 'Question')
   final List<DnsQuestion> question;
+
+  @JsonKey(name: 'Answer')
   final List<DnsRecord> answer;
+
+  @JsonKey(name: 'Comment')
   final String? comment;
 
   @override

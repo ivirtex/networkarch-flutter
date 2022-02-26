@@ -24,8 +24,7 @@ import 'package:network_arch/whois/whois.dart';
 
 abstract class Constants {
   static const String appName = 'NetworkArch';
-  static const String appDesc =
-      '''
+  static const String appDesc = '''
       NetworkArch is a network diagnostic tool equipped with various utilities, 
       including pinging specific IP address or hostname, sending Wake on LAN magic packets,
       whois and DNS Lookup.''';
@@ -55,7 +54,7 @@ abstract class Constants {
 
   static const Divider listDivider = Divider(
     height: 2,
-    indent: 10,
+    indent: 12,
     endIndent: 0,
   );
 

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
@@ -95,6 +96,7 @@ class _WhoisViewState extends State<WhoisView> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   labelText: 'Domain name',
+                  prefixIcon: const Icon(Icons.language),
                 ),
                 onChanged: (_) {
                   setState(() {
@@ -120,8 +122,12 @@ class _WhoisViewState extends State<WhoisView> {
           BlocBuilder<WhoisBloc, WhoisState>(
             builder: (context, state) {
               if (state is WhoisLoadSuccess) {
-                return DataCard(
-                  child: Text(state.response),
+                return SlideInUp(
+                  child: FadeIn(
+                    child: DataCard(
+                      child: Text(state.response),
+                    ),
+                  ),
                 );
               }
 

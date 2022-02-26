@@ -78,9 +78,7 @@ class _PingViewState extends State<PingView> {
         onStopPressed: _handleStop,
         key: _appBarKey,
       ),
-      body: SingleChildScrollView(
-        child: _buildBody(),
-      ),
+      body: SingleChildScrollView(child: _buildBody()),
     );
   }
 

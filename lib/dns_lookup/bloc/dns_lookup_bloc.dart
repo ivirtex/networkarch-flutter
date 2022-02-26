@@ -32,8 +32,6 @@ class DnsLookupBloc extends Bloc<DnsLookupEvent, DnsLookupState> {
       final response =
           await _dnsLookupRepository.lookup(event.hostname, type: event.type);
 
-      log(response.toString());
-
       emit(DnsLookupLoadSuccess(response));
     } on Exception {
       emit(DnsLookupLoadFailure());

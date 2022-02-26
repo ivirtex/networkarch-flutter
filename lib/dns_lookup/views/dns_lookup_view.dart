@@ -3,13 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:auto_animated/auto_animated.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/dns_lookup/dns_lookup.dart';
-import 'package:network_arch/dns_lookup/utils/rr_code_name.dart';
+import 'package:network_arch/dns_lookup/widgets/dns_record_card.dart';
+import 'package:network_arch/shared/cards/cards.dart';
 import 'package:network_arch/shared/platform_widget.dart';
 import 'package:network_arch/utils/keyboard_hider.dart';
 
@@ -31,10 +33,10 @@ class _DnsLookupViewState extends State<DnsLookupView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     _targetDomainController.text = 'google.com';
+    _dnsQueryTypeController.text = 'ANY';
   }
 
   @override
@@ -104,6 +106,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         labelText: 'Domain name',
+                        prefixIcon: const Icon(Icons.language),
                       ),
                       onChanged: (_) {
                         setState(() {
@@ -166,7 +169,38 @@ class _DnsLookupViewState extends State<DnsLookupView> {
           const SizedBox(height: Constants.listSpacing),
           BlocBuilder<DnsLookupBloc, DnsLookupState>(
             builder: (context, state) {
-              return Container();
+              if (state is DnsLookupLoadInProgress) {
+                return const DataCard(
+                  child: CircularProgressIndicator.adaptive(),
+                );
+              }
+
+              if (state is DnsLookupLoadFailure) {
+                return const ErrorCard(
+                  message: 'Failed to load data',
+                );
+              }
+
+              if (state is DnsLookupLoadSuccess) {
+                return Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: Text(
+                          'Found ${state.response.answer.length} records',
+                          style: Constants.descStyleDark,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: Constants.listSpacing),
+                    _buildRecords(state.response),
+                  ],
+                );
+              }
+
+              return const SizedBox();
             },
           ),
         ],
@@ -198,6 +232,31 @@ class _DnsLookupViewState extends State<DnsLookupView> {
 
             Navigator.pop(context);
           },
+        );
+      },
+    );
+  }
+
+  Widget _buildRecords(DnsLookupResponse response) {
+    return LiveList(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: response.answer.length,
+      itemBuilder: (context, index, animation) {
+        final record = response.answer[index];
+
+        return FadeTransition(
+          opacity: Tween<double>(
+            begin: 0,
+            end: 1,
+          ).animate(animation),
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 0.5),
+              end: Offset.zero,
+            ).chain(CurveTween(curve: Curves.ease)).animate(animation),
+            child: DnsRecordCard(record),
+          ),
         );
       },
     );

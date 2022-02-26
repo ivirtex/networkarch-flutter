@@ -19,22 +19,20 @@ class ErrorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DataCard(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        child: Column(
-          children: [
-            const Icon(
-              FontAwesomeIcons.timesCircle,
-              color: Colors.red,
-              size: 25,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              message ?? Constants.defaultError,
-              style: const TextStyle(fontSize: 15),
-            ),
-          ],
-        ),
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        children: [
+          const Icon(
+            FontAwesomeIcons.timesCircle,
+            color: Colors.red,
+            size: 25,
+          ),
+          const SizedBox(width: 10),
+          Text(
+            message ?? Constants.defaultError,
+            style: const TextStyle(fontSize: 15),
+          ),
+        ],
       ),
     );
   }

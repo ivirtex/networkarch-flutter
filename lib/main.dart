@@ -11,8 +11,6 @@ import 'package:path_provider/path_provider.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
-import 'package:network_arch/dns_lookup/bloc/bloc.dart';
-import 'package:network_arch/dns_lookup/data_provider/data_provider.dart';
 import 'package:network_arch/dns_lookup/dns_lookup.dart';
 import 'package:network_arch/home.dart';
 import 'package:network_arch/ip_geo/ip_geo.dart';

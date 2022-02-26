@@ -13,7 +13,8 @@ class DnsRecord {
   Map<String, dynamic> toJson() => _$DnsRecordToJson(this);
 
   final String name;
-  final String type;
+  final int type;
+  @JsonKey(name: 'TTL')
   final int ttl;
   final String data;
 }

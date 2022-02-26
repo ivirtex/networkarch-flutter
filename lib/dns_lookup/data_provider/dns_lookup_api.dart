@@ -25,6 +25,9 @@ class DnsLookupApi {
     }
 
     final bodyJson = jsonDecode(response.body) as Map<String, dynamic>;
+    // bodyJson = bodyJson.map((key, value) {
+    //   return MapEntry(key.toLowerCase(), value);
+    // });
 
     if (bodyJson['Status'] != 0 || bodyJson['Answer'] == null) {
       throw DnsLookupNotFound();

@@ -8,20 +8,20 @@ part of 'dns_lookup_response.dart';
 
 DnsLookupResponse _$DnsLookupResponseFromJson(Map<String, dynamic> json) =>
     DnsLookupResponse(
-      json['status'] as int,
-      (json['question'] as List<dynamic>)
+      json['Status'] as int,
+      (json['Question'] as List<dynamic>)
           .map((e) => DnsQuestion.fromJson(e as Map<String, dynamic>))
           .toList(),
-      (json['answer'] as List<dynamic>)
+      (json['Answer'] as List<dynamic>)
           .map((e) => DnsRecord.fromJson(e as Map<String, dynamic>))
           .toList(),
-      json['comment'] as String?,
+      json['Comment'] as String?,
     );
 
 Map<String, dynamic> _$DnsLookupResponseToJson(DnsLookupResponse instance) =>
     <String, dynamic>{
-      'status': instance.status,
-      'question': instance.question,
-      'answer': instance.answer,
-      'comment': instance.comment,
+      'Status': instance.status,
+      'Question': instance.question,
+      'Answer': instance.answer,
+      'Comment': instance.comment,
     };
