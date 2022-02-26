@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -44,7 +45,7 @@ void main() {
 
     HydratedBlocOverrides.runZoned(
       () {
-        runApp(NetworkArch());
+        runApp(DevicePreview(builder: (context) => NetworkArch()));
       },
       blocObserver: SimpleBlocObserver(),
       storage: storage,
@@ -122,8 +123,8 @@ class NetworkArch extends StatelessWidget {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         return MaterialApp(
-          // useInheritedMediaQuery: true,
-          // locale: DevicePreview.locale(context),
+          useInheritedMediaQuery: true,
+          locale: DevicePreview.locale(context),
           title: Constants.appName,
           theme: Themes.lightThemeData,
           darkTheme: Themes.darkThemeData,
@@ -139,8 +140,8 @@ class NetworkArch extends StatelessWidget {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         return CupertinoApp(
-          // useInheritedMediaQuery: true,
-          // locale: DevicePreview.locale(context),
+          useInheritedMediaQuery: true,
+          locale: DevicePreview.locale(context),
           title: Constants.appName,
           theme: Themes.cupertinoThemeData,
           routes: Constants.routes,

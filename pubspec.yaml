@@ -53,6 +53,7 @@ dev_dependencies:
   dart_code_metrics: ^4.11.0
   import_sorter: ^4.6.0
   lint: ^1.8.2
+  change_app_package_name: ^1.0.0
 
 flutter:
   uses-material-design: true
