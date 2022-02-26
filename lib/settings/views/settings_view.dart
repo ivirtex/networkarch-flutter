@@ -5,9 +5,13 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
+import 'package:network_arch/package_info/cubit/package_info_cubit.dart';
+import 'package:network_arch/package_info/views/package_info_view.dart';
+import 'package:network_arch/shared/list_circular_progress_indicator.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 import 'package:network_arch/theme/theme.dart';
 
@@ -22,12 +26,15 @@ class _SettingsViewState extends State<SettingsView> {
   // TODO: Implement system theme toggle
   late bool _isDarkModeSwitched;
 
+  Future<PackageInfo>? packageInfo;
+
   @override
   void initState() {
     super.initState();
 
     _isDarkModeSwitched =
         context.read<ThemeBloc>().state.mode == ThemeMode.dark;
+    context.read<PackageInfoCubit>().fetchPackageInfo();
   }
 
   @override
@@ -51,9 +58,7 @@ class _SettingsViewState extends State<SettingsView> {
           const CupertinoSliverNavigationBar(
             stretch: true,
             border: null,
-            largeTitle: Text(
-              'Settings',
-            ),
+            largeTitle: Text('Settings'),
           ),
         ],
         body: _buildBody(context),
@@ -66,36 +71,29 @@ class _SettingsViewState extends State<SettingsView> {
 
     return Padding(
       padding: Constants.bodyPadding,
-      child: RoundedList(
+      child: Column(
         children: [
-          ListTile(
-            leading: FaIcon(
-              FontAwesomeIcons.adjust,
-              color: isDarkModeOn ? Colors.white : Colors.black,
+          RoundedList(
+            header: Text(
+              'Theme',
+              style: Theme.of(context).textTheme.bodySmall,
             ),
-            title: const Text('Dark Mode'),
-            trailing: Switch.adaptive(
-              value: _isDarkModeSwitched,
-              onChanged: _handleDarkModeSwitched,
-            ),
+            children: [
+              ListTile(
+                leading: FaIcon(
+                  FontAwesomeIcons.adjust,
+                  color: isDarkModeOn ? Colors.white : Colors.black,
+                ),
+                title: const Text('Dark Mode'),
+                trailing: Switch.adaptive(
+                  value: _isDarkModeSwitched,
+                  onChanged: _handleDarkModeSwitched,
+                ),
+              ),
+            ],
           ),
-          ListTile(
-            leading: FaIcon(
-              FontAwesomeIcons.language,
-              color: isDarkModeOn ? Colors.white : Colors.black,
-            ),
-            title: const Text('Language'),
-            trailing: const Text('English'),
-          ),
-          ListTile(
-            leading: FaIcon(
-              FontAwesomeIcons.infoCircle,
-              color: isDarkModeOn ? Colors.white : Colors.black,
-            ),
-            title: const Text('About'),
-            trailing: const Text('Version 1.0.0'),
-            // onTap: () => Navigator.pushNamed(context, '/about'),
-          ),
+          const SizedBox(height: Constants.listSpacing),
+          const PackageInfoView(),
         ],
       ),
     );

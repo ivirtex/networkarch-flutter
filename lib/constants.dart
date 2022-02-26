@@ -111,9 +111,13 @@ abstract class Constants {
   }
 
   // Description styles
-  static final TextStyle descStyleLight = TextStyle(color: Colors.grey[600]);
+  static final TextStyle descStyleLight = TextStyle(
+    color: Colors.grey[600],
+  );
 
-  static final TextStyle descStyleDark = TextStyle(color: Colors.grey[400]);
+  static final TextStyle descStyleDark = TextStyle(
+    color: Colors.grey[400],
+  );
 
   // Tools descriptions
   static const String pingDesc =

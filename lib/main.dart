@@ -16,6 +16,7 @@ import 'package:network_arch/home.dart';
 import 'package:network_arch/ip_geo/ip_geo.dart';
 import 'package:network_arch/lan_scanner/lan_scanner.dart';
 import 'package:network_arch/network_status/network_status.dart';
+import 'package:network_arch/package_info/cubit/package_info_cubit.dart';
 import 'package:network_arch/permissions/permissions.dart';
 import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
@@ -83,6 +84,9 @@ class NetworkArch extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => PermissionsBloc(),
+          ),
+          BlocProvider(
+            create: (context) => PackageInfoCubit(),
           ),
           BlocProvider(
             create: (context) => NetworkStatusBloc(networkStatusRepository),
