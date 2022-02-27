@@ -1,4 +1,4 @@
-package com.hubertjozwiak.networkarch_flutter
+package com.hubertjozwiak.networkarch
 
 import io.flutter.embedding.android.FlutterActivity
 

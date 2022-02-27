@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 // Project imports:
-import 'package:network_arch/main.dart';
+import 'package:network_arch/networkarch.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

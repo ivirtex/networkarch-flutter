@@ -11,7 +11,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/package_info/cubit/package_info_cubit.dart';
 import 'package:network_arch/package_info/views/package_info_view.dart';
-import 'package:network_arch/shared/list_circular_progress_indicator.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 import 'package:network_arch/theme/theme.dart';
 
