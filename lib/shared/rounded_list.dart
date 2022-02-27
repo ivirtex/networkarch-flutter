@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
+import 'package:network_arch/shared/shared.dart';
 
 class RoundedList extends StatelessWidget {
   const RoundedList({
@@ -17,8 +18,8 @@ class RoundedList extends StatelessWidget {
   }) : super(key: key);
 
   final List<Widget> children;
-  final Widget? header;
-  final Widget? footer;
+  final String? header;
+  final String? footer;
   final Color? bgColor;
 
   @override
@@ -31,13 +32,7 @@ class RoundedList extends StatelessWidget {
 
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 10.0, bottom: 4.0),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: header,
-          ),
-        ),
+        if (header != null) SmallDescription(child: header!),
         Card(
           margin: EdgeInsets.zero,
           shape: RoundedRectangleBorder(
@@ -52,13 +47,7 @@ class RoundedList extends StatelessWidget {
             children: children,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10.0, top: 3.0),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: footer,
-          ),
-        ),
+        if (footer != null) SmallDescription(child: footer!),
       ],
     );
   }

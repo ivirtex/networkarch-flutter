@@ -23,6 +23,10 @@ class LanScannerRepository {
     required String subnet,
     ProgressCallback? callback,
   }) {
-    return _scanner.icmpScan(subnet, progressCallback: callback);
+    return _scanner.icmpScan(
+      subnet,
+      progressCallback: callback,
+      scanSpeeed: 15,
+    );
   }
 }

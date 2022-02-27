@@ -45,6 +45,7 @@ dependencies:
   rxdart: ^0.27.3
   styled_widget: ^0.4.0+3
   wake_on_lan: ^2.0.3+1
+  google_mobile_ads: ^1.1.0
 
 dev_dependencies:
   flutter_test:

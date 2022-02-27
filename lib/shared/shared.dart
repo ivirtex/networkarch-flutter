@@ -8,3 +8,4 @@ export 'platform_scaffold.dart';
 export 'platform_widget.dart';
 export 'rounded_list.dart';
 export 'shared_widgets.dart';
+export 'small_description.dart';

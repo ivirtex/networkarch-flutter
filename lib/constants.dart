@@ -31,6 +31,9 @@ abstract class Constants {
 
   static const String usageDesc = 'We never share your data with anyone.';
 
+  static const String overviewBannerAdUnitId =
+      'ca-app-pub-3940256099942544/6300978111';
+
   static final Map<String, Widget Function(BuildContext)> routes = {
     '/permissions': (context) => const PermissionsView(),
     '/wifi': (context) => const WifiDetailedView(),

@@ -90,7 +90,7 @@ class _HomeState extends State<Home> {
       tabBar: CupertinoTabBar(
         items: const [
           BottomNavigationBarItem(
-            label: 'Dashboard',
+            label: 'Overview',
             icon: Icon(CupertinoIcons.home),
           ),
           BottomNavigationBarItem(

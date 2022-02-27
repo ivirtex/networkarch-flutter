@@ -73,10 +73,7 @@ class _SettingsViewState extends State<SettingsView> {
       child: Column(
         children: [
           RoundedList(
-            header: Text(
-              'Theme',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
+            header: 'Theme',
             children: [
               ListTile(
                 leading: FaIcon(

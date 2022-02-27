@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:adapty_flutter/adapty_flutter.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
@@ -30,6 +31,7 @@ void main() {
     await Hive.openBox('settings');
 
     Adapty.activate();
+    MobileAds.instance.initialize();
 
     HydratedBlocOverrides.runZoned(
       () => runApp(NetworkArch()),

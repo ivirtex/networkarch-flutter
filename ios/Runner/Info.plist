@@ -49,5 +49,8 @@
 
 		<key>AdaptyPublicSdkKey</key>
 		<string>public_live_xuW2ftX9.SiFLdvlhc6rfP6r5bnWA</string>
+
+		<key>GADApplicationIdentifier</key>
+		<string>ca-app-pub-3222092607864795~8507922744</string>
 	</dict>
 </plist>
