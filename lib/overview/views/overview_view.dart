@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +12,6 @@ import 'package:network_arch/network_status/bloc/bloc.dart';
 import 'package:network_arch/network_status/views/views.dart';
 import 'package:network_arch/overview/overview.dart';
 import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/shared/shared_widgets.dart';
 import 'package:network_arch/utils/banner_ad_listener.dart';
 
 class OverviewView extends StatefulWidget {

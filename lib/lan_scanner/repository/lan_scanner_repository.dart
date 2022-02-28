@@ -26,7 +26,7 @@ class LanScannerRepository {
     return _scanner.icmpScan(
       subnet,
       progressCallback: callback,
-      scanSpeeed: 15,
+      scanThreads: 15,
     );
   }
 }

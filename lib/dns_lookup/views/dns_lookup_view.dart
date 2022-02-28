@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_animated/auto_animated.dart';
-import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
@@ -25,18 +24,12 @@ class _DnsLookupViewState extends State<DnsLookupView> {
   final _targetDomainController = TextEditingController();
   String get _target => _targetDomainController.text;
 
-  final _dnsQueryTypeController = TextEditingController();
-  String get _dnsQueryType => _dnsQueryTypeController.text;
+  // final _dnsQueryTypeController = TextEditingController();
+  // String get _dnsQueryType => _dnsQueryTypeController.text;
+
+  rrCodeName _selectedDnsQueryType = rrCodeName.ANY;
 
   bool _shouldCheckButtonBeActive = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // _targetDomainController.text = 'google.com';
-    _dnsQueryTypeController.text = 'ANY';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +87,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
           Row(
             children: [
               Flexible(
-                flex: 2,
+                flex: 3,
                 child: DomainTextField(
                   label: 'Domain',
                   controller: _targetDomainController,
@@ -107,21 +100,18 @@ class _DnsLookupViewState extends State<DnsLookupView> {
               ),
               const SizedBox(width: 10),
               Flexible(
-                child: DomainTextField(
-                  controller: _dnsQueryTypeController,
-                  label: 'Type',
-                  withoutPrefixIcon: true,
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.arrow_drop_down),
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (_) {
-                          return _buildBottomSheet();
-                        },
-                      );
-                    },
-                  ),
+                child: DropdownButton<rrCodeName>(
+                  items: _getQueryTypes(),
+                  value: _selectedDnsQueryType,
+                  hint: const Text('Type'),
+                  borderRadius: BorderRadius.circular(10.0),
+                  icon: const Icon(Icons.arrow_downward),
+                  isExpanded: true,
+                  onChanged: (type) {
+                    setState(() {
+                      _selectedDnsQueryType = type!;
+                    });
+                  },
                 ),
               ),
             ],
@@ -167,8 +157,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
   }
 
   void _handleCheck() {
-    final queryType = EnumToString.fromString(rrCodeName.values, _dnsQueryType);
-    final queryCode = nameToRrCode(queryType!);
+    final queryCode = nameToRrCode(_selectedDnsQueryType);
 
     context
         .read<DnsLookupBloc>()
@@ -177,22 +166,13 @@ class _DnsLookupViewState extends State<DnsLookupView> {
     hideKeyboard(context);
   }
 
-  Widget _buildBottomSheet() {
-    return ListView.builder(
-      itemCount: rrCodeName.values.length,
-      itemBuilder: (context, index) {
-        final queryType = rrCodeName.values[index];
-
-        return ListTile(
-          title: Text(queryType.name),
-          onTap: () {
-            _dnsQueryTypeController.text = queryType.name;
-
-            Navigator.pop(context);
-          },
-        );
-      },
-    );
+  List<DropdownMenuItem<rrCodeName>> _getQueryTypes() {
+    return rrCodeName.values.map((type) {
+      return DropdownMenuItem(
+        value: type,
+        child: Text(type.name),
+      );
+    }).toList();
   }
 
   Widget _buildRecords(DnsLookupResponse response) {
