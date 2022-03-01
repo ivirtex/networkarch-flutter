@@ -39,8 +39,7 @@ class _OverviewViewState extends State<OverviewView> {
         context.read<NetworkStatusBloc>().add(NetworkStatusStreamStarted());
         context.read<NetworkStatusBloc>().add(NetworkStatusExtIPRequested());
       } else {
-        Navigator.of(context).pushReplacementNamed('/permissions');
-        // Constants.showPermissionDeniedNotification(context);
+        Constants.showPermissionDeniedNotification(context);
       }
     });
 

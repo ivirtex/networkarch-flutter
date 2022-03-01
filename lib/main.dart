@@ -8,6 +8,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
 import 'package:network_arch/networkarch.dart';
@@ -34,7 +35,16 @@ void main() {
     MobileAds.instance.initialize();
 
     HydratedBlocOverrides.runZoned(
-      () => runApp(NetworkArch()),
+      () async {
+        await SentryFlutter.init(
+          (options) => {
+            options.tracesSampleRate = 1.0,
+            options.dsn =
+                'https://5d6f627c688b407e96c3d26d2df7457c@o923305.ingest.sentry.io/6238035',
+          },
+        );
+        runApp(NetworkArch());
+      },
       blocObserver: SimpleBlocObserver(),
       storage: storage,
     );

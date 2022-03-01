@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -89,7 +90,39 @@ class _SettingsViewState extends State<SettingsView> {
             ],
           ),
           const SizedBox(height: Constants.listSpacing),
+          RoundedList(
+            header: 'Help',
+            children: [
+              ListTile(
+                leading: FaIcon(
+                  FontAwesomeIcons.infoCircle,
+                  color: isDarkModeOn ? Colors.white : Colors.black,
+                ),
+                title: const Text('Go to introduction screen'),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: isDarkModeOn ? Colors.white : Colors.black,
+                ),
+                onTap: () => Navigator.pushNamed(context, '/introduction'),
+              ),
+              // Build mail send button
+              ListTile(
+                leading: FaIcon(
+                  FontAwesomeIcons.envelope,
+                  color: isDarkModeOn ? Colors.white : Colors.black,
+                ),
+                title: const Text('Send feedback'),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: isDarkModeOn ? Colors.white : Colors.black,
+                ),
+                onTap: () => _sendFeedback(context),
+              ),
+            ],
+          ),
+          const SizedBox(height: Constants.listSpacing),
           const PackageInfoView(),
+          const SizedBox(height: Constants.listSpacing),
         ],
       ),
     );
@@ -105,5 +138,9 @@ class _SettingsViewState extends State<SettingsView> {
               ? UpdateToDarkThemeEvent()
               : UpdateToLightThemeEvent(),
         );
+  }
+
+  void _sendFeedback(BuildContext context) {
+    BetterFeedback.of(context).showAndUploadToSentry();
   }
 }

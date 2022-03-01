@@ -8,14 +8,15 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
+import 'package:introduction_screen/introduction_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
 import 'package:network_arch/dns_lookup/dns_lookup.dart';
+import 'package:network_arch/introduction/introduction.dart';
 import 'package:network_arch/ip_geo/ip_geo.dart';
 import 'package:network_arch/lan_scanner/lan_scanner.dart';
 import 'package:network_arch/network_status/network_status.dart';
-import 'package:network_arch/permissions/permissions.dart';
 import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
 import 'package:network_arch/whois/whois.dart';
@@ -35,7 +36,12 @@ abstract class Constants {
       'ca-app-pub-3940256099942544/6300978111';
 
   static final Map<String, Widget Function(BuildContext)> routes = {
-    '/permissions': (context) => const PermissionsView(),
+    '/introduction': (context) => IntroductionScreen(
+          pages: pagesList,
+          done: const Text('Done'),
+          next: const Icon(Icons.navigate_next),
+          onDone: () {},
+        ),
     '/wifi': (context) => const WifiDetailedView(),
     '/carrier': (context) => const CarrierDetailView(),
     '/tools/ping': (context) => const PingView(),

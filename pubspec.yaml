@@ -46,6 +46,9 @@ dependencies:
   styled_widget: ^0.4.0+3
   wake_on_lan: ^2.0.3+1
   google_mobile_ads: ^1.1.0
+  feedback: ^2.4.1
+  feedback_sentry: ^2.3.0
+  sentry_flutter: ^6.3.0
 
 dev_dependencies:
   flutter_test:
@@ -67,3 +70,4 @@ flutter:
 
   assets:
     - assets/dark_mode_map_style.txt
+    - assets/icon.png

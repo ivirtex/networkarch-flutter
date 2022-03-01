@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:feedback/feedback.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
@@ -36,51 +38,53 @@ class NetworkArch extends StatelessWidget {
     //! Debug, remove in production
     // debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider.value(value: networkStatusRepository),
-        RepositoryProvider.value(value: pingRepository),
-        RepositoryProvider.value(value: lanScannerRepository),
-        RepositoryProvider.value(value: ipGeoRepository),
-        RepositoryProvider.value(value: whoisRepository),
-        RepositoryProvider.value(value: dnsLookupRepository),
-      ],
-      child: MultiBlocProvider(
+    return BetterFeedback(
+      child: MultiRepositoryProvider(
         providers: [
-          BlocProvider(
-            create: (context) => ThemeBloc(),
-          ),
-          BlocProvider(
-            create: (context) => PermissionsBloc(),
-          ),
-          BlocProvider(
-            create: (context) => PackageInfoCubit(),
-          ),
-          BlocProvider(
-            create: (context) => NetworkStatusBloc(networkStatusRepository),
-          ),
-          BlocProvider(
-            create: (context) => PingBloc(pingRepository),
-          ),
-          BlocProvider(
-            create: (context) => LanScannerBloc(lanScannerRepository),
-          ),
-          BlocProvider(
-            create: (context) => WakeOnLanBloc(),
-          ),
-          BlocProvider(
-            create: (context) => IpGeoBloc(ipGeoRepository),
-          ),
-          BlocProvider(
-            create: (context) => WhoisBloc(whoisRepository),
-          ),
-          BlocProvider(
-            create: (context) => DnsLookupBloc(dnsLookupRepository),
-          ),
+          RepositoryProvider.value(value: networkStatusRepository),
+          RepositoryProvider.value(value: pingRepository),
+          RepositoryProvider.value(value: lanScannerRepository),
+          RepositoryProvider.value(value: ipGeoRepository),
+          RepositoryProvider.value(value: whoisRepository),
+          RepositoryProvider.value(value: dnsLookupRepository),
         ],
-        child: PlatformWidget(
-          androidBuilder: _buildAndroid,
-          iosBuilder: _buildIOS,
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => ThemeBloc(),
+            ),
+            BlocProvider(
+              create: (context) => PermissionsBloc(),
+            ),
+            BlocProvider(
+              create: (context) => PackageInfoCubit(),
+            ),
+            BlocProvider(
+              create: (context) => NetworkStatusBloc(networkStatusRepository),
+            ),
+            BlocProvider(
+              create: (context) => PingBloc(pingRepository),
+            ),
+            BlocProvider(
+              create: (context) => LanScannerBloc(lanScannerRepository),
+            ),
+            BlocProvider(
+              create: (context) => WakeOnLanBloc(),
+            ),
+            BlocProvider(
+              create: (context) => IpGeoBloc(ipGeoRepository),
+            ),
+            BlocProvider(
+              create: (context) => WhoisBloc(whoisRepository),
+            ),
+            BlocProvider(
+              create: (context) => DnsLookupBloc(dnsLookupRepository),
+            ),
+          ],
+          child: PlatformWidget(
+            androidBuilder: _buildAndroid,
+            iosBuilder: _buildIOS,
+          ),
         ),
       ),
     );
@@ -92,6 +96,9 @@ class NetworkArch extends StatelessWidget {
         return MaterialApp(
           // useInheritedMediaQuery: true,
           // locale: DevicePreview.locale(context),
+          navigatorObservers: [
+            SentryNavigatorObserver(),
+          ],
           title: Constants.appName,
           theme: Themes.lightThemeData,
           darkTheme: Themes.darkThemeData,
@@ -109,6 +116,9 @@ class NetworkArch extends StatelessWidget {
         return CupertinoApp(
           // useInheritedMediaQuery: true,
           // locale: DevicePreview.locale(context),
+          navigatorObservers: [
+            SentryNavigatorObserver(),
+          ],
           title: Constants.appName,
           theme: Themes.cupertinoThemeData,
           routes: Constants.routes,
