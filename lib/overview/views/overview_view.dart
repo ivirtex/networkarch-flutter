@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -148,7 +149,7 @@ class _OverviewViewState extends State<OverviewView> {
                   Navigator.pushNamed(context, '/tools/dns_lookup');
                 },
               ),
-              const SizedBox(height: Constants.listSpacing),
+              const Divider(indent: 15, endIndent: 15),
               Container(
                 alignment: Alignment.center,
                 width: banner.size.width.toDouble(),

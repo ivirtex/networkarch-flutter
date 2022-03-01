@@ -16,7 +16,7 @@ dependencies:
   animate_do: ^2.1.0
   auto_animated: ^3.0.1
   adapty_flutter: ^1.0.9
-  bloc: ^8.0.2
+  bloc: ^8.0.3
   carrier_info: ^2.0.4
   cupertino_icons: ^1.0.4
   device_preview: ^1.0.0

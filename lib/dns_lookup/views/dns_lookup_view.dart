@@ -24,9 +24,6 @@ class _DnsLookupViewState extends State<DnsLookupView> {
   final _targetDomainController = TextEditingController();
   String get _target => _targetDomainController.text;
 
-  // final _dnsQueryTypeController = TextEditingController();
-  // String get _dnsQueryType => _dnsQueryTypeController.text;
-
   rrCodeName _selectedDnsQueryType = rrCodeName.ANY;
 
   bool _shouldCheckButtonBeActive = false;
