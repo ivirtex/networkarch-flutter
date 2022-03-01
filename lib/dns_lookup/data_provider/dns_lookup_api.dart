@@ -19,8 +19,15 @@ class DnsLookupApi {
     required int type,
   }) async {
     final request = Uri.parse('$_baseUrl?name=$hostname&type=$type');
-    final response = await _httpClient.get(request);
+    late final http.Response response;
 
+    try {
+      response = await _httpClient.get(request);
+    } catch (exc, stackTrace) {
+      Sentry.captureException(exc, stackTrace: stackTrace);
+
+      throw DnsLookupRequestFailure();
+    }
     if (response.statusCode != 200) {
       throw DnsLookupRequestFailure();
     }
@@ -32,7 +39,7 @@ class DnsLookupApi {
     } catch (exc, stackTrace) {
       await Sentry.captureException(exc, stackTrace: stackTrace);
 
-      throw DnsLookupRequestFailure();
+      throw DnsLookupNotFound();
     }
     // bodyJson = bodyJson.map((key, value) {
     //   return MapEntry(key.toLowerCase(), value);

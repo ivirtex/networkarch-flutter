@@ -16,8 +16,15 @@ class IpGeoApi {
 
   Future<IpGeoResponse> getIpGeolocation(String ip) async {
     final request = Uri.parse('$_baseUrl/$ip');
-    final response = await _httpClient.get(request);
+    late final http.Response response;
 
+    try {
+      response = await _httpClient.get(request);
+    } catch (exc, stackTrace) {
+      Sentry.captureException(exc, stackTrace: stackTrace);
+
+      throw IpGeoRequestFailure();
+    }
     if (response.statusCode != 200) {
       throw IpGeoRequestFailure();
     }
@@ -29,7 +36,7 @@ class IpGeoApi {
     } catch (exc, stackTrace) {
       await Sentry.captureException(exc, stackTrace: stackTrace);
 
-      throw IpGeoRequestFailure();
+      throw IpGeoNotFound();
     }
 
     if (bodyJson['status'] == 'fail' || bodyJson.isEmpty) {

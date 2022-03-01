@@ -55,7 +55,6 @@ dart_code_metrics:
     - prefer-trailing-comma
     - prefer-conditional-expressions
     - no-equal-then-else
-    - avoid-throw-in-catch-block
     - binary-expression-operand-order
     - double-literal-format
     - no-boolean-literal-compare

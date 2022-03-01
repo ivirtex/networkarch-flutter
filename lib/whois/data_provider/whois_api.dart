@@ -13,7 +13,15 @@ class WhoisApi {
 
   Future<String> getWhois(String domain) async {
     final request = Uri.parse('$_baseUrl/$domain');
-    final response = await _httpClient.get(request);
+    late final http.Response response;
+
+    try {
+      response = await _httpClient.get(request);
+    } catch (exc, stackTrace) {
+      Sentry.captureException(exc, stackTrace: stackTrace);
+
+      throw WhoisRequestFailure();
+    }
 
     if (response.statusCode == 400) {
       throw WhoisRequestFailure();
@@ -30,7 +38,7 @@ class WhoisApi {
     } catch (exc, stackTrace) {
       await Sentry.captureException(exc, stackTrace: stackTrace);
 
-      throw WhoisRequestFailure();
+      throw WhoisNotFound();
     }
 
     return bodyJson['response'] as String;
