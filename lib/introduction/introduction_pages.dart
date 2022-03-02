@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
@@ -14,8 +15,8 @@ final List<PageViewModel> pagesList = [
     image: ClipRRect(
       borderRadius: const BorderRadius.all(Radius.circular(15.0)),
       child: SizedBox(
-        height: 250,
-        child: Image.asset('assets/icon.png'),
+        height: 300,
+        child: Image.asset('assets/icon_alpha.png'),
       ),
     ),
     body: Constants.appDesc,
@@ -29,5 +30,11 @@ final List<PageViewModel> pagesList = [
       contentMargin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0),
     ),
     bodyWidget: const PermissionsView(),
+    footer: TextButton(
+      child: const Text('Open app settings'),
+      onPressed: () {
+        openAppSettings();
+      },
+    ),
   ),
 ];

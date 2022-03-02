@@ -25,10 +25,12 @@ dependencies:
   dart_ping: ^6.1.2
   dart_ping_ios: ^1.0.0
   equatable: ^2.0.3
+  feedback: ^2.4.1
+  feedback_sentry: ^2.3.0
   flutter_bloc: ^8.0.1
   font_awesome_flutter: ^9.2.0
   google_fonts: ^2.3.1
-  google_maps_flutter: ^2.1.1
+  google_maps_flutter: ^2.1.2
   hive: ^2.0.6
   hive_flutter: ^1.1.0
   http: ^0.13.4
@@ -43,12 +45,10 @@ dependencies:
   percent_indicator: ^4.0.0
   permission_handler: ^9.2.0
   rxdart: ^0.27.3
+  sentry_flutter: ^6.3.0
   styled_widget: ^0.4.0+3
   wake_on_lan: ^2.0.3+1
   google_mobile_ads: ^1.1.0
-  feedback: ^2.4.1
-  feedback_sentry: ^2.3.0
-  sentry_flutter: ^6.3.0
 
 dev_dependencies:
   flutter_test:
@@ -70,4 +70,4 @@ flutter:
 
   assets:
     - assets/dark_mode_map_style.txt
-    - assets/icon.png
+    - assets/icon_alpha.png

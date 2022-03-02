@@ -30,7 +30,7 @@ abstract class Constants {
       including pinging specific IP address or hostname, sending Wake on LAN magic packets,
       whois and DNS Lookup.''';
 
-  static const String usageDesc = 'We never share your data with anyone.';
+  static const String usageDesc = 'We never share this data with anyone.';
 
   static const String overviewBannerAdUnitId =
       'ca-app-pub-3940256099942544/6300978111';
@@ -40,7 +40,7 @@ abstract class Constants {
           pages: pagesList,
           done: const Text('Done'),
           next: const Icon(Icons.navigate_next),
-          onDone: () {},
+          onDone: () => Navigator.of(context).pop(),
         ),
     '/wifi': (context) => const WifiDetailedView(),
     '/carrier': (context) => const CarrierDetailView(),
