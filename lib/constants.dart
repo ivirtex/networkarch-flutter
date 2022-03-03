@@ -68,20 +68,20 @@ abstract class Constants {
   );
 
   // Colors
-  static final Color lightBgColor = Colors.grey[100]!;
-  static const Color iOSlightBgColor = CupertinoColors.white;
-  static final Color darkBgColor = Colors.grey[900]!;
+  static const Color iOSlightBgColor = CupertinoColors.systemGrey5;
   static const Color iOSdarkBgColor = CupertinoColors.black;
+  static final Color lightBgColor = Colors.grey[100]!;
+  static final Color darkBgColor = Colors.grey[900]!;
 
+  static const CupertinoDynamicColor iOSCardColor = CupertinoColors.systemGrey4;
   static final Color lightCardColor = Colors.grey[200]!;
-  static final Color iOSlightCardColor = CupertinoColors.systemGrey5.color;
   static final Color darkCardColor = Colors.grey[850]!;
-  static final Color iOSdarkCardColor = CupertinoColors.systemGrey5.darkColor;
+  // static final Color iOSdarkCardColor = CupertinoColors.systemGrey5.darkColor;
 
+  static const CupertinoDynamicColor iOSBtnColor = CupertinoColors.systemGrey6;
   static final Color lightBtnColor = Colors.grey[300]!;
-  static final Color iOSlightBtnColor = CupertinoColors.systemGrey6.color;
   static final Color darkBtnColor = Colors.grey[800]!;
-  static final Color iOSdarkBtnColor = CupertinoColors.systemGrey4.darkColor;
+  // static final Color iOSdarkBtnColor = CupertinoColors.systemGrey4.darkColor;
 
   static Color getPlatformBgColor(BuildContext context) {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
@@ -101,10 +101,10 @@ abstract class Constants {
     return isDarkModeOn
         ? Platform.isAndroid
             ? Constants.darkCardColor
-            : Constants.iOSdarkCardColor
+            : Constants.iOSCardColor.resolveFrom(context)
         : Platform.isAndroid
             ? Constants.lightCardColor
-            : Constants.iOSlightCardColor;
+            : Constants.iOSCardColor;
   }
 
   static Color getPlatformBtnColor(BuildContext context) {
@@ -113,10 +113,10 @@ abstract class Constants {
     return isDarkModeOn
         ? Platform.isAndroid
             ? Constants.darkBtnColor
-            : Constants.iOSdarkBtnColor
+            : Constants.iOSBtnColor.resolveFrom(context)
         : Platform.isAndroid
             ? Constants.lightBtnColor
-            : Constants.iOSlightBtnColor;
+            : Constants.iOSBtnColor;
   }
 
   // Description styles
