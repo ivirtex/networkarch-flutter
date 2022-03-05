@@ -94,8 +94,6 @@ class NetworkArch extends StatelessWidget {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         return MaterialApp(
-          // useInheritedMediaQuery: true,
-          // locale: DevicePreview.locale(context),
           navigatorObservers: [
             SentryNavigatorObserver(),
           ],
@@ -114,8 +112,11 @@ class NetworkArch extends StatelessWidget {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         return CupertinoApp(
-          // useInheritedMediaQuery: true,
-          // locale: DevicePreview.locale(context),
+          localizationsDelegates: const [
+            DefaultMaterialLocalizations.delegate,
+            DefaultWidgetsLocalizations.delegate,
+            DefaultCupertinoLocalizations.delegate,
+          ],
           navigatorObservers: [
             SentryNavigatorObserver(),
           ],

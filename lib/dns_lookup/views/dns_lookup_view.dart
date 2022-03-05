@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -64,7 +66,9 @@ class _DnsLookupViewState extends State<DnsLookupView> {
           return [
             CupertinoSliverNavigationBar(
               largeTitle: const Text('DNS Lookup'),
+              border: null,
               trailing: CupertinoButton(
+                padding: EdgeInsets.zero,
                 onPressed: _handleCheck,
                 child: const Text('Check'),
               ),
@@ -103,6 +107,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
                   hint: const Text('Type'),
                   borderRadius: BorderRadius.circular(10.0),
                   icon: const Icon(Icons.arrow_downward),
+                  elevation: Platform.isIOS ? 0 : 8,
                   isExpanded: true,
                   onChanged: (type) {
                     setState(() {

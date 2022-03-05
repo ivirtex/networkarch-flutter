@@ -76,7 +76,7 @@ class _PingViewState extends State<PingView> {
         onStopPressed: _handleStop,
         key: _appBarKey,
       ),
-      body: SingleChildScrollView(child: _buildBody()),
+      body: _buildBody(),
     );
   }
 
@@ -112,7 +112,7 @@ class _PingViewState extends State<PingView> {
   Widget _buildBody() {
     return Padding(
       padding: Constants.bodyPadding,
-      child: Column(
+      child: ListView(
         children: [
           Row(
             children: [

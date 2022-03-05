@@ -24,12 +24,6 @@ class RoundedList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    for (var i = 1; i < children.length; i++) {
-      if ((i + 1).isEven) {
-        children.insert(i, Constants.listDivider);
-      }
-    }
-
     return Column(
       children: [
         if (header != null) SmallDescription(child: header!),
@@ -40,11 +34,17 @@ class RoundedList extends StatelessWidget {
           ),
           elevation: Platform.isAndroid ? 1.0 : 0.0,
           color: bgColor ?? Constants.getPlatformCardColor(context),
-          child: ListView(
+          child: ListView.separated(
             padding: EdgeInsets.zero,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            children: children,
+            itemCount: children.length,
+            itemBuilder: (context, index) {
+              return children[index];
+            },
+            separatorBuilder: (context, index) {
+              return Constants.listDivider;
+            },
           ),
         ),
         if (footer != null) SmallDescription(child: footer!),

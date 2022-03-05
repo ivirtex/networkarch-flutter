@@ -47,12 +47,11 @@ class DomainTextField extends StatelessWidget {
         );
       },
       iosBuilder: (context) {
-        return CupertinoTextField(
+        return CupertinoSearchTextField(
           autocorrect: false,
           controller: controller,
           placeholder: label,
           enabled: enabled,
-          suffix: suffixIcon,
           onChanged: onChanged,
         );
       },

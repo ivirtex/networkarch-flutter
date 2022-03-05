@@ -17,9 +17,11 @@ class PlatformWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return androidBuilder!(context);
+        return androidBuilder != null
+            ? androidBuilder!(context)
+            : const SizedBox();
       case TargetPlatform.iOS:
-        return iosBuilder!(context);
+        return iosBuilder != null ? iosBuilder!(context) : const SizedBox();
       default:
         throw 'Unexpected platform $defaultTargetPlatform';
     }

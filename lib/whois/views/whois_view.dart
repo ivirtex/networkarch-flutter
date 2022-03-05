@@ -68,7 +68,9 @@ class _WhoisViewState extends State<WhoisView> {
           return [
             CupertinoSliverNavigationBar(
               largeTitle: const Text('Whois'),
+              border: null,
               trailing: CupertinoButton(
+                padding: EdgeInsets.zero,
                 onPressed: _handleCheck,
                 child: const Text('Check'),
               ),

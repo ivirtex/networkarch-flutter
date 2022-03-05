@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:dart_ping_ios/dart_ping_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -33,12 +34,13 @@ void main() {
 
     Adapty.activate();
     MobileAds.instance.initialize();
+    DartPingIOS.register();
 
     HydratedBlocOverrides.runZoned(
       () async {
         await SentryFlutter.init(
           (options) => {
-            options.tracesSampleRate = 1.0,
+            options.tracesSampleRate = 0.5,
             options.dsn =
                 'https://5d6f627c688b407e96c3d26d2df7457c@o923305.ingest.sentry.io/6238035',
           },

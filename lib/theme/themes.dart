@@ -27,6 +27,7 @@ abstract class Themes {
 
   static final CupertinoThemeData cupertinoThemeData = CupertinoThemeData(
     primaryColor: CupertinoColors.activeBlue,
+    brightness: Brightness.light,
     scaffoldBackgroundColor: const CupertinoDynamicColor.withBrightness(
       color: CupertinoColors.systemGrey6,
       darkColor: CupertinoColors.black,
