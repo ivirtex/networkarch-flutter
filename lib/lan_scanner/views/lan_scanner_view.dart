@@ -12,11 +12,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
 import 'package:network_arch/lan_scanner/bloc/lan_scanner_bloc.dart';
 import 'package:network_arch/lan_scanner/widgets/host_card.dart';
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/shared/action_app_bar.dart';
+import 'package:network_arch/shared/content_list_view.dart';
 import 'package:network_arch/shared/cupertino_action_app_bar.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
@@ -68,9 +68,7 @@ class _LanScannerViewState extends State<LanScannerView> {
         onStopPressed: _handleStop,
         key: _appBarKey,
       ),
-      body: SingleChildScrollView(
-        child: _buildBody(),
-      ),
+      body: _buildBody(),
     );
   }
 
@@ -104,55 +102,52 @@ class _LanScannerViewState extends State<LanScannerView> {
     );
   }
 
-  Padding _buildBody() {
-    return Padding(
-      padding: Constants.bodyPadding,
-      child: Column(
-        children: [
-          BlocConsumer<LanScannerBloc, LanScannerState>(
-            listener: (context, state) {
-              if (state is LanScannerRunProgressUpdate) {
-                currProgress = state.progress;
-              }
+  Widget _buildBody() {
+    return ContentListView(
+      children: [
+        BlocConsumer<LanScannerBloc, LanScannerState>(
+          listener: (context, state) {
+            if (state is LanScannerRunProgressUpdate) {
+              currProgress = state.progress;
+            }
 
-              if (state is LanScannerRunComplete) {
-                _appBarKey.currentState!.toggleAnimation();
-              }
+            if (state is LanScannerRunComplete) {
+              _appBarKey.currentState!.toggleAnimation();
+            }
 
-              if (state is LanScannerRunNewHost) {
-                final host = InternetAddress(state.host.ip);
+            if (state is LanScannerRunNewHost) {
+              final host = InternetAddress(state.host.ip);
 
-                _hosts.insert(_hosts.length, host);
-              }
-            },
-            buildWhen: (previous, current) =>
-                current is LanScannerRunProgressUpdate,
-            builder: (context, state) {
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: LinearProgressIndicator(
-                  // TODO: animate progress
-                  value: currProgress,
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: 10),
-          AnimatedList(
-            key: _listKey,
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            initialItemCount: _hosts.length,
-            itemBuilder: (context, index, animation) {
-              return _buildItem(
-                context,
-                animation,
-                _hosts[index],
-              );
-            },
-          ),
-        ],
-      ),
+              _hosts.insert(_hosts.length, host);
+            }
+          },
+          buildWhen: (previous, current) =>
+              current is LanScannerRunProgressUpdate,
+          builder: (context, state) {
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: LinearProgressIndicator(
+                // TODO: animate progress
+                value: currProgress,
+              ),
+            );
+          },
+        ),
+        const SizedBox(height: 10),
+        AnimatedList(
+          key: _listKey,
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          initialItemCount: _hosts.length,
+          itemBuilder: (context, index, animation) {
+            return _buildItem(
+              context,
+              animation,
+              _hosts[index],
+            );
+          },
+        ),
+      ],
     );
   }
 

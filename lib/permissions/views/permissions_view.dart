@@ -13,7 +13,7 @@ import 'package:network_arch/constants.dart';
 import 'package:network_arch/permissions/bloc/permissions_bloc.dart';
 import 'package:network_arch/permissions/widgets/usage_desc.dart';
 import 'package:network_arch/permissions/widgets/widgets.dart';
-import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/shared/shared.dart';
 
 class PermissionsView extends StatelessWidget {
   const PermissionsView({Key? key}) : super(key: key);
@@ -48,7 +48,7 @@ class PermissionsView extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return Column(
+        return ContentListView(
           children: [
             PermissionCard(
               title: 'Location',

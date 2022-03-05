@@ -12,6 +12,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/package_info/cubit/package_info_cubit.dart';
 import 'package:network_arch/package_info/views/package_info_view.dart';
+import 'package:network_arch/shared/content_list_view.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 import 'package:network_arch/theme/theme.dart';
 
@@ -45,10 +46,8 @@ class _SettingsViewState extends State<SettingsView> {
     );
   }
 
-  SingleChildScrollView _buildAndroid(BuildContext context) {
-    return SingleChildScrollView(
-      child: _buildBody(context),
-    );
+  Widget _buildAndroid(BuildContext context) {
+    return _buildBody(context);
   }
 
   CupertinoPageScaffold _buildIOS(BuildContext context) {
@@ -66,65 +65,62 @@ class _SettingsViewState extends State<SettingsView> {
     );
   }
 
-  Padding _buildBody(BuildContext context) {
+  Widget _buildBody(BuildContext context) {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
-    return Padding(
-      padding: Constants.bodyPadding,
-      child: Column(
-        children: [
-          RoundedList(
-            header: 'Theme',
-            children: [
-              ListTile(
-                leading: FaIcon(
-                  FontAwesomeIcons.adjust,
-                  color: isDarkModeOn ? Colors.white : Colors.black,
-                ),
-                title: const Text('Dark Mode'),
-                trailing: Switch.adaptive(
-                  value: _isDarkModeSwitched,
-                  onChanged: _handleDarkModeSwitched,
-                ),
+    return ContentListView(
+      children: [
+        RoundedList(
+          header: 'Theme',
+          children: [
+            ListTile(
+              leading: FaIcon(
+                FontAwesomeIcons.adjust,
+                color: isDarkModeOn ? Colors.white : Colors.black,
               ),
-            ],
-          ),
-          const SizedBox(height: Constants.listSpacing),
-          RoundedList(
-            header: 'Help',
-            children: [
-              ListTile(
-                leading: FaIcon(
-                  FontAwesomeIcons.infoCircle,
-                  color: isDarkModeOn ? Colors.white : Colors.black,
-                ),
-                title: const Text('Go to introduction screen'),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: isDarkModeOn ? Colors.white : Colors.black,
-                ),
-                onTap: () => Navigator.pushNamed(context, '/introduction'),
+              title: const Text('Dark Mode'),
+              trailing: Switch.adaptive(
+                value: _isDarkModeSwitched,
+                onChanged: _handleDarkModeSwitched,
               ),
-              // Build mail send button
-              ListTile(
-                leading: FaIcon(
-                  FontAwesomeIcons.envelope,
-                  color: isDarkModeOn ? Colors.white : Colors.black,
-                ),
-                title: const Text('Send feedback'),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: isDarkModeOn ? Colors.white : Colors.black,
-                ),
-                onTap: () => _sendFeedback(context),
+            ),
+          ],
+        ),
+        const SizedBox(height: Constants.listSpacing),
+        RoundedList(
+          header: 'Help',
+          children: [
+            ListTile(
+              leading: FaIcon(
+                FontAwesomeIcons.infoCircle,
+                color: isDarkModeOn ? Colors.white : Colors.black,
               ),
-            ],
-          ),
-          const SizedBox(height: Constants.listSpacing),
-          const PackageInfoView(),
-          const SizedBox(height: Constants.listSpacing),
-        ],
-      ),
+              title: const Text('Go to introduction screen'),
+              trailing: Icon(
+                Icons.arrow_forward_ios,
+                color: isDarkModeOn ? Colors.white : Colors.black,
+              ),
+              onTap: () => Navigator.pushNamed(context, '/introduction'),
+            ),
+            // Build mail send button
+            ListTile(
+              leading: FaIcon(
+                FontAwesomeIcons.envelope,
+                color: isDarkModeOn ? Colors.white : Colors.black,
+              ),
+              title: const Text('Send feedback'),
+              trailing: Icon(
+                Icons.arrow_forward_ios,
+                color: isDarkModeOn ? Colors.white : Colors.black,
+              ),
+              onTap: () => _sendFeedback(context),
+            ),
+          ],
+        ),
+        const SizedBox(height: Constants.listSpacing),
+        const PackageInfoView(),
+        const SizedBox(height: Constants.listSpacing),
+      ],
     );
   }
 

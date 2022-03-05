@@ -1,10 +1,10 @@
 // Flutter imports:
-import 'package:dart_ping_ios/dart_ping_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:adapty_flutter/adapty_flutter.dart';
+import 'package:dart_ping_ios/dart_ping_ios.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';

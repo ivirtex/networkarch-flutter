@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:network_arch/shared/list_circular_progress_indicator.dart';
 
-class DataLine extends StatelessWidget {
-  const DataLine({
+class ListTextLine extends StatelessWidget {
+  const ListTextLine({
     required this.textL,
     this.textR,
     this.padding,

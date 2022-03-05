@@ -7,7 +7,6 @@ import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/shared/shared.dart';
@@ -110,77 +109,74 @@ class _PingViewState extends State<PingView> {
   }
 
   Widget _buildBody() {
-    return Padding(
-      padding: Constants.bodyPadding,
-      child: ListView(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: BlocConsumer<PingBloc, PingState>(
-                  listener: (context, state) {
-                    if (state is PingRunNewData) {
-                      _pingData.insert(_pingData.length, state.pingData);
+    return ContentListView(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: BlocConsumer<PingBloc, PingState>(
+                listener: (context, state) {
+                  if (state is PingRunNewData) {
+                    _pingData.insert(_pingData.length, state.pingData);
 
-                      if (state.pingData.error != null &&
-                          state.pingData.error?.error !=
-                              ErrorType.RequestTimedOut) {
-                        _appBarKey.currentState?.toggleAnimation();
+                    if (state.pingData.error != null &&
+                        state.pingData.error?.error !=
+                            ErrorType.RequestTimedOut) {
+                      _appBarKey.currentState?.toggleAnimation();
 
-                        context.read<PingBloc>().add(PingStopped());
-                      }
+                      context.read<PingBloc>().add(PingStopped());
                     }
-                  },
-                  builder: (context, state) {
-                    return DomainTextField(
-                      controller: _targetHostController,
-                      label: 'IP address (e.g. 1.1.1.1)',
-                      enabled: state is PingInitial || state is PingRunComplete,
-                      onChanged: (_) {
-                        setState(() {
-                          _shouldStartButtonBeActive = _target.isNotEmpty;
-                        });
-                      },
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(width: 10.0),
-              BlocBuilder<PingBloc, PingState>(
-                builder: (context, state) {
-                  if (state is PingRunComplete && _pingData.isNotEmpty) {
-                    return ClearListButton(
-                      onPressed: () async {
-                        await _pingData.removeAllElements(context);
-
-                        setState(() {
-                          _shouldStartButtonBeActive = _target.isNotEmpty;
-                        });
-                      },
-                    );
                   }
-
-                  return const ClearListButton();
+                },
+                builder: (context, state) {
+                  return DomainTextField(
+                    controller: _targetHostController,
+                    label: 'IP address (e.g. 1.1.1.1)',
+                    enabled: state is PingInitial || state is PingRunComplete,
+                    onChanged: (_) {
+                      setState(() {
+                        _shouldStartButtonBeActive = _target.isNotEmpty;
+                      });
+                    },
+                  );
                 },
               ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          AnimatedList(
-            key: _listKey,
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            initialItemCount: _pingData.length,
-            itemBuilder: (context, index, animation) {
-              return _buildItem(
-                context,
-                animation,
-                _pingData[index],
-              );
-            },
-          ),
-        ],
-      ),
+            ),
+            const SizedBox(width: 10.0),
+            BlocBuilder<PingBloc, PingState>(
+              builder: (context, state) {
+                if (state is PingRunComplete && _pingData.isNotEmpty) {
+                  return ClearListButton(
+                    onPressed: () async {
+                      await _pingData.removeAllElements(context);
+
+                      setState(() {
+                        _shouldStartButtonBeActive = _target.isNotEmpty;
+                      });
+                    },
+                  );
+                }
+
+                return const ClearListButton();
+              },
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        AnimatedList(
+          key: _listKey,
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          initialItemCount: _pingData.length,
+          itemBuilder: (context, index, animation) {
+            return _buildItem(
+              context,
+              animation,
+              _pingData[index],
+            );
+          },
+        ),
+      ],
     );
   }
 

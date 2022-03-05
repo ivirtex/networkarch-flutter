@@ -57,7 +57,7 @@ class _WhoisViewState extends State<WhoisView> {
           ),
         ],
       ),
-      body: SingleChildScrollView(child: _buildBody()),
+      body: _buildBody(),
     );
   }
 
@@ -83,45 +83,42 @@ class _WhoisViewState extends State<WhoisView> {
   }
 
   Widget _buildBody() {
-    return Padding(
-      padding: Constants.bodyPadding,
-      child: Column(
-        children: [
-          DomainTextField(
-            controller: _targetHostController,
-            label: 'Domain name',
-            onChanged: (_) {
-              setState(() {
-                _shouldCheckButtonBeActive = _target.isNotEmpty;
-              });
-            },
-          ),
-          const SizedBox(height: Constants.listSpacing),
-          BlocBuilder<WhoisBloc, WhoisState>(
-            builder: (context, state) {
-              if (state is WhoisLoadSuccess) {
-                return SlideInUp(
-                  child: FadeIn(
-                    child: DataCard(
-                      child: Text(state.response),
-                    ),
+    return ContentListView(
+      children: [
+        DomainTextField(
+          controller: _targetHostController,
+          label: 'Domain name',
+          onChanged: (_) {
+            setState(() {
+              _shouldCheckButtonBeActive = _target.isNotEmpty;
+            });
+          },
+        ),
+        const SizedBox(height: Constants.listSpacing),
+        BlocBuilder<WhoisBloc, WhoisState>(
+          builder: (context, state) {
+            if (state is WhoisLoadSuccess) {
+              return SlideInUp(
+                child: FadeIn(
+                  child: DataCard(
+                    child: Text(state.response),
                   ),
-                );
-              }
+                ),
+              );
+            }
 
-              if (state is WhoisLoadInProgress) {
-                return const LoadingCard();
-              }
+            if (state is WhoisLoadInProgress) {
+              return const LoadingCard();
+            }
 
-              if (state is WhoisLoadFailure) {
-                return const ErrorCard(message: 'Failed to load data');
-              }
+            if (state is WhoisLoadFailure) {
+              return const ErrorCard(message: 'Failed to load data');
+            }
 
-              return const SizedBox();
-            },
-          ),
-        ],
-      ),
+            return const SizedBox();
+          },
+        ),
+      ],
     );
   }
 

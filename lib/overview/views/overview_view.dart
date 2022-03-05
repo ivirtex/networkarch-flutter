@@ -61,10 +61,8 @@ class _OverviewViewState extends State<OverviewView> {
     );
   }
 
-  SingleChildScrollView _buildAndroid(BuildContext context) {
-    return SingleChildScrollView(
-      child: _buildBody(context),
-    );
+  Widget _buildAndroid(BuildContext context) {
+    return _buildBody(context);
   }
 
   CupertinoPageScaffold _buildIOS(BuildContext context) {
@@ -85,80 +83,70 @@ class _OverviewViewState extends State<OverviewView> {
   Widget _buildBody(BuildContext context) {
     final AdWidget adWidget = AdWidget(ad: banner);
 
-    return Padding(
-      padding: Constants.bodyPadding,
-      child: ListView(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SmallDescription(child: 'Networks', leftPadding: 8.0),
-              const WifiStatusCard(),
-              const SizedBox(height: Constants.listSpacing),
-              const CarrierStatusCard(),
-              // const Divider(indent: 15, endIndent: 15),
-              const SizedBox(height: Constants.listSpacing),
-              const SmallDescription(child: 'Utilities', leftPadding: 8.0),
-              ToolCard(
-                toolName: 'Ping',
-                toolDesc: Constants.pingDesc,
-                onPressed: () {
-                  Navigator.pushNamed(context, '/tools/ping', arguments: '');
-                },
-              ),
-              const SizedBox(height: Constants.listSpacing),
-              ToolCard(
-                toolName: 'LAN Scanner',
-                toolDesc: Constants.lanScannerDesc,
-                onPressed: () {
-                  Navigator.pushNamed(context, '/tools/lan');
-                },
-              ),
-              const SizedBox(height: Constants.listSpacing),
-              ToolCard(
-                toolName: 'Wake On LAN',
-                toolDesc: Constants.wolDesc,
-                onPressed: () {
-                  Navigator.pushNamed(context, '/tools/wol');
-                },
-              ),
-              const SizedBox(height: Constants.listSpacing),
-              ToolCard(
-                toolName: 'IP Geolocation',
-                toolDesc: Constants.ipGeoDesc,
-                onPressed: () {
-                  Navigator.pushNamed(context, '/tools/ip_geo');
-                },
-              ),
-              const SizedBox(height: Constants.listSpacing),
-              ToolCard(
-                toolName: 'Whois',
-                toolDesc: Constants.whoisDesc,
-                onPressed: () {
-                  Navigator.pushNamed(context, '/tools/whois');
-                },
-              ),
-              const SizedBox(height: Constants.listSpacing),
-              ToolCard(
-                toolName: 'DNS Lookup',
-                toolDesc: Constants.dnsDesc,
-                onPressed: () {
-                  Navigator.pushNamed(context, '/tools/dns_lookup');
-                },
-              ),
-              const Divider(indent: 15, endIndent: 15),
-              Container(
-                alignment: Alignment.center,
-                width: banner.size.width.toDouble(),
-                height: banner.size.height.toDouble(),
-                child: adWidget,
-              ),
-            ],
-          ),
-        ],
-      ),
+    return ContentListView(
+      children: [
+        const SmallDescription(child: 'Networks', leftPadding: 8.0),
+        const WifiStatusCard(),
+        const SizedBox(height: Constants.listSpacing),
+        const CarrierStatusCard(),
+        // const Divider(indent: 15, endIndent: 15),
+        const SizedBox(height: Constants.listSpacing),
+        const SmallDescription(child: 'Utilities', leftPadding: 8.0),
+        ToolCard(
+          toolName: 'Ping',
+          toolDesc: Constants.pingDesc,
+          onPressed: () {
+            Navigator.pushNamed(context, '/tools/ping', arguments: '');
+          },
+        ),
+        const SizedBox(height: Constants.listSpacing),
+        ToolCard(
+          toolName: 'LAN Scanner',
+          toolDesc: Constants.lanScannerDesc,
+          onPressed: () {
+            Navigator.pushNamed(context, '/tools/lan');
+          },
+        ),
+        const SizedBox(height: Constants.listSpacing),
+        ToolCard(
+          toolName: 'Wake On LAN',
+          toolDesc: Constants.wolDesc,
+          onPressed: () {
+            Navigator.pushNamed(context, '/tools/wol');
+          },
+        ),
+        const SizedBox(height: Constants.listSpacing),
+        ToolCard(
+          toolName: 'IP Geolocation',
+          toolDesc: Constants.ipGeoDesc,
+          onPressed: () {
+            Navigator.pushNamed(context, '/tools/ip_geo');
+          },
+        ),
+        const SizedBox(height: Constants.listSpacing),
+        ToolCard(
+          toolName: 'Whois',
+          toolDesc: Constants.whoisDesc,
+          onPressed: () {
+            Navigator.pushNamed(context, '/tools/whois');
+          },
+        ),
+        const SizedBox(height: Constants.listSpacing),
+        ToolCard(
+          toolName: 'DNS Lookup',
+          toolDesc: Constants.dnsDesc,
+          onPressed: () {
+            Navigator.pushNamed(context, '/tools/dns_lookup');
+          },
+        ),
+        const Divider(indent: 15, endIndent: 15),
+        Container(
+          alignment: Alignment.center,
+          width: banner.size.width.toDouble(),
+          height: banner.size.height.toDouble(),
+          child: adWidget,
+        ),
+      ],
     );
   }
 }

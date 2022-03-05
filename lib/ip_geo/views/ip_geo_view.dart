@@ -82,9 +82,7 @@ class _IpGeoViewState extends State<IpGeoView> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: _buildBody(),
-      ),
+      body: _buildBody(),
     );
   }
 
@@ -94,8 +92,10 @@ class _IpGeoViewState extends State<IpGeoView> {
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
             CupertinoSliverNavigationBar(
+              border: null,
               largeTitle: const Text('IP Geolocation'),
               trailing: CupertinoButton(
+                padding: EdgeInsets.zero,
                 onPressed: _handleCheck,
                 child: const Text('Check'),
               ),
@@ -108,117 +108,113 @@ class _IpGeoViewState extends State<IpGeoView> {
   }
 
   Widget _buildBody() {
-    return Padding(
-      padding: Constants.bodyPadding,
-      child: Column(
-        children: [
-          DomainTextField(
-            controller: _targetHostController,
-            label: 'IP address (e.g. 1.1.1.1)',
-            onChanged: (_) {
-              setState(() {
-                _shouldCheckBeActive = _target.isNotEmpty;
-              });
-            },
-          ),
-          const SizedBox(height: Constants.listSpacing),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: SizedBox(
-              height: 300,
-              child: GoogleMap(
-                markers: _markers.values.toSet(),
-                initialCameraPosition:
-                    const CameraPosition(target: LatLng(0, 0)),
-                gestureRecognizers: {
-                  Factory<OneSequenceGestureRecognizer>(
-                    () => EagerGestureRecognizer(),
-                  ),
-                },
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
+    return ContentListView(
+      children: [
+        DomainTextField(
+          controller: _targetHostController,
+          label: 'IP address (e.g. 1.1.1.1)',
+          onChanged: (_) {
+            setState(() {
+              _shouldCheckBeActive = _target.isNotEmpty;
+            });
+          },
+        ),
+        const SizedBox(height: Constants.listSpacing),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: SizedBox(
+            height: 300,
+            child: GoogleMap(
+              markers: _markers.values.toSet(),
+              initialCameraPosition: const CameraPosition(target: LatLng(0, 0)),
+              gestureRecognizers: {
+                Factory<OneSequenceGestureRecognizer>(
+                  () => EagerGestureRecognizer(),
+                ),
+              },
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
 
-                  context.read<ThemeBloc>().state.mode == ThemeMode.dark
-                      ? controller.setMapStyle(_darkModeMapStyle)
-                      : controller.setMapStyle(null);
-                },
-              ),
+                context.read<ThemeBloc>().state.mode == ThemeMode.dark
+                    ? controller.setMapStyle(_darkModeMapStyle)
+                    : controller.setMapStyle(null);
+              },
             ),
           ),
-          const SizedBox(height: Constants.listSpacing),
-          BlocConsumer<IpGeoBloc, IpGeoState>(
-            listener: (context, state) {
-              if (state is IpGeoLoadSuccess) {
-                _onSuccesfullUpdate(state);
-              }
-            },
-            builder: (context, state) {
-              if (state is IpGeoLoadSuccess) {
-                return RoundedList(
-                  children: [
-                    DataLine(
-                      textL: const Text('IP'),
-                      textR: Text(state.ipGeoModel.query ?? 'N/A'),
-                    ),
-                    DataLine(
-                      textL: const Text('Country'),
-                      textR: Text(state.ipGeoModel.country ?? 'N/A'),
-                    ),
-                    DataLine(
-                      textL: const Text('Region'),
-                      textR: Text(state.ipGeoModel.region ?? 'N/A'),
-                    ),
-                    DataLine(
-                      textL: const Text('City'),
-                      textR: Text(state.ipGeoModel.city ?? 'N/A'),
-                    ),
-                    DataLine(
-                      textL: const Text('Latitude'),
-                      textR: Text(state.ipGeoModel.lat.toString()),
-                    ),
-                    DataLine(
-                      textL: const Text('Longitude'),
-                      textR: Text(state.ipGeoModel.lon.toString()),
-                    ),
-                    DataLine(
-                      textL: const Text('Timezone'),
-                      textR: Text(state.ipGeoModel.timezone ?? 'N/A'),
-                    ),
-                    DataLine(
-                      textL: const Text('Zipcode'),
-                      textR: Text(state.ipGeoModel.zip ?? 'N/A'),
-                    ),
-                    DataLine(
-                      textL: const Text('ISP'),
-                      textR: Text(state.ipGeoModel.isp ?? 'N/A'),
-                    ),
-                    DataLine(
-                      textL: const Text('Organization'),
-                      textR: Text(state.ipGeoModel.org ?? 'N/A'),
-                    ),
-                    DataLine(
-                      textL: const Text('As'),
-                      textR: Text(state.ipGeoModel.as ?? 'N/A'),
-                    ),
-                  ],
-                );
-              }
+        ),
+        const SizedBox(height: Constants.listSpacing),
+        BlocConsumer<IpGeoBloc, IpGeoState>(
+          listener: (context, state) {
+            if (state is IpGeoLoadSuccess) {
+              _onSuccesfullUpdate(state);
+            }
+          },
+          builder: (context, state) {
+            if (state is IpGeoLoadSuccess) {
+              return RoundedList(
+                children: [
+                  ListTextLine(
+                    textL: const Text('IP'),
+                    textR: Text(state.ipGeoModel.query ?? 'N/A'),
+                  ),
+                  ListTextLine(
+                    textL: const Text('Country'),
+                    textR: Text(state.ipGeoModel.country ?? 'N/A'),
+                  ),
+                  ListTextLine(
+                    textL: const Text('Region'),
+                    textR: Text(state.ipGeoModel.region ?? 'N/A'),
+                  ),
+                  ListTextLine(
+                    textL: const Text('City'),
+                    textR: Text(state.ipGeoModel.city ?? 'N/A'),
+                  ),
+                  ListTextLine(
+                    textL: const Text('Latitude'),
+                    textR: Text(state.ipGeoModel.lat.toString()),
+                  ),
+                  ListTextLine(
+                    textL: const Text('Longitude'),
+                    textR: Text(state.ipGeoModel.lon.toString()),
+                  ),
+                  ListTextLine(
+                    textL: const Text('Timezone'),
+                    textR: Text(state.ipGeoModel.timezone ?? 'N/A'),
+                  ),
+                  ListTextLine(
+                    textL: const Text('Zipcode'),
+                    textR: Text(state.ipGeoModel.zip ?? 'N/A'),
+                  ),
+                  ListTextLine(
+                    textL: const Text('ISP'),
+                    textR: Text(state.ipGeoModel.isp ?? 'N/A'),
+                  ),
+                  ListTextLine(
+                    textL: const Text('Organization'),
+                    textR: Text(state.ipGeoModel.org ?? 'N/A'),
+                  ),
+                  ListTextLine(
+                    textL: const Text('As'),
+                    textR: Text(state.ipGeoModel.as ?? 'N/A'),
+                  ),
+                ],
+              );
+            }
 
-              if (state is IpGeoLoadInProgress) {
-                return const LoadingCard();
-              }
+            if (state is IpGeoLoadInProgress) {
+              return const LoadingCard();
+            }
 
-              if (state is IpGeoLoadFailure) {
-                return const ErrorCard(
-                  message: 'Error while loading the data',
-                );
-              }
+            if (state is IpGeoLoadFailure) {
+              return const ErrorCard(
+                message: 'Error while loading the data',
+              );
+            }
 
-              return const SizedBox();
-            },
-          ),
-        ],
-      ),
+            return const SizedBox();
+          },
+        ),
+      ],
     );
   }
 

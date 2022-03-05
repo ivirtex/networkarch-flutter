@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
@@ -81,9 +80,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: _buildBody(context),
-      ),
+      body: _buildBody(context),
     );
   }
 
@@ -103,84 +100,81 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
   }
 
   Widget _buildBody(BuildContext context) {
-    return Padding(
-      padding: Constants.bodyPadding,
-      child: Column(
-        children: [
-          BlocConsumer<WakeOnLanBloc, WakeOnLanState>(
-            listener: (context, state) {
-              if (state is WakeOnLanIPValidationFailure) {
-                _isValidIpv4 = false;
-              }
+    return ContentListView(
+      children: [
+        BlocConsumer<WakeOnLanBloc, WakeOnLanState>(
+          listener: (context, state) {
+            if (state is WakeOnLanIPValidationFailure) {
+              _isValidIpv4 = false;
+            }
 
-              if (state is WakeOnLanMACValidationFailure) {
-                _isValidMac = false;
-              }
+            if (state is WakeOnLanMACValidationFailure) {
+              _isValidMac = false;
+            }
 
-              if (state is WakeOnLanIPandMACValidationFailure) {
-                _isValidIpv4 = false;
-                _isValidMac = false;
-              }
+            if (state is WakeOnLanIPandMACValidationFailure) {
+              _isValidIpv4 = false;
+              _isValidMac = false;
+            }
 
-              if (state is WakeOnLanSuccess) {
-                _isValidIpv4 = true;
-                _isValidMac = true;
+            if (state is WakeOnLanSuccess) {
+              _isValidIpv4 = true;
+              _isValidMac = true;
 
-                final WolResponseModel response = WolResponseModel(
-                  state.ipv4,
-                  state.mac,
-                  state.packetBytes,
-                  WolStatus.success,
-                );
-                wolResponses.insert(wolResponses.length, response);
-              }
-            },
-            builder: (context, state) {
-              return Column(
-                children: [
-                  DomainTextField(
-                    controller: ipv4TextFieldController,
-                    label: 'IPv4 address',
-                    errorText: _isValidIpv4 ? null : 'Invalid IPv4 address',
-                    keyboardType: TextInputType.number,
-                    onChanged: (_) {
-                      setState(() {
-                        _shouldSendButtonBeActive = _areTextFieldsNotEmpty();
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  DomainTextField(
-                    controller: macTextFieldController,
-                    label: 'MAC address [XX:XX:XX:XX:XX:XX]',
-                    errorText: _isValidMac ? null : 'Invalid MAC address',
-                    keyboardType: TextInputType.number,
-                    onChanged: (_) {
-                      setState(() {
-                        _shouldSendButtonBeActive = _areTextFieldsNotEmpty();
-                      });
-                    },
-                  ),
-                ],
+              final WolResponseModel response = WolResponseModel(
+                state.ipv4,
+                state.mac,
+                state.packetBytes,
+                WolStatus.success,
               );
-            },
-          ),
-          const SizedBox(height: 10),
-          AnimatedList(
-            key: _listKey,
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            initialItemCount: wolResponses.length,
-            itemBuilder: (context, index, animation) {
-              return _buildItem(
-                context,
-                animation,
-                wolResponses[index],
-              );
-            },
-          ),
-        ],
-      ),
+              wolResponses.insert(wolResponses.length, response);
+            }
+          },
+          builder: (context, state) {
+            return Column(
+              children: [
+                DomainTextField(
+                  controller: ipv4TextFieldController,
+                  label: 'IPv4 address',
+                  errorText: _isValidIpv4 ? null : 'Invalid IPv4 address',
+                  keyboardType: TextInputType.number,
+                  onChanged: (_) {
+                    setState(() {
+                      _shouldSendButtonBeActive = _areTextFieldsNotEmpty();
+                    });
+                  },
+                ),
+                const SizedBox(height: 10),
+                DomainTextField(
+                  controller: macTextFieldController,
+                  label: 'MAC address [XX:XX:XX:XX:XX:XX]',
+                  errorText: _isValidMac ? null : 'Invalid MAC address',
+                  keyboardType: TextInputType.number,
+                  onChanged: (_) {
+                    setState(() {
+                      _shouldSendButtonBeActive = _areTextFieldsNotEmpty();
+                    });
+                  },
+                ),
+              ],
+            );
+          },
+        ),
+        const SizedBox(height: 10),
+        AnimatedList(
+          key: _listKey,
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          initialItemCount: wolResponses.length,
+          itemBuilder: (context, index, animation) {
+            return _buildItem(
+              context,
+              animation,
+              wolResponses[index],
+            );
+          },
+        ),
+      ],
     );
   }
 

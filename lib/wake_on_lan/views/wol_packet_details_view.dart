@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/wake_on_lan/models/wol_response_model.dart';
 import 'package:network_arch/wake_on_lan/widgets/hex_bytes_viewer.dart';
 
@@ -26,9 +25,7 @@ class WolPacketDetailsView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Packet details'),
       ),
-      body: SingleChildScrollView(
-        child: _buildBody(context),
-      ),
+      body: _buildBody(context),
     );
   }
 
@@ -49,24 +46,25 @@ class WolPacketDetailsView extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    return Padding(
-      padding: Constants.bodyPadding,
-      child: RoundedList(
-        children: [
-          DataLine(
-            textL: const Text('MAC address'),
-            textR: Text(response.mac.address),
-          ),
-          DataLine(
-            textL: const Text('IP address'),
-            textR: Text(response.ipv4.address),
-          ),
-          HexBytesViewer(
-            title: 'Magic packet bytes',
-            bytes: response.packetBytes,
-          ),
-        ],
-      ),
+    return ContentListView(
+      children: [
+        RoundedList(
+          children: [
+            ListTextLine(
+              textL: const Text('MAC address'),
+              textR: Text(response.mac.address),
+            ),
+            ListTextLine(
+              textL: const Text('IP address'),
+              textR: Text(response.ipv4.address),
+            ),
+            HexBytesViewer(
+              title: 'Magic packet bytes',
+              bytes: response.packetBytes,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

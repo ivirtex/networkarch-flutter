@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // Project imports:
 import 'package:network_arch/package_info/package_info.dart';
 import 'package:network_arch/shared/cards/cards.dart';
-import 'package:network_arch/shared/data_line.dart';
+import 'package:network_arch/shared/list_text_line.dart';
 import 'package:network_arch/shared/rounded_list.dart';
 
 class PackageInfoView extends StatelessWidget {
@@ -25,11 +25,11 @@ class PackageInfoView extends StatelessWidget {
           return RoundedList(
             header: 'App info',
             children: [
-              DataLine(
+              ListTextLine(
                 textL: const Text('App name'),
                 textR: Text(state.packageInfo.appName),
               ),
-              DataLine(
+              ListTextLine(
                 textL: const Text('Version'),
                 textR: Text(state.packageInfo.version),
               ),
