@@ -97,7 +97,15 @@ class _IpGeoViewState extends State<IpGeoView> {
               trailing: CupertinoButton(
                 padding: EdgeInsets.zero,
                 onPressed: _handleCheck,
-                child: const Text('Check'),
+                child: Text(
+                  'Check',
+                  style: TextStyle(
+                    color: CupertinoDynamicColor.resolve(
+                      CupertinoColors.activeGreen,
+                      context,
+                    ),
+                  ),
+                ),
               ),
             ),
           ];

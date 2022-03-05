@@ -88,10 +88,23 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
     return CupertinoPageScaffold(
       child: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          const CupertinoSliverNavigationBar(
-            stretch: true,
+          CupertinoSliverNavigationBar(
+            largeTitle: const Text('Whois'),
             border: null,
-            largeTitle: Text('Wake On LAN'),
+            stretch: true,
+            trailing: CupertinoButton(
+              padding: EdgeInsets.zero,
+              onPressed: _handleSend,
+              child: Text(
+                'Send',
+                style: TextStyle(
+                  color: CupertinoDynamicColor.resolve(
+                    CupertinoColors.activeGreen,
+                    context,
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
         body: _buildBody(context),

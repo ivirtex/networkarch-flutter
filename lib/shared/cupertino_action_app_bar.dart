@@ -31,7 +31,7 @@ class CupertinoActionAppBar extends StatelessWidget {
               padding: EdgeInsets.zero,
               onPressed: isActive ? onPressed : null,
               child: const Icon(
-                CupertinoIcons.play,
+                CupertinoIcons.play_arrow_solid,
                 color: CupertinoColors.activeGreen,
               ),
             )
@@ -39,7 +39,7 @@ class CupertinoActionAppBar extends StatelessWidget {
               padding: EdgeInsets.zero,
               onPressed: isActive ? onPressed : null,
               child: const FaIcon(
-                CupertinoIcons.stop,
+                CupertinoIcons.stop_fill,
                 color: CupertinoColors.destructiveRed,
               ),
             ),

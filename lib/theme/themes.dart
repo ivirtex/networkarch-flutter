@@ -25,9 +25,22 @@ abstract class Themes {
     ),
   );
 
-  static final CupertinoThemeData cupertinoThemeData = CupertinoThemeData(
+  static final CupertinoThemeData cupertinoLightThemeData = CupertinoThemeData(
     primaryColor: CupertinoColors.activeBlue,
     brightness: Brightness.light,
+    scaffoldBackgroundColor: const CupertinoDynamicColor.withBrightness(
+      color: CupertinoColors.systemGrey6,
+      darkColor: CupertinoColors.black,
+    ),
+    barBackgroundColor: CupertinoDynamicColor.withBrightness(
+      color: CupertinoColors.systemGrey6.withOpacity(0.8),
+      darkColor: CupertinoColors.black.withOpacity(0.8),
+    ),
+  );
+
+  static final CupertinoThemeData cupertinoDarkThemeData = CupertinoThemeData(
+    primaryColor: CupertinoColors.activeBlue,
+    brightness: Brightness.dark,
     scaffoldBackgroundColor: const CupertinoDynamicColor.withBrightness(
       color: CupertinoColors.systemGrey6,
       darkColor: CupertinoColors.black,

@@ -111,19 +111,24 @@ class NetworkArch extends StatelessWidget {
   Widget _buildIOS(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
-        return CupertinoApp(
-          localizationsDelegates: const [
-            DefaultMaterialLocalizations.delegate,
-            DefaultWidgetsLocalizations.delegate,
-            DefaultCupertinoLocalizations.delegate,
-          ],
-          navigatorObservers: [
-            SentryNavigatorObserver(),
-          ],
-          title: Constants.appName,
-          theme: Themes.cupertinoThemeData,
-          routes: Constants.routes,
-          home: const Home(),
+        return MediaQuery.fromWindow(
+          child: CupertinoApp(
+            useInheritedMediaQuery: true,
+            localizationsDelegates: const [
+              DefaultMaterialLocalizations.delegate,
+              DefaultWidgetsLocalizations.delegate,
+              DefaultCupertinoLocalizations.delegate,
+            ],
+            navigatorObservers: [
+              SentryNavigatorObserver(),
+            ],
+            title: Constants.appName,
+            theme: state.mode == ThemeMode.light
+                ? Themes.cupertinoLightThemeData
+                : Themes.cupertinoDarkThemeData,
+            routes: Constants.routes,
+            home: const Home(),
+          ),
         );
       },
     );

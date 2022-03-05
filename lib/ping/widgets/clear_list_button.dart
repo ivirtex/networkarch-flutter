@@ -42,10 +42,9 @@ class ClearListButton extends StatelessWidget {
   Widget _buildIOS(BuildContext context) {
     return CupertinoButton(
       padding: const EdgeInsets.all(12.0),
-      color: Constants.getPlatformBtnColor(context),
       borderRadius: BorderRadius.circular(10.0),
       onPressed: onPressed,
-      child: Text('Clear list', style: Theme.of(context).textTheme.button),
+      child: const Text('Clear list'),
     );
   }
 }

@@ -113,23 +113,23 @@ class _PingViewState extends State<PingView> {
       children: [
         Row(
           children: [
-            Expanded(
-              child: BlocConsumer<PingBloc, PingState>(
-                listener: (context, state) {
-                  if (state is PingRunNewData) {
-                    _pingData.insert(_pingData.length, state.pingData);
+            BlocConsumer<PingBloc, PingState>(
+              listener: (context, state) {
+                if (state is PingRunNewData) {
+                  _pingData.insert(_pingData.length, state.pingData);
 
-                    if (state.pingData.error != null &&
-                        state.pingData.error?.error !=
-                            ErrorType.RequestTimedOut) {
-                      _appBarKey.currentState?.toggleAnimation();
+                  if (state.pingData.error != null &&
+                      state.pingData.error?.error !=
+                          ErrorType.RequestTimedOut) {
+                    _appBarKey.currentState?.toggleAnimation();
 
-                      context.read<PingBloc>().add(PingStopped());
-                    }
+                    context.read<PingBloc>().add(PingStopped());
                   }
-                },
-                builder: (context, state) {
-                  return DomainTextField(
+                }
+              },
+              builder: (context, state) {
+                return Expanded(
+                  child: DomainTextField(
                     controller: _targetHostController,
                     label: 'IP address (e.g. 1.1.1.1)',
                     enabled: state is PingInitial || state is PingRunComplete,
@@ -138,9 +138,9 @@ class _PingViewState extends State<PingView> {
                         _shouldStartButtonBeActive = _target.isNotEmpty;
                       });
                     },
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
             const SizedBox(width: 10.0),
             BlocBuilder<PingBloc, PingState>(

@@ -71,7 +71,15 @@ class _DnsLookupViewState extends State<DnsLookupView> {
               trailing: CupertinoButton(
                 padding: EdgeInsets.zero,
                 onPressed: _handleCheck,
-                child: const Text('Check'),
+                child: Text(
+                  'Check',
+                  style: TextStyle(
+                    color: CupertinoDynamicColor.resolve(
+                      CupertinoColors.activeGreen,
+                      context,
+                    ),
+                  ),
+                ),
               ),
             ),
           ];
