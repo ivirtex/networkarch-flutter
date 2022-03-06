@@ -35,6 +35,7 @@ class DomainTextField extends StatelessWidget {
           autocorrect: false,
           controller: controller,
           decoration: InputDecoration(
+            fillColor: Theme.of(context).colorScheme.tertiaryContainer,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),

@@ -22,9 +22,9 @@ class ErrorCard extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       child: Row(
         children: [
-          const Icon(
+          Icon(
             FontAwesomeIcons.timesCircle,
-            color: Colors.red,
+            color: Theme.of(context).colorScheme.error,
             size: 25,
           ),
           const SizedBox(width: 10),

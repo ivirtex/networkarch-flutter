@@ -68,6 +68,15 @@ abstract class Constants {
   );
 
   // Colors
+  static const Color seedColor = Color.fromARGB(255, 0, 76, 163);
+  static final ColorScheme lightColorScheme = ColorScheme.fromSeed(
+    seedColor: seedColor,
+  );
+  static final ColorScheme darkColorScheme = ColorScheme.fromSeed(
+    brightness: Brightness.dark,
+    seedColor: seedColor,
+  );
+
   static const Color iOSlightBgColor = CupertinoColors.systemGrey5;
   static const Color iOSdarkBgColor = CupertinoColors.black;
   static final Color lightBgColor = Colors.grey[100]!;
@@ -76,12 +85,10 @@ abstract class Constants {
   static const CupertinoDynamicColor iOSCardColor = CupertinoColors.systemGrey5;
   static final Color lightCardColor = Colors.grey[200]!;
   static final Color darkCardColor = Colors.grey[850]!;
-  // static final Color iOSdarkCardColor = CupertinoColors.systemGrey5.darkColor;
 
   static const CupertinoDynamicColor iOSBtnColor = CupertinoColors.systemGrey4;
   static final Color lightBtnColor = Colors.grey[300]!;
   static final Color darkBtnColor = Colors.grey[800]!;
-  // static final Color iOSdarkBtnColor = CupertinoColors.systemGrey4.darkColor;
 
   static Color getPlatformBgColor(BuildContext context) {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
@@ -101,18 +108,14 @@ abstract class Constants {
     return Platform.isIOS
         ? Constants.iOSCardColor.resolveFrom(context)
         : isDarkModeOn
-            ? Constants.darkCardColor
-            : Constants.lightCardColor;
+            ? Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.6)
+            : Theme.of(context).colorScheme.surface.withOpacity(0.8);
   }
 
   static Color getPlatformBtnColor(BuildContext context) {
-    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
-
     return Platform.isIOS
         ? Constants.iOSBtnColor.resolveFrom(context)
-        : isDarkModeOn
-            ? Constants.darkBtnColor
-            : Constants.lightBtnColor;
+        : Theme.of(context).colorScheme.surface.withOpacity(0.6);
   }
 
   // Description styles

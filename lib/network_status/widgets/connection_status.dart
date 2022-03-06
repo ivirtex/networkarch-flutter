@@ -26,7 +26,9 @@ class ConnectionStatus extends StatelessWidget {
           Text(
             isNetworkConnected ? 'Connected' : 'Disconnected',
             style: TextStyle(
-              color: isNetworkConnected ? Colors.green : Colors.red,
+              color: isNetworkConnected
+                  ? Colors.green
+                  : Theme.of(context).colorScheme.error,
               fontWeight: FontWeight.bold,
               fontSize: 16.0,
             ),
@@ -35,23 +37,25 @@ class ConnectionStatus extends StatelessWidget {
           Icon(
             isNetworkConnected ? Icons.check_circle : Icons.cancel,
             size: iconSize,
-            color: isNetworkConnected ? Colors.green : Colors.red,
+            color: isNetworkConnected
+                ? Colors.green
+                : Theme.of(context).colorScheme.error,
           ),
         ],
       );
     } else if (state.status == NetworkStatus.failure) {
       return Row(
-        children: const [
+        children: [
           Text(
             'Error',
             style: TextStyle(
-              color: Colors.red,
+              color: Theme.of(context).colorScheme.error,
               fontWeight: FontWeight.bold,
               fontSize: 16.0,
             ),
           ),
-          SizedBox(width: 5.0),
-          Icon(
+          const SizedBox(width: 5.0),
+          const Icon(
             Icons.cancel,
             size: iconSize,
           ),

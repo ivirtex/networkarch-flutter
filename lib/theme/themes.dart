@@ -6,18 +6,23 @@ import 'package:flutter/material.dart';
 import 'package:network_arch/constants.dart';
 
 abstract class Themes {
-  static final ThemeData lightThemeData = ThemeData.light().copyWith(
-    scaffoldBackgroundColor: Constants.lightBgColor,
+  static final ThemeData lightThemeData = ThemeData(
+    colorScheme: Constants.lightColorScheme,
+    useMaterial3: true,
+    scaffoldBackgroundColor: Constants.lightColorScheme.background,
     appBarTheme: const AppBarTheme(
-      foregroundColor: Colors.black,
       backgroundColor: Colors.transparent,
       shadowColor: Colors.transparent,
+      foregroundColor: Colors.black,
       elevation: 0,
     ),
   );
 
-  static final ThemeData darkThemeData = ThemeData.dark().copyWith(
-    scaffoldBackgroundColor: Constants.darkBgColor,
+  static final ThemeData darkThemeData = ThemeData(
+    colorScheme: Constants.darkColorScheme,
+    brightness: Brightness.dark,
+    useMaterial3: true,
+    scaffoldBackgroundColor: Constants.darkColorScheme.background,
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,
       shadowColor: Colors.transparent,

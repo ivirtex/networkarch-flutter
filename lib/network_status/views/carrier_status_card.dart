@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
 import 'package:network_arch/network_status/network_status.dart';
 import 'package:network_arch/shared/adaptive_button.dart';
 import 'package:network_arch/shared/list_circular_progress_indicator.dart';
