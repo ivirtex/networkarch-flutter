@@ -26,10 +26,6 @@ class ClearListButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         primary: Constants.getPlatformBtnColor(context),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10.0,
-          vertical: 21.0,
-        ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),

@@ -111,56 +111,59 @@ class _PingViewState extends State<PingView> {
   Widget _buildBody() {
     return ContentListView(
       children: [
-        Row(
-          children: [
-            BlocConsumer<PingBloc, PingState>(
-              listener: (context, state) {
-                if (state is PingRunNewData) {
-                  _pingData.insert(_pingData.length, state.pingData);
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              BlocConsumer<PingBloc, PingState>(
+                listener: (context, state) {
+                  if (state is PingRunNewData) {
+                    _pingData.insert(_pingData.length, state.pingData);
 
-                  if (state.pingData.error != null &&
-                      state.pingData.error?.error !=
-                          ErrorType.RequestTimedOut) {
-                    _appBarKey.currentState?.toggleAnimation();
+                    if (state.pingData.error != null &&
+                        state.pingData.error?.error !=
+                            ErrorType.RequestTimedOut) {
+                      _appBarKey.currentState?.toggleAnimation();
 
-                    context.read<PingBloc>().add(PingStopped());
+                      context.read<PingBloc>().add(PingStopped());
+                    }
                   }
-                }
-              },
-              builder: (context, state) {
-                return Expanded(
-                  child: DomainTextField(
-                    controller: _targetHostController,
-                    label: 'IP address (e.g. 1.1.1.1)',
-                    enabled: state is PingInitial || state is PingRunComplete,
-                    onChanged: (_) {
-                      setState(() {
-                        _shouldStartButtonBeActive = _target.isNotEmpty;
-                      });
-                    },
-                  ),
-                );
-              },
-            ),
-            const SizedBox(width: 10.0),
-            BlocBuilder<PingBloc, PingState>(
-              builder: (context, state) {
-                if (state is PingRunComplete && _pingData.isNotEmpty) {
-                  return ClearListButton(
-                    onPressed: () async {
-                      await _pingData.removeAllElements(context);
-
-                      setState(() {
-                        _shouldStartButtonBeActive = _target.isNotEmpty;
-                      });
-                    },
+                },
+                builder: (context, state) {
+                  return Expanded(
+                    child: DomainTextField(
+                      controller: _targetHostController,
+                      label: 'IP address (e.g. 1.1.1.1)',
+                      enabled: state is PingInitial || state is PingRunComplete,
+                      onChanged: (_) {
+                        setState(() {
+                          _shouldStartButtonBeActive = _target.isNotEmpty;
+                        });
+                      },
+                    ),
                   );
-                }
+                },
+              ),
+              const SizedBox(width: 10.0),
+              BlocBuilder<PingBloc, PingState>(
+                builder: (context, state) {
+                  if (state is PingRunComplete && _pingData.isNotEmpty) {
+                    return ClearListButton(
+                      onPressed: () async {
+                        await _pingData.removeAllElements(context);
 
-                return const ClearListButton();
-              },
-            ),
-          ],
+                        setState(() {
+                          _shouldStartButtonBeActive = _target.isNotEmpty;
+                        });
+                      },
+                    );
+                  }
+
+                  return const ClearListButton();
+                },
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: 10),
         AnimatedList(

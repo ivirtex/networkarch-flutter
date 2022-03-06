@@ -10,6 +10,7 @@ class DomainTextField extends StatelessWidget {
     required this.controller,
     required this.label,
     this.enabled,
+    this.expands = false,
     this.errorText,
     this.keyboardType,
     this.suffixIcon,
@@ -21,6 +22,7 @@ class DomainTextField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
   final bool? enabled;
+  final bool expands;
   final String? errorText;
   final TextInputType? keyboardType;
   final Widget? suffixIcon;
@@ -44,6 +46,8 @@ class DomainTextField extends StatelessWidget {
             prefixIcon: withoutPrefixIcon ? null : const Icon(Icons.language),
             suffixIcon: suffixIcon,
           ),
+          expands: expands,
+          maxLines: null,
           onChanged: onChanged,
         );
       },

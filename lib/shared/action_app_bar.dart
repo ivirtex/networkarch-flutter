@@ -50,7 +50,6 @@ class ActionAppBarState extends State<ActionAppBar>
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(widget.title),
-      iconTheme: Theme.of(context).iconTheme,
       actions: [
         IconButton(
           splashRadius: 25.0,

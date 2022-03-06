@@ -92,45 +92,49 @@ class _DnsLookupViewState extends State<DnsLookupView> {
   Widget _buildBody() {
     return ContentListView(
       children: [
-        Row(
-          children: [
-            Flexible(
-              flex: 3,
-              child: DomainTextField(
-                label: 'Domain',
-                controller: _targetDomainController,
-                onChanged: (_) {
-                  setState(() {
-                    _shouldCheckButtonBeActive = _target.isNotEmpty;
-                  });
-                },
-              ),
-            ),
-            const SizedBox(width: 10),
-            Flexible(
-              child: DropdownButton<rrCodeName>(
-                items: _getQueryTypes(),
-                value: _selectedDnsQueryType,
-                hint: const Text('Type'),
-                borderRadius: BorderRadius.circular(10.0),
-                icon: const Icon(Icons.arrow_downward),
-                style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                underline: Container(
-                  height: 2,
-                  color: Theme.of(context).colorScheme.secondary,
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Flexible(
+                flex: 3,
+                child: DomainTextField(
+                  label: 'Domain',
+                  controller: _targetDomainController,
+                  expands: true,
+                  onChanged: (_) {
+                    setState(() {
+                      _shouldCheckButtonBeActive = _target.isNotEmpty;
+                    });
+                  },
                 ),
-                elevation: Platform.isIOS ? 0 : 8,
-                isExpanded: true,
-                onChanged: (type) {
-                  setState(() {
-                    _selectedDnsQueryType = type!;
-                  });
-                },
               ),
-            ),
-          ],
+              const SizedBox(width: 10),
+              Flexible(
+                child: DropdownButtonFormField<rrCodeName>(
+                  items: _getQueryTypes(),
+                  value: _selectedDnsQueryType,
+                  hint: const Text('Type'),
+                  icon: const Icon(Icons.arrow_downward),
+                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  elevation: Platform.isIOS ? 0 : 8,
+                  isExpanded: true,
+                  onChanged: (type) {
+                    setState(() {
+                      _selectedDnsQueryType = type!;
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: Constants.listSpacing),
         BlocBuilder<DnsLookupBloc, DnsLookupState>(

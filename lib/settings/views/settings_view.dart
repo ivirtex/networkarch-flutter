@@ -35,6 +35,7 @@ class _SettingsViewState extends State<SettingsView> {
   void initState() {
     super.initState();
 
+    _labelIndex = context.read<ThemeBloc>().state.mode.index;
     context.read<PackageInfoCubit>().fetchPackageInfo();
     canLaunch(Constants.sourceCodeURL)
         .then((canLaunch) => _canLaunchUrl = canLaunch);
