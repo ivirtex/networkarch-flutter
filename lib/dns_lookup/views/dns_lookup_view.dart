@@ -114,6 +114,13 @@ class _DnsLookupViewState extends State<DnsLookupView> {
                 hint: const Text('Type'),
                 borderRadius: BorderRadius.circular(10.0),
                 icon: const Icon(Icons.arrow_downward),
+                style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                underline: Container(
+                  height: 2,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
                 elevation: Platform.isIOS ? 0 : 8,
                 isExpanded: true,
                 onChanged: (type) {

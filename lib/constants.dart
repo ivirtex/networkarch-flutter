@@ -26,9 +26,9 @@ import 'package:network_arch/whois/whois.dart';
 abstract class Constants {
   static const String appName = 'NetworkArch';
   static const String appDesc = '''
-      NetworkArch is a network diagnostic tool equipped with various utilities, 
-      including pinging specific IP address or hostname, sending Wake on LAN magic packets,
-      whois and DNS Lookup.''';
+      NetworkArch is an open-source network diagnostic tool equipped with various useful utilities.
+      
+      ''';
 
   static const String usageDesc = 'We never share this data with anyone.';
 
@@ -41,6 +41,9 @@ abstract class Constants {
           done: const Text('Done'),
           next: const Icon(Icons.navigate_next),
           onDone: () => Navigator.of(context).pop(),
+          dotsDecorator: DotsDecorator(
+            activeColor: Theme.of(context).colorScheme.primary,
+          ),
         ),
     '/wifi': (context) => const WifiDetailedView(),
     '/carrier': (context) => const CarrierDetailView(),
@@ -68,7 +71,7 @@ abstract class Constants {
   );
 
   // Colors
-  static const Color seedColor = Color.fromARGB(255, 0, 76, 163);
+  static const Color seedColor = Color.fromARGB(255, 0, 123, 206);
   static final ColorScheme lightColorScheme = ColorScheme.fromSeed(
     seedColor: seedColor,
   );
@@ -79,27 +82,15 @@ abstract class Constants {
 
   static const Color iOSlightBgColor = CupertinoColors.systemGrey5;
   static const Color iOSdarkBgColor = CupertinoColors.black;
-  static final Color lightBgColor = Colors.grey[100]!;
-  static final Color darkBgColor = Colors.grey[900]!;
-
   static const CupertinoDynamicColor iOSCardColor = CupertinoColors.systemGrey5;
-  static final Color lightCardColor = Colors.grey[200]!;
-  static final Color darkCardColor = Colors.grey[850]!;
-
   static const CupertinoDynamicColor iOSBtnColor = CupertinoColors.systemGrey4;
-  static final Color lightBtnColor = Colors.grey[300]!;
-  static final Color darkBtnColor = Colors.grey[800]!;
 
   static Color getPlatformBgColor(BuildContext context) {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
-    return isDarkModeOn
-        ? Platform.isAndroid
-            ? Constants.darkBgColor
-            : Constants.iOSdarkBgColor
-        : Platform.isAndroid
-            ? Constants.lightBgColor
-            : Constants.iOSlightBgColor;
+    return Platform.isIOS
+        ? (isDarkModeOn ? iOSdarkBgColor : iOSlightBgColor)
+        : Theme.of(context).colorScheme.background;
   }
 
   static Color getPlatformCardColor(BuildContext context) {
@@ -108,14 +99,30 @@ abstract class Constants {
     return Platform.isIOS
         ? Constants.iOSCardColor.resolveFrom(context)
         : isDarkModeOn
-            ? Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.6)
+            ? Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5)
             : Theme.of(context).colorScheme.surface.withOpacity(0.8);
   }
 
   static Color getPlatformBtnColor(BuildContext context) {
+    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+
     return Platform.isIOS
         ? Constants.iOSBtnColor.resolveFrom(context)
-        : Theme.of(context).colorScheme.surface.withOpacity(0.6);
+        : isDarkModeOn
+            ? Theme.of(context).colorScheme.surface.withOpacity(0.6)
+            : Theme.of(context).colorScheme.surface;
+  }
+
+  static Color getPlatformIconColor(BuildContext context) {
+    return Platform.isIOS
+        ? CupertinoDynamicColor.resolve(CupertinoColors.white, context)
+        : Theme.of(context).colorScheme.onSurface;
+  }
+
+  static Color getPlatformTextColor(BuildContext context) {
+    return Platform.isIOS
+        ? CupertinoDynamicColor.resolve(CupertinoColors.white, context)
+        : Theme.of(context).colorScheme.onBackground;
   }
 
   // Description styles
@@ -177,24 +184,18 @@ abstract class Constants {
   ) {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
-    isDarkModeOn
-        ? _permissionGrantedNotificationDark.show(context)
-        : _permissionGrantedNotification.show(context);
+    if (isDarkModeOn) {
+      _permissionGrantedNotification.background =
+          Theme.of(context).colorScheme.outline;
+    }
+
+    _permissionGrantedNotification.show(context);
   }
 
   static final ElegantNotification _permissionGrantedNotification =
       ElegantNotification.success(
     title: const Text('Success'),
     description: const Text(_permissionGranted),
-    notificationPosition: NOTIFICATION_POSITION.bottom,
-    animation: ANIMATION.fromBottom,
-  );
-
-  static final ElegantNotification _permissionGrantedNotificationDark =
-      ElegantNotification.success(
-    title: const Text('Success'),
-    description: const Text(_permissionGranted),
-    background: Constants.darkCardColor,
     notificationPosition: NOTIFICATION_POSITION.bottom,
     animation: ANIMATION.fromBottom,
   );
@@ -206,38 +207,18 @@ abstract class Constants {
   ) {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
-    isDarkModeOn
-        ? _permissionDeniedNotificationDark.show(context)
-        : _permissionDeniedNotification.show(context);
+    if (isDarkModeOn) {
+      _permissionDeniedNotification.background =
+          Theme.of(context).colorScheme.outline;
+    }
+
+    _permissionDeniedNotification.show(context);
   }
 
   static final ElegantNotification _permissionDeniedNotification =
       ElegantNotification.error(
     title: const Text('Error'),
     description: const Text(_permissionDenied),
-    notificationPosition: NOTIFICATION_POSITION.bottom,
-    animation: ANIMATION.fromBottom,
-    toastDuration: const Duration(milliseconds: 4000),
-    height: 140.0,
-    action: const Padding(
-      padding: EdgeInsets.only(top: 10.0),
-      child: Text(
-        'Open Settings',
-        style: TextStyle(
-          color: Colors.blue,
-        ),
-      ),
-    ),
-    onActionPressed: () {
-      openAppSettings();
-    },
-  );
-
-  static final ElegantNotification _permissionDeniedNotificationDark =
-      ElegantNotification.error(
-    title: const Text('Error'),
-    description: const Text(_permissionDenied),
-    background: Constants.darkCardColor,
     notificationPosition: NOTIFICATION_POSITION.bottom,
     animation: ANIMATION.fromBottom,
     toastDuration: const Duration(milliseconds: 4000),
@@ -263,24 +244,18 @@ abstract class Constants {
   ) {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
-    isDarkModeOn
-        ? _permissionDefaultNotificationDark.show(context)
-        : _permissionDefaultNotification.show(context);
+    if (isDarkModeOn) {
+      _permissionDefaultNotification.background =
+          Theme.of(context).colorScheme.outline;
+    }
+
+    _permissionDefaultNotification.show(context);
   }
 
   static final ElegantNotification _permissionDefaultNotification =
       ElegantNotification.error(
     title: const Text('Warning'),
     description: const Text(_permissionDefault),
-    notificationPosition: NOTIFICATION_POSITION.bottom,
-    animation: ANIMATION.fromBottom,
-  );
-
-  static final ElegantNotification _permissionDefaultNotificationDark =
-      ElegantNotification.error(
-    title: const Text('Warning'),
-    description: const Text(_permissionDefault),
-    background: Constants.darkCardColor,
     notificationPosition: NOTIFICATION_POSITION.bottom,
     animation: ANIMATION.fromBottom,
   );

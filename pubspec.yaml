@@ -70,4 +70,5 @@ flutter:
 
   assets:
     - assets/dark_mode_map_style.txt
-    - assets/icon_alpha.png
+    - assets/icon_alpha_light.png
+    - assets/icon_alpha_dark.png

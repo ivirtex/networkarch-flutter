@@ -32,12 +32,9 @@ class AdaptiveButton extends StatelessWidget {
   }
 
   TextButton _buildAndroid(BuildContext context) {
-    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
-
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
-        primary: isDarkModeOn ? Colors.white : Colors.black,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
@@ -50,12 +47,12 @@ class AdaptiveButton extends StatelessWidget {
           Text(
             text,
             style: TextStyle(
-              color: isDarkModeOn ? Colors.white : Colors.black,
+              color: Constants.getPlatformTextColor(context),
             ),
           ),
           FaIcon(
             androidIcon,
-            color: isDarkModeOn ? Colors.white : Colors.black,
+            color: Constants.getPlatformIconColor(context),
           ),
         ],
       ),

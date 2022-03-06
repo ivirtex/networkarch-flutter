@@ -22,8 +22,6 @@ class ToolCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
-
     return DataCard(
       margin: EdgeInsetsDirectional.zero,
       child: Row(
@@ -36,19 +34,18 @@ class ToolCard extends StatelessWidget {
               children: [
                 Text(
                   toolName,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
-                    color: isDarkModeOn ? Colors.white : Colors.black,
                   ),
                 ),
                 Text(
                   toolDesc,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: isDarkModeOn
-                      ? Constants.descStyleDark
-                      : Constants.descStyleLight,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ],
             ),
@@ -58,13 +55,12 @@ class ToolCard extends StatelessWidget {
             child: TextButton(
               style: TextButton.styleFrom(
                 shape: const CircleBorder(),
-                primary: Colors.white,
                 backgroundColor: Constants.getPlatformBtnColor(context),
               ),
               onPressed: onPressed as void Function()?,
               child: FaIcon(
                 FontAwesomeIcons.arrowCircleRight,
-                color: isDarkModeOn ? Colors.white : Colors.black,
+                color: Constants.getPlatformIconColor(context),
               ),
             ),
           ),

@@ -15,8 +15,6 @@ class CarrierStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
-
     return DataCard(
       margin: EdgeInsetsDirectional.zero,
       child: Column(
@@ -27,12 +25,14 @@ class CarrierStatusCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
+                      const Icon(Icons.cell_tower_rounded),
+                      const SizedBox(width: 5),
                       Text(
                         'Carrier',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20.0,
-                          color: isDarkModeOn ? Colors.white : Colors.black,
+                          color: Theme.of(context).colorScheme.onBackground,
                         ),
                       ),
                       const Spacer(),
