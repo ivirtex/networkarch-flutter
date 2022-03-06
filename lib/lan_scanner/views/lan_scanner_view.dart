@@ -62,7 +62,7 @@ class _LanScannerViewState extends State<LanScannerView> {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: ActionAppBar(
-        title: 'Lan Scanner',
+        title: 'LAN Scanner',
         isActive: true,
         onStartPressed: _handleStart,
         onStopPressed: _handleStop,

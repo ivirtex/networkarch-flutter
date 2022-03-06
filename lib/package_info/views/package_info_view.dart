@@ -24,6 +24,7 @@ class PackageInfoView extends StatelessWidget {
         if (state is PackageInfoLoadSuccess) {
           return RoundedList(
             header: 'App info',
+            footer: 'Made with ❤️ by ivirtex',
             children: [
               ListTextLine(
                 textL: const Text('App name'),

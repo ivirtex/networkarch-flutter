@@ -66,14 +66,17 @@ final List<PageViewModel> pagesList = [
   PageViewModel(
     title: 'Permissions',
     decoration: const PageDecoration(
-      contentMargin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0),
+      contentMargin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 40.0),
     ),
     bodyWidget: const PermissionsView(),
-    footer: TextButton(
-      child: const Text('Open app settings'),
-      onPressed: () {
-        openAppSettings();
-      },
+    footer: Align(
+      alignment: Alignment.bottomCenter,
+      child: TextButton(
+        child: const Text('Open app settings'),
+        onPressed: () {
+          openAppSettings();
+        },
+      ),
     ),
   ),
 ];

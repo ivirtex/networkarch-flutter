@@ -27,24 +27,27 @@ class RoundedList extends StatelessWidget {
     return Column(
       children: [
         if (header != null) SmallDescription(child: header!),
-        Card(
-          margin: EdgeInsets.zero,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          elevation: Platform.isAndroid ? 1.0 : 0.0,
-          color: bgColor ?? Constants.getPlatformCardColor(context),
-          child: ListView.separated(
-            padding: EdgeInsets.zero,
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: children.length,
-            itemBuilder: (context, index) {
-              return children[index];
-            },
-            separatorBuilder: (context, index) {
-              return Constants.listDivider;
-            },
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: Card(
+            margin: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            elevation: Platform.isAndroid ? 1.0 : 0.0,
+            color: bgColor ?? Constants.getPlatformCardColor(context),
+            child: ListView.separated(
+              padding: EdgeInsets.zero,
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: children.length,
+              itemBuilder: (context, index) {
+                return children[index];
+              },
+              separatorBuilder: (context, index) {
+                return Constants.listDivider;
+              },
+            ),
           ),
         ),
         if (footer != null) SmallDescription(child: footer!),

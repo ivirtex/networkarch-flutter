@@ -18,6 +18,8 @@ class OnboardingFeature extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+
     return Row(
       children: [
         Icon(
@@ -38,7 +40,9 @@ class OnboardingFeature extends StatelessWidget {
               ),
               Text(
                 description,
-                style: Constants.descStyleLight,
+                style: isDarkModeOn
+                    ? Constants.descStyleDark
+                    : Constants.descStyleLight,
               ),
             ],
           ),

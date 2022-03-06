@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
 import 'package:network_arch/network_status/network_status.dart';
-import 'package:network_arch/shared/adaptive_button.dart';
+import 'package:network_arch/network_status/widgets/adaptive_button.dart';
 import 'package:network_arch/shared/list_circular_progress_indicator.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 

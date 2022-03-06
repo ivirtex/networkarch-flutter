@@ -52,5 +52,11 @@
 
 		<key>GADApplicationIdentifier</key>
 		<string>ca-app-pub-3222092607864795~8507922744</string>
+
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>https</string>
+			<string>http</string>
+		</array>
 	</dict>
 </plist>

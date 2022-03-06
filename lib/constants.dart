@@ -26,9 +26,11 @@ import 'package:network_arch/whois/whois.dart';
 abstract class Constants {
   static const String appName = 'NetworkArch';
   static const String appDesc = '''
-      NetworkArch is an open-source network diagnostic tool equipped with various useful utilities.
-      
+      NetworkArch is an open-source network diagnostic tool 
+      equipped with various useful utilities.
       ''';
+  static const String sourceCodeURL =
+      'https://github.com/ivirtex/networkarch-flutter';
 
   static const String usageDesc = 'We never share this data with anyone.';
 
@@ -71,7 +73,8 @@ abstract class Constants {
   );
 
   // Colors
-  static const Color seedColor = Color.fromARGB(255, 0, 123, 206);
+  static const Color seedColor = Color.fromARGB(255, 1, 77, 128);
+
   static final ColorScheme lightColorScheme = ColorScheme.fromSeed(
     seedColor: seedColor,
   );
@@ -186,7 +189,7 @@ abstract class Constants {
 
     if (isDarkModeOn) {
       _permissionGrantedNotification.background =
-          Theme.of(context).colorScheme.outline;
+          Theme.of(context).colorScheme.surfaceVariant;
     }
 
     _permissionGrantedNotification.show(context);
@@ -209,7 +212,7 @@ abstract class Constants {
 
     if (isDarkModeOn) {
       _permissionDeniedNotification.background =
-          Theme.of(context).colorScheme.outline;
+          Theme.of(context).colorScheme.surfaceVariant;
     }
 
     _permissionDeniedNotification.show(context);
@@ -246,7 +249,7 @@ abstract class Constants {
 
     if (isDarkModeOn) {
       _permissionDefaultNotification.background =
-          Theme.of(context).colorScheme.outline;
+          Theme.of(context).colorScheme.surfaceVariant;
     }
 
     _permissionDefaultNotification.show(context);

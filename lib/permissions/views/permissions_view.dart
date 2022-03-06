@@ -77,7 +77,9 @@ class PermissionsView extends StatelessWidget {
                 );
               },
             ),
-            const UsageDesc(),
+            const Align(
+              child: UsageDesc(),
+            ),
           ],
         );
       },

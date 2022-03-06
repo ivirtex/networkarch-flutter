@@ -14,7 +14,7 @@ class SmallDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: leftPadding, bottom: 4.0),
+      padding: EdgeInsets.only(left: leftPadding, bottom: 4.0, top: 4.0),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(

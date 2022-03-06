@@ -7,6 +7,7 @@ import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
@@ -28,6 +29,7 @@ class _SettingsViewState extends State<SettingsView> {
   late bool _isDarkModeSwitched;
 
   Future<PackageInfo>? packageInfo;
+  bool canLaunchUrl = true;
 
   @override
   void initState() {
@@ -36,6 +38,8 @@ class _SettingsViewState extends State<SettingsView> {
     _isDarkModeSwitched =
         context.read<ThemeBloc>().state.mode == ThemeMode.dark;
     context.read<PackageInfoCubit>().fetchPackageInfo();
+    canLaunch(Constants.sourceCodeURL)
+        .then((canLaunch) => canLaunchUrl = canLaunch);
   }
 
   @override
@@ -66,8 +70,6 @@ class _SettingsViewState extends State<SettingsView> {
   }
 
   Widget _buildBody(BuildContext context) {
-    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
-
     return ContentListView(
       children: [
         RoundedList(
@@ -76,7 +78,7 @@ class _SettingsViewState extends State<SettingsView> {
             ListTile(
               leading: FaIcon(
                 FontAwesomeIcons.adjust,
-                color: isDarkModeOn ? Colors.white : Colors.black,
+                color: Constants.getPlatformIconColor(context),
               ),
               title: const Text('Dark Mode'),
               trailing: Switch.adaptive(
@@ -93,33 +95,43 @@ class _SettingsViewState extends State<SettingsView> {
             ListTile(
               leading: FaIcon(
                 FontAwesomeIcons.infoCircle,
-                color: isDarkModeOn ? Colors.white : Colors.black,
+                color: Constants.getPlatformIconColor(context),
               ),
               title: const Text('Go to introduction screen'),
               trailing: Icon(
                 Icons.arrow_forward_ios,
-                color: isDarkModeOn ? Colors.white : Colors.black,
+                color: Constants.getPlatformIconColor(context),
               ),
               onTap: () => Navigator.pushNamed(context, '/introduction'),
             ),
-            // Build mail send button
             ListTile(
               leading: FaIcon(
                 FontAwesomeIcons.envelope,
-                color: isDarkModeOn ? Colors.white : Colors.black,
+                color: Constants.getPlatformIconColor(context),
               ),
               title: const Text('Send feedback'),
               trailing: Icon(
                 Icons.arrow_forward_ios,
-                color: isDarkModeOn ? Colors.white : Colors.black,
+                color: Constants.getPlatformIconColor(context),
               ),
               onTap: () => _sendFeedback(context),
+            ),
+            ListTile(
+              leading: FaIcon(
+                FontAwesomeIcons.github,
+                color: Constants.getPlatformIconColor(context),
+              ),
+              title: const Text('Source code'),
+              trailing: Icon(
+                Icons.arrow_forward_ios,
+                color: Constants.getPlatformIconColor(context),
+              ),
+              onTap: canLaunchUrl ? _openSourceCode : null,
             ),
           ],
         ),
         const SizedBox(height: Constants.listSpacing),
         const PackageInfoView(),
-        const SizedBox(height: Constants.listSpacing),
       ],
     );
   }
@@ -138,5 +150,9 @@ class _SettingsViewState extends State<SettingsView> {
 
   void _sendFeedback(BuildContext context) {
     BetterFeedback.of(context).showAndUploadToSentry();
+  }
+
+  Future<void> _openSourceCode() async {
+    if (!await launch(Constants.sourceCodeURL)) throw 'Could not launch URL';
   }
 }
