@@ -19,7 +19,10 @@ class SmallDescription extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Text(
           child,
-          style: Theme.of(context).textTheme.bodySmall,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color:
+                    Theme.of(context).colorScheme.onBackground.withOpacity(0.8),
+              ),
         ),
       ),
     );

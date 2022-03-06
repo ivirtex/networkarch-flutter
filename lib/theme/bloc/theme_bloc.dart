@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:async';
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -10,19 +13,27 @@ part 'theme_event.dart';
 part 'theme_state.dart';
 
 class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
-  ThemeBloc() : super(const ThemeState(ThemeMode.light)) {
-    on<UpdateToLightThemeEvent>(_onUpdateToLightThemeEvent);
-    on<UpdateToDarkThemeEvent>(_onUpdateToDarkThemeEvent);
+  ThemeBloc() : super(const ThemeState(ThemeMode.system)) {
+    on<UpdateToSystemThemeEvent>(_updateToSystemTheme);
+    on<UpdateToLightThemeEvent>(_onUpdateToLightTheme);
+    on<UpdateToDarkThemeEvent>(_onUpdateToDarkTheme);
   }
 
-  void _onUpdateToLightThemeEvent(
+  void _updateToSystemTheme(
+    UpdateToSystemThemeEvent event,
+    Emitter<ThemeState> emit,
+  ) {
+    emit(const ThemeState(ThemeMode.system));
+  }
+
+  void _onUpdateToLightTheme(
     UpdateToLightThemeEvent event,
     Emitter<ThemeState> emit,
   ) {
     emit(const ThemeState(ThemeMode.light));
   }
 
-  void _onUpdateToDarkThemeEvent(
+  void _onUpdateToDarkTheme(
     UpdateToDarkThemeEvent event,
     Emitter<ThemeState> emit,
   ) {

@@ -7,12 +7,14 @@ import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/package_info/cubit/package_info_cubit.dart';
 import 'package:network_arch/package_info/views/package_info_view.dart';
+import 'package:network_arch/settings/settings.dart';
 import 'package:network_arch/shared/content_list_view.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 import 'package:network_arch/theme/theme.dart';
@@ -25,21 +27,17 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  // TODO: Implement system theme toggle
-  late bool _isDarkModeSwitched;
+  late int _labelIndex;
 
-  Future<PackageInfo>? packageInfo;
-  bool canLaunchUrl = true;
+  bool _canLaunchUrl = true;
 
   @override
   void initState() {
     super.initState();
 
-    _isDarkModeSwitched =
-        context.read<ThemeBloc>().state.mode == ThemeMode.dark;
     context.read<PackageInfoCubit>().fetchPackageInfo();
     canLaunch(Constants.sourceCodeURL)
-        .then((canLaunch) => canLaunchUrl = canLaunch);
+        .then((canLaunch) => _canLaunchUrl = canLaunch);
   }
 
   @override
@@ -76,14 +74,25 @@ class _SettingsViewState extends State<SettingsView> {
           header: 'Theme',
           children: [
             ListTile(
-              leading: FaIcon(
-                FontAwesomeIcons.adjust,
+              contentPadding: const EdgeInsets.only(left: 16, right: 8),
+              leading: Icon(
+                Icons.dark_mode_rounded,
                 color: Constants.getPlatformIconColor(context),
               ),
-              title: const Text('Dark Mode'),
-              trailing: Switch.adaptive(
-                value: _isDarkModeSwitched,
-                onChanged: _handleDarkModeSwitched,
+              title: const Text('Mode'),
+              trailing: SizedBox(
+                child: ToggleSwitch(
+                  totalSwitches: 3,
+                  initialLabelIndex: _labelIndex,
+                  labels: const ['System', 'Light', 'Dark'],
+                  cornerRadius: 10.0,
+                  activeBgColor: [
+                    Theme.of(context).colorScheme.primary,
+                  ],
+                  activeFgColor: Theme.of(context).colorScheme.onPrimary,
+                  inactiveBgColor: Theme.of(context).colorScheme.surfaceVariant,
+                  onToggle: _onToggle,
+                ),
               ),
             ),
           ],
@@ -92,41 +101,20 @@ class _SettingsViewState extends State<SettingsView> {
         RoundedList(
           header: 'Help',
           children: [
-            ListTile(
-              leading: FaIcon(
-                FontAwesomeIcons.infoCircle,
-                color: Constants.getPlatformIconColor(context),
-              ),
-              title: const Text('Go to introduction screen'),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                color: Constants.getPlatformIconColor(context),
-              ),
+            SettingsTile(
+              title: 'Go to onboarding screen',
+              icon: Icons.info_rounded,
               onTap: () => Navigator.pushNamed(context, '/introduction'),
             ),
-            ListTile(
-              leading: FaIcon(
-                FontAwesomeIcons.envelope,
-                color: Constants.getPlatformIconColor(context),
-              ),
-              title: const Text('Send feedback'),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                color: Constants.getPlatformIconColor(context),
-              ),
+            SettingsTile(
+              title: 'Send feedback',
+              icon: Icons.feedback_rounded,
               onTap: () => _sendFeedback(context),
             ),
-            ListTile(
-              leading: FaIcon(
-                FontAwesomeIcons.github,
-                color: Constants.getPlatformIconColor(context),
-              ),
-              title: const Text('Source code'),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                color: Constants.getPlatformIconColor(context),
-              ),
-              onTap: canLaunchUrl ? _openSourceCode : null,
+            SettingsTile(
+              title: 'View source code',
+              icon: FontAwesomeIcons.github,
+              onTap: _canLaunchUrl ? _openSourceCode : null,
             ),
           ],
         ),
@@ -136,20 +124,26 @@ class _SettingsViewState extends State<SettingsView> {
     );
   }
 
-  void _handleDarkModeSwitched(bool isSwitched) {
-    setState(() {
-      _isDarkModeSwitched = isSwitched;
-    });
-
-    context.read<ThemeBloc>().add(
-          _isDarkModeSwitched
-              ? UpdateToDarkThemeEvent()
-              : UpdateToLightThemeEvent(),
-        );
-  }
-
   void _sendFeedback(BuildContext context) {
     BetterFeedback.of(context).showAndUploadToSentry();
+  }
+
+  void _onToggle(int? index) {
+    switch (index) {
+      case 0:
+        context.read<ThemeBloc>().add(UpdateToSystemThemeEvent());
+        _labelIndex = 0;
+        break;
+      case 1:
+        context.read<ThemeBloc>().add(UpdateToLightThemeEvent());
+        _labelIndex = 1;
+        break;
+
+      case 2:
+        context.read<ThemeBloc>().add(UpdateToDarkThemeEvent());
+        _labelIndex = 2;
+        break;
+    }
   }
 
   Future<void> _openSourceCode() async {
