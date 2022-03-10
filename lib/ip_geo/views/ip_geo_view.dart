@@ -143,7 +143,7 @@ class _IpGeoViewState extends State<IpGeoView> {
               onMapCreated: (GoogleMapController controller) {
                 _controller.complete(controller);
 
-                context.read<ThemeBloc>().state.mode == ThemeMode.dark
+                Theme.of(context).brightness == Brightness.dark
                     ? controller.setMapStyle(_darkModeMapStyle)
                     : controller.setMapStyle(null);
               },

@@ -94,6 +94,7 @@ class NetworkArch extends StatelessWidget {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           navigatorObservers: [
             SentryNavigatorObserver(),
           ],

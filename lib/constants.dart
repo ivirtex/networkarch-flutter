@@ -149,9 +149,9 @@ abstract class Constants {
   static const String ipGeoDesc =
       'Get the geolocation of a specific IP address';
 
-  static const String whoisDesc = 'Look up information about a specific domain';
+  static const String whoisDesc = 'Lookup information about a specific domain';
 
-  static const String dnsDesc = 'Get the DNS records of a specific domain';
+  static const String dnsDesc = 'Lookup DNS records of a specific domain';
 
   // Error descriptions
   static const String defaultError = "Couldn't read the data";
