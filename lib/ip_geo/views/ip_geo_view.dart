@@ -11,12 +11,12 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hive/hive.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/ip_geo/bloc/ip_geo_bloc.dart';
 import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/theme/theme.dart';
 import 'package:network_arch/utils/keyboard_hider.dart';
 
 class IpGeoView extends StatefulWidget {
@@ -36,12 +36,23 @@ class _IpGeoViewState extends State<IpGeoView> {
   String get _target => _targetHostController.text;
 
   bool _shouldCheckBeActive = false;
+  bool _isPremiumAvail = true;
 
   @override
   void initState() {
     super.initState();
 
     loadDarkModeMapStyle();
+
+    final iapBox = Hive.box('iap');
+    _isPremiumAvail = iapBox.get(
+          'isPremiumGranted',
+          defaultValue: false,
+        ) as bool ||
+        iapBox.get(
+          'isPremiumTempGranted',
+          defaultValue: false,
+        ) as bool;
   }
 
   @override
@@ -123,7 +134,7 @@ class _IpGeoViewState extends State<IpGeoView> {
           label: 'IP address (e.g. 1.1.1.1)',
           onChanged: (_) {
             setState(() {
-              _shouldCheckBeActive = _target.isNotEmpty;
+              _shouldCheckBeActive = _target.isNotEmpty && _isPremiumAvail;
             });
           },
         ),
@@ -227,6 +238,12 @@ class _IpGeoViewState extends State<IpGeoView> {
   }
 
   void _handleCheck() {
+    setState(() {
+      Hive.box('iap').put('isPremiumTempGranted', false);
+
+      _isPremiumAvail = false;
+    });
+
     context.read<IpGeoBloc>().add(IpGeoRequested(ip: _target));
 
     hideKeyboard(context);

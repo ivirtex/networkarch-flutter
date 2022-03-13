@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:auto_animated/auto_animated.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
@@ -30,6 +31,22 @@ class _DnsLookupViewState extends State<DnsLookupView> {
   rrCodeName _selectedDnsQueryType = rrCodeName.ANY;
 
   bool _shouldCheckButtonBeActive = false;
+  bool _isPremiumAvail = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final iapBox = Hive.box('iap');
+    _isPremiumAvail = iapBox.get(
+          'isPremiumGranted',
+          defaultValue: false,
+        ) as bool ||
+        iapBox.get(
+          'isPremiumTempGranted',
+          defaultValue: false,
+        ) as bool;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +121,8 @@ class _DnsLookupViewState extends State<DnsLookupView> {
                   expands: true,
                   onChanged: (_) {
                     setState(() {
-                      _shouldCheckButtonBeActive = _target.isNotEmpty;
+                      _shouldCheckButtonBeActive =
+                          _target.isNotEmpty && _isPremiumAvail;
                     });
                   },
                 ),
@@ -176,6 +194,12 @@ class _DnsLookupViewState extends State<DnsLookupView> {
   }
 
   void _handleCheck() {
+    setState(() {
+      Hive.box('iap').put('isPremiumTempGranted', false);
+
+      _isPremiumAvail = false;
+    });
+
     final queryCode = nameToRrCode(_selectedDnsQueryType);
 
     context

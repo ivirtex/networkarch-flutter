@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -31,6 +32,8 @@ void main() {
 
     await Hive.initFlutter();
     await Hive.openBox('settings');
+    await Hive.openBox<bool>('iap');
+    // await Hive.box('iap').clear();
 
     Adapty.activate();
     MobileAds.instance.initialize();
@@ -44,10 +47,10 @@ void main() {
             options.dsn =
                 'https://5d6f627c688b407e96c3d26d2df7457c@o923305.ingest.sentry.io/6238035',
           },
+          appRunner: () => runApp(NetworkArch()),
         );
-        runApp(NetworkArch());
       },
-      blocObserver: SimpleBlocObserver(),
+      blocObserver: kDebugMode ? SimpleBlocObserver() : null,
       storage: storage,
     );
   });

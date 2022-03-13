@@ -34,8 +34,20 @@ abstract class Constants {
 
   static const String usageDesc = 'We never share this data with anyone.';
 
-  static const String overviewBannerAdUnitId =
+  static const String overviewAndroidAdUnitId =
+      'ca-app-pub-3222092607864795/3727150533';
+  static const String overviewIOSAdUnitId =
+      'ca-app-pub-3222092607864795/6714553758';
+
+  static const String premiumAccessAndroidAdUnitId =
+      'ca-app-pub-3222092607864795/9965201926';
+  static const String premiumAccessIOSAdUnitId =
+      'ca-app-pub-3222092607864795/3915633040';
+
+  static const String testBannerAdUnitId =
       'ca-app-pub-3940256099942544/6300978111';
+  static const String testRewardedAdUnitId =
+      'ca-app-pub-3940256099942544/5224354917';
 
   static final Map<String, Widget Function(BuildContext)> routes = {
     '/introduction': (context) => IntroductionScreen(

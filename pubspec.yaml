@@ -50,6 +50,7 @@ dependencies:
   toggle_switch: ^1.4.0
   url_launcher: ^6.0.20
   wake_on_lan: ^2.0.3+2
+  modal_bottom_sheet: ^2.0.1
 
 dev_dependencies:
   flutter_test:

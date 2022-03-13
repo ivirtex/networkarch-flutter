@@ -1,10 +1,16 @@
+// Dart imports:
+import 'dart:io';
+
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
@@ -24,11 +30,16 @@ class OverviewView extends StatefulWidget {
 
 class _OverviewViewState extends State<OverviewView> {
   final BannerAd banner = BannerAd(
-    adUnitId: Constants.overviewBannerAdUnitId,
+    adUnitId: getAdUnitId(),
     size: AdSize.banner,
     request: const AdRequest(),
     listener: listener,
   );
+
+  late bool isPremiumGranted;
+  late bool isPremiumTempGranted;
+
+  bool get isPremiumAvail => isPremiumGranted || isPremiumTempGranted;
 
   @override
   void initState() {
@@ -44,6 +55,23 @@ class _OverviewViewState extends State<OverviewView> {
     });
 
     banner.load();
+
+    final iapBox = Hive.box('iap');
+    isPremiumGranted =
+        iapBox.get('isPremiumGranted', defaultValue: false)! as bool;
+    isPremiumTempGranted =
+        iapBox.get('isPremiumTempGranted', defaultValue: false)! as bool;
+
+    iapBox.watch(key: 'isPremiumGranted').listen((event) {
+      setState(() {
+        isPremiumGranted = event.value as bool;
+      });
+    });
+    iapBox.watch(key: 'isPremiumTempGranted').listen((event) {
+      setState(() {
+        isPremiumTempGranted = event.value as bool;
+      });
+    });
   }
 
   @override
@@ -89,64 +117,87 @@ class _OverviewViewState extends State<OverviewView> {
         const WifiStatusCard(),
         const SizedBox(height: Constants.listSpacing),
         const CarrierStatusCard(),
-        // const Divider(indent: 15, endIndent: 15),
         const SizedBox(height: Constants.listSpacing),
         const SmallDescription(child: 'Utilities', leftPadding: 8.0),
         ToolCard(
           toolName: 'Ping',
           toolDesc: Constants.pingDesc,
-          onPressed: () {
-            Navigator.pushNamed(context, '/tools/ping', arguments: '');
-          },
+          onPressed: () =>
+              Navigator.pushNamed(context, '/tools/ping', arguments: ''),
         ),
         const SizedBox(height: Constants.listSpacing),
         ToolCard(
           toolName: 'LAN Scanner',
           toolDesc: Constants.lanScannerDesc,
-          onPressed: () {
-            Navigator.pushNamed(context, '/tools/lan');
-          },
+          onPressed: () => Navigator.pushNamed(context, '/tools/lan'),
         ),
         const SizedBox(height: Constants.listSpacing),
         ToolCard(
           toolName: 'Wake On LAN',
           toolDesc: Constants.wolDesc,
-          onPressed: () {
-            Navigator.pushNamed(context, '/tools/wol');
-          },
+          onPressed: () => Navigator.pushNamed(context, '/tools/wol'),
         ),
         const SizedBox(height: Constants.listSpacing),
         ToolCard(
           toolName: 'IP Geolocation',
           toolDesc: Constants.ipGeoDesc,
-          onPressed: () {
-            Navigator.pushNamed(context, '/tools/ip_geo');
-          },
+          isPremium: !isPremiumAvail,
+          onPressed: isPremiumAvail
+              ? () => Navigator.pushNamed(context, '/tools/ip_geo')
+              : () => showPremiumBottomSheet(context),
         ),
         const SizedBox(height: Constants.listSpacing),
         ToolCard(
           toolName: 'Whois',
           toolDesc: Constants.whoisDesc,
-          onPressed: () {
-            Navigator.pushNamed(context, '/tools/whois');
-          },
+          isPremium: !isPremiumAvail,
+          onPressed: isPremiumAvail
+              ? () => Navigator.pushNamed(context, '/tools/whois')
+              : () => showPremiumBottomSheet(context),
         ),
         const SizedBox(height: Constants.listSpacing),
         ToolCard(
           toolName: 'DNS Lookup',
           toolDesc: Constants.dnsDesc,
-          onPressed: () {
-            Navigator.pushNamed(context, '/tools/dns_lookup');
-          },
+          isPremium: !isPremiumAvail,
+          onPressed: isPremiumAvail
+              ? () => Navigator.pushNamed(context, '/tools/dns_lookup')
+              : () => showPremiumBottomSheet(context),
         ),
-        const Divider(indent: 15, endIndent: 15),
-        Container(
-          alignment: Alignment.center,
-          width: banner.size.width.toDouble(),
-          height: banner.size.height.toDouble(),
-          child: adWidget,
-        ),
+        const SizedBox(height: Constants.listSpacing),
+        if (!isPremiumAvail)
+          Container(
+            alignment: Alignment.center,
+            width: banner.size.width.toDouble(),
+            height: banner.size.height.toDouble(),
+            child: adWidget,
+          ),
       ],
     );
   }
+
+  Future<void> showPremiumBottomSheet(BuildContext context) {
+    return Platform.isIOS
+        ? showCupertinoModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return const PremiumBottomSheetBody();
+            },
+          )
+        : showMaterialModalBottomSheet(
+            context: context,
+            backgroundColor: Theme.of(context).colorScheme.background,
+            builder: (context) {
+              return const PremiumBottomSheetBody();
+            },
+          );
+  }
+}
+
+String getAdUnitId() {
+  return kReleaseMode
+      ? Platform.isIOS
+          ? Constants.overviewIOSAdUnitId
+          : Constants.overviewAndroidAdUnitId
+      : Constants.testBannerAdUnitId;
 }

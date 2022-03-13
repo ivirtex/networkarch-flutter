@@ -5,7 +5,6 @@ export 'cupertino_action_app_bar.dart';
 export 'domain_text_field.dart';
 export 'list_circular_progress_indicator.dart';
 export 'list_text_line.dart';
-export 'platform_scaffold.dart';
 export 'platform_widget.dart';
 export 'rounded_list.dart';
 export 'shared_widgets.dart';

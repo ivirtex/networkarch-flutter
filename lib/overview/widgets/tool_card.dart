@@ -12,13 +12,15 @@ class ToolCard extends StatelessWidget {
   const ToolCard({
     required this.toolName,
     required this.toolDesc,
+    this.isPremium = false,
     this.onPressed,
     Key? key,
   }) : super(key: key);
 
   final String toolName;
   final String toolDesc;
-  final Function? onPressed;
+  final bool isPremium;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +56,17 @@ class ToolCard extends StatelessWidget {
           Flexible(
             child: TextButton(
               style: TextButton.styleFrom(
-                shape: const CircleBorder(),
+                shape: CircleBorder(
+                  side: isPremium
+                      ? BorderSide(
+                          width: 2.0,
+                          color: Colors.yellow.shade600,
+                        )
+                      : BorderSide.none,
+                ),
                 backgroundColor: Constants.getPlatformBtnColor(context),
               ),
-              onPressed: onPressed as void Function()?,
+              onPressed: onPressed,
               child: FaIcon(
                 FontAwesomeIcons.arrowCircleRight,
                 color: Constants.getPlatformIconColor(context),

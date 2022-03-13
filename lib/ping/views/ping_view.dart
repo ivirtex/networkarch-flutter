@@ -227,7 +227,8 @@ class _PingViewState extends State<PingView> {
     await _pingData.removeAllElements(context);
 
     _targetHost = _target;
-    // ignore: use_build_context_synchronously
+
+    if (!mounted) return;
     context.read<PingBloc>().add(PingStarted(_target));
   }
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
@@ -24,6 +25,22 @@ class _WhoisViewState extends State<WhoisView> {
   String get _target => _targetHostController.text;
 
   bool _shouldCheckButtonBeActive = false;
+  bool _isPremiumAvail = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final iapBox = Hive.box('iap');
+    _isPremiumAvail = iapBox.get(
+          'isPremiumGranted',
+          defaultValue: false,
+        ) as bool ||
+        iapBox.get(
+          'isPremiumTempGranted',
+          defaultValue: false,
+        ) as bool;
+  }
 
   @override
   void dispose() {
@@ -98,7 +115,8 @@ class _WhoisViewState extends State<WhoisView> {
           label: 'Domain name',
           onChanged: (_) {
             setState(() {
-              _shouldCheckButtonBeActive = _target.isNotEmpty;
+              _shouldCheckButtonBeActive =
+                  _target.isNotEmpty && _isPremiumAvail;
             });
           },
         ),
@@ -131,6 +149,12 @@ class _WhoisViewState extends State<WhoisView> {
   }
 
   void _handleCheck() {
+    setState(() {
+      Hive.box('iap').put('isPremiumTempGranted', false);
+
+      _isPremiumAvail = false;
+    });
+
     context.read<WhoisBloc>().add(WhoisRequested(domain: _target));
 
     hideKeyboard(context);
