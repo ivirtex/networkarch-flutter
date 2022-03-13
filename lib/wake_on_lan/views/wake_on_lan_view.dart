@@ -120,9 +120,11 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
           listener: (context, state) {
             if (state is WakeOnLanIPValidationFailure) {
               _isValidIpv4 = false;
+              _isValidMac = true;
             }
 
             if (state is WakeOnLanMACValidationFailure) {
+              _isValidIpv4 = true;
               _isValidMac = false;
             }
 

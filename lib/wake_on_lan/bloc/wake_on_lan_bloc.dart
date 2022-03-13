@@ -22,14 +22,14 @@ class WakeOnLanBloc extends Bloc<WakeOnLanEvent, WakeOnLanState> {
     Emitter<WakeOnLanState> emit,
   ) async {
     if (IPv4Address.validate(event.ipv4)) {
-      _ipv4 = IPv4Address.from(event.ipv4);
+      _ipv4 = IPv4Address(event.ipv4);
       _isValidIPv4 = true;
     } else {
       _isValidIPv4 = false;
     }
 
     if (MACAddress.validate(event.macAddress)) {
-      _mac = MACAddress.from(event.macAddress);
+      _mac = MACAddress(event.macAddress);
       _isValidMAC = true;
     } else {
       _isValidMAC = false;
@@ -49,7 +49,7 @@ class WakeOnLanBloc extends Bloc<WakeOnLanEvent, WakeOnLanState> {
       return;
     }
 
-    final WakeOnLAN wol = WakeOnLAN.from(_ipv4, _mac);
+    final WakeOnLAN wol = WakeOnLAN(_ipv4, _mac);
     final List<int> packetBytes = wol.magicPacket();
     await wol.wake();
 
