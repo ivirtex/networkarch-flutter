@@ -15,7 +15,7 @@ import 'package:network_arch/constants.dart';
 import 'package:network_arch/dns_lookup/dns_lookup.dart';
 import 'package:network_arch/dns_lookup/widgets/dns_record_card.dart';
 import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/utils/keyboard_hider.dart';
+import 'package:network_arch/utils/utils.dart';
 
 class DnsLookupView extends StatefulWidget {
   const DnsLookupView({Key? key}) : super(key: key);
@@ -37,15 +37,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
   void initState() {
     super.initState();
 
-    final iapBox = Hive.box('iap');
-    _isPremiumAvail = iapBox.get(
-          'isPremiumGranted',
-          defaultValue: false,
-        ) as bool ||
-        iapBox.get(
-          'isPremiumTempGranted',
-          defaultValue: false,
-        ) as bool;
+    _isPremiumAvail = isPremiumActive();
   }
 
   @override
@@ -197,7 +189,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
     setState(() {
       Hive.box('iap').put('isPremiumTempGranted', false);
 
-      _isPremiumAvail = false;
+      _isPremiumAvail = isPremiumActive();
     });
 
     final queryCode = nameToRrCode(_selectedDnsQueryType);

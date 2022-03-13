@@ -10,7 +10,7 @@ import 'package:hive/hive.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/utils/keyboard_hider.dart';
+import 'package:network_arch/utils/utils.dart';
 import 'package:network_arch/whois/whois.dart';
 
 class WhoisView extends StatefulWidget {
@@ -31,15 +31,7 @@ class _WhoisViewState extends State<WhoisView> {
   void initState() {
     super.initState();
 
-    final iapBox = Hive.box('iap');
-    _isPremiumAvail = iapBox.get(
-          'isPremiumGranted',
-          defaultValue: false,
-        ) as bool ||
-        iapBox.get(
-          'isPremiumTempGranted',
-          defaultValue: false,
-        ) as bool;
+    _isPremiumAvail = isPremiumActive();
   }
 
   @override
@@ -152,7 +144,7 @@ class _WhoisViewState extends State<WhoisView> {
     setState(() {
       Hive.box('iap').put('isPremiumTempGranted', false);
 
-      _isPremiumAvail = false;
+      _isPremiumAvail = isPremiumActive();
     });
 
     context.read<WhoisBloc>().add(WhoisRequested(domain: _target));

@@ -17,7 +17,7 @@ import 'package:hive/hive.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/ip_geo/bloc/ip_geo_bloc.dart';
 import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/utils/keyboard_hider.dart';
+import 'package:network_arch/utils/utils.dart';
 
 class IpGeoView extends StatefulWidget {
   const IpGeoView({Key? key}) : super(key: key);
@@ -44,15 +44,7 @@ class _IpGeoViewState extends State<IpGeoView> {
 
     loadDarkModeMapStyle();
 
-    final iapBox = Hive.box('iap');
-    _isPremiumAvail = iapBox.get(
-          'isPremiumGranted',
-          defaultValue: false,
-        ) as bool ||
-        iapBox.get(
-          'isPremiumTempGranted',
-          defaultValue: false,
-        ) as bool;
+    _isPremiumAvail = isPremiumActive();
   }
 
   @override
@@ -241,7 +233,7 @@ class _IpGeoViewState extends State<IpGeoView> {
     setState(() {
       Hive.box('iap').put('isPremiumTempGranted', false);
 
-      _isPremiumAvail = false;
+      _isPremiumAvail = isPremiumActive();
     });
 
     context.read<IpGeoBloc>().add(IpGeoRequested(ip: _target));

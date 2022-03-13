@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:io';
+
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -32,18 +35,23 @@ void main() {
 
     await Hive.initFlutter();
     await Hive.openBox('settings');
-    await Hive.openBox<bool>('iap');
-    // await Hive.box('iap').clear();
+    await Hive.openBox('iap');
 
     Adapty.activate();
     MobileAds.instance.initialize();
-    DartPingIOS.register();
+    if (Platform.isIOS) DartPingIOS.register();
+
+    final purchaserInfo = await Adapty.getPurchaserInfo(forceUpdate: true);
+    Hive.box('iap').put(
+      'isPremiumGranted',
+      purchaserInfo.accessLevels['premium']?.isActive ?? false,
+    );
 
     HydratedBlocOverrides.runZoned(
       () async {
         await SentryFlutter.init(
           (options) => {
-            options.tracesSampleRate = 0.5,
+            options.tracesSampleRate = 0.2,
             options.dsn =
                 'https://5d6f627c688b407e96c3d26d2df7457c@o923305.ingest.sentry.io/6238035',
           },

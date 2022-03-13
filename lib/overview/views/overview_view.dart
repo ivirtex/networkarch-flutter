@@ -57,6 +57,7 @@ class _OverviewViewState extends State<OverviewView> {
     banner.load();
 
     final iapBox = Hive.box('iap');
+
     isPremiumGranted =
         iapBox.get('isPremiumGranted', defaultValue: false)! as bool;
     isPremiumTempGranted =
