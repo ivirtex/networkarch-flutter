@@ -52,6 +52,8 @@ abstract class Constants {
   static final Map<String, Widget Function(BuildContext)> routes = {
     '/introduction': (context) => IntroductionScreen(
           pages: pagesList,
+          isTopSafeArea: true,
+          isBottomSafeArea: true,
           done: const Text('Done'),
           next: const Icon(Icons.navigate_next),
           onDone: () => Navigator.of(context).pop(),

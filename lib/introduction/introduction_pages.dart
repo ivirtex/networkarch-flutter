@@ -13,62 +13,61 @@ import 'package:network_arch/permissions/permissions.dart';
 final List<PageViewModel> pagesList = [
   PageViewModel(
     title: 'Welcome to NetworkArch!',
-    image: ClipRRect(
-      borderRadius: BorderRadius.circular(20.0),
-      child: SizedBox(
-        height: 250,
-        child: Builder(
-          builder: (context) {
-            final isDarkModeOn =
-                Theme.of(context).brightness == Brightness.dark;
+    image: Builder(
+      builder: (context) {
+        final isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
-            return isDarkModeOn
-                ? Image.asset('assets/icon_alpha_dark.png')
-                : Image.asset('assets/icon_alpha_light.png');
-          },
-        ),
-      ),
+        return isDarkModeOn
+            ? Image.asset('assets/icon_alpha_dark.png', height: 250.0)
+            : Image.asset('assets/icon_alpha_light.png', height: 250.0);
+      },
     ),
-    bodyWidget: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        children: const [
-          Text(
-            Constants.appDesc,
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18.0),
-          ),
-          SizedBox(height: Constants.listSpacing),
-          OnboardingFeature(
-            icon: Icons.wifi_rounded,
-            title: 'WiFi',
-            description:
-                'Explore detailed information about your Wi-Fi network',
-          ),
-          SizedBox(height: Constants.listSpacing),
-          OnboardingFeature(
-            icon: Icons.cell_tower_rounded,
-            title: 'Carrier',
-            description:
-                'Explore detailed information about your cellular network',
-          ),
-          SizedBox(height: Constants.listSpacing),
-          OnboardingFeature(
-            icon: Icons.settings_rounded,
-            title: 'WiFi',
-            description:
-                'Test your networks thanks to various diagnostic tools such as ping, Wake on LAN, LAN Scanner and more',
-          ),
-        ],
-      ),
+    decoration: const PageDecoration(
+      imagePadding: EdgeInsets.zero,
+      imageFlex: 2,
+      bodyFlex: 3,
+    ),
+    bodyWidget: Column(
+      children: const [
+        Text(
+          Constants.appDesc,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 18.0),
+        ),
+        SizedBox(height: Constants.listSpacing),
+        OnboardingFeature(
+          icon: Icons.wifi_rounded,
+          title: 'WiFi',
+          description: 'Explore detailed information about your Wi-Fi network',
+        ),
+        SizedBox(height: Constants.listSpacing),
+        OnboardingFeature(
+          icon: Icons.cell_tower_rounded,
+          title: 'Carrier',
+          description:
+              'Explore detailed information about your cellular network',
+        ),
+        SizedBox(height: Constants.listSpacing),
+        OnboardingFeature(
+          icon: Icons.settings_rounded,
+          title: 'Tools',
+          description:
+              'Test your networks thanks to various diagnostic tools such as ping, Wake on LAN, LAN Scanner and more',
+        ),
+      ],
     ),
   ),
   PageViewModel(
     title: 'Permissions',
+    useScrollView: false,
     decoration: const PageDecoration(
-      contentMargin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 40.0),
+      contentMargin: EdgeInsets.symmetric(
+        horizontal: 16.0,
+        vertical: 36.0,
+      ),
+      footerPadding: EdgeInsets.zero,
     ),
-    bodyWidget: const PermissionsView(),
+    bodyWidget: const Expanded(child: PermissionsView()),
     footer: Align(
       alignment: Alignment.bottomCenter,
       child: TextButton(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
+import 'package:network_arch/shared/cards/cards.dart';
 
 class OnboardingFeature extends StatelessWidget {
   const OnboardingFeature({
@@ -20,34 +21,37 @@ class OnboardingFeature extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
-    return Row(
-      children: [
-        Icon(
-          icon,
-          size: 36.0,
-        ),
-        const SizedBox(width: Constants.listSpacing),
-        Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
-                ),
-              ),
-              Text(
-                description,
-                style: isDarkModeOn
-                    ? Constants.descStyleDark
-                    : Constants.descStyleLight,
-              ),
-            ],
+    return DataCard(
+      margin: EdgeInsets.zero,
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            size: 36.0,
           ),
-        ),
-      ],
+          const SizedBox(width: Constants.listSpacing),
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
+                ),
+                Text(
+                  description,
+                  style: isDarkModeOn
+                      ? Constants.descStyleDark
+                      : Constants.descStyleLight,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
