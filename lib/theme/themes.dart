@@ -26,7 +26,7 @@ abstract class Themes {
       useSubThemes: true,
       appBarStyle: FlexAppBarStyle.background,
       appBarOpacity: 0,
-      surfaceMode: FlexSurfaceMode.highScaffoldLowSurfacesVariantDialog,
+      surfaceMode: FlexSurfaceMode.highScaffoldLevelSurface,
       blendLevel: 7,
     );
   }

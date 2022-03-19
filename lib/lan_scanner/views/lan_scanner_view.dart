@@ -1,4 +1,3 @@
-// Dart imports:
 // ignore_for_file: use_build_context_synchronously
 
 // Dart imports:
@@ -124,12 +123,20 @@ class _LanScannerViewState extends State<LanScannerView> {
           buildWhen: (previous, current) =>
               current is LanScannerRunProgressUpdate,
           builder: (context, state) {
-            return ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: LinearProgressIndicator(
-                // TODO: animate progress
-                value: currProgress,
-              ),
+            return Row(
+              children: [
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: LinearProgressIndicator(
+                      // TODO: animate progress
+                      value: currProgress,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8.0),
+                Text('${(currProgress * 100).toInt()}%'),
+              ],
             );
           },
         ),
