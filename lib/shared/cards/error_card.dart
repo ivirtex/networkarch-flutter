@@ -30,7 +30,10 @@ class ErrorCard extends StatelessWidget {
           const SizedBox(width: 10),
           Text(
             message ?? Constants.defaultError,
-            style: const TextStyle(fontSize: 15),
+            style: TextStyle(
+              fontSize: 15,
+              color: Theme.of(context).colorScheme.error,
+            ),
           ),
         ],
       ),

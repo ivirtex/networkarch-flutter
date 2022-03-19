@@ -1,17 +1,14 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/theme/theme.dart';
 
 class RoundedList extends StatelessWidget {
   const RoundedList({
     required this.children,
+    this.padding = const EdgeInsets.all(10.0),
     this.header,
     this.footer,
     this.bgColor,
@@ -19,6 +16,7 @@ class RoundedList extends StatelessWidget {
   }) : super(key: key);
 
   final List<Widget> children;
+  final EdgeInsets padding;
   final String? header;
   final String? footer;
   final Color? bgColor;
@@ -39,7 +37,10 @@ class RoundedList extends StatelessWidget {
               shrinkWrap: true,
               itemCount: children.length,
               itemBuilder: (context, index) {
-                return children[index];
+                return Padding(
+                  padding: padding,
+                  child: children[index],
+                );
               },
               separatorBuilder: (context, index) {
                 return Constants.listDivider;

@@ -8,73 +8,68 @@ class ListTextLine extends StatelessWidget {
   const ListTextLine({
     required this.textL,
     this.textR,
-    this.padding,
     this.onRefreshTap,
     Key? key,
   }) : super(key: key);
 
   final Text textL;
   final Text? textR;
-  final EdgeInsets? padding;
   final VoidCallback? onRefreshTap;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: padding ?? const EdgeInsets.all(10.0),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return textR != null
-              ? constraints.maxWidth < 200 || textR!.data!.length > 40
-                  ? Column(
-                      children: [
-                        Row(children: [textL, const Spacer()]),
-                        const SizedBox(height: 5.0),
-                        Row(
-                          children: [
-                            const Spacer(),
-                            if (onRefreshTap != null)
-                              IconButton(
-                                constraints: const BoxConstraints(),
-                                padding: const EdgeInsets.only(right: 4),
-                                splashRadius: 12.0,
-                                iconSize: 16.0,
-                                icon: const Icon(
-                                  Icons.refresh,
-                                  color: Colors.blue,
-                                ),
-                                onPressed: onRefreshTap,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return textR != null
+            ? constraints.maxWidth < 200 || textR!.data!.length > 40
+                ? Column(
+                    children: [
+                      Row(children: [textL, const Spacer()]),
+                      const SizedBox(height: 5.0),
+                      Row(
+                        children: [
+                          const Spacer(),
+                          if (onRefreshTap != null)
+                            IconButton(
+                              constraints: const BoxConstraints(),
+                              padding: const EdgeInsets.only(right: 4),
+                              splashRadius: 12.0,
+                              iconSize: 16.0,
+                              icon: const Icon(
+                                Icons.refresh,
+                                color: Colors.blue,
                               ),
-                            textR!,
-                          ],
+                              onPressed: onRefreshTap,
+                            ),
+                          textR!,
+                        ],
+                      ),
+                    ],
+                  )
+                : Row(
+                    children: [
+                      textL,
+                      const Spacer(),
+                      if (onRefreshTap != null)
+                        IconButton(
+                          constraints: const BoxConstraints(),
+                          padding: const EdgeInsets.only(right: 4),
+                          splashRadius: 12.0,
+                          iconSize: 16.0,
+                          icon: const Icon(Icons.refresh, color: Colors.blue),
+                          onPressed: onRefreshTap,
                         ),
-                      ],
-                    )
-                  : Row(
-                      children: [
-                        textL,
-                        const Spacer(),
-                        if (onRefreshTap != null)
-                          IconButton(
-                            constraints: const BoxConstraints(),
-                            padding: const EdgeInsets.only(right: 4),
-                            splashRadius: 12.0,
-                            iconSize: 16.0,
-                            icon: const Icon(Icons.refresh, color: Colors.blue),
-                            onPressed: onRefreshTap,
-                          ),
-                        textR!,
-                      ],
-                    )
-              : Row(
-                  children: [
-                    textL,
-                    const Spacer(),
-                    const ListCircularProgressIndicator(),
-                  ],
-                );
-        },
-      ),
+                      textR!,
+                    ],
+                  )
+            : Row(
+                children: [
+                  textL,
+                  const Spacer(),
+                  const ListCircularProgressIndicator(),
+                ],
+              );
+      },
     );
   }
 }

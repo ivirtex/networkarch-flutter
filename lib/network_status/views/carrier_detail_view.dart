@@ -56,6 +56,7 @@ class CarrierDetailView extends StatelessWidget {
           builder: (context, state) {
             return state.status == NetworkStatus.success
                 ? RoundedList(
+                    padding: EdgeInsets.zero,
                     children: [
                       ListTextLine(
                         textL: const Text('VoIP Support'),

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:feedback/feedback.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -15,7 +14,7 @@ import 'package:network_arch/home.dart';
 import 'package:network_arch/ip_geo/ip_geo.dart';
 import 'package:network_arch/lan_scanner/lan_scanner.dart';
 import 'package:network_arch/network_status/network_status.dart';
-import 'package:network_arch/package_info/cubit/package_info_cubit.dart';
+import 'package:network_arch/package_info/package_info.dart';
 import 'package:network_arch/permissions/permissions.dart';
 import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
@@ -97,8 +96,8 @@ class NetworkArch extends StatelessWidget {
             SentryNavigatorObserver(),
           ],
           title: Constants.appName,
-          theme: Themes.lightThemeData,
-          darkTheme: Themes.darkThemeData,
+          theme: Themes.getLightThemeDataFor(state.scheme),
+          darkTheme: Themes.getDarkThemeDataFor(state.scheme),
           themeMode: state.mode,
           routes: Constants.routes,
           home: const Home(),

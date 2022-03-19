@@ -1,2 +1,3 @@
-export 'bloc/theme_bloc.dart';
+export 'bloc/bloc.dart';
 export 'themes.dart';
+export 'widgets/widgets.dart';

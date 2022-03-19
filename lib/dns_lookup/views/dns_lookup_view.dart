@@ -168,7 +168,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
                       padding: const EdgeInsets.only(left: 10.0),
                       child: Text(
                         'Found ${state.response.answer.length} records',
-                        style: Constants.descStyleDark,
+                        style: Theme.of(context).textTheme.caption,
                       ),
                     ),
                   ),

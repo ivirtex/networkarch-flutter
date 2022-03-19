@@ -4,37 +4,30 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'theme_event.dart';
 part 'theme_state.dart';
 
 class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
-  ThemeBloc() : super(const ThemeState(ThemeMode.system)) {
-    on<UpdateToSystemThemeEvent>(_updateToSystemTheme);
-    on<UpdateToLightThemeEvent>(_onUpdateToLightTheme);
-    on<UpdateToDarkThemeEvent>(_onUpdateToDarkTheme);
+  ThemeBloc() : super(const ThemeState()) {
+    on<ThemeModeChangedEvent>(_onThemeModeChanged);
+    on<ThemeSchemeChangedEvent>(_onThemeSchemeChanged);
   }
 
-  void _updateToSystemTheme(
-    UpdateToSystemThemeEvent event,
+  void _onThemeModeChanged(
+    ThemeModeChangedEvent event,
     Emitter<ThemeState> emit,
   ) {
-    emit(const ThemeState(ThemeMode.system));
+    emit(state.copyWith(mode: event.themeMode));
   }
 
-  void _onUpdateToLightTheme(
-    UpdateToLightThemeEvent event,
+  void _onThemeSchemeChanged(
+    ThemeSchemeChangedEvent event,
     Emitter<ThemeState> emit,
   ) {
-    emit(const ThemeState(ThemeMode.light));
-  }
-
-  void _onUpdateToDarkTheme(
-    UpdateToDarkThemeEvent event,
-    Emitter<ThemeState> emit,
-  ) {
-    emit(const ThemeState(ThemeMode.dark));
+    emit(state.copyWith(scheme: event.scheme));
   }
 
   @override

@@ -1,2 +1,2 @@
 export 'introduction_pages.dart';
-export 'onboarding_feature.dart';
+export 'widgets/onboarding_feature.dart';

@@ -14,7 +14,6 @@ import 'package:network_arch/overview/views/overview_view.dart';
 import 'package:network_arch/permissions/permissions.dart';
 import 'package:network_arch/settings/settings.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
-import 'package:network_arch/theme/theme.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -59,8 +58,6 @@ class _HomeState extends State<Home> {
   }
 
   Widget _androidBuilder(BuildContext context) {
-    print(Theme.of(context).scaffoldBackgroundColor);
-
     return Scaffold(
       appBar: AppBar(
         title: _selectedIndex == 0

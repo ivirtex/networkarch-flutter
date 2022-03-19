@@ -23,6 +23,7 @@ class PackageInfoView extends StatelessWidget {
 
         if (state is PackageInfoLoadSuccess) {
           return RoundedList(
+            padding: EdgeInsets.zero,
             header: 'App info',
             footer: 'Made with ❤️ by ivirtex',
             children: [

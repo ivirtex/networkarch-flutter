@@ -7,8 +7,20 @@ abstract class ThemeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class UpdateToSystemThemeEvent extends ThemeEvent {}
+class ThemeModeChangedEvent extends ThemeEvent {
+  const ThemeModeChangedEvent({required this.themeMode});
 
-class UpdateToLightThemeEvent extends ThemeEvent {}
+  final ThemeMode themeMode;
 
-class UpdateToDarkThemeEvent extends ThemeEvent {}
+  @override
+  List<Object> get props => [themeMode];
+}
+
+class ThemeSchemeChangedEvent extends ThemeEvent {
+  const ThemeSchemeChangedEvent({required this.scheme});
+
+  final FlexScheme scheme;
+
+  @override
+  List<Object> get props => [scheme];
+}

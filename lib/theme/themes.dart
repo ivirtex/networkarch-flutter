@@ -9,23 +9,27 @@ import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 
 abstract class Themes {
-  static final ThemeData lightThemeData = FlexThemeData.light(
-    scheme: FlexScheme.blue,
-    useSubThemes: true,
-    appBarStyle: FlexAppBarStyle.background,
-    appBarOpacity: 0,
-    surfaceMode: FlexSurfaceMode.highScaffoldLowSurfacesVariantDialog,
-    blendLevel: 7,
-  );
+  static ThemeData getLightThemeDataFor(FlexScheme flexScheme) {
+    return FlexThemeData.light(
+      scheme: flexScheme,
+      useSubThemes: true,
+      appBarStyle: FlexAppBarStyle.background,
+      appBarOpacity: 0,
+      surfaceMode: FlexSurfaceMode.highScaffoldLevelSurface,
+      blendLevel: 7,
+    );
+  }
 
-  static final ThemeData darkThemeData = FlexThemeData.dark(
-    scheme: FlexScheme.blue,
-    useSubThemes: true,
-    appBarStyle: FlexAppBarStyle.background,
-    appBarOpacity: 0,
-    surfaceMode: FlexSurfaceMode.highScaffoldLowSurfacesVariantDialog,
-    blendLevel: 7,
-  );
+  static ThemeData getDarkThemeDataFor(FlexScheme flexScheme) {
+    return FlexThemeData.dark(
+      scheme: flexScheme,
+      useSubThemes: true,
+      appBarStyle: FlexAppBarStyle.background,
+      appBarOpacity: 0,
+      surfaceMode: FlexSurfaceMode.highScaffoldLowSurfacesVariantDialog,
+      blendLevel: 7,
+    );
+  }
 
   static final CupertinoThemeData cupertinoLightThemeData = CupertinoThemeData(
     primaryColor: CupertinoColors.activeBlue,

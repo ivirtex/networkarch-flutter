@@ -7,7 +7,6 @@ import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -27,15 +26,12 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  late int _labelIndex;
-
   bool _canLaunchUrl = true;
 
   @override
   void initState() {
     super.initState();
 
-    _labelIndex = context.read<ThemeBloc>().state.mode.index;
     context.read<PackageInfoCubit>().fetchPackageInfo();
     canLaunch(Constants.sourceCodeURL)
         .then((canLaunch) => _canLaunchUrl = canLaunch);
@@ -69,35 +65,40 @@ class _SettingsViewState extends State<SettingsView> {
   }
 
   Widget _buildBody(BuildContext context) {
+    final themeBloc = context.read<ThemeBloc>();
+
     return ContentListView(
       children: [
         RoundedList(
-          header: 'Theme',
+          header: 'Theme settings',
           children: [
-            ListTile(
-              contentPadding: const EdgeInsets.only(left: 16, right: 8),
-              leading: Icon(
-                Icons.dark_mode_rounded,
-                color: Themes.getPlatformIconColor(context),
-              ),
-              title: const Text('Mode'),
-              trailing: SizedBox(
-                child: ToggleSwitch(
-                  totalSwitches: 3,
-                  initialLabelIndex: _labelIndex,
-                  labels: const ['System', 'Light', 'Dark'],
-                  cornerRadius: 10.0,
-                  activeBgColor: [
-                    Theme.of(context).colorScheme.primary,
-                  ],
-                  onToggle: _onToggle,
-                ),
-              ),
+            FlexThemeModeSwitch(
+              themeMode: themeBloc.state.mode,
+              onThemeModeChanged: (mode) {
+                setState(() {
+                  themeBloc.add(ThemeModeChangedEvent(themeMode: mode));
+                });
+              },
+              flexSchemeData:
+                  FlexColor.schemesList[themeBloc.state.scheme.index],
+              optionButtonBorderRadius: 10.0,
+            ),
+            ThemePopupMenu(
+              contentPadding: EdgeInsets.zero,
+              schemeIndex: themeBloc.state.scheme.index,
+              onChanged: (index) {
+                setState(() {
+                  themeBloc.add(
+                    ThemeSchemeChangedEvent(scheme: FlexScheme.values[index]),
+                  );
+                });
+              },
             ),
           ],
         ),
         const SizedBox(height: Constants.listSpacing),
         RoundedList(
+          padding: EdgeInsets.zero,
           header: 'Help',
           children: [
             SettingsTile(
@@ -125,24 +126,6 @@ class _SettingsViewState extends State<SettingsView> {
 
   void _sendFeedback(BuildContext context) {
     BetterFeedback.of(context).showAndUploadToSentry();
-  }
-
-  void _onToggle(int? index) {
-    switch (index) {
-      case 0:
-        context.read<ThemeBloc>().add(UpdateToSystemThemeEvent());
-        _labelIndex = 0;
-        break;
-      case 1:
-        context.read<ThemeBloc>().add(UpdateToLightThemeEvent());
-        _labelIndex = 1;
-        break;
-
-      case 2:
-        context.read<ThemeBloc>().add(UpdateToDarkThemeEvent());
-        _labelIndex = 2;
-        break;
-    }
   }
 
   Future<void> _openSourceCode() async {

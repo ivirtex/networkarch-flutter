@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:google_fonts/google_fonts.dart';
 
-// Project imports:
-import 'package:network_arch/theme/theme.dart';
-
 class HexBytesViewer extends StatelessWidget {
   const HexBytesViewer({
     required this.title,

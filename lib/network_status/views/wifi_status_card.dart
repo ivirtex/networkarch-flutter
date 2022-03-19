@@ -9,7 +9,6 @@ import 'package:network_arch/network_status/network_status.dart';
 import 'package:network_arch/network_status/widgets/adaptive_button.dart';
 import 'package:network_arch/shared/list_circular_progress_indicator.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
-import 'package:network_arch/theme/theme.dart';
 
 class WifiStatusCard extends StatelessWidget {
   const WifiStatusCard({Key? key}) : super(key: key);

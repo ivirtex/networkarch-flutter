@@ -62,8 +62,7 @@ final List<PageViewModel> pagesList = [
     useScrollView: false,
     decoration: const PageDecoration(
       contentMargin: EdgeInsets.symmetric(
-        horizontal: 16.0,
-        vertical: 36.0,
+        horizontal: 8.0,
       ),
       footerPadding: EdgeInsets.zero,
     ),
