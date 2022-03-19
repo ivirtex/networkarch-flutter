@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/shared/shared.dart';
+import 'package:network_arch/theme/theme.dart';
 
 class RoundedList extends StatelessWidget {
   const RoundedList({
@@ -29,13 +30,9 @@ class RoundedList extends StatelessWidget {
         if (header != null) SmallDescription(child: header!),
         ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
-          child: Card(
+          child: DataCard(
             margin: EdgeInsets.zero,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            elevation: Platform.isAndroid ? 1.0 : 0.0,
-            color: bgColor ?? Constants.getPlatformCardColor(context),
+            padding: EdgeInsets.zero,
             child: ListView.separated(
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),

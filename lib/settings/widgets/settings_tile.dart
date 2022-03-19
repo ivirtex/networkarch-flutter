@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
+import 'package:network_arch/theme/theme.dart';
 
 class SettingsTile extends StatelessWidget {
   const SettingsTile({
@@ -24,12 +24,12 @@ class SettingsTile extends StatelessWidget {
     return ListTile(
       leading: FaIcon(
         icon,
-        color: Constants.getPlatformIconColor(context),
+        color: Themes.getPlatformIconColor(context),
       ),
       title: Text(title),
       trailing: Icon(
         Icons.arrow_forward_ios,
-        color: Constants.getPlatformIconColor(context),
+        color: Themes.getPlatformIconColor(context),
       ),
       onTap: onTap,
     );

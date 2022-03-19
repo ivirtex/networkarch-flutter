@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
 import 'package:network_arch/shared/shared.dart';
+import 'package:network_arch/theme/theme.dart';
 
 class AdaptiveButton extends StatelessWidget {
   const AdaptiveButton({
     required this.text,
-    this.androidIcon = FontAwesomeIcons.arrowCircleRight,
+    this.androidIcon = FontAwesomeIcons.circleArrowRight,
     this.cupertinoIcon = CupertinoIcons.chevron_right,
     this.onPressed,
     Key? key,
@@ -35,24 +35,20 @@ class AdaptiveButton extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
+        backgroundColor:
+            Theme.of(context).colorScheme.primary.withOpacity(0.15),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        backgroundColor: Constants.getPlatformBtnColor(context),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const SizedBox(),
-          Text(
-            text,
-            style: TextStyle(
-              color: Constants.getPlatformTextColor(context),
-            ),
-          ),
+          Text(text),
           FaIcon(
             androidIcon,
-            color: Constants.getPlatformIconColor(context),
+            color: Themes.getPlatformIconColor(context),
           ),
         ],
       ),
@@ -65,7 +61,6 @@ class AdaptiveButton extends StatelessWidget {
     return CupertinoButton(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       onPressed: onPressed,
-      color: Constants.getPlatformBtnColor(context),
       borderRadius: BorderRadius.circular(10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,8 +1,4 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -86,62 +82,6 @@ abstract class Constants {
     endIndent: 0,
   );
 
-  // Colors
-  static const Color seedColor = Color.fromARGB(255, 1, 77, 128);
-
-  static final ColorScheme lightColorScheme = ColorScheme.fromSeed(
-    seedColor: seedColor,
-  );
-  static final ColorScheme darkColorScheme = ColorScheme.fromSeed(
-    brightness: Brightness.dark,
-    seedColor: seedColor,
-  );
-
-  static const Color iOSlightBgColor = CupertinoColors.systemGrey5;
-  static const Color iOSdarkBgColor = CupertinoColors.black;
-  static const CupertinoDynamicColor iOSCardColor = CupertinoColors.systemGrey5;
-  static const CupertinoDynamicColor iOSBtnColor = CupertinoColors.systemGrey4;
-
-  static Color getPlatformBgColor(BuildContext context) {
-    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
-
-    return Platform.isIOS
-        ? (isDarkModeOn ? iOSdarkBgColor : iOSlightBgColor)
-        : Theme.of(context).colorScheme.background;
-  }
-
-  static Color getPlatformCardColor(BuildContext context) {
-    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
-
-    return Platform.isIOS
-        ? Constants.iOSCardColor.resolveFrom(context)
-        : isDarkModeOn
-            ? Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5)
-            : Theme.of(context).colorScheme.surface.withOpacity(0.8);
-  }
-
-  static Color getPlatformBtnColor(BuildContext context) {
-    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
-
-    return Platform.isIOS
-        ? Constants.iOSBtnColor.resolveFrom(context)
-        : isDarkModeOn
-            ? Theme.of(context).colorScheme.surface.withOpacity(0.6)
-            : Theme.of(context).colorScheme.surface;
-  }
-
-  static Color getPlatformIconColor(BuildContext context) {
-    return Platform.isIOS
-        ? CupertinoDynamicColor.resolve(CupertinoColors.white, context)
-        : Theme.of(context).colorScheme.onSurface;
-  }
-
-  static Color getPlatformTextColor(BuildContext context) {
-    return Platform.isIOS
-        ? CupertinoDynamicColor.resolve(CupertinoColors.white, context)
-        : Theme.of(context).colorScheme.onBackground;
-  }
-
   // Description styles
   static final TextStyle descStyleLight = TextStyle(
     color: Colors.grey[600],
@@ -213,6 +153,7 @@ abstract class Constants {
       ElegantNotification.success(
     title: const Text('Success'),
     description: const Text(_permissionGranted),
+    dismissible: true,
     notificationPosition: NOTIFICATION_POSITION.bottom,
     animation: ANIMATION.fromBottom,
   );
@@ -236,6 +177,7 @@ abstract class Constants {
       ElegantNotification.error(
     title: const Text('Error'),
     description: const Text(_permissionDenied),
+    dismissible: true,
     notificationPosition: NOTIFICATION_POSITION.bottom,
     animation: ANIMATION.fromBottom,
     toastDuration: const Duration(milliseconds: 4000),
@@ -273,6 +215,7 @@ abstract class Constants {
       ElegantNotification.error(
     title: const Text('Warning'),
     description: const Text(_permissionDefault),
+    dismissible: true,
     notificationPosition: NOTIFICATION_POSITION.bottom,
     animation: ANIMATION.fromBottom,
   );
@@ -287,6 +230,7 @@ abstract class Constants {
       ElegantNotification.error(
     title: const Text('Validation error'),
     description: const Text(_wolValidationError),
+    dismissible: true,
     notificationPosition: NOTIFICATION_POSITION.bottom,
     animation: ANIMATION.fromBottom,
     toastDuration: const Duration(milliseconds: 4000),

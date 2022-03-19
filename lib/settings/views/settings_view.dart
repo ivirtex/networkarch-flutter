@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:feedback_sentry/feedback_sentry.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -77,7 +78,7 @@ class _SettingsViewState extends State<SettingsView> {
               contentPadding: const EdgeInsets.only(left: 16, right: 8),
               leading: Icon(
                 Icons.dark_mode_rounded,
-                color: Constants.getPlatformIconColor(context),
+                color: Themes.getPlatformIconColor(context),
               ),
               title: const Text('Mode'),
               trailing: SizedBox(
@@ -89,8 +90,6 @@ class _SettingsViewState extends State<SettingsView> {
                   activeBgColor: [
                     Theme.of(context).colorScheme.primary,
                   ],
-                  activeFgColor: Theme.of(context).colorScheme.onPrimary,
-                  inactiveBgColor: Theme.of(context).colorScheme.surfaceVariant,
                   onToggle: _onToggle,
                 ),
               ),

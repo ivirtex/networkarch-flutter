@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
 import 'package:network_arch/network_status/network_status.dart';
 import 'package:network_arch/network_status/widgets/adaptive_button.dart';
 import 'package:network_arch/shared/list_circular_progress_indicator.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/theme/theme.dart';
 
 class WifiStatusCard extends StatelessWidget {
   const WifiStatusCard({Key? key}) : super(key: key);
@@ -28,12 +28,11 @@ class WifiStatusCard extends StatelessWidget {
                     children: [
                       const Icon(Icons.wifi_rounded),
                       const SizedBox(width: 5),
-                      Text(
+                      const Text(
                         'Wi-Fi',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20.0,
-                          color: Constants.getPlatformTextColor(context),
                         ),
                       ),
                       const Spacer(),

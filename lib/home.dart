@@ -14,6 +14,7 @@ import 'package:network_arch/overview/views/overview_view.dart';
 import 'package:network_arch/permissions/permissions.dart';
 import 'package:network_arch/settings/settings.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/theme/theme.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -58,37 +59,34 @@ class _HomeState extends State<Home> {
   }
 
   Widget _androidBuilder(BuildContext context) {
-    return DefaultTextStyle(
-      style: DefaultTextStyle.of(context).style.copyWith(
-            color: Theme.of(context).colorScheme.onBackground,
+    print(Theme.of(context).scaffoldBackgroundColor);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: _selectedIndex == 0
+            ? const Text('Overview')
+            : const Text('Settings'),
+      ),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pages,
+      ),
+      bottomNavigationBar: NavigationBar(
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.home_outlined),
+            selectedIcon: Icon(Icons.home_rounded),
+            label: 'Overview',
           ),
-      child: Scaffold(
-        appBar: AppBar(
-          title: _selectedIndex == 0
-              ? const Text('Overview')
-              : const Text('Settings'),
-        ),
-        body: IndexedStack(
-          index: _selectedIndex,
-          children: _pages,
-        ),
-        bottomNavigationBar: NavigationBar(
-          destinations: const [
-            NavigationDestination(
-              icon: Icon(Icons.home_outlined),
-              selectedIcon: Icon(Icons.home),
-              label: 'Overview',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.settings_outlined),
-              selectedIcon: Icon(Icons.settings),
-              label: 'Settings',
-            ),
-          ],
-          selectedIndex: _selectedIndex,
-          onDestinationSelected: (index) =>
-              setState(() => _selectedIndex = index),
-        ),
+          NavigationDestination(
+            icon: Icon(Icons.settings_outlined),
+            selectedIcon: Icon(Icons.settings_rounded),
+            label: 'Settings',
+          ),
+        ],
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: (index) =>
+            setState(() => _selectedIndex = index),
       ),
     );
   }

@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/theme/theme.dart';
 
 class ClearListButton extends StatelessWidget {
   const ClearListButton({
@@ -24,14 +24,8 @@ class ClearListButton extends StatelessWidget {
 
   Widget _buildAndroid(BuildContext context) {
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        primary: Constants.getPlatformBtnColor(context),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
       onPressed: onPressed,
-      child: Text('Clear list', style: Theme.of(context).textTheme.button),
+      child: const Text('Clear list'),
     );
   }
 

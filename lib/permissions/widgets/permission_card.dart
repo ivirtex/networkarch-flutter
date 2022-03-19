@@ -65,7 +65,7 @@ class PermissionCard extends StatelessWidget {
                   flex: 2,
                   child: Center(
                     child: FaIcon(
-                      FontAwesomeIcons.checkCircle,
+                      FontAwesomeIcons.circleCheck,
                       color: Colors.green,
                     ),
                   ),
@@ -75,7 +75,7 @@ class PermissionCard extends StatelessWidget {
                   flex: 2,
                   child: Center(
                     child: FaIcon(
-                      FontAwesomeIcons.timesCircle,
+                      FontAwesomeIcons.circleXmark,
                       color: Colors.red,
                     ),
                   ),

@@ -23,7 +23,7 @@ class ErrorCard extends StatelessWidget {
       child: Row(
         children: [
           Icon(
-            FontAwesomeIcons.timesCircle,
+            FontAwesomeIcons.circleXmark,
             color: Theme.of(context).colorScheme.error,
             size: 25,
           ),

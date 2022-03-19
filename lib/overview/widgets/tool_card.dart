@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/theme/theme.dart';
 
 class ToolCard extends StatelessWidget {
   const ToolCard({
@@ -44,7 +44,6 @@ class ToolCard extends StatelessWidget {
                 Text(
                   toolDesc,
                   maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
@@ -54,8 +53,11 @@ class ToolCard extends StatelessWidget {
           ),
           const Spacer(),
           Flexible(
-            child: TextButton(
-              style: TextButton.styleFrom(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary:
+                    Theme.of(context).colorScheme.primary.withOpacity(0.15),
+                elevation: 0.0,
                 shape: CircleBorder(
                   side: isPremium
                       ? BorderSide(
@@ -64,12 +66,11 @@ class ToolCard extends StatelessWidget {
                         )
                       : BorderSide.none,
                 ),
-                backgroundColor: Constants.getPlatformBtnColor(context),
               ),
               onPressed: onPressed,
               child: FaIcon(
-                FontAwesomeIcons.arrowCircleRight,
-                color: Constants.getPlatformIconColor(context),
+                FontAwesomeIcons.circleArrowRight,
+                color: Themes.getPlatformIconColor(context),
               ),
             ),
           ),

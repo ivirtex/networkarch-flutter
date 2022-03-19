@@ -1,33 +1,30 @@
+// Dart imports:
+import 'dart:io';
+
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// Project imports:
-import 'package:network_arch/constants.dart';
+// Package imports:
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 
 abstract class Themes {
-  static final ThemeData lightThemeData = ThemeData(
-    colorScheme: Constants.lightColorScheme,
-    useMaterial3: true,
-    scaffoldBackgroundColor: Constants.lightColorScheme.background,
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.transparent,
-      shadowColor: Colors.transparent,
-      foregroundColor: Colors.black,
-      elevation: 0,
-    ),
+  static final ThemeData lightThemeData = FlexThemeData.light(
+    scheme: FlexScheme.blue,
+    useSubThemes: true,
+    appBarStyle: FlexAppBarStyle.background,
+    appBarOpacity: 0,
+    surfaceMode: FlexSurfaceMode.highScaffoldLowSurfacesVariantDialog,
+    blendLevel: 7,
   );
 
-  static final ThemeData darkThemeData = ThemeData(
-    colorScheme: Constants.darkColorScheme,
-    brightness: Brightness.dark,
-    useMaterial3: true,
-    scaffoldBackgroundColor: Constants.darkColorScheme.background,
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.transparent,
-      shadowColor: Colors.transparent,
-      elevation: 0,
-    ),
+  static final ThemeData darkThemeData = FlexThemeData.dark(
+    scheme: FlexScheme.blue,
+    useSubThemes: true,
+    appBarStyle: FlexAppBarStyle.background,
+    appBarOpacity: 0,
+    surfaceMode: FlexSurfaceMode.highScaffoldLowSurfacesVariantDialog,
+    blendLevel: 7,
   );
 
   static final CupertinoThemeData cupertinoLightThemeData = CupertinoThemeData(
@@ -55,4 +52,15 @@ abstract class Themes {
       darkColor: CupertinoColors.black.withOpacity(0.8),
     ),
   );
+
+  static const Color iOSlightBgColor = CupertinoColors.systemGrey5;
+  static const Color iOSdarkBgColor = CupertinoColors.black;
+  static const CupertinoDynamicColor iOSCardColor = CupertinoColors.systemGrey5;
+  static const CupertinoDynamicColor iOSBtnColor = CupertinoColors.systemGrey4;
+
+  static Color getPlatformIconColor(BuildContext context) {
+    return Platform.isIOS
+        ? CupertinoDynamicColor.resolve(CupertinoColors.white, context)
+        : Theme.of(context).colorScheme.onSurface;
+  }
 }

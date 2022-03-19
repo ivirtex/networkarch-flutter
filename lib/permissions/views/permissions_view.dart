@@ -67,7 +67,7 @@ class PermissionsView extends StatelessWidget {
                 return PermissionCard(
                   title: 'Phone',
                   description: Constants.phoneStatePermissionDesc,
-                  icon: const FaIcon(FontAwesomeIcons.phoneAlt),
+                  icon: const FaIcon(FontAwesomeIcons.phoneFlip),
                   status: state.phoneStateStatus ?? PermissionStatus.denied,
                   onPressed: () {
                     context

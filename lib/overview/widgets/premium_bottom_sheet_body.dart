@@ -113,21 +113,11 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
               children: [
                 const Spacer(),
                 ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                      Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
                   onPressed: () => _handleSubscribe(context),
                   child: const Text('Subscribe'),
                 ),
                 const SizedBox(width: Constants.listSpacing),
                 ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                      Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
                   onPressed: () => _handleWatchAd(context),
                   child: const Text('Watch ad'),
                 ),

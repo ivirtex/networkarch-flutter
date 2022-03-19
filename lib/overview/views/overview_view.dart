@@ -181,16 +181,12 @@ class _OverviewViewState extends State<OverviewView> {
     return Platform.isIOS
         ? showCupertinoModalBottomSheet(
             context: context,
-            builder: (context) {
-              return const PremiumBottomSheetBody();
-            },
+            builder: (_) => const PremiumBottomSheetBody(),
           )
         : showMaterialModalBottomSheet(
             context: context,
-            backgroundColor: Theme.of(context).colorScheme.background,
-            builder: (context) {
-              return const PremiumBottomSheetBody();
-            },
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            builder: (_) => const PremiumBottomSheetBody(),
           );
   }
 }

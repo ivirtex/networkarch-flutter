@@ -4,8 +4,11 @@ import 'dart:io';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:flex_color_scheme/flex_color_scheme.dart';
+
 // Project imports:
-import 'package:network_arch/constants.dart';
+import 'package:network_arch/theme/theme.dart';
 
 class DataCard extends StatelessWidget {
   const DataCard({
@@ -22,12 +25,11 @@ class DataCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).cardColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
       margin: margin,
-      elevation: Platform.isAndroid ? 1.0 : 0.0,
-      color: Constants.getPlatformCardColor(context),
       child: Padding(
         padding: padding,
         child: child,

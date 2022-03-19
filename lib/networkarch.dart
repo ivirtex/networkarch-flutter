@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:feedback/feedback.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -35,9 +36,6 @@ class NetworkArch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //! Debug, remove in production
-    // debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
-
     return BetterFeedback(
       child: MultiRepositoryProvider(
         providers: [

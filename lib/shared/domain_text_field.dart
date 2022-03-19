@@ -37,13 +37,13 @@ class DomainTextField extends StatelessWidget {
           autocorrect: false,
           controller: controller,
           decoration: InputDecoration(
-            fillColor: Theme.of(context).colorScheme.secondary,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
             errorText: errorText,
             labelText: label,
-            prefixIcon: withoutPrefixIcon ? null : const Icon(Icons.language),
+            prefixIcon: withoutPrefixIcon
+                ? null
+                : const Icon(
+                    Icons.language_rounded,
+                  ),
             suffixIcon: suffixIcon,
           ),
           expands: expands,
