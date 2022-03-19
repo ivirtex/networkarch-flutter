@@ -70,7 +70,7 @@ class ToolCard extends StatelessWidget {
               onPressed: onPressed,
               child: FaIcon(
                 FontAwesomeIcons.circleArrowRight,
-                color: Themes.getPlatformIconColor(context),
+                color: Theme.of(context).iconTheme.color,
               ),
             ),
           ),

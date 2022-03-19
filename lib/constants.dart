@@ -77,9 +77,9 @@ abstract class Constants {
   static const double linearProgressWidth = 50.0;
 
   static const Divider listDivider = Divider(
-    height: 2,
-    indent: 12,
-    endIndent: 0,
+    height: 0.0,
+    indent: 12.0,
+    endIndent: 0.0,
   );
 
   // Description styles

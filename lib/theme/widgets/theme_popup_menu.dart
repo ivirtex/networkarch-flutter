@@ -21,11 +21,15 @@ class ThemePopupMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final bool isLight = theme.brightness == Brightness.light;
+
     final ColorScheme colorScheme = theme.colorScheme;
 
     return PopupMenuButton<int>(
       padding: EdgeInsets.zero,
       onSelected: onChanged,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
       itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
         for (int i = 0; i < FlexColor.schemes.length; i++)
           PopupMenuItem<int>(
@@ -43,16 +47,28 @@ class ThemePopupMenu extends StatelessWidget {
           ),
       ],
       child: ListTile(
-        contentPadding:
-            contentPadding ?? const EdgeInsets.symmetric(horizontal: 16),
+        contentPadding: contentPadding ??
+            const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8,
+            ),
         title: Text(
           '${FlexColor.schemesList[schemeIndex].name} color scheme',
         ),
         subtitle: Text(FlexColor.schemesList[schemeIndex].description),
-        trailing: Icon(
-          Icons.lens,
-          color: colorScheme.primary,
-          size: 40,
+        trailing: Stack(
+          alignment: Alignment.center,
+          children: [
+            Icon(
+              Icons.arrow_downward_rounded,
+              color: colorScheme.primary,
+            ),
+            Icon(
+              Icons.lens_outlined,
+              color: colorScheme.primary,
+              size: 40,
+            ),
+          ],
         ),
       ),
     );

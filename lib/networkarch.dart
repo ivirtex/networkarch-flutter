@@ -36,6 +36,7 @@ class NetworkArch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BetterFeedback(
+      theme: FeedbackThemeData(background: Colors.lightBlue[50]!),
       child: MultiRepositoryProvider(
         providers: [
           RepositoryProvider.value(value: networkStatusRepository),

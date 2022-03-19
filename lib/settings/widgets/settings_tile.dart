@@ -24,12 +24,12 @@ class SettingsTile extends StatelessWidget {
     return ListTile(
       leading: FaIcon(
         icon,
-        color: Themes.getPlatformIconColor(context),
+        color: Theme.of(context).iconTheme.color,
       ),
       title: Text(title),
       trailing: Icon(
         Icons.arrow_forward_ios,
-        color: Themes.getPlatformIconColor(context),
+        color: Theme.of(context).iconTheme.color,
       ),
       onTap: onTap,
     );

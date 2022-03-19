@@ -35,6 +35,7 @@ class AdaptiveButton extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         backgroundColor:
             Theme.of(context).colorScheme.primary.withOpacity(0.15),
         shape: const RoundedRectangleBorder(
@@ -49,7 +50,7 @@ class AdaptiveButton extends StatelessWidget {
           Text(text),
           FaIcon(
             androidIcon,
-            color: Themes.getPlatformIconColor(context),
+            color: Theme.of(context).iconTheme.color,
           ),
         ],
       ),

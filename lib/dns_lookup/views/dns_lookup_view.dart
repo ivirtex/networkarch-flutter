@@ -125,16 +125,12 @@ class _DnsLookupViewState extends State<DnsLookupView> {
                   items: _getQueryTypes(),
                   value: _selectedDnsQueryType,
                   hint: const Text('Type'),
-                  icon: const Icon(Icons.arrow_downward),
-                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
+                  icon: const Icon(Icons.arrow_downward_rounded),
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
-                  elevation: Platform.isIOS ? 0 : 8,
                   isExpanded: true,
                   onChanged: (type) {
                     setState(() {

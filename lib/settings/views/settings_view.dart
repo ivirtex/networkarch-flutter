@@ -70,21 +70,27 @@ class _SettingsViewState extends State<SettingsView> {
     return ContentListView(
       children: [
         RoundedList(
+          padding: EdgeInsets.zero,
           header: 'Theme settings',
           children: [
-            FlexThemeModeSwitch(
-              themeMode: themeBloc.state.mode,
-              onThemeModeChanged: (mode) {
-                setState(() {
-                  themeBloc.add(ThemeModeChangedEvent(themeMode: mode));
-                });
-              },
-              flexSchemeData:
-                  FlexColor.schemesList[themeBloc.state.scheme.index],
-              optionButtonBorderRadius: 10.0,
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
+              ),
+              child: FlexThemeModeSwitch(
+                themeMode: themeBloc.state.mode,
+                onThemeModeChanged: (mode) {
+                  setState(() {
+                    themeBloc.add(ThemeModeChangedEvent(themeMode: mode));
+                  });
+                },
+                flexSchemeData:
+                    FlexColor.schemesList[themeBloc.state.scheme.index],
+                optionButtonBorderRadius: 10.0,
+              ),
             ),
             ThemePopupMenu(
-              contentPadding: EdgeInsets.zero,
               schemeIndex: themeBloc.state.scheme.index,
               onChanged: (index) {
                 setState(() {
