@@ -108,17 +108,20 @@ class _SettingsViewState extends State<SettingsView> {
           header: 'Help',
           children: [
             SettingsTile(
-              title: 'Go to onboarding screen',
+              title: const Text('Go to onboarding screen'),
+              subtitle: const Text('Resolve permissions issues'),
               icon: Icons.info_rounded,
               onTap: () => Navigator.pushNamed(context, '/introduction'),
             ),
             SettingsTile(
-              title: 'Send feedback',
+              title: const Text('Send feedback'),
+              subtitle: const Text('Something is not working?'),
               icon: Icons.feedback_rounded,
               onTap: () => _sendFeedback(context),
             ),
             SettingsTile(
-              title: 'View source code',
+              title: const Text('Source code'),
+              subtitle: const Text('Feel free to contribute!'),
               icon: FontAwesomeIcons.github,
               onTap: _canLaunchUrl ? _openSourceCode : null,
             ),

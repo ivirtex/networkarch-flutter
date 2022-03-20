@@ -4,33 +4,34 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-// Project imports:
-import 'package:network_arch/theme/theme.dart';
-
 class SettingsTile extends StatelessWidget {
   const SettingsTile({
     required this.title,
     required this.icon,
+    this.subtitle,
     this.onTap,
     Key? key,
   }) : super(key: key);
 
-  final String title;
+  final Text title;
   final IconData icon;
+  final Text? subtitle;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: FaIcon(
-        icon,
-        color: Theme.of(context).iconTheme.color,
+      iconColor: Theme.of(context).iconTheme.color,
+      // Used to center the icon in the tile.
+      leading: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FaIcon(icon),
+        ],
       ),
-      title: Text(title),
-      trailing: Icon(
-        Icons.arrow_forward_ios,
-        color: Theme.of(context).iconTheme.color,
-      ),
+      title: title,
+      subtitle: subtitle,
+      trailing: const Icon(Icons.arrow_forward_ios),
       onTap: onTap,
     );
   }

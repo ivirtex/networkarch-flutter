@@ -16,63 +16,60 @@ class HexBytesViewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(title),
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(title),
+        ),
+        const SizedBox(height: 10),
+        Card(
+          margin: EdgeInsets.zero,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
           ),
-          const SizedBox(height: 10),
-          Card(
-            margin: EdgeInsets.zero,
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  GridView.count(
-                    physics: const NeverScrollableScrollPhysics(),
-                    crossAxisCount: 16,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    children: [
-                      for (final byte in bytes)
+          color: Theme.of(context).chipTheme.backgroundColor,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                GridView.count(
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisCount: 16,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  children: [
+                    for (final byte in bytes)
+                      Text(
+                        byte.toRadixString(16).padLeft(2, '0'),
+                        style: GoogleFonts.sourceCodePro(),
+                      ),
+                  ],
+                ),
+                GridView.count(
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisCount: 16,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  children: [
+                    for (final byte in bytes)
+                      if (byte < 128)
                         Text(
-                          byte.toRadixString(16).padLeft(2, '0'),
+                          String.fromCharCode(byte),
+                          style: GoogleFonts.sourceCodePro(),
+                        )
+                      else
+                        Text(
+                          '.',
                           style: GoogleFonts.sourceCodePro(),
                         ),
-                    ],
-                  ),
-                  GridView.count(
-                    physics: const NeverScrollableScrollPhysics(),
-                    crossAxisCount: 16,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    children: [
-                      for (final byte in bytes)
-                        if (byte < 128)
-                          Text(
-                            String.fromCharCode(byte),
-                            style: GoogleFonts.sourceCodePro(),
-                          )
-                        else
-                          Text(
-                            '.',
-                            style: GoogleFonts.sourceCodePro(),
-                          ),
-                    ],
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

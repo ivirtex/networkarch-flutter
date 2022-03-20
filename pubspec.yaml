@@ -4,7 +4,7 @@ description:
   including pinging specific IP address or hostname, sending Wake on LAN magic packets,
   whois and DNS Lookup.
 publish_to: "none"
-version: 1.1.0
+version: 1.1.0+3
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -52,7 +52,6 @@ dependencies:
   url_launcher: ^6.0.20
   wake_on_lan: ^3.0.0
   flex_color_scheme: ^4.2.0
-  flex_color_picker: ^2.3.1
 
 dev_dependencies:
   flutter_test:

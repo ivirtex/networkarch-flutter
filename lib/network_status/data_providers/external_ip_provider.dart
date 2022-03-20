@@ -7,6 +7,7 @@ class ExternalIpProvider {
       final url = Uri.parse('https://api.ipify.org');
       final response = await http.get(url);
 
+      // ignore: prefer-conditional-expressions
       if (response.statusCode == 200) {
         // The response body is the IP in plain text, so just
         // return it as-is.

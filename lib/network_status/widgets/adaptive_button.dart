@@ -7,7 +7,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/theme/theme.dart';
 
 class AdaptiveButton extends StatelessWidget {
   const AdaptiveButton({

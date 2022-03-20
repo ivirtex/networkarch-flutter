@@ -22,7 +22,7 @@ import 'package:network_arch/whois/whois.dart';
 abstract class Constants {
   static const String appName = 'NetworkArch';
   static const String appDesc = '''
-      NetworkArch is an open-source network diagnostic tool 
+      NetworkArch is an open-source network diagnostics tool 
       equipped with various useful utilities.
       ''';
   static const String sourceCodeURL =
@@ -100,7 +100,7 @@ abstract class Constants {
       'Send ICMP pings to specific IP address or domain';
 
   static const String lanScannerDesc =
-      'Discover network devices in local network';
+      'Discover network devices in the local network';
 
   static const String wolDesc = 'Send magic packets on your local network';
 

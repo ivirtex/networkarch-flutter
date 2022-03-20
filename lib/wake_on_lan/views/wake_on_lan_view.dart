@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -43,9 +44,10 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
       removedItemBuilder: _buildItem,
     );
 
-    //! debug
-    // ipv4TextFieldController.text = '192.168.0.99';
-    // macTextFieldController.text = '2A:D8:BB:E3:33:D1';
+    if (kDebugMode) {
+      ipv4TextFieldController.text = '192.168.0.99';
+      macTextFieldController.text = '2A:D8:BB:E3:33:D1';
+    }
   }
 
   @override
