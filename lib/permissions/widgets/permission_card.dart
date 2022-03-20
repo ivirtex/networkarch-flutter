@@ -62,7 +62,7 @@ class PermissionCard extends StatelessWidget {
               ),
               if (status.isGranted)
                 const Flexible(
-                  flex: 2,
+                  flex: 3,
                   child: Center(
                     child: FaIcon(
                       FontAwesomeIcons.circleCheck,
@@ -72,7 +72,7 @@ class PermissionCard extends StatelessWidget {
                 )
               else if (status.isPermanentlyDenied)
                 const Flexible(
-                  flex: 2,
+                  flex: 3,
                   child: Center(
                     child: FaIcon(
                       FontAwesomeIcons.circleXmark,
@@ -82,7 +82,7 @@ class PermissionCard extends StatelessWidget {
                 )
               else
                 Flexible(
-                  flex: 2,
+                  flex: 3,
                   child: Center(
                     child: TextButton(
                       onPressed: onPressed,

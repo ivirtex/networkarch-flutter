@@ -50,6 +50,10 @@ abstract class Constants {
           pages: pagesList,
           isTopSafeArea: true,
           isBottomSafeArea: true,
+          controlsPadding: EdgeInsets.symmetric(
+            vertical: MediaQuery.of(context).padding.bottom,
+            horizontal: 16.0,
+          ),
           done: const Text('Done'),
           next: const Icon(Icons.navigate_next),
           onDone: () => Navigator.of(context).pop(),

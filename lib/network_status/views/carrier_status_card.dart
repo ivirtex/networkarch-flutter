@@ -17,11 +17,11 @@ class CarrierStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DataCard(
       margin: EdgeInsetsDirectional.zero,
-      child: Column(
-        children: [
-          BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
-            builder: (context, state) {
-              return Column(
+      child: BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
+        builder: (context, state) {
+          return Column(
+            children: [
+              Column(
                 children: [
                   Row(
                     children: [
@@ -55,15 +55,17 @@ class CarrierStatusCard extends StatelessWidget {
                     ],
                   ),
                 ],
-              );
-            },
-          ),
-          const SizedBox(height: 10),
-          AdaptiveButton(
-            text: 'Detailed view',
-            onPressed: () => Navigator.pushNamed(context, '/carrier'),
-          ),
-        ],
+              ),
+              const SizedBox(height: 10),
+              AdaptiveButton(
+                text: 'Detailed view',
+                onPressed: state.carrierInfo?.isoCountryCode != null
+                    ? () => Navigator.pushNamed(context, '/carrier')
+                    : null,
+              ),
+            ],
+          );
+        },
       ),
     );
   }

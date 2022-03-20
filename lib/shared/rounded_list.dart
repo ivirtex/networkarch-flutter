@@ -11,6 +11,8 @@ class RoundedList extends StatelessWidget {
     this.padding = const EdgeInsets.all(10.0),
     this.header,
     this.footer,
+    this.onHeaderTapped,
+    this.onFooterTapped,
     this.bgColor,
     Key? key,
   }) : super(key: key);
@@ -19,13 +21,18 @@ class RoundedList extends StatelessWidget {
   final EdgeInsets padding;
   final String? header;
   final String? footer;
+  final VoidCallback? onHeaderTapped;
+  final VoidCallback? onFooterTapped;
   final Color? bgColor;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (header != null) SmallDescription(child: header!),
+        if (header != null)
+          GestureDetector(
+            child: SmallDescription(child: header!),
+          ),
         ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
           child: DataCard(
@@ -48,7 +55,10 @@ class RoundedList extends StatelessWidget {
             ),
           ),
         ),
-        if (footer != null) SmallDescription(child: footer!),
+        if (footer != null)
+          GestureDetector(
+            child: SmallDescription(child: footer!),
+          ),
       ],
     );
   }

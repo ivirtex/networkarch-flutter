@@ -13,14 +13,16 @@ import 'package:network_arch/permissions/permissions.dart';
 final List<PageViewModel> pagesList = [
   PageViewModel(
     title: 'Welcome to NetworkArch!',
-    image: Builder(
-      builder: (context) {
-        final isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+    image: SafeArea(
+      child: Builder(
+        builder: (context) {
+          final isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
-        return isDarkModeOn
-            ? Image.asset('assets/icon_alpha_dark.png', height: 250.0)
-            : Image.asset('assets/icon_alpha_light.png', height: 250.0);
-      },
+          return isDarkModeOn
+              ? Image.asset('assets/icon_alpha_dark.png', height: 250.0)
+              : Image.asset('assets/icon_alpha_light.png', height: 250.0);
+        },
+      ),
     ),
     decoration: const PageDecoration(
       imagePadding: EdgeInsets.zero,
@@ -58,13 +60,23 @@ final List<PageViewModel> pagesList = [
     ),
   ),
   PageViewModel(
-    title: 'Permissions',
+    titleWidget: SafeArea(
+      child: Builder(
+        builder: (context) {
+          return Text(
+            'Permissions',
+            style: Theme.of(context).textTheme.headline6,
+          );
+        },
+      ),
+    ),
     useScrollView: false,
     decoration: const PageDecoration(
       contentMargin: EdgeInsets.symmetric(
         horizontal: 8.0,
       ),
       footerPadding: EdgeInsets.zero,
+      titlePadding: EdgeInsets.only(top: 16),
     ),
     bodyWidget: const Expanded(child: PermissionsView()),
     footer: Align(

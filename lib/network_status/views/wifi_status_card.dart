@@ -17,11 +17,11 @@ class WifiStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DataCard(
       margin: EdgeInsetsDirectional.zero,
-      child: Column(
-        children: [
-          BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
-            builder: (context, state) {
-              return Column(
+      child: BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
+        builder: (context, state) {
+          return Column(
+            children: [
+              Column(
                 children: [
                   Row(
                     children: [
@@ -54,15 +54,17 @@ class WifiStatusCard extends StatelessWidget {
                     ],
                   ),
                 ],
-              );
-            },
-          ),
-          const SizedBox(height: 10),
-          AdaptiveButton(
-            text: 'Detailed view',
-            onPressed: () => Navigator.of(context).pushNamed('/wifi'),
-          ),
-        ],
+              ),
+              const SizedBox(height: 10),
+              AdaptiveButton(
+                text: 'Detailed view',
+                onPressed: state.wifiInfo?.wifiIPv4 != null
+                    ? () => Navigator.of(context).pushNamed('/wifi')
+                    : null,
+              ),
+            ],
+          );
+        },
       ),
     );
   }
