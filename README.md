@@ -1,16 +1,16 @@
-# network_arch
+# NetworkArch
 
-A new Flutter project.
+![Flutter badge](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
 
-## Getting Started
+NetworkArch is an Flutter app, that allows to diagnose Internet connections, discover details about Wi-Fi & Cellular networks and use many network-oriented tools:
 
-This project is a starting point for a Flutter application.
+- Ping
+- LAN Scanner
+- Wake On LAN
+- IP Geolocation
+- Whois
+- DNS Lookup
 
-A few resources to get you started if this is your first Flutter project:
+I tried to follow the Material 3 Design Guidelines as much as possible, but Flutter 2.10.3 still hasn't got the Material 3 fully implemented.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+[Play Store link](https://play.google.com/store/apps/details?id=com.hubertjozwiak.networkarch)
