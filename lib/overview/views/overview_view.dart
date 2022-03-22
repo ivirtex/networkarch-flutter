@@ -166,7 +166,7 @@ class _OverviewViewState extends State<OverviewView> {
               : () => showPremiumBottomSheet(context),
         ),
         const SizedBox(height: Constants.listSpacing),
-        if (!isPremiumAvail)
+        if (!isPremiumGranted)
           Container(
             alignment: Alignment.center,
             width: banner.size.width.toDouble(),
