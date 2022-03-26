@@ -15,8 +15,23 @@ import 'package:network_arch/permissions/widgets/usage_desc.dart';
 import 'package:network_arch/permissions/widgets/widgets.dart';
 import 'package:network_arch/shared/shared.dart';
 
-class PermissionsView extends StatelessWidget {
+class PermissionsView extends StatefulWidget {
   const PermissionsView({Key? key}) : super(key: key);
+
+  @override
+  State<PermissionsView> createState() => _PermissionsViewState();
+}
+
+class _PermissionsViewState extends State<PermissionsView> {
+  @override
+  void initState() {
+    super.initState();
+
+    context
+        .read<PermissionsBloc>()
+        .add(const PermissionsStatusRefreshRequested());
+  }
+
   @override
   Widget build(BuildContext context) {
     return _buildBody(context);
