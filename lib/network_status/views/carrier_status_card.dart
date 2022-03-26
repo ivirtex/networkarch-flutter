@@ -59,7 +59,7 @@ class CarrierStatusCard extends StatelessWidget {
               const SizedBox(height: 10),
               AdaptiveButton(
                 text: 'Detailed view',
-                onPressed: state.carrierInfo?.isoCountryCode != null
+                onPressed: state.isCarrierConnected
                     ? () => Navigator.pushNamed(context, '/carrier')
                     : null,
               ),

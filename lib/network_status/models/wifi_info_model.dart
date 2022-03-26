@@ -25,6 +25,8 @@ class WifiInfoModel extends Equatable {
   final String? wifiGateway;
   final String? wifiSubmask;
 
+  bool get isWifiConnected => wifiSSID != null;
+
   @override
   List<Object?> get props => [
         locationServiceAuthorizationStatus,

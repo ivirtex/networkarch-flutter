@@ -16,8 +16,10 @@ class NetworkStatusRepository {
     final zipped = ZipStream.zip2(
       _getWifiInfoStream(),
       _getCarrierInfoStream(),
-      (WifiInfoModel wifi, CarrierInfoModel carrier) =>
-          NetworkInfoModel(wifiInfo: wifi, carrierInfo: carrier),
+      (WifiInfoModel wifi, CarrierInfoModel carrier) => NetworkInfoModel(
+        wifiInfo: wifi,
+        carrierInfo: carrier,
+      ),
     );
 
     return zipped;

@@ -20,6 +20,8 @@ class CarrierInfoModel extends Equatable {
   final String? networkGeneration;
   final String? radioType;
 
+  bool get isCarrierConnected => carrierName != null;
+
   @override
   List<Object?> get props => [
         allowsVOIP,

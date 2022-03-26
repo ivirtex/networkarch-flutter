@@ -37,8 +37,7 @@ class WifiStatusCard extends StatelessWidget {
                       const Spacer(),
                       ConnectionStatus(
                         state,
-                        connectionChecker: () =>
-                            state.wifiInfo!.wifiIPv4 != null,
+                        connectionChecker: () => state.isWifiConnected,
                       ),
                     ],
                   ),
@@ -58,7 +57,7 @@ class WifiStatusCard extends StatelessWidget {
               const SizedBox(height: 10),
               AdaptiveButton(
                 text: 'Detailed view',
-                onPressed: state.wifiInfo?.wifiIPv4 != null
+                onPressed: state.isWifiConnected
                     ? () => Navigator.of(context).pushNamed('/wifi')
                     : null,
               ),

@@ -17,9 +17,17 @@ class NetworkStatusState extends Equatable {
   final String? extIP;
   final Object? error;
 
+  bool get isWifiConnected => wifiInfo?.isWifiConnected ?? false;
+  bool get isCarrierConnected => carrierInfo?.isCarrierConnected ?? false;
+
   @override
-  List<Object?> get props =>
-      [status, extIpStatus, wifiInfo, carrierInfo, extIP];
+  List<Object?> get props => [
+        status,
+        extIpStatus,
+        wifiInfo,
+        carrierInfo,
+        extIP,
+      ];
 
   NetworkStatusState copyWith({
     NetworkStatus? status,

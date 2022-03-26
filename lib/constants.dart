@@ -143,12 +143,8 @@ abstract class Constants {
   static void showPermissionGrantedNotification(
     BuildContext context,
   ) {
-    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
-
-    if (isDarkModeOn) {
-      _permissionGrantedNotification.background =
-          Theme.of(context).colorScheme.surfaceVariant;
-    }
+    _permissionGrantedNotification.background =
+        Theme.of(context).colorScheme.surfaceVariant;
 
     _permissionGrantedNotification.show(context);
   }
@@ -167,12 +163,8 @@ abstract class Constants {
   static void showPermissionDeniedNotification(
     BuildContext context,
   ) {
-    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
-
-    if (isDarkModeOn) {
-      _permissionDeniedNotification.background =
-          Theme.of(context).colorScheme.surfaceVariant;
-    }
+    _permissionDeniedNotification.background =
+        Theme.of(context).colorScheme.surfaceVariant;
 
     _permissionDeniedNotification.show(context);
   }
@@ -205,12 +197,8 @@ abstract class Constants {
   static void showPermissionDefaultNotification(
     BuildContext context,
   ) {
-    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
-
-    if (isDarkModeOn) {
-      _permissionDefaultNotification.background =
-          Theme.of(context).colorScheme.surfaceVariant;
-    }
+    _permissionDefaultNotification.background =
+        Theme.of(context).colorScheme.surfaceVariant;
 
     _permissionDefaultNotification.show(context);
   }
@@ -226,7 +214,6 @@ abstract class Constants {
 
   // -----------------------------------------------
 
-  // Wake On Lan snackbars
   static const String _wolValidationError =
       '''The IP address or MAC address is not valid, please check it and try again.''';
 

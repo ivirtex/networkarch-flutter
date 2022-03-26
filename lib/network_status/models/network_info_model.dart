@@ -11,4 +11,7 @@ class NetworkInfoModel {
   final WifiInfoModel wifiInfo;
   final CarrierInfoModel carrierInfo;
   final String? externalIP;
+
+  bool get isWifiConnected => wifiInfo.isWifiConnected;
+  bool get isCarrierConnected => carrierInfo.isCarrierConnected;
 }

@@ -29,6 +29,8 @@ class NetworkStatusBloc extends Bloc<NetworkStatusEvent, NetworkStatusState> {
   ) async {
     emit(state.copyWith(status: NetworkStatus.loading));
 
+    // TODO: Add separate streams for each data provider,
+    // so connection status for wifi and carrier can be set separately.
     await emit.onEach<NetworkInfoModel>(
       _repository.getNetworkInfoStream(),
       onData: (NetworkInfoModel networkInfo) {

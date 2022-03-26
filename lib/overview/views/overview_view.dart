@@ -112,68 +112,76 @@ class _OverviewViewState extends State<OverviewView> {
   Widget _buildBody(BuildContext context) {
     final AdWidget adWidget = AdWidget(ad: banner);
 
-    return ContentListView(
-      children: [
-        const SmallDescription(child: 'Networks', leftPadding: 8.0),
-        const WifiStatusCard(),
-        const SizedBox(height: Constants.listSpacing),
-        const CarrierStatusCard(),
-        const SizedBox(height: Constants.listSpacing),
-        const SmallDescription(child: 'Utilities', leftPadding: 8.0),
-        ToolCard(
-          toolName: 'Ping',
-          toolDesc: Constants.pingDesc,
-          onPressed: () =>
-              Navigator.pushNamed(context, '/tools/ping', arguments: ''),
-        ),
-        const SizedBox(height: Constants.listSpacing),
-        ToolCard(
-          toolName: 'LAN Scanner',
-          toolDesc: Constants.lanScannerDesc,
-          onPressed: () => Navigator.pushNamed(context, '/tools/lan'),
-        ),
-        const SizedBox(height: Constants.listSpacing),
-        ToolCard(
-          toolName: 'Wake On LAN',
-          toolDesc: Constants.wolDesc,
-          onPressed: () => Navigator.pushNamed(context, '/tools/wol'),
-        ),
-        const SizedBox(height: Constants.listSpacing),
-        ToolCard(
-          toolName: 'IP Geolocation',
-          toolDesc: Constants.ipGeoDesc,
-          isPremium: !isPremiumAvail,
-          onPressed: isPremiumAvail
-              ? () => Navigator.pushNamed(context, '/tools/ip_geo')
-              : () => showPremiumBottomSheet(context),
-        ),
-        const SizedBox(height: Constants.listSpacing),
-        ToolCard(
-          toolName: 'Whois',
-          toolDesc: Constants.whoisDesc,
-          isPremium: !isPremiumAvail,
-          onPressed: isPremiumAvail
-              ? () => Navigator.pushNamed(context, '/tools/whois')
-              : () => showPremiumBottomSheet(context),
-        ),
-        const SizedBox(height: Constants.listSpacing),
-        ToolCard(
-          toolName: 'DNS Lookup',
-          toolDesc: Constants.dnsDesc,
-          isPremium: !isPremiumAvail,
-          onPressed: isPremiumAvail
-              ? () => Navigator.pushNamed(context, '/tools/dns_lookup')
-              : () => showPremiumBottomSheet(context),
-        ),
-        const SizedBox(height: Constants.listSpacing),
-        if (!isPremiumGranted)
-          Container(
-            alignment: Alignment.center,
-            width: banner.size.width.toDouble(),
-            height: banner.size.height.toDouble(),
-            child: adWidget,
-          ),
-      ],
+    return BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
+      builder: (context, state) {
+        return ContentListView(
+          children: [
+            const SmallDescription(child: 'Networks', leftPadding: 8.0),
+            const WifiStatusCard(),
+            const SizedBox(height: Constants.listSpacing),
+            const CarrierStatusCard(),
+            const SizedBox(height: Constants.listSpacing),
+            const SmallDescription(child: 'Utilities', leftPadding: 8.0),
+            ToolCard(
+              toolName: 'Ping',
+              toolDesc: Constants.pingDesc,
+              onPressed: () =>
+                  Navigator.pushNamed(context, '/tools/ping', arguments: ''),
+            ),
+            const SizedBox(height: Constants.listSpacing),
+            ToolCard(
+              toolName: 'LAN Scanner',
+              toolDesc: Constants.lanScannerDesc,
+              onPressed: state.isWifiConnected
+                  ? () => Navigator.pushNamed(context, '/tools/lan')
+                  : null,
+            ),
+            const SizedBox(height: Constants.listSpacing),
+            ToolCard(
+              toolName: 'Wake On LAN',
+              toolDesc: Constants.wolDesc,
+              onPressed: state.isWifiConnected
+                  ? () => Navigator.pushNamed(context, '/tools/wol')
+                  : null,
+            ),
+            const SizedBox(height: Constants.listSpacing),
+            ToolCard(
+              toolName: 'IP Geolocation',
+              toolDesc: Constants.ipGeoDesc,
+              isPremium: !isPremiumAvail,
+              onPressed: isPremiumAvail
+                  ? () => Navigator.pushNamed(context, '/tools/ip_geo')
+                  : () => showPremiumBottomSheet(context),
+            ),
+            const SizedBox(height: Constants.listSpacing),
+            ToolCard(
+              toolName: 'Whois',
+              toolDesc: Constants.whoisDesc,
+              isPremium: !isPremiumAvail,
+              onPressed: isPremiumAvail
+                  ? () => Navigator.pushNamed(context, '/tools/whois')
+                  : () => showPremiumBottomSheet(context),
+            ),
+            const SizedBox(height: Constants.listSpacing),
+            ToolCard(
+              toolName: 'DNS Lookup',
+              toolDesc: Constants.dnsDesc,
+              isPremium: !isPremiumAvail,
+              onPressed: isPremiumAvail
+                  ? () => Navigator.pushNamed(context, '/tools/dns_lookup')
+                  : () => showPremiumBottomSheet(context),
+            ),
+            const SizedBox(height: Constants.listSpacing),
+            if (!isPremiumGranted)
+              Container(
+                alignment: Alignment.center,
+                width: banner.size.width.toDouble(),
+                height: banner.size.height.toDouble(),
+                child: adWidget,
+              ),
+          ],
+        );
+      },
     );
   }
 
