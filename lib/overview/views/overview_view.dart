@@ -193,7 +193,6 @@ class _OverviewViewState extends State<OverviewView> {
           )
         : showMaterialModalBottomSheet(
             context: context,
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             builder: (_) => const PremiumBottomSheetBody(),
           );
   }

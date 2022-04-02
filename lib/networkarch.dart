@@ -35,54 +35,51 @@ class NetworkArch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BetterFeedback(
-      theme: FeedbackThemeData(background: Colors.lightBlue[50]!),
-      child: MultiRepositoryProvider(
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider.value(value: networkStatusRepository),
+        RepositoryProvider.value(value: pingRepository),
+        RepositoryProvider.value(value: lanScannerRepository),
+        RepositoryProvider.value(value: ipGeoRepository),
+        RepositoryProvider.value(value: whoisRepository),
+        RepositoryProvider.value(value: dnsLookupRepository),
+      ],
+      child: MultiBlocProvider(
         providers: [
-          RepositoryProvider.value(value: networkStatusRepository),
-          RepositoryProvider.value(value: pingRepository),
-          RepositoryProvider.value(value: lanScannerRepository),
-          RepositoryProvider.value(value: ipGeoRepository),
-          RepositoryProvider.value(value: whoisRepository),
-          RepositoryProvider.value(value: dnsLookupRepository),
-        ],
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => ThemeBloc(),
-            ),
-            BlocProvider(
-              create: (context) => PermissionsBloc(),
-            ),
-            BlocProvider(
-              create: (context) => PackageInfoCubit(),
-            ),
-            BlocProvider(
-              create: (context) => NetworkStatusBloc(networkStatusRepository),
-            ),
-            BlocProvider(
-              create: (context) => PingBloc(pingRepository),
-            ),
-            BlocProvider(
-              create: (context) => LanScannerBloc(lanScannerRepository),
-            ),
-            BlocProvider(
-              create: (context) => WakeOnLanBloc(),
-            ),
-            BlocProvider(
-              create: (context) => IpGeoBloc(ipGeoRepository),
-            ),
-            BlocProvider(
-              create: (context) => WhoisBloc(whoisRepository),
-            ),
-            BlocProvider(
-              create: (context) => DnsLookupBloc(dnsLookupRepository),
-            ),
-          ],
-          child: PlatformWidget(
-            androidBuilder: _buildAndroid,
-            iosBuilder: _buildIOS,
+          BlocProvider(
+            create: (context) => ThemeBloc(),
           ),
+          BlocProvider(
+            create: (context) => PermissionsBloc(),
+          ),
+          BlocProvider(
+            create: (context) => PackageInfoCubit(),
+          ),
+          BlocProvider(
+            create: (context) => NetworkStatusBloc(networkStatusRepository),
+          ),
+          BlocProvider(
+            create: (context) => PingBloc(pingRepository),
+          ),
+          BlocProvider(
+            create: (context) => LanScannerBloc(lanScannerRepository),
+          ),
+          BlocProvider(
+            create: (context) => WakeOnLanBloc(),
+          ),
+          BlocProvider(
+            create: (context) => IpGeoBloc(ipGeoRepository),
+          ),
+          BlocProvider(
+            create: (context) => WhoisBloc(whoisRepository),
+          ),
+          BlocProvider(
+            create: (context) => DnsLookupBloc(dnsLookupRepository),
+          ),
+        ],
+        child: PlatformWidget(
+          androidBuilder: _buildAndroid,
+          iosBuilder: _buildIOS,
         ),
       ),
     );
@@ -91,17 +88,29 @@ class NetworkArch extends StatelessWidget {
   Widget _buildAndroid(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          navigatorObservers: [
-            SentryNavigatorObserver(),
-          ],
-          title: Constants.appName,
-          theme: Themes.getLightThemeDataFor(state.scheme),
-          darkTheme: Themes.getDarkThemeDataFor(state.scheme),
-          themeMode: state.mode,
-          routes: Constants.routes,
-          home: const Home(),
+        final themeData = Themes.getLightThemeDataFor(state.scheme);
+        final darkThemeData = Themes.getDarkThemeDataFor(state.scheme);
+
+        final feedbackBackgroundColor = state.mode == ThemeMode.light
+            ? themeData.colorScheme.background.withOpacity(0.9)
+            : darkThemeData.colorScheme.background.withOpacity(0.9);
+
+        return BetterFeedback(
+          theme: FeedbackThemeData(
+            background: feedbackBackgroundColor,
+          ),
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            navigatorObservers: [
+              SentryNavigatorObserver(),
+            ],
+            title: Constants.appName,
+            theme: themeData,
+            darkTheme: darkThemeData,
+            themeMode: state.mode,
+            routes: Constants.routes,
+            home: const Home(),
+          ),
         );
       },
     );
@@ -111,22 +120,24 @@ class NetworkArch extends StatelessWidget {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         return MediaQuery.fromWindow(
-          child: CupertinoApp(
-            useInheritedMediaQuery: true,
-            localizationsDelegates: const [
-              DefaultMaterialLocalizations.delegate,
-              DefaultWidgetsLocalizations.delegate,
-              DefaultCupertinoLocalizations.delegate,
-            ],
-            navigatorObservers: [
-              SentryNavigatorObserver(),
-            ],
-            title: Constants.appName,
-            theme: state.mode == ThemeMode.light
-                ? Themes.cupertinoLightThemeData
-                : Themes.cupertinoDarkThemeData,
-            routes: Constants.routes,
-            home: const Home(),
+          child: BetterFeedback(
+            child: CupertinoApp(
+              useInheritedMediaQuery: true,
+              localizationsDelegates: const [
+                DefaultMaterialLocalizations.delegate,
+                DefaultWidgetsLocalizations.delegate,
+                DefaultCupertinoLocalizations.delegate,
+              ],
+              navigatorObservers: [
+                SentryNavigatorObserver(),
+              ],
+              title: Constants.appName,
+              theme: state.mode == ThemeMode.light
+                  ? Themes.cupertinoLightThemeData
+                  : Themes.cupertinoDarkThemeData,
+              routes: Constants.routes,
+              home: const Home(),
+            ),
           ),
         );
       },

@@ -40,7 +40,7 @@ class DataCard extends StatelessWidget {
     // not necessarily a lot, but always a bit at least.
     if (cardColor == theme.scaffoldBackgroundColor) {
       cardColor = Color.alphaBlend(
-        scheme.primary.withAlpha(blendFactor * 4),
+        scheme.primary.withAlpha(blendFactor * 6),
         cardColor,
       );
     }

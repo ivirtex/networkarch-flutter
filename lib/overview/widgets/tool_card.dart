@@ -44,7 +44,7 @@ class ToolCard extends StatelessWidget {
                   toolDesc,
                   maxLines: 2,
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    color: Theme.of(context).textTheme.caption?.color,
                   ),
                 ),
               ],
@@ -61,7 +61,7 @@ class ToolCard extends StatelessWidget {
                   side: isPremium
                       ? BorderSide(
                           width: 2.0,
-                          color: Colors.yellow.shade600,
+                          color: Theme.of(context).colorScheme.tertiary,
                         )
                       : BorderSide.none,
                 ),

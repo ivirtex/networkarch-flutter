@@ -15,7 +15,7 @@ abstract class Themes {
       useSubThemes: true,
       appBarStyle: FlexAppBarStyle.background,
       appBarOpacity: 0,
-      surfaceMode: FlexSurfaceMode.highScaffoldLevelSurface,
+      surfaceMode: FlexSurfaceMode.level,
       blendLevel: 7,
     );
   }
@@ -26,7 +26,7 @@ abstract class Themes {
       useSubThemes: true,
       appBarStyle: FlexAppBarStyle.background,
       appBarOpacity: 0,
-      surfaceMode: FlexSurfaceMode.highScaffoldLevelSurface,
+      surfaceMode: FlexSurfaceMode.level,
       blendLevel: 7,
     );
   }
