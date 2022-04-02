@@ -34,7 +34,7 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
     Emitter<LanScannerState> emit,
   ) async {
     final ip = await NetworkInfo().getWifiIP();
-    final subnet = ipToSubnet(ip!);
+    final subnet = ipToCSubnet(ip!);
 
     final stream = _lanScannerRepository.getLanScannerStream(
       subnet: subnet,
@@ -71,7 +71,7 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
     emit(LanScannerRunProgressUpdate(event.progress));
   }
 
-  FutureOr<void> _onHostFound(
+  void _onHostFound(
     LanScannerHostFound event,
     Emitter<LanScannerState> emit,
   ) {
@@ -84,7 +84,7 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
     emit(const LanScannerRunStop());
   }
 
-  FutureOr<void> _onCompleted(
+  void _onCompleted(
     LanScannerCompleted event,
     Emitter<LanScannerState> emit,
   ) {

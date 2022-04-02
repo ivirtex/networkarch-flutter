@@ -19,8 +19,8 @@ final List<PageViewModel> pagesList = [
           final isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
           return isDarkModeOn
-              ? Image.asset('assets/icon_alpha_dark.png', height: 250.0)
-              : Image.asset('assets/icon_alpha_light.png', height: 250.0);
+              ? Image.asset('assets/icons/icon_alpha_dark.png', height: 250.0)
+              : Image.asset('assets/icons/icon_alpha_light.png', height: 250.0);
         },
       ),
     ),
