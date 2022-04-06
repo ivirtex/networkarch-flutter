@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 // Package imports:
 import 'package:introduction_screen/introduction_screen.dart';
@@ -17,16 +18,22 @@ final List<PageViewModel> pagesList = [
       child: Builder(
         builder: (context) {
           final isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+          const semanticsLabel = 'NetworkArch logo';
 
           return isDarkModeOn
-              ? Image.asset('assets/icons/icon_alpha_dark.png', height: 250.0)
-              : Image.asset('assets/icons/icon_alpha_light.png', height: 250.0);
+              ? SvgPicture.asset(
+                  'assets/icons/icon_alpha_dark.svg',
+                  semanticsLabel: semanticsLabel,
+                )
+              : SvgPicture.asset(
+                  'assets/icons/icon_alpha_light.svg',
+                  semanticsLabel: semanticsLabel,
+                );
         },
       ),
     ),
     decoration: const PageDecoration(
-      imagePadding: EdgeInsets.zero,
-      imageFlex: 2,
+      imagePadding: EdgeInsets.only(top: 40.0, bottom: 10.0),
       bodyFlex: 3,
     ),
     bodyWidget: Column(
