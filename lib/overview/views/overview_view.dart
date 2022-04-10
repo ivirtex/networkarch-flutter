@@ -45,13 +45,13 @@ class _OverviewViewState extends State<OverviewView> {
     super.initState();
 
     Permission.location.isGranted.then((bool isGranted) {
-      if (isGranted) {
-        context.read<NetworkStatusBloc>().add(NetworkStatusStreamStarted());
-        context.read<NetworkStatusBloc>().add(NetworkStatusExtIPRequested());
-      } else {
+      if (!isGranted) {
         Constants.showPermissionDeniedNotification(context);
       }
     });
+
+    context.read<NetworkStatusBloc>().add(NetworkStatusStreamStarted());
+    context.read<NetworkStatusBloc>().add(NetworkStatusExtIPRequested());
 
     banner.load();
 

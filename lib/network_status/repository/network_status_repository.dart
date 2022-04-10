@@ -1,8 +1,9 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:io';
 
 // Package imports:
-import 'package:rxdart/rxdart.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
 import 'package:network_arch/network_status/network_status.dart';
@@ -12,29 +13,25 @@ class NetworkStatusRepository {
   final _carrierDataProvider = CarrierDataProvider();
   final _externalIpProvider = ExternalIpProvider();
 
-  Stream<NetworkInfoModel> getNetworkInfoStream() {
-    final zipped = ZipStream.zip2(
-      _getWifiInfoStream(),
-      _getCarrierInfoStream(),
-      (WifiInfoModel wifi, CarrierInfoModel carrier) => NetworkInfoModel(
-        wifiInfo: wifi,
-        carrierInfo: carrier,
-      ),
-    );
-
-    return zipped;
-  }
-
-  Stream<WifiInfoModel> _getWifiInfoStream() {
+  Stream<WifiInfoModel> getWifiInfoStream() {
     late StreamController<WifiInfoModel> controller;
     Timer? timer;
 
     WifiInfoModel wifiInfo;
 
     Future<void> fetchData(_) async {
-      wifiInfo = await _wifiDataProvider.getWifiData();
+      final wifiPermStatus = await _wifiDataProvider.getPermissionStatus();
 
-      controller.add(wifiInfo);
+      if (wifiPermStatus == PermissionStatus.granted) {
+        wifiInfo = await _wifiDataProvider.getWifiData();
+
+        controller.add(wifiInfo);
+      } else {
+        controller.addError(
+          NetworkStatus.permissionIssue,
+          StackTrace.current,
+        );
+      }
     }
 
     void startTimer() {
@@ -56,16 +53,30 @@ class NetworkStatusRepository {
     return controller.stream;
   }
 
-  Stream<CarrierInfoModel> _getCarrierInfoStream() {
+  Stream<CarrierInfoModel> getCarrierInfoStream() {
     late StreamController<CarrierInfoModel> controller;
     Timer? timer;
 
     CarrierInfoModel carrierInfo;
 
     Future<void> fetchData(_) async {
-      carrierInfo = await _carrierDataProvider.getCellularData();
+      if (Platform.isIOS) {
+        carrierInfo = await _carrierDataProvider.getCellularData();
 
-      controller.add(carrierInfo);
+        controller.add(carrierInfo);
+      } else {
+        if (await _carrierDataProvider.getPermissionStatus() ==
+            PermissionStatus.granted) {
+          carrierInfo = await _carrierDataProvider.getCellularData();
+
+          controller.add(carrierInfo);
+        } else {
+          controller.addError(
+            NetworkStatus.permissionIssue,
+            StackTrace.current,
+          );
+        }
+      }
     }
 
     void startTimer() {

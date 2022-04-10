@@ -54,7 +54,7 @@ class WifiDetailedView extends StatelessWidget {
       children: [
         BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
           builder: (context, state) {
-            return state.status == NetworkStatus.success
+            return state.wifiStatus == NetworkStatus.success
                 ? RoundedList(
                     children: [
                       ListTextLine(
@@ -85,13 +85,13 @@ class WifiDetailedView extends StatelessWidget {
                         textL: const Text('Submask'),
                         textR: Text(state.wifiInfo!.wifiSubmask ?? 'N/A'),
                       ),
-                      if (state.extIpStatus == ExtIpStatus.success)
+                      if (state.extIpStatus == NetworkStatus.success)
                         ListTextLine(
                           textL: const Text('External IPv4'),
                           textR: Text(state.extIP.toString()),
                           onRefreshTap: () => _handleExtIPRefresh(context),
                         )
-                      else if (state.extIpStatus == ExtIpStatus.loading)
+                      else if (state.extIpStatus == NetworkStatus.loading)
                         const ListTextLine(textL: Text('External IPv4'))
                       else
                         ListTextLine(

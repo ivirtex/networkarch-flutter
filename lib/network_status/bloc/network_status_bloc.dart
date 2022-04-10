@@ -27,45 +27,69 @@ class NetworkStatusBloc extends Bloc<NetworkStatusEvent, NetworkStatusState> {
     NetworkStatusStreamStarted event,
     Emitter<NetworkStatusState> emit,
   ) async {
-    emit(state.copyWith(status: NetworkStatus.loading));
-
-    // TODO: Add separate streams for each data provider,
-    // so connection status for wifi and carrier can be set separately.
-    await emit.onEach<NetworkInfoModel>(
-      _repository.getNetworkInfoStream(),
-      onData: (NetworkInfoModel networkInfo) {
-        emit(
-          state.copyWith(
-            status: NetworkStatus.success,
-            carrierInfo: networkInfo.carrierInfo,
-            wifiInfo: networkInfo.wifiInfo,
-          ),
-        );
-      },
-      // getNetworkInfoStream() stream doesn't add any errors to the sink for now.
-      onError: (Object error, StackTrace stackTrace) {
-        emit(
-          state.copyWith(
-            status: NetworkStatus.failure,
-            error: error,
-          ),
-        );
-      },
+    emit(
+      state.copyWith(
+        wifiStatus: NetworkStatus.loading,
+        carrierStatus: NetworkStatus.loading,
+      ),
     );
+
+    await Future.wait([
+      emit.onEach(
+        _repository.getWifiInfoStream(),
+        onData: (WifiInfoModel wifiData) {
+          emit(
+            state.copyWith(
+              wifiStatus: NetworkStatus.success,
+              wifiInfo: wifiData,
+            ),
+          );
+        },
+        // getWifiInfoStream() adds error only if permission is denied
+        onError: (Object error, StackTrace stackTrace) {
+          emit(
+            state.copyWith(
+              wifiStatus: error as NetworkStatus,
+              error: error,
+            ),
+          );
+        },
+      ),
+      emit.onEach(
+        _repository.getCarrierInfoStream(),
+        onData: (CarrierInfoModel carrierData) {
+          emit(
+            state.copyWith(
+              carrierStatus: NetworkStatus.success,
+              carrierInfo: carrierData,
+            ),
+          );
+        },
+        // getCarrierInfoStream() adds error only if permission is denied
+        onError: (Object error, StackTrace stackTrace) {
+          emit(
+            state.copyWith(
+              carrierStatus: error as NetworkStatus,
+              error: error,
+            ),
+          );
+        },
+      ),
+    ]);
   }
 
   Future<void> _onExtIPRequested(
     NetworkStatusExtIPRequested event,
     Emitter<NetworkStatusState> emit,
   ) async {
-    emit(state.copyWith(extIpStatus: ExtIpStatus.loading));
+    emit(state.copyWith(extIpStatus: NetworkStatus.loading));
 
     final ip = await _repository.fetchExternalIp();
 
     emit(
       state.copyWith(
         extIP: ip,
-        extIpStatus: ip != null ? ExtIpStatus.success : ExtIpStatus.failure,
+        extIpStatus: ip != null ? NetworkStatus.success : NetworkStatus.failure,
       ),
     );
   }

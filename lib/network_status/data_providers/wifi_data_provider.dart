@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:network_info_plus/network_info_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
 import 'package:network_arch/network_status/models/models.dart';
@@ -17,5 +18,9 @@ class WifiDataProvider {
       wifiGateway: await networkInfo.getWifiGatewayIP(),
       wifiSubmask: await networkInfo.getWifiSubmask(),
     );
+  }
+
+  Future<PermissionStatus> getPermissionStatus() {
+    return Permission.locationWhenInUse.status;
   }
 }

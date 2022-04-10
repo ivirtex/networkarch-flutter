@@ -36,7 +36,7 @@ class WifiStatusCard extends StatelessWidget {
                       ),
                       const Spacer(),
                       ConnectionStatus(
-                        state,
+                        state.wifiStatus,
                         connectionChecker: () => state.isWifiConnected,
                       ),
                     ],
@@ -46,7 +46,7 @@ class WifiStatusCard extends StatelessWidget {
                     children: [
                       const Text('Local IP'),
                       const Spacer(),
-                      if (state.status == NetworkStatus.success)
+                      if (state.wifiStatus == NetworkStatus.success)
                         Text(state.wifiInfo!.wifiIPv4 ?? 'N/A')
                       else
                         const ListCircularProgressIndicator(),

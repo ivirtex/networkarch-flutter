@@ -54,7 +54,7 @@ class CarrierDetailView extends StatelessWidget {
       children: [
         BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
           builder: (context, state) {
-            return state.status == NetworkStatus.success
+            return state.wifiStatus == NetworkStatus.success
                 ? RoundedList(
                     children: [
                       ListTextLine(
