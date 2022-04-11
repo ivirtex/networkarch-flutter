@@ -14,7 +14,7 @@ packages:
       name: adapty_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.9"
+    version: "1.0.10"
   analyzer:
     dependency: transitive
     description:
@@ -266,7 +266,7 @@ packages:
       name: elegant_notification
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.1"
+    version: "1.5.2"
   enum_to_string:
     dependency: "direct main"
     description:
@@ -361,6 +361,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_platform_widgets:
+    dependency: "direct main"
+    description:
+      name: flutter_platform_widgets
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.20.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:

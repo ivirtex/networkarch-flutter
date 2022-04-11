@@ -7,9 +7,10 @@ import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart'
+    hide PlatformWidget;
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
@@ -184,16 +185,12 @@ class _OverviewViewState extends State<OverviewView> {
     );
   }
 
-  Future<void> showPremiumBottomSheet(BuildContext context) {
-    return Platform.isIOS
-        ? showCupertinoModalBottomSheet(
-            context: context,
-            builder: (_) => const PremiumBottomSheetBody(),
-          )
-        : showMaterialModalBottomSheet(
-            context: context,
-            builder: (_) => const PremiumBottomSheetBody(),
-          );
+  void showPremiumBottomSheet(BuildContext context) {
+    showPlatformModalSheet(
+      context: context,
+      builder: (_) => const PremiumBottomSheetBody(),
+      material: MaterialModalSheetData(),
+    );
   }
 }
 

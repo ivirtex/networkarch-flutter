@@ -25,7 +25,7 @@ class _PingViewState extends State<PingView> {
   final _targetHostController = TextEditingController();
   late final AnimatedListModel<PingData?> _pingData;
 
-  late String _targetHost;
+  String _targetHost = '';
 
   String get _target => _targetHostController.text;
 
