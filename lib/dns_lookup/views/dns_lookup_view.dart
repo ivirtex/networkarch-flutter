@@ -25,7 +25,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
   final _targetDomainController = TextEditingController();
   String get _target => _targetDomainController.text;
 
-  rrCodeName _selectedDnsQueryType = rrCodeName.ANY;
+  RrCodeName _selectedDnsQueryType = RrCodeName.ANY;
 
   bool _shouldCheckButtonBeActive = false;
   bool _isPremiumAvail = true;
@@ -118,7 +118,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
               ),
               const SizedBox(width: 10),
               Flexible(
-                child: DropdownButtonFormField<rrCodeName>(
+                child: DropdownButtonFormField<RrCodeName>(
                   items: _getQueryTypes(),
                   value: _selectedDnsQueryType,
                   hint: const Text('Type'),
@@ -194,8 +194,8 @@ class _DnsLookupViewState extends State<DnsLookupView> {
     hideKeyboard(context);
   }
 
-  List<DropdownMenuItem<rrCodeName>> _getQueryTypes() {
-    return rrCodeName.values.map((type) {
+  List<DropdownMenuItem<RrCodeName>> _getQueryTypes() {
+    return RrCodeName.values.map((type) {
       return DropdownMenuItem(
         value: type,
         child: Text(type.name),

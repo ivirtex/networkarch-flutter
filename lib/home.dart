@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:async';
+
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +8,9 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
@@ -14,6 +19,7 @@ import 'package:network_arch/overview/views/overview_view.dart';
 import 'package:network_arch/permissions/permissions.dart';
 import 'package:network_arch/settings/settings.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/utils/in_app_purchases.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -23,6 +29,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  late StreamSubscription<List<PurchaseDetails>> _subscription;
   int _selectedIndex = 0;
 
   @override
@@ -32,6 +39,24 @@ class _HomeState extends State<Home> {
     context
         .read<PermissionsBloc>()
         .add(const PermissionsStatusRefreshRequested());
+
+    _setUpInAppPurchases();
+  }
+
+  void _setUpInAppPurchases() {
+    final Stream<List<PurchaseDetails>> purchaseUpdated =
+        InAppPurchase.instance.purchaseStream;
+    _subscription = purchaseUpdated.listen(
+      (purchaseDetailsList) {
+        listenToPurchaseUpdated(purchaseDetailsList, context);
+      },
+      onDone: () {
+        _subscription.cancel();
+      },
+      onError: (error) {
+        Sentry.captureException(error);
+      },
+    );
   }
 
   @override

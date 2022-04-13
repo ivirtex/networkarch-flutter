@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:adapty_flutter/adapty_flutter.dart';
 import 'package:dart_ping_ios/dart_ping_ios.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -37,17 +36,12 @@ void main() {
     await Hive.openBox('settings');
     await Hive.openBox('iap');
 
+    await Hive.box('iap').clear();
+
     if (Platform.isIOS) DartPingIOS.register();
 
     if (!Platform.isWindows) {
-      Adapty.activate();
       MobileAds.instance.initialize();
-
-      final purchaserInfo = await Adapty.getPurchaserInfo(forceUpdate: true);
-      Hive.box('iap').put(
-        'isPremiumGranted',
-        purchaserInfo.accessLevels['premium']?.isActive ?? false,
-      );
     }
 
     HydratedBlocOverrides.runZoned(

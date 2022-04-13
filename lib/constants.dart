@@ -140,16 +140,16 @@ abstract class Constants {
   static const String _permissionDefault =
       'Something gone wrong, check app permissions.';
 
-  static void showPermissionGrantedNotification(
+  static void showElegantNotification(
     BuildContext context,
+    ElegantNotification notification,
   ) {
-    _permissionGrantedNotification.background =
-        Theme.of(context).colorScheme.surfaceVariant;
+    notification.background = Theme.of(context).colorScheme.surfaceVariant;
 
-    _permissionGrantedNotification.show(context);
+    notification.show(context);
   }
 
-  static final ElegantNotification _permissionGrantedNotification =
+  static final ElegantNotification permissionGrantedNotification =
       ElegantNotification.success(
     title: const Text('Success'),
     description: const Text(_permissionGranted),
@@ -158,18 +158,7 @@ abstract class Constants {
     animation: ANIMATION.fromBottom,
   );
 
-  // -----------------------------------------------
-
-  static void showPermissionDeniedNotification(
-    BuildContext context,
-  ) {
-    _permissionDeniedNotification.background =
-        Theme.of(context).colorScheme.surfaceVariant;
-
-    _permissionDeniedNotification.show(context);
-  }
-
-  static final ElegantNotification _permissionDeniedNotification =
+  static final ElegantNotification permissionDeniedNotification =
       ElegantNotification.error(
     title: const Text('Error'),
     description: const Text(_permissionDenied),
@@ -192,18 +181,7 @@ abstract class Constants {
     },
   );
 
-  // -----------------------------------------------
-
-  static void showPermissionDefaultNotification(
-    BuildContext context,
-  ) {
-    _permissionDefaultNotification.background =
-        Theme.of(context).colorScheme.surfaceVariant;
-
-    _permissionDefaultNotification.show(context);
-  }
-
-  static final ElegantNotification _permissionDefaultNotification =
+  static final ElegantNotification permissionDefaultNotification =
       ElegantNotification.error(
     title: const Text('Warning'),
     description: const Text(_permissionDefault),
@@ -211,8 +189,6 @@ abstract class Constants {
     notificationPosition: NOTIFICATION_POSITION.bottom,
     animation: ANIMATION.fromBottom,
   );
-
-  // -----------------------------------------------
 
   static const String _wolValidationError =
       '''The IP address or MAC address is not valid, please check it and try again.''';

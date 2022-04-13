@@ -1,4 +1,5 @@
 // Dart imports:
+import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
@@ -6,11 +7,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:adapty_flutter/adapty_flutter.dart';
-import 'package:adapty_flutter/models/adapty_error.dart';
-import 'package:adapty_flutter/models/adapty_paywall.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
@@ -24,31 +23,14 @@ class PremiumBottomSheetBody extends StatefulWidget {
 }
 
 class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
+  Future<bool> isIapAvailableFuture = InAppPurchase.instance.isAvailable();
   RewardedAd? _rewardedAd;
 
   @override
   void initState() {
     super.initState();
 
-    RewardedAd.load(
-      adUnitId: getPremiumAdUnitId(),
-      request: const AdRequest(),
-      rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: (RewardedAd ad) {
-          if (kDebugMode) {
-            print('$ad loaded.');
-          }
-
-          // Keep a reference to the ad so you can show it later.
-          _rewardedAd = ad;
-        },
-        onAdFailedToLoad: (LoadAdError error) {
-          if (kDebugMode) {
-            print('RewardedAd failed to load: $error');
-          }
-        },
-      ),
-    );
+    _setUpAds();
   }
 
   @override
@@ -112,9 +94,28 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
             Row(
               children: [
                 const Spacer(),
-                ElevatedButton(
-                  onPressed: () => _handleSubscribe(context),
-                  child: const Text('Subscribe'),
+                FutureBuilder(
+                  future: isIapAvailableFuture,
+                  builder: (context, AsyncSnapshot<bool> isIapAvailable) {
+                    if (isIapAvailable.connectionState ==
+                        ConnectionState.waiting) {
+                      return const ListCircularProgressIndicator();
+                    }
+
+                    if (isIapAvailable.hasError) {
+                      return const ElevatedButton(
+                        onPressed: null,
+                        child: Text('Subscribe'),
+                      );
+                    }
+
+                    return ElevatedButton(
+                      onPressed: isIapAvailable.data!
+                          ? () => _handleSubscribe(context)
+                          : null,
+                      child: const Text('Subscribe'),
+                    );
+                  },
                 ),
                 const SizedBox(width: Constants.listSpacing),
                 ElevatedButton(
@@ -130,45 +131,48 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
     );
   }
 
+  Future<void> _setUpAds() async {
+    await RewardedAd.load(
+      adUnitId: getPremiumAdUnitId(),
+      request: const AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (RewardedAd ad) {
+          if (kDebugMode) {
+            print('$ad loaded.');
+          }
+
+          // Keep a reference to the ad so you can show it later.
+          _rewardedAd = ad;
+        },
+        onAdFailedToLoad: (LoadAdError error) {
+          if (kDebugMode) {
+            print('RewardedAd failed to load: $error');
+          }
+        },
+      ),
+    );
+  }
+
   Future<void> _handleSubscribe(BuildContext context) async {
-    AdaptyPaywall? paywall;
+    const Set<String> _kIds = <String>{'com.hubertjozwiak.networkarch.premium'};
 
-    try {
-      final paywallResult = await Adapty.getPaywalls();
-      final paywalls = paywallResult.paywalls;
+    final ProductDetailsResponse response =
+        await InAppPurchase.instance.queryProductDetails(_kIds);
 
-      paywall = paywalls?.first;
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-    }
+    final List<ProductDetails> products = response.productDetails;
 
-    final product = paywall?.products?.first;
-
-    if (product != null) {
-      try {
-        final result = await Adapty.makePurchase(product);
-
-        if (result.purchaserInfo?.accessLevels['premium']?.isActive ?? false) {
-          await Hive.box('iap').put('isPremiumGranted', true);
-
-          if (!mounted) return;
-          Navigator.pop(context);
-        }
-      } on AdaptyError catch (e) {
-        if (kDebugMode) {
-          print(e);
-        }
-      }
-    }
+    InAppPurchase.instance.buyNonConsumable(
+      purchaseParam: PurchaseParam(
+        productDetails: products.first,
+      ),
+    );
   }
 
   void _handleWatchAd(BuildContext context) {
     _rewardedAd?.show(
       onUserEarnedReward: (ad, reward) async {
         if (kDebugMode) {
-          print('User earned reward $reward');
+          print('User earned reward ${reward.type}');
         }
 
         await Hive.box('iap').put('isPremiumTempGranted', true);

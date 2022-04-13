@@ -42,23 +42,41 @@ class _PermissionsViewState extends State<PermissionsView> {
       listener: (context, state) {
         if (state.latestRequested == Permission.locationWhenInUse) {
           if (state.locationStatus == PermissionStatus.granted) {
-            Constants.showPermissionGrantedNotification(context);
+            Constants.showElegantNotification(
+              context,
+              Constants.permissionGrantedNotification,
+            );
           } else if (state.locationStatus ==
               PermissionStatus.permanentlyDenied) {
-            Constants.showPermissionDeniedNotification(context);
+            Constants.showElegantNotification(
+              context,
+              Constants.permissionDeniedNotification,
+            );
           } else {
-            Constants.showPermissionDefaultNotification(context);
+            Constants.showElegantNotification(
+              context,
+              Constants.permissionDefaultNotification,
+            );
           }
         }
 
         if (state.latestRequested == Permission.phone) {
           if (state.phoneStateStatus == PermissionStatus.granted) {
-            Constants.showPermissionGrantedNotification(context);
+            Constants.showElegantNotification(
+              context,
+              Constants.permissionGrantedNotification,
+            );
           } else if (state.phoneStateStatus ==
               PermissionStatus.permanentlyDenied) {
-            Constants.showPermissionDeniedNotification(context);
+            Constants.showElegantNotification(
+              context,
+              Constants.permissionDeniedNotification,
+            );
           } else {
-            Constants.showPermissionDefaultNotification(context);
+            Constants.showElegantNotification(
+              context,
+              Constants.permissionDefaultNotification,
+            );
           }
         }
       },

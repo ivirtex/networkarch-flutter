@@ -1,97 +1,97 @@
 // Project imports:
 import 'package:network_arch/dns_lookup/utils/rr_code_name.dart';
 
-rrCodeName rrCodeToName(int type) {
+RrCodeName rrCodeToName(int type) {
   switch (type) {
     case 1:
-      return rrCodeName.A;
+      return RrCodeName.A;
     case 10:
-      return rrCodeName.NULL;
+      return RrCodeName.NULL;
     case 28:
-      return rrCodeName.AAAA;
+      return RrCodeName.AAAA;
     case 18:
-      return rrCodeName.AFSDB;
+      return RrCodeName.AFSDB;
     case 42:
-      return rrCodeName.APL;
+      return RrCodeName.APL;
     case 257:
-      return rrCodeName.CAA;
+      return RrCodeName.CAA;
     case 60:
-      return rrCodeName.CDNSKEY;
+      return RrCodeName.CDNSKEY;
     case 59:
-      return rrCodeName.CDS;
+      return RrCodeName.CDS;
     case 37:
-      return rrCodeName.CERT;
+      return RrCodeName.CERT;
     case 5:
-      return rrCodeName.CNAME;
+      return RrCodeName.CNAME;
     case 49:
-      return rrCodeName.DHCID;
+      return RrCodeName.DHCID;
     case 32769:
-      return rrCodeName.DLV;
+      return RrCodeName.DLV;
     case 39:
-      return rrCodeName.DNAME;
+      return RrCodeName.DNAME;
     case 48:
-      return rrCodeName.DNSKEY;
+      return RrCodeName.DNSKEY;
     case 43:
-      return rrCodeName.DS;
+      return RrCodeName.DS;
     case 55:
-      return rrCodeName.HIP;
+      return RrCodeName.HIP;
     case 13:
-      return rrCodeName.HINFO;
+      return RrCodeName.HINFO;
     case 45:
-      return rrCodeName.IPSECKEY;
+      return RrCodeName.IPSECKEY;
     case 25:
-      return rrCodeName.KEY;
+      return RrCodeName.KEY;
     case 36:
-      return rrCodeName.KX;
+      return RrCodeName.KX;
     case 29:
-      return rrCodeName.LOC;
+      return RrCodeName.LOC;
     case 15:
-      return rrCodeName.MX;
+      return RrCodeName.MX;
     case 35:
-      return rrCodeName.NAPTR;
+      return RrCodeName.NAPTR;
     case 2:
-      return rrCodeName.NS;
+      return RrCodeName.NS;
     case 47:
-      return rrCodeName.NSEC;
+      return RrCodeName.NSEC;
     case 50:
-      return rrCodeName.NSEC3;
+      return RrCodeName.NSEC3;
     case 51:
-      return rrCodeName.NSEC3PARAM;
+      return RrCodeName.NSEC3PARAM;
     case 12:
-      return rrCodeName.PTR;
+      return RrCodeName.PTR;
     case 46:
-      return rrCodeName.RRSIG;
+      return RrCodeName.RRSIG;
     case 17:
-      return rrCodeName.RP;
+      return RrCodeName.RP;
     case 24:
-      return rrCodeName.SIG;
+      return RrCodeName.SIG;
     case 6:
-      return rrCodeName.SOA;
+      return RrCodeName.SOA;
     case 99:
-      return rrCodeName.SPF;
+      return RrCodeName.SPF;
     case 33:
-      return rrCodeName.SRV;
+      return RrCodeName.SRV;
     case 44:
-      return rrCodeName.SSHFP;
+      return RrCodeName.SSHFP;
     case 32768:
-      return rrCodeName.TA;
+      return RrCodeName.TA;
     case 249:
-      return rrCodeName.TKEY;
+      return RrCodeName.TKEY;
     case 52:
-      return rrCodeName.TLSA;
+      return RrCodeName.TLSA;
     case 250:
-      return rrCodeName.TSIG;
+      return RrCodeName.TSIG;
     case 16:
-      return rrCodeName.TXT;
+      return RrCodeName.TXT;
     case 252:
-      return rrCodeName.AXFR;
+      return RrCodeName.AXFR;
     case 251:
-      return rrCodeName.IXFR;
+      return RrCodeName.IXFR;
     case 41:
-      return rrCodeName.OPT;
+      return RrCodeName.OPT;
     case 255:
-      return rrCodeName.ANY;
+      return RrCodeName.ANY;
   }
 
-  return rrCodeName.UNKNOWN;
+  return RrCodeName.UNKNOWN;
 }
