@@ -92,7 +92,10 @@ class _SettingsViewState extends State<SettingsView> {
             ),
             ThemePopupMenu(
               schemeIndex: themeBloc.state.scheme.index,
-              onChanged: (index) {
+              onChanged: (index) async {
+                // Await for popup menu to close (to avoid jank)
+                await Future.delayed(const Duration(milliseconds: 300));
+
                 setState(() {
                   themeBloc.add(
                     ThemeSchemeChangedEvent(scheme: FlexScheme.values[index]),
@@ -110,13 +113,13 @@ class _SettingsViewState extends State<SettingsView> {
             SettingsTile(
               title: const Text('Go to onboarding screen'),
               subtitle: const Text('Resolve permissions issues'),
-              icon: Icons.info_rounded,
+              icon: Icons.lock_outline_rounded,
               onTap: () => Navigator.pushNamed(context, '/introduction'),
             ),
             SettingsTile(
               title: const Text('Send feedback'),
               subtitle: const Text('Something is not working?'),
-              icon: Icons.feedback_rounded,
+              icon: Icons.feedback_outlined,
               onTap: () => _sendFeedback(context),
             ),
             SettingsTile(

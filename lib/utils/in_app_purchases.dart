@@ -52,7 +52,9 @@ void _handleError(IAPError iapError, BuildContext context) {
     builder: (context) {
       return PlatformAlertDialog(
         title: const Text('Error'),
-        content: const Text('There was an error completing your purchase'),
+        content: const Text(
+          'There was an error completing your purchase. Please try again later.',
+        ),
         actions: <Widget>[
           PlatformDialogAction(
             child: const Text('OK'),

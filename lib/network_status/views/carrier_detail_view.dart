@@ -89,6 +89,20 @@ class CarrierDetailView extends StatelessWidget {
                         textL: const Text('Radio Access Technology'),
                         textR: Text(state.carrierInfo!.radioType ?? 'N/A'),
                       ),
+                      if (state.extIpStatus == NetworkStatus.success)
+                        ListTextLine(
+                          textL: const Text('External IPv4'),
+                          textR: Text(state.extIP.toString()),
+                          onRefreshTap: () => _handleExtIPRefresh(context),
+                        )
+                      else if (state.extIpStatus == NetworkStatus.loading)
+                        const ListTextLine(textL: Text('External IPv4'))
+                      else
+                        ListTextLine(
+                          textL: const Text('External IPv4'),
+                          textR: const Text('N/A'),
+                          onRefreshTap: () => _handleExtIPRefresh(context),
+                        ),
                     ],
                   )
                 : const RoundedList(
@@ -100,11 +114,16 @@ class CarrierDetailView extends StatelessWidget {
                       ListTextLine(textL: Text('Mobile Network Code')),
                       ListTextLine(textL: Text('Network Generation')),
                       ListTextLine(textL: Text('Radio Access Technology')),
+                      ListTextLine(textL: Text('External IPv4')),
                     ],
                   );
           },
         ),
       ],
     );
+  }
+
+  void _handleExtIPRefresh(BuildContext context) {
+    context.read<NetworkStatusBloc>().add(NetworkStatusExtIPRequested());
   }
 }
