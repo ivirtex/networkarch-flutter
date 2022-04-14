@@ -174,6 +174,14 @@ class _OverviewViewState extends State<OverviewView> {
                   : () => showPremiumBottomSheet(context),
             ),
             const SizedBox(height: Constants.listSpacing),
+            if (kDebugMode)
+              ToolCard(
+                toolName: 'Clear IAP data',
+                toolDesc: '',
+                onPressed: () async {
+                  await Hive.box('iap').put('isPremiumGranted', false);
+                },
+              ),
             if (!isPremiumGranted)
               Container(
                 alignment: Alignment.center,

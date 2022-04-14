@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -17,6 +18,15 @@ void listenToPurchaseUpdated(
 ) {
   // ignore: avoid_function_literals_in_foreach_calls
   purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
+    if (kDebugMode) {
+      print(
+        'Received purchase: ${purchaseDetails.productID} with status: ${purchaseDetails.status}',
+      );
+    }
+    Sentry.captureMessage(
+      'Received purchase: ${purchaseDetails.productID} with status: ${purchaseDetails.status}',
+    );
+
     if (purchaseDetails.status == PurchaseStatus.pending) {
       _showPendingUI(context);
     } else {
@@ -24,17 +34,9 @@ void listenToPurchaseUpdated(
         _handleError(purchaseDetails.error!, context);
       } else if (purchaseDetails.status == PurchaseStatus.purchased ||
           purchaseDetails.status == PurchaseStatus.restored) {
-        Sentry.captureMessage(
-          'Purchase to deliver: ${purchaseDetails.productID}, ${purchaseDetails.status}',
-        );
-
         _deliverProduct(purchaseDetails, context);
       }
       if (purchaseDetails.pendingCompletePurchase) {
-        Sentry.captureMessage(
-          'Pending complete purchase: ${purchaseDetails.productID}',
-        );
-
         await InAppPurchase.instance.completePurchase(purchaseDetails);
       }
     }
@@ -90,6 +92,8 @@ Future<void> _deliverProduct(
     await Hive.box('iap').put('isPremiumGranted', true);
   }
 
-  // ignore: use_build_context_synchronously
-  Navigator.of(context).pop();
+  if (purchaseDetails.status != PurchaseStatus.restored) {
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+  }
 }

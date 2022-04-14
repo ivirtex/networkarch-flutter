@@ -19,6 +19,10 @@ import 'package:network_arch/shared/content_list_view.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 import 'package:network_arch/theme/theme.dart';
 
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart'
+    hide PlatformWidget;
+
+
 class SettingsView extends StatefulWidget {
   const SettingsView({Key? key}) : super(key: key);
 
@@ -150,7 +154,23 @@ class _SettingsViewState extends State<SettingsView> {
     if (!await launch(Constants.sourceCodeURL)) throw 'Could not launch URL';
   }
 
-  Future<void> _restorePurchases() async {
-    await InAppPurchase.instance.restorePurchases();
+  void _restorePurchases() {
+    InAppPurchase.instance.restorePurchases();
+
+    showPlatformDialog(
+      context: context,
+      builder: (context) {
+        return PlatformAlertDialog(
+          title: const Text('Restore purchases'),
+          content: const Text('Purchases have been restored.'),
+          actions: [
+            PlatformDialogAction(
+              child: const Text('OK'),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

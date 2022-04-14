@@ -43,6 +43,13 @@ class _HomeState extends State<Home> {
     _setUpInAppPurchases();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+
+    _subscription.cancel();
+  }
+
   void _setUpInAppPurchases() {
     final Stream<List<PurchaseDetails>> purchaseUpdated =
         InAppPurchase.instance.purchaseStream;
