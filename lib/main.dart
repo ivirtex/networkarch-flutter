@@ -36,8 +36,6 @@ void main() {
     await Hive.openBox('settings');
     await Hive.openBox('iap');
 
-    await Hive.box('iap').clear();
-
     if (Platform.isIOS) DartPingIOS.register();
 
     if (!Platform.isWindows) {

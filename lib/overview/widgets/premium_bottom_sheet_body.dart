@@ -14,6 +14,7 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/shared/shared.dart';
+import 'package:network_arch/utils/in_app_purchases.dart';
 
 class PremiumBottomSheetBody extends StatefulWidget {
   const PremiumBottomSheetBody({Key? key}) : super(key: key);
@@ -154,10 +155,8 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
   }
 
   Future<void> _handleSubscribe(BuildContext context) async {
-    const Set<String> _kIds = <String>{'com.hubertjozwiak.networkarch.premium'};
-
     final ProductDetailsResponse response =
-        await InAppPurchase.instance.queryProductDetails(_kIds);
+        await InAppPurchase.instance.queryProductDetails(kProductIds);
 
     final List<ProductDetails> products = response.productDetails;
 

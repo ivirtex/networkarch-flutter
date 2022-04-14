@@ -7,6 +7,7 @@ import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -128,6 +129,11 @@ class _SettingsViewState extends State<SettingsView> {
               icon: FontAwesomeIcons.github,
               onTap: _canLaunchUrl ? _openSourceCode : null,
             ),
+            SettingsTile(
+              title: const Text('Restore purchases'),
+              icon: Icons.workspace_premium_rounded,
+              onTap: () => _restorePurchases(),
+            ),
           ],
         ),
         const SizedBox(height: Constants.listSpacing),
@@ -142,5 +148,9 @@ class _SettingsViewState extends State<SettingsView> {
 
   Future<void> _openSourceCode() async {
     if (!await launch(Constants.sourceCodeURL)) throw 'Could not launch URL';
+  }
+
+  Future<void> _restorePurchases() async {
+    await InAppPurchase.instance.restorePurchases();
   }
 }
