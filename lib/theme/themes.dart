@@ -12,7 +12,8 @@ abstract class Themes {
   static ThemeData getLightThemeDataFor(FlexScheme flexScheme) {
     return FlexThemeData.light(
       scheme: flexScheme,
-      useSubThemes: true,
+      useMaterial3: true,
+      useMaterial3ErrorColors: true,
       appBarStyle: FlexAppBarStyle.background,
       appBarOpacity: 0,
       surfaceMode: FlexSurfaceMode.level,
@@ -23,7 +24,8 @@ abstract class Themes {
   static ThemeData getDarkThemeDataFor(FlexScheme flexScheme) {
     return FlexThemeData.dark(
       scheme: flexScheme,
-      useSubThemes: true,
+      useMaterial3: true,
+      useMaterial3ErrorColors: true,
       appBarStyle: FlexAppBarStyle.background,
       appBarOpacity: 0,
       surfaceMode: FlexSurfaceMode.level,

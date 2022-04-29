@@ -22,7 +22,6 @@ import 'package:network_arch/theme/theme.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart'
     hide PlatformWidget;
 
-
 class SettingsView extends StatefulWidget {
   const SettingsView({Key? key}) : super(key: key);
 
@@ -38,7 +37,7 @@ class _SettingsViewState extends State<SettingsView> {
     super.initState();
 
     context.read<PackageInfoCubit>().fetchPackageInfo();
-    canLaunch(Constants.sourceCodeURL)
+    canLaunchUrl(Uri.parse(Constants.sourceCodeURL))
         .then((canLaunch) => _canLaunchUrl = canLaunch);
   }
 
@@ -151,7 +150,9 @@ class _SettingsViewState extends State<SettingsView> {
   }
 
   Future<void> _openSourceCode() async {
-    if (!await launch(Constants.sourceCodeURL)) throw 'Could not launch URL';
+    if (!await launchUrl(Uri.parse(Constants.sourceCodeURL))) {
+      throw 'Could not launch URL';
+    }
   }
 
   void _restorePurchases() {
