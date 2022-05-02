@@ -14,6 +14,7 @@ import 'package:network_arch/permissions/bloc/permissions_bloc.dart';
 import 'package:network_arch/permissions/widgets/usage_desc.dart';
 import 'package:network_arch/permissions/widgets/widgets.dart';
 import 'package:network_arch/shared/shared.dart';
+import 'package:network_arch/utils/utils.dart';
 
 class PermissionsView extends StatefulWidget {
   const PermissionsView({Key? key}) : super(key: key);
@@ -42,18 +43,18 @@ class _PermissionsViewState extends State<PermissionsView> {
       listener: (context, state) {
         if (state.latestRequested == Permission.locationWhenInUse) {
           if (state.locationStatus == PermissionStatus.granted) {
-            Constants.showElegantNotification(
+            showElegantNotification(
               context,
               Constants.permissionGrantedNotification,
             );
           } else if (state.locationStatus ==
               PermissionStatus.permanentlyDenied) {
-            Constants.showElegantNotification(
+            showElegantNotification(
               context,
               Constants.permissionDeniedNotification,
             );
           } else {
-            Constants.showElegantNotification(
+            showElegantNotification(
               context,
               Constants.permissionDefaultNotification,
             );
@@ -62,18 +63,18 @@ class _PermissionsViewState extends State<PermissionsView> {
 
         if (state.latestRequested == Permission.phone) {
           if (state.phoneStateStatus == PermissionStatus.granted) {
-            Constants.showElegantNotification(
+            showElegantNotification(
               context,
               Constants.permissionGrantedNotification,
             );
           } else if (state.phoneStateStatus ==
               PermissionStatus.permanentlyDenied) {
-            Constants.showElegantNotification(
+            showElegantNotification(
               context,
               Constants.permissionDeniedNotification,
             );
           } else {
-            Constants.showElegantNotification(
+            showElegantNotification(
               context,
               Constants.permissionDefaultNotification,
             );

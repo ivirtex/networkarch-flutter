@@ -59,10 +59,8 @@ class DataCard extends StatelessWidget {
       children: [
         if (header != null) SmallDescription(child: header!),
         Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
           color: cardColor,
+          elevation: 0.0,
           margin: margin,
           child: Padding(
             padding: padding,

@@ -140,15 +140,6 @@ abstract class Constants {
   static const String _permissionDefault =
       'Something gone wrong, check app permissions.';
 
-  static void showElegantNotification(
-    BuildContext context,
-    ElegantNotification notification,
-  ) {
-    notification.background = Theme.of(context).colorScheme.surfaceVariant;
-
-    notification.show(context);
-  }
-
   static final ElegantNotification permissionGrantedNotification =
       ElegantNotification.success(
     title: const Text('Success'),

@@ -18,7 +18,7 @@ import 'package:network_arch/network_status/bloc/bloc.dart';
 import 'package:network_arch/network_status/views/views.dart';
 import 'package:network_arch/overview/overview.dart';
 import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/utils/banner_ad_listener.dart';
+import 'package:network_arch/utils/utils.dart';
 
 class OverviewView extends StatefulWidget {
   const OverviewView({Key? key}) : super(key: key);
@@ -46,7 +46,7 @@ class _OverviewViewState extends State<OverviewView> {
 
     Permission.location.isGranted.then((bool isGranted) {
       if (!isGranted) {
-        Constants.showElegantNotification(
+        showElegantNotification(
           context,
           Constants.permissionDeniedNotification,
         );
@@ -175,12 +175,39 @@ class _OverviewViewState extends State<OverviewView> {
             ),
             const SizedBox(height: Constants.listSpacing),
             if (kDebugMode)
-              ToolCard(
-                toolName: 'Clear IAP data',
-                toolDesc: '',
-                onPressed: () async {
-                  await Hive.box('iap').put('isPremiumGranted', false);
-                },
+              Column(
+                children: [
+                  ToolCard(
+                    toolName: 'Clear IAP data',
+                    toolDesc: '',
+                    onPressed: () async {
+                      await Hive.box('iap').put('isPremiumGranted', false);
+                    },
+                  ),
+                  const SizedBox(height: Constants.listSpacing),
+                  ToolCard(
+                    toolName: 'Show success notif',
+                    toolDesc: '',
+                    onPressed: () {
+                      showElegantNotification(
+                        context,
+                        Constants.permissionGrantedNotification,
+                      );
+                    },
+                  ),
+                  const SizedBox(height: Constants.listSpacing),
+                  ToolCard(
+                    toolName: 'Show failure notif',
+                    toolDesc: '',
+                    onPressed: () {
+                      showElegantNotification(
+                        context,
+                        Constants.permissionDeniedNotification,
+                      );
+                    },
+                  ),
+                  const SizedBox(height: Constants.listSpacing),
+                ],
               ),
             if (!isPremiumGranted)
               Container(
