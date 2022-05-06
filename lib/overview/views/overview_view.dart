@@ -4,6 +4,7 @@ import 'dart:io';
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -231,6 +232,10 @@ class _OverviewViewState extends State<OverviewView> {
     } else {
       showMaterialModalBottomSheet(
         context: context,
+        backgroundColor: Color.alphaBlend(
+          Theme.of(context).colorScheme.primary.withOpacity(0.03),
+          Theme.of(context).colorScheme.surfaceVariant,
+        ),
         builder: (context) => const PremiumBottomSheetBody(),
       );
     }

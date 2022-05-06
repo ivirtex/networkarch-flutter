@@ -22,7 +22,7 @@ class ClearListButton extends StatelessWidget {
   }
 
   Widget _buildAndroid(BuildContext context) {
-    return ElevatedButton(
+    return FilledTonalButton(
       onPressed: onPressed,
       child: const Text('Clear list'),
     );

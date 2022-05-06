@@ -104,13 +104,13 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
                     }
 
                     if (isIapAvailable.hasError) {
-                      return const ElevatedButton(
+                      return const OutlinedButton(
                         onPressed: null,
                         child: Text('Subscribe'),
                       );
                     }
 
-                    return ElevatedButton(
+                    return OutlinedButton(
                       onPressed: isIapAvailable.data!
                           ? () => _handleSubscribe(context)
                           : null,
@@ -119,7 +119,7 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
                   },
                 ),
                 const SizedBox(width: Constants.listSpacing),
-                ElevatedButton(
+                OutlinedButton(
                   onPressed: () => _handleWatchAd(context),
                   child: const Text('Watch ad'),
                 ),

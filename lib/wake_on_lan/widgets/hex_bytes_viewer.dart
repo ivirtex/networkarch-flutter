@@ -28,7 +28,11 @@ class HexBytesViewer extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          color: Theme.of(context).chipTheme.backgroundColor,
+          color: Color.alphaBlend(
+            Theme.of(context).colorScheme.primary.withOpacity(0.1),
+            Theme.of(context).colorScheme.surfaceVariant,
+          ),
+          elevation: 0.0,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
