@@ -61,6 +61,9 @@ class DataCard extends StatelessWidget {
         Card(
           color: cardColor,
           elevation: 0.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
           margin: margin,
           child: Padding(
             padding: padding,

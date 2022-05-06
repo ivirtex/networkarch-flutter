@@ -25,7 +25,7 @@ class WifiInfoModel extends Equatable {
   final String? wifiGateway;
   final String? wifiSubmask;
 
-  bool get isWifiConnected => wifiSSID != null;
+  bool get isWifiConnected => wifiIPv4 != null;
 
   @override
   List<Object?> get props => [

@@ -165,48 +165,48 @@ class _IpGeoViewState extends State<IpGeoView> {
               return RoundedList(
                 children: [
                   ListTextLine(
-                    textL: const Text('IP'),
-                    textR: Text(state.ipGeoModel.query ?? 'N/A'),
+                    widgetL: const Text('IP'),
+                    widgetR: Text(state.ipGeoModel.query ?? 'N/A'),
                   ),
                   ListTextLine(
-                    textL: const Text('Country'),
-                    textR: Text(state.ipGeoModel.country ?? 'N/A'),
+                    widgetL: const Text('Country'),
+                    widgetR: Text(state.ipGeoModel.country ?? 'N/A'),
                   ),
                   ListTextLine(
-                    textL: const Text('Region'),
-                    textR: Text(state.ipGeoModel.region ?? 'N/A'),
+                    widgetL: const Text('Region'),
+                    widgetR: Text(state.ipGeoModel.region ?? 'N/A'),
                   ),
                   ListTextLine(
-                    textL: const Text('City'),
-                    textR: Text(state.ipGeoModel.city ?? 'N/A'),
+                    widgetL: const Text('City'),
+                    widgetR: Text(state.ipGeoModel.city ?? 'N/A'),
                   ),
                   ListTextLine(
-                    textL: const Text('Latitude'),
-                    textR: Text(state.ipGeoModel.lat.toString()),
+                    widgetL: const Text('Latitude'),
+                    widgetR: Text(state.ipGeoModel.lat.toString()),
                   ),
                   ListTextLine(
-                    textL: const Text('Longitude'),
-                    textR: Text(state.ipGeoModel.lon.toString()),
+                    widgetL: const Text('Longitude'),
+                    widgetR: Text(state.ipGeoModel.lon.toString()),
                   ),
                   ListTextLine(
-                    textL: const Text('Timezone'),
-                    textR: Text(state.ipGeoModel.timezone ?? 'N/A'),
+                    widgetL: const Text('Timezone'),
+                    widgetR: Text(state.ipGeoModel.timezone ?? 'N/A'),
                   ),
                   ListTextLine(
-                    textL: const Text('Zipcode'),
-                    textR: Text(state.ipGeoModel.zip ?? 'N/A'),
+                    widgetL: const Text('Zipcode'),
+                    widgetR: Text(state.ipGeoModel.zip ?? 'N/A'),
                   ),
                   ListTextLine(
-                    textL: const Text('ISP'),
-                    textR: Text(state.ipGeoModel.isp ?? 'N/A'),
+                    widgetL: const Text('ISP'),
+                    widgetR: Text(state.ipGeoModel.isp ?? 'N/A'),
                   ),
                   ListTextLine(
-                    textL: const Text('Organization'),
-                    textR: Text(state.ipGeoModel.org ?? 'N/A'),
+                    widgetL: const Text('Organization'),
+                    widgetR: Text(state.ipGeoModel.org ?? 'N/A'),
                   ),
                   ListTextLine(
-                    textL: const Text('As'),
-                    textR: Text(state.ipGeoModel.as ?? 'N/A'),
+                    widgetL: const Text('As'),
+                    widgetR: Text(state.ipGeoModel.as ?? 'N/A'),
                   ),
                 ],
               );

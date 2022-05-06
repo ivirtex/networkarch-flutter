@@ -27,12 +27,12 @@ class PackageInfoView extends StatelessWidget {
             footer: 'Made with ❤️ by ivirtex',
             children: [
               ListTextLine(
-                textL: const Text('App name'),
-                textR: Text(state.packageInfo.appName),
+                widgetL: const Text('App name'),
+                widgetR: Text(state.packageInfo.appName),
               ),
               ListTextLine(
-                textL: const Text('Version'),
-                textR: Text(state.packageInfo.version),
+                widgetL: const Text('Version'),
+                widgetR: Text(state.packageInfo.version),
               ),
             ],
           );

@@ -58,63 +58,87 @@ class CarrierDetailView extends StatelessWidget {
                 ? RoundedList(
                     children: [
                       ListTextLine(
-                        textL: const Text('VoIP Support'),
-                        textR:
-                            Text(state.carrierInfo!.allowsVOIP ? 'Yes' : 'No'),
+                        widgetL: const Text('VoIP Support'),
+                        widgetR: state.carrierInfo!.allowsVOIP
+                            ? const Text(
+                                'Yes',
+                                style: TextStyle(
+                                  color: Colors.green,
+                                ),
+                              )
+                            : const Text(
+                                'No',
+                                style: TextStyle(color: Colors.red),
+                              ),
                       ),
                       ListTextLine(
-                        textL: const Text('Carrier Name'),
-                        textR: Text(state.carrierInfo!.carrierName ?? 'N/A'),
+                        widgetL: const Text('Carrier Name'),
+                        widgetR: Text(
+                          state.carrierInfo!.carrierName ?? 'N/A',
+                        ),
                       ),
                       ListTextLine(
-                        textL: const Text('ISO Country Code'),
-                        textR: Text(state.carrierInfo!.isoCountryCode ?? 'N/A'),
+                        widgetL: const Text('ISO Country Code'),
+                        widgetR: Text(
+                          state.carrierInfo!.isoCountryCode ?? 'N/A',
+                        ),
                       ),
                       ListTextLine(
-                        textL: const Text('Mobile Country Code'),
-                        textR:
-                            Text(state.carrierInfo!.mobileCountryCode ?? 'N/A'),
+                        widgetL: const Text('Mobile Country Code'),
+                        widgetR: Text(
+                          state.carrierInfo!.mobileCountryCode ?? 'N/A',
+                        ),
                       ),
                       ListTextLine(
-                        textL: const Text('Mobile Network Code'),
-                        textR:
-                            Text(state.carrierInfo!.mobileNetworkCode ?? 'N/A'),
+                        widgetL: const Text('Mobile Network Code'),
+                        widgetR: Text(
+                          state.carrierInfo!.mobileNetworkCode ?? 'N/A',
+                        ),
                       ),
                       ListTextLine(
-                        textL: const Text('Network Generation'),
-                        textR:
-                            Text(state.carrierInfo!.networkGeneration ?? 'N/A'),
+                        widgetL: const Text('Network Generation'),
+                        widgetR: Text(
+                          state.carrierInfo!.networkGeneration ?? 'N/A',
+                        ),
                       ),
                       ListTextLine(
-                        textL: const Text('Radio Access Technology'),
-                        textR: Text(state.carrierInfo!.radioType ?? 'N/A'),
+                        widgetL: const Text('Radio Access Technology'),
+                        widgetR: Text(
+                          state.carrierInfo!.radioType ?? 'N/A',
+                        ),
+                      ),
+                      ListTextLine(
+                        widgetL: const Text('Sim Carrier Name'),
+                        widgetR: Text(
+                          'DDDDDDDDDDDDDDDDDDDDDDDD',
+                        ),
                       ),
                       if (state.extIpStatus == NetworkStatus.success)
                         ListTextLine(
-                          textL: const Text('External IPv4'),
-                          textR: Text(state.extIP.toString()),
+                          widgetL: const Text('External IPv4'),
+                          widgetR: Text(state.extIP.toString()),
                           onRefreshTap: () => _handleExtIPRefresh(context),
                         )
                       else if (state.extIpStatus == NetworkStatus.loading)
-                        const ListTextLine(textL: Text('External IPv4'))
+                        const ListTextLine(widgetL: Text('External IPv4'))
                       else
                         ListTextLine(
-                          textL: const Text('External IPv4'),
-                          textR: const Text('N/A'),
+                          widgetL: const Text('External IPv4'),
+                          widgetR: const Text('N/A'),
                           onRefreshTap: () => _handleExtIPRefresh(context),
                         ),
                     ],
                   )
                 : const RoundedList(
                     children: [
-                      ListTextLine(textL: Text('VoIP Support')),
-                      ListTextLine(textL: Text('Carrier Name')),
-                      ListTextLine(textL: Text('ISO Country Code')),
-                      ListTextLine(textL: Text('Mobile Country Code')),
-                      ListTextLine(textL: Text('Mobile Network Code')),
-                      ListTextLine(textL: Text('Network Generation')),
-                      ListTextLine(textL: Text('Radio Access Technology')),
-                      ListTextLine(textL: Text('External IPv4')),
+                      ListTextLine(widgetL: Text('VoIP Support')),
+                      ListTextLine(widgetL: Text('Carrier Name')),
+                      ListTextLine(widgetL: Text('ISO Country Code')),
+                      ListTextLine(widgetL: Text('Mobile Country Code')),
+                      ListTextLine(widgetL: Text('Mobile Network Code')),
+                      ListTextLine(widgetL: Text('Network Generation')),
+                      ListTextLine(widgetL: Text('Radio Access Technology')),
+                      ListTextLine(widgetL: Text('External IPv4')),
                     ],
                   );
           },

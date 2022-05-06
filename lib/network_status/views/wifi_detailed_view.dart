@@ -58,59 +58,73 @@ class WifiDetailedView extends StatelessWidget {
                 ? RoundedList(
                     children: [
                       ListTextLine(
-                        textL: const Text('SSID'),
-                        textR: Text(state.wifiInfo!.wifiSSID ?? 'N/A'),
+                        widgetL: const Text('SSID'),
+                        widgetR: SelectableText(
+                          state.wifiInfo!.wifiSSID ?? 'N/A',
+                        ),
                       ),
                       ListTextLine(
-                        textL: const Text('BSSID'),
-                        textR: Text(state.wifiInfo!.wifiBSSID ?? 'N/A'),
+                        widgetL: const Text('BSSID'),
+                        widgetR: SelectableText(
+                          state.wifiInfo!.wifiBSSID ?? 'N/A',
+                        ),
                       ),
                       ListTextLine(
-                        textL: const Text('Local IPv4'),
-                        textR: Text(state.wifiInfo!.wifiIPv4 ?? 'N/A'),
+                        widgetL: const Text('Local IPv4'),
+                        widgetR: SelectableText(
+                          state.wifiInfo!.wifiIPv4 ?? 'N/A',
+                        ),
                       ),
                       ListTextLine(
-                        textL: const Text('Local IPv6'),
-                        textR: Text(state.wifiInfo!.wifiIPv6 ?? 'N/A'),
+                        widgetL: const Text('Local IPv6'),
+                        widgetR: SelectableText(
+                          state.wifiInfo!.wifiIPv6 ?? 'N/A',
+                        ),
                       ),
                       ListTextLine(
-                        textL: const Text('Broadcast address'),
-                        textR: Text(state.wifiInfo!.wifiBroadcast ?? 'N/A'),
+                        widgetL: const Text('Broadcast address'),
+                        widgetR: SelectableText(
+                          state.wifiInfo!.wifiBroadcast ?? 'N/A',
+                        ),
                       ),
                       ListTextLine(
-                        textL: const Text('Gateway'),
-                        textR: Text(state.wifiInfo!.wifiGateway ?? 'N/A'),
+                        widgetL: const Text('Gateway'),
+                        widgetR: SelectableText(
+                          state.wifiInfo!.wifiGateway ?? 'N/A',
+                        ),
                       ),
                       ListTextLine(
-                        textL: const Text('Submask'),
-                        textR: Text(state.wifiInfo!.wifiSubmask ?? 'N/A'),
+                        widgetL: const Text('Submask'),
+                        widgetR: SelectableText(
+                          state.wifiInfo!.wifiSubmask ?? 'N/A',
+                        ),
                       ),
                       if (state.extIpStatus == NetworkStatus.success)
                         ListTextLine(
-                          textL: const Text('External IPv4'),
-                          textR: Text(state.extIP.toString()),
+                          widgetL: const Text('External IPv4'),
+                          widgetR: SelectableText(state.extIP ?? 'N/A'),
                           onRefreshTap: () => _handleExtIPRefresh(context),
                         )
                       else if (state.extIpStatus == NetworkStatus.loading)
-                        const ListTextLine(textL: Text('External IPv4'))
+                        const ListTextLine(widgetL: Text('External IPv4'))
                       else
                         ListTextLine(
-                          textL: const Text('External IPv4'),
-                          textR: const Text('N/A'),
+                          widgetL: const Text('External IPv4'),
+                          widgetR: const Text('N/A'),
                           onRefreshTap: () => _handleExtIPRefresh(context),
                         ),
                     ],
                   )
                 : const RoundedList(
                     children: [
-                      ListTextLine(textL: Text('SSID')),
-                      ListTextLine(textL: Text('BSSID')),
-                      ListTextLine(textL: Text('Local IPv4')),
-                      ListTextLine(textL: Text('Local IPv6')),
-                      ListTextLine(textL: Text('Broadcast address')),
-                      ListTextLine(textL: Text('Gateway')),
-                      ListTextLine(textL: Text('Submask')),
-                      ListTextLine(textL: Text('External IP')),
+                      ListTextLine(widgetL: Text('SSID')),
+                      ListTextLine(widgetL: Text('BSSID')),
+                      ListTextLine(widgetL: Text('Local IPv4')),
+                      ListTextLine(widgetL: Text('Local IPv6')),
+                      ListTextLine(widgetL: Text('Broadcast address')),
+                      ListTextLine(widgetL: Text('Gateway')),
+                      ListTextLine(widgetL: Text('Submask')),
+                      ListTextLine(widgetL: Text('External IP')),
                     ],
                   );
           },

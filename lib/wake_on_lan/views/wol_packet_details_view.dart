@@ -51,12 +51,12 @@ class WolPacketDetailsView extends StatelessWidget {
         RoundedList(
           children: [
             ListTextLine(
-              textL: const Text('MAC address'),
-              textR: Text(response.mac.address),
+              widgetL: const Text('MAC address'),
+              widgetR: Text(response.mac.address),
             ),
             ListTextLine(
-              textL: const Text('IP address'),
-              textR: Text(response.ipv4.address),
+              widgetL: const Text('IP address'),
+              widgetR: Text(response.ipv4.address),
             ),
             HexBytesViewer(
               title: 'Magic packet bytes',

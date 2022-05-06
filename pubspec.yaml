@@ -58,7 +58,7 @@ dev_dependencies:
     sdk: flutter
 
   build_runner: ^2.1.10
-  dart_code_metrics: ^4.14.0
+  dart_code_metrics: ^4.15.0
   flutter_launcher_icons_maker: ^0.10.2
   import_sorter: ^4.6.0
   lint: ^1.8.2

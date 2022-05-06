@@ -82,8 +82,6 @@ final List<PageViewModel> pagesList = [
       contentMargin: EdgeInsets.symmetric(
         horizontal: 8.0,
       ),
-      footerPadding: EdgeInsets.zero,
-      titlePadding: EdgeInsets.only(top: 16),
     ),
     bodyWidget: const Expanded(child: PermissionsView()),
     footer: Align(

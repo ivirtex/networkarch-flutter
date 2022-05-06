@@ -155,8 +155,8 @@ class _SettingsViewState extends State<SettingsView> {
     }
   }
 
-  void _restorePurchases() {
-    InAppPurchase.instance.restorePurchases();
+  Future<void> _restorePurchases() async {
+    await InAppPurchase.instance.restorePurchases();
 
     showPlatformDialog(
       context: context,
