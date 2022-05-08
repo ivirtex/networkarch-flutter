@@ -47,7 +47,6 @@ dependencies:
   package_info_plus: ^1.4.2
   path_provider: ^2.0.9
   permission_handler: ^9.2.0
-  rxdart: ^0.27.3
   sentry_flutter: ^6.5.1
   styled_widget: ^0.4.0+3
   url_launcher: ^6.1.0
