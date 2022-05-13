@@ -37,6 +37,9 @@ class DomainTextField extends StatelessWidget {
           autocorrect: false,
           controller: controller,
           decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
             errorText: errorText,
             labelText: label,
             prefixIcon: withoutPrefixIcon
@@ -47,7 +50,7 @@ class DomainTextField extends StatelessWidget {
             suffixIcon: suffixIcon,
           ),
           expands: expands,
-          maxLines: null,
+          maxLines: expands ? null : 1,
           onChanged: onChanged,
         );
       },

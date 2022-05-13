@@ -68,7 +68,9 @@ class CarrierDetailView extends StatelessWidget {
                               )
                             : const Text(
                                 'No',
-                                style: TextStyle(color: Colors.red),
+                                style: TextStyle(
+                                  color: Colors.red,
+                                ),
                               ),
                       ),
                       ListTextLine(
@@ -110,7 +112,7 @@ class CarrierDetailView extends StatelessWidget {
                       ListTextLine(
                         widgetL: const Text('Sim Carrier Name'),
                         widgetR: Text(
-                          'DDDDDDDDDDDDDDDDDDDDDDDD',
+                          'DDDDDDDDDDDDDDDDDDDddddDD',
                         ),
                       ),
                       if (state.extIpStatus == NetworkStatus.success)

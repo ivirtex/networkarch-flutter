@@ -26,7 +26,6 @@ class ListTextLine extends StatelessWidget {
         widgetL,
         Row(
           mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             if (onRefreshTap != null)
               IconButton(
@@ -40,7 +39,13 @@ class ListTextLine extends StatelessWidget {
                 ),
                 onPressed: onRefreshTap,
               ),
-            widgetR ?? const ListCircularProgressIndicator(),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                print('ListTextLine: ${constraints.maxWidth}');
+
+                return widgetR ?? const ListCircularProgressIndicator();
+              },
+            ),
           ],
         ),
       ],
