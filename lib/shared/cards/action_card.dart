@@ -12,6 +12,7 @@ class ActionCard extends StatelessWidget {
     required this.title,
     required this.desc,
     this.icon,
+    this.buttonStyle,
     this.onTap,
     Key? key,
   }) : super(key: key);
@@ -19,6 +20,7 @@ class ActionCard extends StatelessWidget {
   final String title;
   final String desc;
   final IconData? icon;
+  final ButtonStyle? buttonStyle;
   final VoidCallback? onTap;
 
   @override
@@ -26,13 +28,14 @@ class ActionCard extends StatelessWidget {
     return DataCard(
       margin: EdgeInsetsDirectional.zero,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Flexible(
-            child: FaIcon(icon),
-          ),
-          Flexible(
-            flex: 3,
+          if (icon != null)
+            Padding(
+              padding: const EdgeInsets.only(right: 14.0, left: 7.0),
+              child: FaIcon(icon),
+            ),
+          Expanded(
+            flex: 5,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -54,19 +57,18 @@ class ActionCard extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          Flexible(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary:
-                    Theme.of(context).colorScheme.primary.withOpacity(0.15),
-                elevation: 0.0,
-                shape: const CircleBorder(),
-              ),
-              onPressed: onTap,
-              child: FaIcon(
-                FontAwesomeIcons.circleArrowRight,
-                color: Theme.of(context).iconTheme.color,
-              ),
+          ElevatedButton(
+            style: buttonStyle ??
+                ElevatedButton.styleFrom(
+                  primary:
+                      Theme.of(context).colorScheme.primary.withOpacity(0.15),
+                  elevation: 0.0,
+                  shape: const CircleBorder(),
+                ),
+            onPressed: onTap,
+            child: FaIcon(
+              FontAwesomeIcons.circleArrowRight,
+              color: Theme.of(context).iconTheme.color,
             ),
           ),
         ],

@@ -18,6 +18,7 @@ class ListTextLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: improve alignment of widgets on wrap
     return Wrap(
       alignment: WrapAlignment.spaceBetween,
       runSpacing: 5.0,
@@ -30,7 +31,7 @@ class ListTextLine extends StatelessWidget {
             if (onRefreshTap != null)
               IconButton(
                 constraints: const BoxConstraints(),
-                padding: const EdgeInsets.only(right: 4),
+                padding: const EdgeInsets.only(right: 4.0),
                 splashRadius: 12.0,
                 iconSize: 16.0,
                 icon: const Icon(
@@ -39,13 +40,7 @@ class ListTextLine extends StatelessWidget {
                 ),
                 onPressed: onRefreshTap,
               ),
-            LayoutBuilder(
-              builder: (context, constraints) {
-                print('ListTextLine: ${constraints.maxWidth}');
-
-                return widgetR ?? const ListCircularProgressIndicator();
-              },
-            ),
+            widgetR ?? const ListCircularProgressIndicator(),
           ],
         ),
       ],

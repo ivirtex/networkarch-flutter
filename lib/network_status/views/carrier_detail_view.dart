@@ -109,12 +109,6 @@ class CarrierDetailView extends StatelessWidget {
                           state.carrierInfo!.radioType ?? 'N/A',
                         ),
                       ),
-                      ListTextLine(
-                        widgetL: const Text('Sim Carrier Name'),
-                        widgetR: Text(
-                          'DDDDDDDDDDDDDDDDDDDddddDD',
-                        ),
-                      ),
                       if (state.extIpStatus == NetworkStatus.success)
                         ListTextLine(
                           widgetL: const Text('External IPv4'),

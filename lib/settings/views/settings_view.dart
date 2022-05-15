@@ -14,9 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/package_info/cubit/package_info_cubit.dart';
 import 'package:network_arch/package_info/views/package_info_view.dart';
-import 'package:network_arch/settings/settings.dart';
-import 'package:network_arch/shared/content_list_view.dart';
-import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/theme/theme.dart';
 
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart'
@@ -73,6 +71,7 @@ class _SettingsViewState extends State<SettingsView> {
 
     return ContentListView(
       children: [
+        const SmallDescription(child: 'Theme settings'),
         DataCard(
           padding: EdgeInsets.zero,
           child: Column(
@@ -110,7 +109,7 @@ class _SettingsViewState extends State<SettingsView> {
             ],
           ),
         ),
-        const SizedBox(height: Constants.listSpacing),
+        const SmallDescription(child: 'Help'),
         Column(
           children: [
             ActionCard(
