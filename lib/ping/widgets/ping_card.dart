@@ -40,7 +40,7 @@ class PingCard extends StatelessWidget {
                 text: 'Online',
               ),
         title: Text(
-          addr,
+          addr.isEmpty ? 'N/A' : addr,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -60,15 +60,20 @@ class PingCard extends StatelessWidget {
                   Text('TTL: ${item.response!.ttl.toString()}'),
                 ],
               ),
-        trailing: SizedBox(
-          child: hasError
-              ? Text(
-                  context.read<PingRepository>().getErrorDesc(item.error!),
-                )
-              : Text(
-                  '${item.response!.time!.inMilliseconds.toString()} ms',
+        trailing: hasError
+            ? Text(
+                context.read<PingRepository>().getErrorDesc(item.error!),
+              )
+            : Text(
+                '${item.response!.time!.inMilliseconds.toString()} ms',
+                style: TextStyle(
+                  color: item.response!.time!.inMilliseconds < 75
+                      ? Colors.green
+                      : item.response!.time!.inMilliseconds < 150
+                          ? Colors.yellow[700]
+                          : Colors.red[700],
                 ),
-        ),
+              ),
       ),
     );
   }

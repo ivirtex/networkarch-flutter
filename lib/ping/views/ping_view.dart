@@ -25,9 +25,8 @@ class _PingViewState extends State<PingView> {
   final _targetHostController = TextEditingController();
   late final AnimatedListModel<PingData?> _pingData;
 
-  String _targetHost = '';
-
   String get _target => _targetHostController.text;
+  String _finalTarget = '';
 
   bool _shouldStartButtonBeActive = false;
 
@@ -175,7 +174,7 @@ class _PingViewState extends State<PingView> {
             return _buildItem(
               context,
               animation,
-              _pingData[index],
+              _pingData[index]!,
             );
           },
         ),
@@ -186,50 +185,31 @@ class _PingViewState extends State<PingView> {
   Widget _buildItem(
     BuildContext context,
     Animation<double> animation,
-    PingData? item,
+    PingData item,
   ) {
-    _targetHost = _targetHost.isEmpty ? 'N/A' : _targetHost;
-
-    if (item!.error != null) {
-      return FadeTransition(
-        opacity: animation.drive(_pingData.fadeTween),
-        child: SlideTransition(
-          position: animation.drive(_pingData.slideTween),
-          child: PingCard(
-            list: _pingData,
-            item: item,
-            addr: _targetHost,
-            hasError: true,
-          ),
+    return FadeTransition(
+      opacity: animation.drive(_pingData.fadeTween),
+      child: SlideTransition(
+        position: animation.drive(_pingData.slideTween),
+        child: PingCard(
+          list: _pingData,
+          item: item,
+          addr: _finalTarget,
+          hasError: item.error != null,
         ),
-      );
-    }
-
-    if (item.response != null) {
-      return FadeTransition(
-        opacity: animation.drive(_pingData.fadeTween),
-        child: SlideTransition(
-          position: animation.drive(_pingData.slideTween),
-          child: PingCard(
-            list: _pingData,
-            item: item,
-            addr: _targetHost,
-          ),
-        ),
-      );
-    } else {
-      throw Exception('Unexpected item type');
-    }
+      ),
+    );
   }
 
   Future<void> _handleStart() async {
     hideKeyboard(context);
     await _pingData.removeAllElements(context);
 
-    _targetHost = _target;
+    _finalTarget = _target;
+    _targetHostController.text = '';
 
     if (!mounted) return;
-    context.read<PingBloc>().add(PingStarted(_target));
+    context.read<PingBloc>().add(PingStarted(_finalTarget));
   }
 
   void _handleStop() {
