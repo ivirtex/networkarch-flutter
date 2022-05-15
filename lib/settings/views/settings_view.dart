@@ -73,67 +73,70 @@ class _SettingsViewState extends State<SettingsView> {
 
     return ContentListView(
       children: [
-        RoundedList(
+        DataCard(
           padding: EdgeInsets.zero,
-          header: 'Theme settings',
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 8.0,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8.0,
+                ),
+                child: FlexThemeModeSwitch(
+                  themeMode: themeBloc.state.mode,
+                  onThemeModeChanged: (mode) {
+                    setState(() {
+                      themeBloc.add(ThemeModeChangedEvent(themeMode: mode));
+                    });
+                  },
+                  flexSchemeData:
+                      FlexColor.schemesList[themeBloc.state.scheme.index],
+                  optionButtonBorderRadius: 10.0,
+                ),
               ),
-              child: FlexThemeModeSwitch(
-                themeMode: themeBloc.state.mode,
-                onThemeModeChanged: (mode) {
+              ThemePopupMenu(
+                schemeIndex: themeBloc.state.scheme.index,
+                onChanged: (index) async {
+                  // Await for popup menu to close (to avoid jank)
+                  await Future.delayed(const Duration(milliseconds: 300));
+
                   setState(() {
-                    themeBloc.add(ThemeModeChangedEvent(themeMode: mode));
+                    themeBloc.add(
+                      ThemeSchemeChangedEvent(scheme: FlexScheme.values[index]),
+                    );
                   });
                 },
-                flexSchemeData:
-                    FlexColor.schemesList[themeBloc.state.scheme.index],
-                optionButtonBorderRadius: 10.0,
               ),
-            ),
-            ThemePopupMenu(
-              schemeIndex: themeBloc.state.scheme.index,
-              onChanged: (index) async {
-                // Await for popup menu to close (to avoid jank)
-                await Future.delayed(const Duration(milliseconds: 300));
-
-                setState(() {
-                  themeBloc.add(
-                    ThemeSchemeChangedEvent(scheme: FlexScheme.values[index]),
-                  );
-                });
-              },
-            ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(height: Constants.listSpacing),
-        RoundedList(
-          padding: EdgeInsets.zero,
-          header: 'Help',
+        Column(
           children: [
-            SettingsTile(
-              title: const Text('Go to onboarding screen'),
-              subtitle: const Text('Resolve permissions issues'),
+            ActionCard(
+              title: 'Go to onboarding screen',
+              desc: 'Resolve permissions issues',
               icon: Icons.lock_outline_rounded,
               onTap: () => Navigator.pushNamed(context, '/introduction'),
             ),
-            SettingsTile(
-              title: const Text('Send feedback'),
-              subtitle: const Text('Something is not working?'),
+            const SizedBox(height: Constants.listSpacing),
+            ActionCard(
+              title: 'Send feedback',
+              desc: 'Something is not working?',
               icon: Icons.feedback_outlined,
               onTap: () => _sendFeedback(context),
             ),
-            SettingsTile(
-              title: const Text('Source code'),
-              subtitle: const Text('Feel free to contribute!'),
+            const SizedBox(height: Constants.listSpacing),
+            ActionCard(
+              title: 'Source code',
+              desc: 'Feel free to contribute!',
               icon: FontAwesomeIcons.github,
               onTap: _canLaunchUrl ? _openSourceCode : null,
             ),
-            SettingsTile(
-              title: const Text('Restore purchases'),
+            const SizedBox(height: Constants.listSpacing),
+            ActionCard(
+              title: 'Restore purchases',
+              desc: 'Restore purchases made in the past',
               icon: Icons.workspace_premium_rounded,
               onTap: () => _restorePurchases(),
             ),

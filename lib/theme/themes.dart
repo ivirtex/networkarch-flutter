@@ -16,7 +16,7 @@ abstract class Themes {
       useMaterial3ErrorColors: true,
       appBarStyle: FlexAppBarStyle.background,
       appBarOpacity: 0,
-      blendLevel: 6,
+      blendLevel: 5,
     );
   }
 
@@ -27,7 +27,8 @@ abstract class Themes {
       useMaterial3ErrorColors: true,
       appBarStyle: FlexAppBarStyle.background,
       appBarOpacity: 0,
-      surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+      surfaceMode: FlexSurfaceMode.level,
+      blendLevel: 20,
     );
   }
 
