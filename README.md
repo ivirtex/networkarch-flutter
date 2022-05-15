@@ -11,6 +11,7 @@ NetworkArch is an Flutter app, that allows to diagnose Internet connections, dis
 - Whois
 - DNS Lookup
 
-I tried to follow the Material 3 Design Guidelines as much as possible, but Flutter 2.10.3 still hasn't got the Material 3 fully implemented.
+I tried to follow the Material 3 Design Guidelines as much as possible, but Flutter still hasn't got the Material 3 fully implemented.
 
-[Play Store link](https://play.google.com/store/apps/details?id=com.hubertjozwiak.networkarch)
+<a href='https://play.google.com/store/apps/details?id=com.hubertjozwiak.networkarch&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width='250'/></a>  
+App Store version coming soon!
