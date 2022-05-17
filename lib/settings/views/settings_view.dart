@@ -88,8 +88,8 @@ class _SettingsViewState extends State<SettingsView> {
                       themeBloc.add(ThemeModeChangedEvent(themeMode: mode));
                     });
                   },
-                  flexSchemeData:
-                      FlexColor.schemesList[themeBloc.state.scheme.index],
+                  flexSchemeData: Themes
+                      .schemesListWithDynamic[themeBloc.state.scheme.index],
                   optionButtonBorderRadius: 10.0,
                 ),
               ),
@@ -101,7 +101,9 @@ class _SettingsViewState extends State<SettingsView> {
 
                   setState(() {
                     themeBloc.add(
-                      ThemeSchemeChangedEvent(scheme: FlexScheme.values[index]),
+                      ThemeSchemeChangedEvent(
+                        scheme: CustomFlexScheme.values[index],
+                      ),
                     );
                   });
                 },

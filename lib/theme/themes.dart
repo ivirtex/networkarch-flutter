@@ -8,26 +8,50 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 
+// Project imports:
+import 'package:network_arch/theme/theme.dart';
+
 abstract class Themes {
-  static ThemeData getLightThemeDataFor(FlexScheme flexScheme) {
+  static List<FlexSchemeData> schemesListWithDynamic = [
+    // Fallback scheme that will get replaced if device supports dynamic colors
+    FlexSchemeData(
+      name: 'Fallback',
+      description:
+          'Fallback scheme if your device does not support dynamic colors (Android 12+)',
+      light: FlexSchemeColor.from(
+        primary: Colors.blue,
+        brightness: Brightness.light,
+      ),
+      dark: FlexSchemeColor.from(
+        primary: Colors.blue,
+        brightness: Brightness.dark,
+      ),
+    ),
+
+    ...FlexColor.schemesList,
+  ];
+
+  static ThemeData getLightThemeDataFor(CustomFlexScheme flexScheme) {
     return FlexThemeData.light(
-      scheme: flexScheme,
+      colors: schemesListWithDynamic[flexScheme.index].light,
       useMaterial3: true,
       useMaterial3ErrorColors: true,
+      subThemesData: const FlexSubThemesData(),
       appBarStyle: FlexAppBarStyle.background,
       appBarOpacity: 0,
       blendLevel: 5,
     );
   }
 
-  static ThemeData getDarkThemeDataFor(FlexScheme flexScheme) {
+  static ThemeData getDarkThemeDataFor(CustomFlexScheme flexScheme) {
     return FlexThemeData.dark(
-      scheme: flexScheme,
+      colors: schemesListWithDynamic[flexScheme.index].dark,
       useMaterial3: true,
       useMaterial3ErrorColors: true,
+      subThemesData: const FlexSubThemesData(),
+      surfaceMode: FlexSurfaceMode.level,
       appBarStyle: FlexAppBarStyle.background,
       appBarOpacity: 0,
-      surfaceMode: FlexSurfaceMode.level,
       blendLevel: 20,
     );
   }

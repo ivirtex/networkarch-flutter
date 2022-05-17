@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 
+// Project imports:
+import 'package:network_arch/theme/theme.dart';
+
 // Widget used to change the used FlexSchemeData index in example 4.
 class ThemePopupMenu extends StatelessWidget {
   const ThemePopupMenu({
@@ -31,18 +34,18 @@ class ThemePopupMenu extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
       ),
       itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
-        for (int i = 0; i < FlexColor.schemes.length; i++)
+        for (int i = 0; i < Themes.schemesListWithDynamic.length; i++)
           PopupMenuItem<int>(
             value: i,
             child: ListTile(
               leading: Icon(
                 Icons.lens,
                 color: isLight
-                    ? FlexColor.schemesList[i].light.primary
-                    : FlexColor.schemesList[i].dark.primary,
+                    ? Themes.schemesListWithDynamic[i].light.primary
+                    : Themes.schemesListWithDynamic[i].dark.primary,
                 size: 35,
               ),
-              title: Text(FlexColor.schemesList[i].name),
+              title: Text(Themes.schemesListWithDynamic[i].name),
             ),
           ),
       ],
@@ -53,9 +56,9 @@ class ThemePopupMenu extends StatelessWidget {
               vertical: 8,
             ),
         title: Text(
-          '${FlexColor.schemesList[schemeIndex].name} color scheme',
+          '${Themes.schemesListWithDynamic[schemeIndex].name} color scheme',
         ),
-        subtitle: Text(FlexColor.schemesList[schemeIndex].description),
+        subtitle: Text(Themes.schemesListWithDynamic[schemeIndex].description),
         trailing: Stack(
           alignment: Alignment.center,
           children: [

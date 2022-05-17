@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 
 // Project imports:
+import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
 class ClearListButton extends StatelessWidget {

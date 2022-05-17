@@ -104,13 +104,13 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
                     }
 
                     if (isIapAvailable.hasError) {
-                      return const OutlinedButton(
+                      return const FilledButton(
                         onPressed: null,
                         child: Text('Subscribe'),
                       );
                     }
 
-                    return OutlinedButton(
+                    return FilledButton(
                       onPressed: isIapAvailable.data!
                           ? () => _handleSubscribe(context)
                           : null,

@@ -3,6 +3,8 @@ export 'cards/cards.dart';
 export 'content_list_view.dart';
 export 'cupertino_action_app_bar.dart';
 export 'domain_text_field.dart';
+export 'filled_button.dart';
+export 'filled_tonal_button.dart';
 export 'list_circular_progress_indicator.dart';
 export 'list_text_line.dart';
 export 'platform_widget.dart';

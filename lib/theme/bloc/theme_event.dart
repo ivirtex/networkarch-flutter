@@ -19,7 +19,7 @@ class ThemeModeChangedEvent extends ThemeEvent {
 class ThemeSchemeChangedEvent extends ThemeEvent {
   const ThemeSchemeChangedEvent({required this.scheme});
 
-  final FlexScheme scheme;
+  final CustomFlexScheme scheme;
 
   @override
   List<Object> get props => [scheme];

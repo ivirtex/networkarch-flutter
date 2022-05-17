@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:feedback/feedback.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -86,31 +88,37 @@ class NetworkArch extends StatelessWidget {
   }
 
   Widget _buildAndroid(BuildContext context) {
-    return BlocBuilder<ThemeBloc, ThemeState>(
-      builder: (context, state) {
-        final themeData = Themes.getLightThemeDataFor(state.scheme);
-        final darkThemeData = Themes.getDarkThemeDataFor(state.scheme);
+    return DynamicColorBuilder(
+      builder: (lightDynamic, darkDynamic) {
+        handleDynamicColors(lightDynamic, darkDynamic, context);
 
-        final feedbackBackgroundColor = state.mode == ThemeMode.light
-            ? themeData.colorScheme.background.withOpacity(0.9)
-            : darkThemeData.colorScheme.background.withOpacity(0.9);
+        return BlocBuilder<ThemeBloc, ThemeState>(
+          builder: (context, state) {
+            final themeData = Themes.getLightThemeDataFor(state.scheme);
+            final darkThemeData = Themes.getDarkThemeDataFor(state.scheme);
 
-        return BetterFeedback(
-          theme: FeedbackThemeData(
-            background: feedbackBackgroundColor,
-          ),
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            navigatorObservers: [
-              SentryNavigatorObserver(),
-            ],
-            title: Constants.appName,
-            theme: themeData,
-            darkTheme: darkThemeData,
-            themeMode: state.mode,
-            routes: Constants.routes,
-            home: const Home(),
-          ),
+            final feedbackBackgroundColor = state.mode == ThemeMode.light
+                ? themeData.colorScheme.background.withOpacity(0.9)
+                : darkThemeData.colorScheme.background.withOpacity(0.9);
+
+            return BetterFeedback(
+              theme: FeedbackThemeData(
+                background: feedbackBackgroundColor,
+              ),
+              child: MaterialApp(
+                debugShowCheckedModeBanner: false,
+                navigatorObservers: [
+                  SentryNavigatorObserver(),
+                ],
+                title: Constants.appName,
+                theme: themeData,
+                darkTheme: darkThemeData,
+                themeMode: state.mode,
+                routes: Constants.routes,
+                home: const Home(),
+              ),
+            );
+          },
         );
       },
     );
@@ -142,5 +150,43 @@ class NetworkArch extends StatelessWidget {
         );
       },
     );
+  }
+
+  void handleDynamicColors(
+    ColorScheme? lightDynamic,
+    ColorScheme? darkDynamic,
+    BuildContext context,
+  ) {
+    if (lightDynamic != null && darkDynamic != null) {
+      final lightColorScheme = lightDynamic.harmonized();
+      final darkColorScheme = darkDynamic.harmonized();
+
+      final lightFlexSchemeColor = FlexSchemeColor.from(
+        primary: lightColorScheme.primary,
+        brightness: Brightness.light,
+      );
+
+      final darkFlexSchemeColor = FlexSchemeColor.from(
+        primary: darkColorScheme.primary,
+        brightness: Brightness.dark,
+      );
+
+      final dynamicScheme = FlexSchemeData(
+        name: 'System dynamic',
+        description: 'Dynamic color theme, based on your system scheme',
+        light: lightFlexSchemeColor,
+        dark: darkFlexSchemeColor,
+      );
+
+      if (!Themes.schemesListWithDynamic.contains(dynamicScheme)) {
+        Themes.schemesListWithDynamic.first = dynamicScheme;
+
+        context.read<ThemeBloc>().add(
+              const ThemeSchemeChangedEvent(
+                scheme: CustomFlexScheme.dynamic,
+              ),
+            );
+      }
+    }
   }
 }
