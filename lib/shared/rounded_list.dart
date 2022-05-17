@@ -32,7 +32,7 @@ class RoundedList extends StatelessWidget {
       children: [
         if (header != null)
           GestureDetector(
-            child: SmallDescription(child: header!),
+            child: SmallDescription(text: header!),
           ),
         ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
@@ -58,7 +58,7 @@ class RoundedList extends StatelessWidget {
         ),
         if (footer != null)
           GestureDetector(
-            child: SmallDescription(child: footer!),
+            child: SmallDescription(text: footer!),
           ),
       ],
     );

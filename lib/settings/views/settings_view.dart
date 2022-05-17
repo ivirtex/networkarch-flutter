@@ -71,7 +71,7 @@ class _SettingsViewState extends State<SettingsView> {
 
     return ContentListView(
       children: [
-        const SmallDescription(child: 'Theme settings'),
+        const SmallDescription(text: 'Theme settings'),
         DataCard(
           padding: EdgeInsets.zero,
           child: Column(
@@ -111,13 +111,20 @@ class _SettingsViewState extends State<SettingsView> {
             ],
           ),
         ),
-        const SmallDescription(child: 'Help'),
+        const SmallDescription(text: 'Help'),
         Column(
           children: [
             ActionCard(
-              title: 'Go to onboarding screen',
+              title: 'Restore purchases',
+              desc: 'Restore purchases made in the past',
+              icon: Icons.workspace_premium_rounded,
+              onTap: () => _restorePurchases(),
+            ),
+            const SizedBox(height: Constants.listSpacing),
+            ActionCard(
+              title: 'Onboarding screen',
               desc: 'Resolve permissions issues',
-              icon: Icons.lock_outline_rounded,
+              icon: Icons.info_outline_rounded,
               onTap: () => Navigator.pushNamed(context, '/introduction'),
             ),
             const SizedBox(height: Constants.listSpacing),
@@ -133,13 +140,6 @@ class _SettingsViewState extends State<SettingsView> {
               desc: 'Feel free to contribute!',
               icon: FontAwesomeIcons.github,
               onTap: _canLaunchUrl ? _openSourceCode : null,
-            ),
-            const SizedBox(height: Constants.listSpacing),
-            ActionCard(
-              title: 'Restore purchases',
-              desc: 'Restore purchases made in the past',
-              icon: Icons.workspace_premium_rounded,
-              onTap: () => _restorePurchases(),
             ),
           ],
         ),

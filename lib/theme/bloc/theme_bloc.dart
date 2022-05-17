@@ -31,7 +31,9 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
     ThemeDynamicSchemeChangedEvent event,
     Emitter<ThemeState> emit,
   ) {
-    emit(state.copyWith(dynamicScheme: event.dynamicScheme));
+    Themes.schemesListWithDynamic.first = event.newDynamicScheme;
+
+    emit(state.copyWith(dynamicScheme: event.newDynamicScheme));
   }
 
   void _onThemeModeChanged(

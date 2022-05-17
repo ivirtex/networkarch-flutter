@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class SmallDescription extends StatelessWidget {
   const SmallDescription({
-    required this.child,
+    required this.text,
     this.leftPadding = 10.0,
     Key? key,
   }) : super(key: key);
 
-  final String child;
+  final String text;
   final double leftPadding;
 
   @override
@@ -18,11 +18,8 @@ class SmallDescription extends StatelessWidget {
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
-          child,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color:
-                    Theme.of(context).colorScheme.onBackground.withOpacity(0.8),
-              ),
+          text,
+          style: Theme.of(context).textTheme.bodySmall,
         ),
       ),
     );

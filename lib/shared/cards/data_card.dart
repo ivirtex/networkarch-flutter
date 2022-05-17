@@ -57,7 +57,7 @@ class DataCard extends StatelessWidget {
 
     return Column(
       children: [
-        if (header != null) SmallDescription(child: header!),
+        if (header != null) SmallDescription(text: header!),
         Card(
           color: cardColor,
           elevation: 0.0,
@@ -70,7 +70,7 @@ class DataCard extends StatelessWidget {
             child: child,
           ),
         ),
-        if (footer != null) SmallDescription(child: footer!),
+        if (footer != null) SmallDescription(text: footer!),
       ],
     );
   }

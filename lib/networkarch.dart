@@ -196,11 +196,9 @@ class NetworkArch extends StatelessWidget {
 
       final themeBloc = context.read<ThemeBloc>();
       if (themeBloc.state.dynamicScheme != newDynamicScheme) {
-        Themes.schemesListWithDynamic.first = newDynamicScheme;
-
         themeBloc.add(
           ThemeDynamicSchemeChangedEvent(
-            dynamicScheme: newDynamicScheme,
+            newDynamicScheme: newDynamicScheme,
           ),
         );
       }

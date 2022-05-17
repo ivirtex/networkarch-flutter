@@ -119,12 +119,12 @@ class _OverviewViewState extends State<OverviewView> {
       builder: (context, state) {
         return ContentListView(
           children: [
-            const SmallDescription(child: 'Networks', leftPadding: 8.0),
+            const SmallDescription(text: 'Networks', leftPadding: 8.0),
             const WifiStatusCard(),
             const SizedBox(height: Constants.listSpacing),
             const CarrierStatusCard(),
             const SizedBox(height: Constants.listSpacing),
-            const SmallDescription(child: 'Utilities', leftPadding: 8.0),
+            const SmallDescription(text: 'Utilities', leftPadding: 8.0),
             ToolCard(
               toolName: 'Ping',
               toolDesc: Constants.pingDesc,
@@ -178,6 +178,10 @@ class _OverviewViewState extends State<OverviewView> {
             if (kDebugMode)
               Column(
                 children: [
+                  const SmallDescription(
+                    text: 'Debug',
+                    leftPadding: 8.0,
+                  ),
                   ToolCard(
                     toolName: 'Clear IAP data',
                     toolDesc: '',
