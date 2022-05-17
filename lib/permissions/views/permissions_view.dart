@@ -41,42 +41,38 @@ class _PermissionsViewState extends State<PermissionsView> {
   Widget _buildBody(BuildContext context) {
     return BlocConsumer<PermissionsBloc, PermissionsState>(
       listener: (context, state) {
+        final scaffoldMessenger = ScaffoldMessenger.of(context);
+
         if (state.latestRequested == Permission.locationWhenInUse) {
           if (state.locationStatus == PermissionStatus.granted) {
-            showElegantNotification(
-              context,
-              Constants.permissionGrantedNotification,
+            scaffoldMessenger.showSnackBar(
+              Constants.permissionGrantedSnackbar,
             );
           } else if (state.locationStatus ==
               PermissionStatus.permanentlyDenied) {
-            showElegantNotification(
-              context,
-              Constants.permissionDeniedNotification,
+            scaffoldMessenger.showSnackBar(
+              Constants.permissionDeniedSnackbar,
             );
           } else {
-            showElegantNotification(
-              context,
-              Constants.permissionDefaultNotification,
+            scaffoldMessenger.showSnackBar(
+              Constants.permissionDefaultSnackbar,
             );
           }
         }
 
         if (state.latestRequested == Permission.phone) {
           if (state.phoneStateStatus == PermissionStatus.granted) {
-            showElegantNotification(
-              context,
-              Constants.permissionGrantedNotification,
+            scaffoldMessenger.showSnackBar(
+              Constants.permissionGrantedSnackbar,
             );
           } else if (state.phoneStateStatus ==
               PermissionStatus.permanentlyDenied) {
-            showElegantNotification(
-              context,
-              Constants.permissionDeniedNotification,
+            scaffoldMessenger.showSnackBar(
+              Constants.permissionDeniedSnackbar,
             );
           } else {
-            showElegantNotification(
-              context,
-              Constants.permissionDefaultNotification,
+            scaffoldMessenger.showSnackBar(
+              Constants.permissionDefaultSnackbar,
             );
           }
         }

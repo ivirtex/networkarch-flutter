@@ -175,45 +175,7 @@ class _OverviewViewState extends State<OverviewView> {
                   : () => showPremiumBottomSheet(context),
             ),
             const SizedBox(height: Constants.listSpacing),
-            if (kDebugMode)
-              Column(
-                children: [
-                  const SmallDescription(
-                    text: 'Debug',
-                    leftPadding: 8.0,
-                  ),
-                  ToolCard(
-                    toolName: 'Clear IAP data',
-                    toolDesc: '',
-                    onPressed: () async {
-                      await Hive.box('iap').put('isPremiumGranted', false);
-                    },
-                  ),
-                  const SizedBox(height: Constants.listSpacing),
-                  ToolCard(
-                    toolName: 'Show success notif',
-                    toolDesc: '',
-                    onPressed: () {
-                      showElegantNotification(
-                        context,
-                        Constants.permissionGrantedNotification,
-                      );
-                    },
-                  ),
-                  const SizedBox(height: Constants.listSpacing),
-                  ToolCard(
-                    toolName: 'Show failure notif',
-                    toolDesc: '',
-                    onPressed: () {
-                      showElegantNotification(
-                        context,
-                        Constants.permissionDeniedNotification,
-                      );
-                    },
-                  ),
-                  const SizedBox(height: Constants.listSpacing),
-                ],
-              ),
+            if (kDebugMode) const DebugSection(),
             if (!isPremiumGranted)
               Container(
                 alignment: Alignment.center,
@@ -244,12 +206,4 @@ class _OverviewViewState extends State<OverviewView> {
       );
     }
   }
-}
-
-String getAdUnitId() {
-  return kReleaseMode
-      ? Platform.isIOS
-          ? Constants.overviewIOSAdUnitId
-          : Constants.overviewAndroidAdUnitId
-      : Constants.testBannerAdUnitId;
 }

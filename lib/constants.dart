@@ -132,13 +132,51 @@ abstract class Constants {
       'We need your phone permission in order to access carrier information';
 
   // Permissions snackbars
-  static const String _permissionGranted = 'Permission granted.';
+  static const String _permissionGranted = 'Permission granted!';
 
   static const String _permissionDenied =
-      '''Permission denied, the app may not function properly, check the app's settings.''';
+      '''Permission denied, the app may not function properly, check the app's settings''';
 
   static const String _permissionDefault =
-      'Something gone wrong, check app permissions.';
+      'Something gone wrong, check app permissions';
+
+  static final SnackBar permissionGrantedSnackbar = SnackBar(
+    content: Row(
+      children: const [
+        Icon(Icons.check_circle_rounded, color: Colors.green),
+        SizedBox(width: 10.0),
+        Expanded(child: Text(_permissionGranted)),
+      ],
+    ),
+  );
+
+  static final SnackBar permissionDeniedSnackbar = SnackBar(
+    content: Row(
+      children: const [
+        Icon(Icons.error_rounded, color: Colors.red),
+        SizedBox(width: 10.0),
+        Expanded(child: Text(_permissionDenied)),
+      ],
+    ),
+    action: SnackBarAction(
+      label: 'Open settings',
+      onPressed: () => openAppSettings(),
+    ),
+  );
+
+  static final SnackBar permissionDefaultSnackbar = SnackBar(
+    content: Row(
+      children: const [
+        Icon(Icons.warning_rounded, color: Colors.orange),
+        SizedBox(width: 10.0),
+        Expanded(child: Text(_permissionDefault)),
+      ],
+    ),
+    action: SnackBarAction(
+      label: 'Open settings',
+      onPressed: () => openAppSettings(),
+    ),
+  );
 
   static final ElegantNotification permissionGrantedNotification =
       ElegantNotification.success(
@@ -179,18 +217,5 @@ abstract class Constants {
     dismissible: true,
     notificationPosition: NOTIFICATION_POSITION.bottom,
     animation: ANIMATION.fromBottom,
-  );
-
-  static const String _wolValidationError =
-      '''The IP address or MAC address is not valid, please check it and try again.''';
-
-  static final ElegantNotification wolValidationErrorNotification =
-      ElegantNotification.error(
-    title: const Text('Validation error'),
-    description: const Text(_wolValidationError),
-    dismissible: true,
-    notificationPosition: NOTIFICATION_POSITION.bottom,
-    animation: ANIMATION.fromBottom,
-    toastDuration: const Duration(milliseconds: 4000),
   );
 }
