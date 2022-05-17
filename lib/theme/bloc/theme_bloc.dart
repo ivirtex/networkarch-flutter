@@ -16,6 +16,7 @@ part 'theme_state.dart';
 class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
   ThemeBloc() : super(const ThemeState(scheme: CustomFlexScheme.brandBlue)) {
     on<ThemeSchemeChangedEvent>(_onThemeSchemeChanged);
+    on<ThemeDynamicSchemeChangedEvent>(_onThemeDynamicSchemeChanged);
     on<ThemeModeChangedEvent>(_onThemeModeChanged);
   }
 
@@ -24,6 +25,13 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
     Emitter<ThemeState> emit,
   ) {
     emit(state.copyWith(scheme: event.scheme));
+  }
+
+  void _onThemeDynamicSchemeChanged(
+    ThemeDynamicSchemeChangedEvent event,
+    Emitter<ThemeState> emit,
+  ) {
+    emit(state.copyWith(dynamicScheme: event.dynamicScheme));
   }
 
   void _onThemeModeChanged(
@@ -40,6 +48,6 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
 
   @override
   Map<String, dynamic>? toJson(ThemeState state) {
-    return state.toJson();
+    return state.toJson(state);
   }
 }

@@ -24,3 +24,12 @@ class ThemeSchemeChangedEvent extends ThemeEvent {
   @override
   List<Object> get props => [scheme];
 }
+
+class ThemeDynamicSchemeChangedEvent extends ThemeEvent {
+  const ThemeDynamicSchemeChangedEvent({required this.dynamicScheme});
+
+  final FlexSchemeData dynamicScheme;
+
+  @override
+  List<Object> get props => [dynamicScheme];
+}

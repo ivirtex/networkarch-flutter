@@ -1,9 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:flex_color_scheme/flex_color_scheme.dart';
-
 // Project imports:
 import 'package:network_arch/theme/theme.dart';
 

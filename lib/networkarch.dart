@@ -88,6 +88,10 @@ class NetworkArch extends StatelessWidget {
   }
 
   Widget _buildAndroid(BuildContext context) {
+    Themes.schemesListWithDynamic.first =
+        context.read<ThemeBloc>().state.dynamicScheme ??
+            Themes.schemesListWithDynamic.first;
+
     return DynamicColorBuilder(
       builder: (lightDynamic, darkDynamic) {
         handleDynamicColors(lightDynamic, darkDynamic, context);
@@ -161,31 +165,44 @@ class NetworkArch extends StatelessWidget {
       final lightColorScheme = lightDynamic.harmonized();
       final darkColorScheme = darkDynamic.harmonized();
 
-      final lightFlexSchemeColor = FlexSchemeColor.from(
+      final lightFlexSchemeColor = FlexSchemeColor(
         primary: lightColorScheme.primary,
-        brightness: Brightness.light,
+        primaryContainer: lightColorScheme.primaryContainer,
+        secondary: lightColorScheme.secondary,
+        secondaryContainer: lightColorScheme.secondaryContainer,
+        tertiary: lightColorScheme.tertiary,
+        tertiaryContainer: lightColorScheme.tertiaryContainer,
+        error: lightColorScheme.error,
+        errorContainer: lightColorScheme.errorContainer,
       );
 
-      final darkFlexSchemeColor = FlexSchemeColor.from(
+      final darkFlexSchemeColor = FlexSchemeColor(
         primary: darkColorScheme.primary,
-        brightness: Brightness.dark,
+        primaryContainer: darkColorScheme.primaryContainer,
+        secondary: darkColorScheme.secondary,
+        secondaryContainer: darkColorScheme.secondaryContainer,
+        tertiary: darkColorScheme.tertiary,
+        tertiaryContainer: darkColorScheme.tertiaryContainer,
+        error: darkColorScheme.error,
+        errorContainer: darkColorScheme.errorContainer,
       );
 
-      final dynamicScheme = FlexSchemeData(
+      final newDynamicScheme = FlexSchemeData(
         name: 'System dynamic',
         description: 'Dynamic color theme, based on your system scheme',
         light: lightFlexSchemeColor,
         dark: darkFlexSchemeColor,
       );
 
-      if (!Themes.schemesListWithDynamic.contains(dynamicScheme)) {
-        Themes.schemesListWithDynamic.first = dynamicScheme;
+      final themeBloc = context.read<ThemeBloc>();
+      if (themeBloc.state.dynamicScheme != newDynamicScheme) {
+        Themes.schemesListWithDynamic.first = newDynamicScheme;
 
-        context.read<ThemeBloc>().add(
-              const ThemeSchemeChangedEvent(
-                scheme: CustomFlexScheme.dynamic,
-              ),
-            );
+        themeBloc.add(
+          ThemeDynamicSchemeChangedEvent(
+            dynamicScheme: newDynamicScheme,
+          ),
+        );
       }
     }
   }
