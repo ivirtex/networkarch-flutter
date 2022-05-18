@@ -47,9 +47,8 @@ class _OverviewViewState extends State<OverviewView> {
 
     Permission.location.isGranted.then((bool isGranted) {
       if (!isGranted) {
-        showElegantNotification(
-          context,
-          Constants.permissionDeniedNotification,
+        ScaffoldMessenger.of(context).showSnackBar(
+          Constants.permissionDeniedSnackbar,
         );
       }
     });

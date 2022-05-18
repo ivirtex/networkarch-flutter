@@ -50,6 +50,9 @@ class CarrierStatusCard extends StatelessWidget {
                       const Spacer(),
                       if (state.carrierStatus == NetworkStatus.success)
                         Text(state.carrierInfo!.networkGeneration ?? 'N/A')
+                      else if (state.carrierStatus ==
+                          NetworkStatus.permissionIssue)
+                        const Text('N/A')
                       else
                         const ListCircularProgressIndicator(),
                     ],

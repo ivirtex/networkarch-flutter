@@ -48,6 +48,9 @@ class WifiStatusCard extends StatelessWidget {
                       const Spacer(),
                       if (state.wifiStatus == NetworkStatus.success)
                         Text(state.wifiInfo!.wifiIPv4 ?? 'N/A')
+                      else if (state.wifiStatus ==
+                          NetworkStatus.permissionIssue)
+                        const Text('N/A')
                       else
                         const ListCircularProgressIndicator(),
                     ],

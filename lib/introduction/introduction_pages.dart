@@ -79,6 +79,7 @@ final List<PageViewModel> pagesList = [
     ),
     useScrollView: false,
     decoration: const PageDecoration(
+      titlePadding: EdgeInsets.symmetric(vertical: 16.0),
       contentMargin: EdgeInsets.symmetric(
         horizontal: 8.0,
       ),
