@@ -74,6 +74,9 @@ class AnimatedListModel<T> {
   }
 
   Future<void> removeAllElements(BuildContext context) async {
+    // Based on function (1/x), more elements we have, the shorter the animation will be.
+    final removalSpeedInMs = (2500 / length).clamp(15, 200).toInt();
+
     for (int i = length - 1; i >= 0; --i) {
       final T removedItem = _items.removeAt(i)!;
 
@@ -83,7 +86,9 @@ class AnimatedListModel<T> {
             removedItemBuilder(context, animation, removedItem),
       );
 
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future.delayed(
+        Duration(milliseconds: removalSpeedInMs),
+      );
     }
 
     _items.clear();

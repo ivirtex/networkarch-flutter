@@ -8,16 +8,19 @@ import 'package:network_arch/shared/shared_widgets.dart';
 class ContentListView extends StatelessWidget {
   const ContentListView({
     required this.children,
+    this.scrollController,
     Key? key,
   }) : super(key: key);
 
   final List<Widget> children;
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
     return PlatformWidget(
       androidBuilder: (context) {
         return SingleChildScrollView(
+          controller: scrollController,
           child: _buildBody(context),
         );
       },

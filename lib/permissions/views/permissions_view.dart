@@ -14,7 +14,6 @@ import 'package:network_arch/permissions/bloc/permissions_bloc.dart';
 import 'package:network_arch/permissions/widgets/usage_desc.dart';
 import 'package:network_arch/permissions/widgets/widgets.dart';
 import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/utils/utils.dart';
 
 class PermissionsView extends StatefulWidget {
   const PermissionsView({Key? key}) : super(key: key);

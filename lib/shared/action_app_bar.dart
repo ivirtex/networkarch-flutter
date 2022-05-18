@@ -52,7 +52,6 @@ class ActionAppBarState extends State<ActionAppBar>
       title: Text(widget.title),
       actions: [
         IconButton(
-          splashRadius: 25.0,
           icon: AnimatedIcon(
             icon: AnimatedIcons.play_pause,
             size: 30.0,

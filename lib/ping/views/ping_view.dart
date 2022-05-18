@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -23,12 +24,15 @@ class _PingViewState extends State<PingView> {
   final _appBarKey = GlobalKey<ActionAppBarState>();
   final _listKey = GlobalKey<AnimatedListState>();
   final _targetHostController = TextEditingController();
+  final _scrollController = ScrollController();
   late final AnimatedListModel<PingData?> _pingData;
 
   String get _target => _targetHostController.text;
   String _finalTarget = '';
 
   bool _shouldStartButtonBeActive = false;
+  bool _shouldAutoScroll = true;
+  bool _isFabVisible = false;
 
   @override
   void initState() {
@@ -38,6 +42,23 @@ class _PingViewState extends State<PingView> {
       listKey: _listKey,
       removedItemBuilder: _buildItem,
     );
+
+    if (kDebugMode) {
+      _targetHostController.text = '1.1.1.1';
+    }
+
+    _scrollController.addListener(() {
+      _shouldAutoScroll = _scrollController.offset ==
+          _scrollController.position.maxScrollExtent;
+
+      final shouldFabBeVisible = _scrollController.offset > 0;
+
+      if (shouldFabBeVisible != _isFabVisible) {
+        setState(() {
+          _isFabVisible = shouldFabBeVisible;
+        });
+      }
+    });
   }
 
   @override
@@ -75,6 +96,18 @@ class _PingViewState extends State<PingView> {
         key: _appBarKey,
       ),
       body: _buildBody(),
+      floatingActionButton: _isFabVisible
+          ? FloatingActionButton(
+              child: const Icon(Icons.arrow_upward_rounded),
+              onPressed: () {
+                _scrollController.animateTo(
+                  0.0,
+                  duration: const Duration(seconds: 1),
+                  curve: Curves.easeInOut,
+                );
+              },
+            )
+          : null,
     );
   }
 
@@ -109,25 +142,14 @@ class _PingViewState extends State<PingView> {
 
   Widget _buildBody() {
     return ContentListView(
+      scrollController: _scrollController,
       children: [
         IntrinsicHeight(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               BlocConsumer<PingBloc, PingState>(
-                listener: (context, state) {
-                  if (state is PingRunNewData) {
-                    _pingData.insert(_pingData.length, state.pingData);
-
-                    if (state.pingData.error != null &&
-                        state.pingData.error?.error !=
-                            ErrorType.RequestTimedOut) {
-                      _appBarKey.currentState?.toggleAnimation();
-
-                      context.read<PingBloc>().add(PingStopped());
-                    }
-                  }
-                },
+                listener: (context, state) => _handleNewData(state),
                 builder: (context, state) {
                   return Expanded(
                     child: DomainTextField(
@@ -203,6 +225,7 @@ class _PingViewState extends State<PingView> {
 
   Future<void> _handleStart() async {
     hideKeyboard(context);
+
     await _pingData.removeAllElements(context);
 
     _finalTarget = _target;
@@ -214,5 +237,28 @@ class _PingViewState extends State<PingView> {
 
   void _handleStop() {
     context.read<PingBloc>().add(PingStopped());
+  }
+
+  void _handleNewData(PingState state) {
+    if (state is PingRunNewData) {
+      _pingData.insert(_pingData.length, state.pingData);
+
+      if (_shouldAutoScroll) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 150),
+            curve: Curves.easeInOut,
+          );
+        });
+      }
+
+      if (state.pingData.error != null &&
+          state.pingData.error?.error != ErrorType.RequestTimedOut) {
+        _appBarKey.currentState?.toggleAnimation();
+
+        context.read<PingBloc>().add(PingStopped());
+      }
+    }
   }
 }
