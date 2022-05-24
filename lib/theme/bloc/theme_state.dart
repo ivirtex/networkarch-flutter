@@ -10,6 +10,8 @@ class ThemeState extends Equatable {
   });
 
   final CustomFlexScheme scheme;
+  // We save dynamic scheme in the hydrated bloc's state so we can restore it
+  // when the app is re-opened.
   final FlexSchemeData? dynamicScheme;
   final ThemeMode mode;
 

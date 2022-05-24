@@ -259,7 +259,7 @@ packages:
       name: dynamic_color
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.2"
+    version: "1.2.3"
   elegant_notification:
     dependency: "direct main"
     description:
@@ -419,7 +419,7 @@ packages:
       name: google_fonts
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.2"
+    version: "3.0.1"
   google_maps_flutter:
     dependency: "direct main"
     description:
@@ -454,7 +454,7 @@ packages:
       name: hive
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.0"
+    version: "2.2.1"
   hive_flutter:
     dependency: "direct main"
     description:

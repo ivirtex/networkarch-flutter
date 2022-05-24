@@ -201,6 +201,12 @@ class NetworkArch extends StatelessWidget {
             newDynamicScheme: newDynamicScheme,
           ),
         );
+
+        themeBloc.add(
+          const ThemeSchemeChangedEvent(
+            scheme: CustomFlexScheme.dynamic,
+          ),
+        );
       }
     }
   }

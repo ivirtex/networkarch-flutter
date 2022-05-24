@@ -22,7 +22,7 @@ dependencies:
   enum_to_string: ^2.0.1
   dart_ping: ^6.1.2
   dart_ping_ios: ^1.1.0
-  dynamic_color: ^1.2.2
+  dynamic_color: ^1.2.3
   equatable: ^2.0.3
   feedback: ^2.5.0
   feedback_sentry: ^2.3.0
@@ -31,10 +31,10 @@ dependencies:
   flutter_svg: ^1.0.3
   flutter_platform_widgets: ^1.20.0
   font_awesome_flutter: ^10.1.0
-  google_fonts: ^2.3.2
+  google_fonts: ^3.0.1
   google_maps_flutter: ^2.1.5
   google_mobile_ads: ^1.2.0
-  hive: ^2.2.0
+  hive: ^2.2.1
   hive_flutter: ^1.1.0
   http: ^0.13.4
   hydrated_bloc: ^8.1.0
