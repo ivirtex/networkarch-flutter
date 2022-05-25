@@ -12,6 +12,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:network_arch/theme/theme.dart';
 
 abstract class Themes {
+  // ignore: avoid-global-state
   static List<FlexSchemeData> schemesListWithDynamic = [
     // Fallback scheme that will get replaced if device supports dynamic colors
     FlexSchemeData(
