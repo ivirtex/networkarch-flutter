@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // Project imports:
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/utils/keyboard_hider.dart';
+import 'package:network_arch/utils/utils.dart';
 import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
 
 class WakeOnLanView extends StatefulWidget {

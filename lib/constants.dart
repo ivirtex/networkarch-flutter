@@ -17,8 +17,6 @@ import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
 import 'package:network_arch/whois/whois.dart';
 
-// ignore_for_file: avoid-global-state
-
 abstract class Constants {
   static const String appName = 'NetworkArch';
   static const String appDesc = '''

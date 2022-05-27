@@ -118,7 +118,7 @@ class _SettingsViewState extends State<SettingsView> {
               title: 'Restore purchases',
               desc: 'Restore purchases made in the past',
               icon: Icons.workspace_premium_rounded,
-              onTap: () => _restorePurchases(),
+              onTap: _restorePurchases,
             ),
             const SizedBox(height: Constants.listSpacing),
             ActionCard(

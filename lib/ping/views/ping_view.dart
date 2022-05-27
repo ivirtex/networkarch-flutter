@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/utils/keyboard_hider.dart';
+import 'package:network_arch/utils/utils.dart';
 
 class PingView extends StatefulWidget {
   const PingView({Key? key}) : super(key: key);
