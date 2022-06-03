@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  dynamic_color
   network_info_plus_windows
   permission_handler_windows
   sentry_flutter

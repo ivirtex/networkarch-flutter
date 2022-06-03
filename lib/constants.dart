@@ -181,8 +181,8 @@ abstract class Constants {
     title: const Text('Success'),
     description: const Text(_permissionGranted),
     dismissible: true,
-    notificationPosition: NOTIFICATION_POSITION.bottom,
-    animation: ANIMATION.fromBottom,
+    notificationPosition: NotificationPosition.bottom,
+    animation: AnimationType.fromBottom,
   );
 
   static final ElegantNotification permissionDeniedNotification =
@@ -190,8 +190,8 @@ abstract class Constants {
     title: const Text('Error'),
     description: const Text(_permissionDenied),
     dismissible: true,
-    notificationPosition: NOTIFICATION_POSITION.bottom,
-    animation: ANIMATION.fromBottom,
+    notificationPosition: NotificationPosition.bottom,
+    animation: AnimationType.fromBottom,
     toastDuration: const Duration(milliseconds: 4000),
     height: 140.0,
     action: const Padding(
@@ -213,7 +213,7 @@ abstract class Constants {
     title: const Text('Warning'),
     description: const Text(_permissionDefault),
     dismissible: true,
-    notificationPosition: NOTIFICATION_POSITION.bottom,
-    animation: ANIMATION.fromBottom,
+    notificationPosition: NotificationPosition.bottom,
+    animation: AnimationType.fromBottom,
   );
 }
