@@ -87,31 +87,23 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
     );
   }
 
-  CupertinoPageScaffold _buildIOS(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          CupertinoSliverNavigationBar(
-            largeTitle: const Text('Whois'),
-            border: null,
-            stretch: true,
-            trailing: CupertinoButton(
-              padding: EdgeInsets.zero,
-              onPressed: _handleSend,
-              child: Text(
-                'Send',
-                style: TextStyle(
-                  color: CupertinoDynamicColor.resolve(
-                    CupertinoColors.activeGreen,
-                    context,
-                  ),
-                ),
-              ),
+  Widget _buildIOS(BuildContext context) {
+    return CupertinoContentScaffold(
+      largeTitle: const Text('DNS Lookup'),
+      navBarTrailingWidget: CupertinoButton(
+        padding: EdgeInsets.zero,
+        onPressed: _handleSend,
+        child: Text(
+          'Send',
+          style: TextStyle(
+            color: CupertinoDynamicColor.resolve(
+              CupertinoColors.activeGreen,
+              context,
             ),
           ),
-        ],
-        body: _buildBody(context),
+        ),
       ),
+      child: _buildBody(context),
     );
   }
 

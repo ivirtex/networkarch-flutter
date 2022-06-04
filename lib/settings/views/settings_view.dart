@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -12,8 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
-import 'package:network_arch/package_info/cubit/package_info_cubit.dart';
-import 'package:network_arch/package_info/views/package_info_view.dart';
+import 'package:network_arch/package_info/package_info.dart';
 import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/theme/theme.dart';
 
@@ -51,18 +49,10 @@ class _SettingsViewState extends State<SettingsView> {
     return _buildBody(context);
   }
 
-  CupertinoPageScaffold _buildIOS(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          const CupertinoSliverNavigationBar(
-            stretch: true,
-            border: null,
-            largeTitle: Text('Settings'),
-          ),
-        ],
-        body: _buildBody(context),
-      ),
+  Widget _buildIOS(BuildContext context) {
+    return CupertinoContentScaffold(
+      largeTitle: const Text('Settings'),
+      child: _buildBody(context),
     );
   }
 

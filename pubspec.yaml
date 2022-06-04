@@ -14,7 +14,7 @@ dependencies:
   auto_animated: ^3.0.1
   bloc: ^8.0.3
   carrier_info: ^2.0.5
-  cupertino_icons: ^1.0.4
+  cupertino_icons: ^1.0.5
   dart_ping: ^6.1.2
   dart_ping_ios: ^1.1.0
   dynamic_color: ^1.4.0
