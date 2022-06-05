@@ -61,45 +61,56 @@ class _SettingsViewState extends State<SettingsView> {
 
     return ContentListView(
       children: [
-        const SmallDescription(text: 'Theme settings'),
-        DataCard(
-          padding: EdgeInsets.zero,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 8.0,
-                ),
-                child: FlexThemeModeSwitch(
-                  themeMode: themeBloc.state.mode,
-                  onThemeModeChanged: (mode) {
-                    setState(() {
-                      themeBloc.add(ThemeModeChangedEvent(themeMode: mode));
-                    });
-                  },
-                  flexSchemeData: Themes
-                      .schemesListWithDynamic[themeBloc.state.scheme.index],
-                  optionButtonBorderRadius: 10.0,
-                ),
-              ),
-              ThemePopupMenu(
-                schemeIndex: themeBloc.state.scheme.index,
-                onChanged: (index) async {
-                  // Await for popup menu to close (to avoid jank)
-                  await Future.delayed(const Duration(milliseconds: 300));
-
-                  setState(() {
-                    themeBloc.add(
-                      ThemeSchemeChangedEvent(
-                        scheme: CustomFlexScheme.values[index],
+        PlatformWidget(
+          androidBuilder: (context) {
+            return Column(
+              children: [
+                const SmallDescription(text: 'Theme settings'),
+                DataCard(
+                  padding: EdgeInsets.zero,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                          vertical: 8.0,
+                        ),
+                        child: FlexThemeModeSwitch(
+                          themeMode: themeBloc.state.mode,
+                          onThemeModeChanged: (mode) {
+                            setState(() {
+                              themeBloc
+                                  .add(ThemeModeChangedEvent(themeMode: mode));
+                            });
+                          },
+                          flexSchemeData: Themes.schemesListWithDynamic[
+                              themeBloc.state.scheme.index],
+                          optionButtonBorderRadius: 10.0,
+                        ),
                       ),
-                    );
-                  });
-                },
-              ),
-            ],
-          ),
+                      ThemePopupMenu(
+                        schemeIndex: themeBloc.state.scheme.index,
+                        onChanged: (index) async {
+                          // Await for popup menu to close (to avoid jank)
+                          await Future.delayed(
+                            const Duration(milliseconds: 300),
+                          );
+
+                          setState(() {
+                            themeBloc.add(
+                              ThemeSchemeChangedEvent(
+                                scheme: CustomFlexScheme.values[index],
+                              ),
+                            );
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
         ),
         const SmallDescription(text: 'Help'),
         Column(

@@ -73,6 +73,7 @@ abstract class Constants {
   static const EdgeInsets listPadding = EdgeInsets.all(10.0);
 
   static const EdgeInsets bodyPadding = EdgeInsets.all(10.0);
+  static const EdgeInsets iOSbodyPadding = EdgeInsets.zero;
 
   static const double listSpacing = 10.0;
 

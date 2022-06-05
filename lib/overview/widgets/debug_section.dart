@@ -24,7 +24,6 @@ class DebugSection extends StatelessWidget {
         ),
         ToolCard(
           toolName: 'Clear IAP data',
-          toolDesc: '',
           onPressed: () async {
             await Hive.box('iap').put('isPremiumGranted', false);
           },
@@ -32,7 +31,6 @@ class DebugSection extends StatelessWidget {
         const SizedBox(height: Constants.listSpacing),
         ToolCard(
           toolName: 'Show permission granted',
-          toolDesc: '',
           onPressed: () {
             ScaffoldMessenger.of(context).showSnackBar(
               Constants.permissionGrantedSnackbar,
@@ -42,7 +40,6 @@ class DebugSection extends StatelessWidget {
         const SizedBox(height: Constants.listSpacing),
         ToolCard(
           toolName: 'Show permission denied',
-          toolDesc: '',
           onPressed: () {
             ScaffoldMessenger.of(context).showSnackBar(
               Constants.permissionDeniedSnackbar,
@@ -52,7 +49,6 @@ class DebugSection extends StatelessWidget {
         const SizedBox(height: Constants.listSpacing),
         ToolCard(
           toolName: 'Show permission default',
-          toolDesc: '',
           onPressed: () {
             ScaffoldMessenger.of(context).showSnackBar(
               Constants.permissionDefaultSnackbar,

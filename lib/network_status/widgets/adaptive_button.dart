@@ -60,6 +60,8 @@ class AdaptiveButton extends StatelessWidget {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
     return CupertinoButton(
+      color:
+          CupertinoDynamicColor.resolve(CupertinoColors.systemGrey4, context),
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       onPressed: onPressed,
       borderRadius: BorderRadius.circular(10.0),

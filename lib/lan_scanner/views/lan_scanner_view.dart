@@ -73,14 +73,14 @@ class _LanScannerViewState extends State<LanScannerView> {
                   state is LanScannerRunProgressUpdate
               ? CupertinoActionAppBar(
                   context,
-                  title: 'Ping',
+                  title: 'LAN Scanner',
                   action: ButtonAction.stop,
                   isActive: true,
                   onPressed: _handleStop,
                 )
               : CupertinoActionAppBar(
                   context,
-                  title: 'Ping',
+                  title: 'LAN Scanner',
                   action: ButtonAction.start,
                   isActive: true,
                   onPressed: _handleStart,

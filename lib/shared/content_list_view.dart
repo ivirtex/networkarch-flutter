@@ -30,7 +30,9 @@ class ContentListView extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
     return Padding(
-      padding: Constants.bodyPadding,
+      padding: Theme.of(context).platform == TargetPlatform.iOS
+          ? Constants.iOSbodyPadding
+          : Constants.bodyPadding,
       child: MediaQuery.removePadding(
         context: context,
         removeTop: true,

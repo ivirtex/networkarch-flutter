@@ -58,7 +58,6 @@ abstract class Themes {
   }
 
   static final CupertinoThemeData cupertinoLightThemeData = CupertinoThemeData(
-    primaryColor: CupertinoColors.activeBlue,
     brightness: Brightness.light,
     scaffoldBackgroundColor: const CupertinoDynamicColor.withBrightness(
       color: CupertinoColors.systemGrey6,
@@ -71,7 +70,6 @@ abstract class Themes {
   );
 
   static final CupertinoThemeData cupertinoDarkThemeData = CupertinoThemeData(
-    primaryColor: CupertinoColors.activeBlue,
     brightness: Brightness.dark,
     scaffoldBackgroundColor: const CupertinoDynamicColor.withBrightness(
       color: CupertinoColors.systemGrey6,
@@ -85,12 +83,15 @@ abstract class Themes {
 
   static const Color iOSlightBgColor = CupertinoColors.systemGrey5;
   static const Color iOSdarkBgColor = CupertinoColors.black;
-  static const CupertinoDynamicColor iOSCardColor = CupertinoColors.systemGrey5;
-  static const CupertinoDynamicColor iOSBtnColor = CupertinoColors.systemGrey4;
+  static const CupertinoDynamicColor iOSCardColor =
+      CupertinoColors.systemBackground;
 
   static Color getPlatformIconColor(BuildContext context) {
     return Platform.isIOS
-        ? CupertinoDynamicColor.resolve(CupertinoColors.white, context)
+        ? const CupertinoDynamicColor.withBrightness(
+            color: CupertinoColors.black,
+            darkColor: CupertinoColors.white,
+          )
         : Theme.of(context).colorScheme.onSurface;
   }
 }
