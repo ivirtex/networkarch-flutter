@@ -6,7 +6,6 @@ import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
 import 'package:network_arch/network_status/network_status.dart';
 import 'package:network_arch/network_status/widgets/adaptive_button.dart';
 import 'package:network_arch/shared/list_circular_progress_indicator.dart';
@@ -49,7 +48,7 @@ class WifiStatusCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 15.0),
+                      const SizedBox(height: 20.0),
                       Row(
                         children: [
                           const Text('Local IP'),
@@ -82,7 +81,10 @@ class WifiStatusCard extends StatelessWidget {
               header: const Text('Wi-Fi'),
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 16.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14.0,
+                    vertical: 10.0,
+                  ),
                   child: Column(
                     children: [
                       Row(
@@ -92,9 +94,9 @@ class WifiStatusCard extends StatelessWidget {
                             color: Themes.getPlatformIconColor(context),
                           ),
                           const SizedBox(width: 5),
-                          const Text(
-                            'Wi-Fi',
-                            style: TextStyle(
+                          Text(
+                            state.wifiInfo?.wifiSSID ?? 'N/A',
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0,
                             ),
@@ -124,6 +126,9 @@ class WifiStatusCard extends StatelessWidget {
                   ),
                 ),
                 CupertinoListTile.notched(
+                  leadingSize: 0.0,
+                  leadingToTitle: 0.0,
+                  leading: const SizedBox(),
                   title: const Text('Detailed view'),
                   trailing: const CupertinoListTileChevron(),
                   onTap: state.isWifiConnected

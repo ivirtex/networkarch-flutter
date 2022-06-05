@@ -90,6 +90,7 @@ class _OverviewViewState extends State<OverviewView> {
     return BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
       builder: (context, state) {
         return ContentListView(
+          usePadding: false,
           children: [
             PlatformWidget(
               androidBuilder: (context) {

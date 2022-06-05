@@ -94,4 +94,22 @@ abstract class Themes {
           )
         : Theme.of(context).colorScheme.onSurface;
   }
+
+  static Color getPlatformSuccessColor(BuildContext context) {
+    return Theme.of(context).platform == TargetPlatform.iOS
+        ? CupertinoDynamicColor.resolve(
+            CupertinoColors.systemGreen,
+            context,
+          )
+        : Colors.green;
+  }
+
+  static Color getPlatformErrorColor(BuildContext context) {
+    return Theme.of(context).platform == TargetPlatform.iOS
+        ? CupertinoDynamicColor.resolve(
+            CupertinoColors.systemRed,
+            context,
+          )
+        : Theme.of(context).colorScheme.error;
+  }
 }

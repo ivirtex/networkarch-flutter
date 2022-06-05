@@ -73,17 +73,14 @@ abstract class Constants {
   static const EdgeInsets listPadding = EdgeInsets.all(10.0);
 
   static const EdgeInsets bodyPadding = EdgeInsets.all(10.0);
-  static const EdgeInsets iOSbodyPadding = EdgeInsets.zero;
+  static const EdgeInsetsDirectional iOSbodyPadding =
+      EdgeInsetsDirectional.fromSTEB(20.0, 16.0, 20.0, 6.0);
 
   static const double listSpacing = 10.0;
 
   static const double linearProgressWidth = 50.0;
 
-  static const Divider listDivider = Divider(
-    height: 0.0,
-    indent: 12.0,
-    endIndent: 0.0,
-  );
+  static const double listDividerIndent = 14.0;
 
   // Description styles
   static final TextStyle descStyleLight = TextStyle(

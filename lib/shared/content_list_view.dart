@@ -9,11 +9,13 @@ class ContentListView extends StatelessWidget {
   const ContentListView({
     required this.children,
     this.scrollController,
+    this.usePadding = true,
     Key? key,
   }) : super(key: key);
 
   final List<Widget> children;
   final ScrollController? scrollController;
+  final bool usePadding;
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +32,11 @@ class ContentListView extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
     return Padding(
-      padding: Theme.of(context).platform == TargetPlatform.iOS
-          ? Constants.iOSbodyPadding
-          : Constants.bodyPadding,
+      padding: usePadding
+          ? Theme.of(context).platform == TargetPlatform.iOS
+              ? Constants.iOSbodyPadding
+              : Constants.bodyPadding
+          : EdgeInsets.zero,
       child: MediaQuery.removePadding(
         context: context,
         removeTop: true,

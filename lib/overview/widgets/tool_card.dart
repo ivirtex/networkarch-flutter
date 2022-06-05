@@ -45,13 +45,18 @@ class ToolCard extends StatelessWidget {
       },
       iosBuilder: (context) {
         return CupertinoListTile.notched(
+          leadingSize: 0.0,
+          leadingToTitle: 0.0,
+          leading: const SizedBox(),
           title: Text(toolName),
-          subtitle: toolDesc != null
-              ? Text(
-                  toolDesc!,
-                  maxLines: 2,
-                )
-              : null,
+          // TODO: Fix overflow with subtitle
+          // subtitle: toolDesc != null
+          //     ? Text(
+          //         toolDesc!,
+          //         overflow: TextOverflow.ellipsis,
+          //         maxLines: 2,
+          //       )
+          //     : null,
           trailing: const CupertinoListTileChevron(),
           onTap: onPressed,
         );

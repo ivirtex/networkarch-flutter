@@ -82,7 +82,10 @@ class CarrierStatusCard extends StatelessWidget {
               header: const Text('Carrier'),
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 16.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14.0,
+                    vertical: 10.0,
+                  ),
                   child: Column(
                     children: [
                       Row(
@@ -107,7 +110,7 @@ class CarrierStatusCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 15.0),
+                      const SizedBox(height: 20.0),
                       Row(
                         children: [
                           const Text('Network Generation'),
@@ -125,6 +128,9 @@ class CarrierStatusCard extends StatelessWidget {
                   ),
                 ),
                 CupertinoListTile.notched(
+                  leadingSize: 0.0,
+                  leadingToTitle: 0.0,
+                  leading: const SizedBox(),
                   title: const Text('Detailed view'),
                   trailing: const CupertinoListTileChevron(),
                   onTap: state.isCarrierConnected
