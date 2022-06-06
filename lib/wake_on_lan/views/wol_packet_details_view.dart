@@ -30,18 +30,9 @@ class WolPacketDetailsView extends StatelessWidget {
   }
 
   Widget _buildIOS(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) =>
-            [
-          const CupertinoSliverNavigationBar(
-            stretch: true,
-            border: null,
-            largeTitle: Text('Packet details'),
-          ),
-        ],
-        body: _buildBody(context),
-      ),
+    return CupertinoContentScaffold(
+      largeTitle: const Text('Packet details'),
+      child: _buildBody(context),
     );
   }
 

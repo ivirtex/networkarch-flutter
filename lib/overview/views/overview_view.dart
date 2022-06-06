@@ -185,13 +185,14 @@ class _OverviewViewState extends State<OverviewView> {
                             arguments: '',
                           ),
                         ),
-                        ToolCard(
-                          toolName: 'LAN Scanner',
-                          toolDesc: Constants.lanScannerDesc,
-                          onPressed: state.isWifiConnected
-                              ? () => Navigator.pushNamed(context, '/tools/lan')
-                              : null,
-                        ),
+                        //! lan_scanner not supported on iOS
+                        // ToolCard(
+                        //   toolName: 'LAN Scanner',
+                        //   toolDesc: Constants.lanScannerDesc,
+                        //   onPressed: state.isWifiConnected
+                        //       ? () => Navigator.pushNamed(context, '/tools/lan')
+                        //       : null,
+                        // ),
                         ToolCard(
                           toolName: 'Wake On LAN',
                           toolDesc: Constants.wolDesc,

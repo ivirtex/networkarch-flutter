@@ -66,10 +66,10 @@ class WifiStatusCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   AdaptiveButton(
-                    text: 'Detailed view',
                     onPressed: state.isWifiConnected
                         ? () => Navigator.of(context).pushNamed('/wifi')
                         : null,
+                    child: const Text('Detailed view'),
                   ),
                 ],
               ),
@@ -108,7 +108,7 @@ class WifiStatusCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 15.0),
+                      const SizedBox(height: 20.0),
                       Row(
                         children: [
                           const Text('Local IP'),

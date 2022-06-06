@@ -13,6 +13,7 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
+import 'package:network_arch/network_status/widgets/adaptive_button.dart';
 import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/utils/in_app_purchases.dart';
 
@@ -104,13 +105,12 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
                     }
 
                     if (isIapAvailable.hasError) {
-                      return const FilledButton(
-                        onPressed: null,
-                        child: Text('Subscribe'),
+                      return AdaptiveButton.filled(
+                        child: const Text('Subscribe'),
                       );
                     }
 
-                    return FilledButton(
+                    return AdaptiveButton.filled(
                       onPressed: isIapAvailable.data!
                           ? () => _handleSubscribe(context)
                           : null,
@@ -119,7 +119,7 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
                   },
                 ),
                 const SizedBox(width: Constants.listSpacing),
-                OutlinedButton(
+                AdaptiveButton(
                   onPressed: () => _handleWatchAd(context),
                   child: const Text('Watch ad'),
                 ),
@@ -212,18 +212,20 @@ class AdvantageCard extends StatelessWidget {
               children: [
                 Icon(icon),
                 const SizedBox(width: 10.0),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(
-                      subtitle,
-                      style: Theme.of(context).textTheme.caption,
-                    ),
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        subtitle,
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
