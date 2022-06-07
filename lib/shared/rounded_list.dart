@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -51,7 +52,13 @@ class RoundedList extends StatelessWidget {
                 );
               },
               separatorBuilder: (context, index) {
-                return Constants.listDivider;
+                return Divider(
+                  color: Theme.of(context).platform == TargetPlatform.iOS
+                      ? CupertinoColors.separator.resolveFrom(context)
+                      : null,
+                  indent: Constants.listDividerIndent,
+                  height: 1.0 / MediaQuery.of(context).devicePixelRatio,
+                );
               },
             ),
           ),

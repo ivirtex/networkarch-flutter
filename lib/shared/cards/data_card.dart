@@ -1,8 +1,10 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:network_arch/shared/shared.dart';
+import 'package:network_arch/theme/themes.dart';
 
 class DataCard extends StatelessWidget {
   const DataCard({
@@ -26,32 +28,41 @@ class DataCard extends StatelessWidget {
     final ColorScheme scheme = theme.colorScheme;
 
     final bool isDark = theme.brightness == Brightness.dark;
-    // Scaling for the blend value, used to tune the look a bit.
-    final int blendFactor = isDark ? 3 : 2;
 
     // start with no extra blend on card, assume it is bit different from
     // scaffold background where this Card is designed to be placed.
     Color cardColor = theme.cardColor;
-    // If card or its header color, is equal to scaffold background, we will
-    // adjust both and make them more primary tinted. This happens e.g. when we
-    // use not blend level, or with the all level blend mode. In this
-    // design we want the Card on the scaffold to always have a slightly
-    // different background color from scaffold background where it is placed,
-    // not necessarily a lot, but always a bit at least.
-    if (cardColor == theme.scaffoldBackgroundColor) {
-      cardColor = Color.alphaBlend(
-        scheme.primary.withAlpha(blendFactor * 6),
-        cardColor,
-      );
-    }
-    // If it was header color that was equal, the adjustment on card, may
-    // have caused card body to become equal to scaffold background, let's
-    // check for it and adjust only it once again if it happened. Very unlikely
-    // that this happens, but it is possible.
-    if (cardColor == theme.scaffoldBackgroundColor) {
-      cardColor = Color.alphaBlend(
-        scheme.primary.withAlpha(blendFactor * 2),
-        cardColor,
+
+    if (Theme.of(context).platform == TargetPlatform.android) {
+      // Scaling for the blend value, used to tune the look a bit.
+      final int blendFactor = isDark ? 3 : 2;
+
+      // If card or its header color, is equal to scaffold background, we will
+      // adjust both and make them more primary tinted. This happens e.g. when we
+      // use not blend level, or with the all level blend mode. In this
+      // design we want the Card on the scaffold to always have a slightly
+      // different background color from scaffold background where it is placed,
+      // not necessarily a lot, but always a bit at least.
+      if (cardColor == theme.scaffoldBackgroundColor) {
+        cardColor = Color.alphaBlend(
+          scheme.primary.withAlpha(blendFactor * 6),
+          cardColor,
+        );
+      }
+      // If it was header color that was equal, the adjustment on card, may
+      // have caused card body to become equal to scaffold background, let's
+      // check for it and adjust only it once again if it happened. Very unlikely
+      // that this happens, but it is possible.
+      if (cardColor == theme.scaffoldBackgroundColor) {
+        cardColor = Color.alphaBlend(
+          scheme.primary.withAlpha(blendFactor * 2),
+          cardColor,
+        );
+      }
+    } else {
+      cardColor = CupertinoDynamicColor.resolve(
+        Themes.iOSCardColor,
+        context,
       );
     }
 

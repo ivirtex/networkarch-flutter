@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -28,10 +29,15 @@ class HexBytesViewer extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          color: Color.alphaBlend(
-            Theme.of(context).colorScheme.primary.withOpacity(0.1),
-            Theme.of(context).colorScheme.surfaceVariant,
-          ),
+          color: Theme.of(context).platform != TargetPlatform.iOS
+              ? Color.alphaBlend(
+                  Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                  Theme.of(context).colorScheme.surfaceVariant,
+                )
+              : CupertinoDynamicColor.resolve(
+                  CupertinoColors.systemGrey6,
+                  context,
+                ),
           elevation: 0.0,
           child: Padding(
             padding: const EdgeInsets.all(8.0),

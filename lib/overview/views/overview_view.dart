@@ -1,12 +1,9 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -58,23 +55,7 @@ class _OverviewViewState extends State<OverviewView> {
 
     banner.load();
 
-    final iapBox = Hive.box('iap');
-
-    isPremiumGranted =
-        iapBox.get('isPremiumGranted', defaultValue: false)! as bool;
-    isPremiumTempGranted =
-        iapBox.get('isPremiumTempGranted', defaultValue: false)! as bool;
-
-    iapBox.watch(key: 'isPremiumGranted').listen((event) {
-      setState(() {
-        isPremiumGranted = event.value as bool;
-      });
-    });
-    iapBox.watch(key: 'isPremiumTempGranted').listen((event) {
-      setState(() {
-        isPremiumTempGranted = event.value as bool;
-      });
-    });
+    setUpIAP();
   }
 
   @override
@@ -96,18 +77,10 @@ class _OverviewViewState extends State<OverviewView> {
     return _buildBody(context);
   }
 
-  CupertinoPageScaffold _buildIOS(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          const CupertinoSliverNavigationBar(
-            stretch: true,
-            border: null,
-            largeTitle: Text('Overview'),
-          ),
-        ],
-        body: _buildBody(context),
-      ),
+  Widget _buildIOS(BuildContext context) {
+    return CupertinoContentScaffold(
+      largeTitle: const Text('Overview'),
+      child: _buildBody(context),
     );
   }
 
@@ -117,71 +90,160 @@ class _OverviewViewState extends State<OverviewView> {
     return BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
       builder: (context, state) {
         return ContentListView(
+          usePadding: false,
           children: [
-            const SmallDescription(text: 'Networks', leftPadding: 8.0),
-            const WifiStatusCard(),
-            const SizedBox(height: Constants.listSpacing),
-            const CarrierStatusCard(),
-            const SizedBox(height: Constants.listSpacing),
-            const SmallDescription(text: 'Utilities', leftPadding: 8.0),
-            ToolCard(
-              toolName: 'Ping',
-              toolDesc: Constants.pingDesc,
-              onPressed: () =>
-                  Navigator.pushNamed(context, '/tools/ping', arguments: ''),
+            PlatformWidget(
+              androidBuilder: (context) {
+                return Column(
+                  children: [
+                    const SmallDescription(text: 'Networks', leftPadding: 8.0),
+                    const WifiStatusCard(),
+                    const SizedBox(height: Constants.listSpacing),
+                    const CarrierStatusCard(),
+                    const SizedBox(height: Constants.listSpacing),
+                    const SmallDescription(text: 'Utilities', leftPadding: 8.0),
+                    ToolCard(
+                      toolName: 'Ping',
+                      toolDesc: Constants.pingDesc,
+                      onPressed: () => Navigator.pushNamed(
+                        context,
+                        '/tools/ping',
+                        arguments: '',
+                      ),
+                    ),
+                    const SizedBox(height: Constants.listSpacing),
+                    ToolCard(
+                      toolName: 'LAN Scanner',
+                      toolDesc: Constants.lanScannerDesc,
+                      onPressed: state.isWifiConnected
+                          ? () => Navigator.pushNamed(context, '/tools/lan')
+                          : null,
+                    ),
+                    const SizedBox(height: Constants.listSpacing),
+                    ToolCard(
+                      toolName: 'Wake On LAN',
+                      toolDesc: Constants.wolDesc,
+                      onPressed: state.isWifiConnected
+                          ? () => Navigator.pushNamed(context, '/tools/wol')
+                          : null,
+                    ),
+                    const SizedBox(height: Constants.listSpacing),
+                    ToolCard(
+                      toolName: 'IP Geolocation',
+                      toolDesc: Constants.ipGeoDesc,
+                      isPremium: !isPremiumAvail,
+                      onPressed: isPremiumAvail
+                          ? () => Navigator.pushNamed(context, '/tools/ip_geo')
+                          : () => showPremiumBottomSheet(context),
+                    ),
+                    const SizedBox(height: Constants.listSpacing),
+                    ToolCard(
+                      toolName: 'Whois',
+                      toolDesc: Constants.whoisDesc,
+                      isPremium: !isPremiumAvail,
+                      onPressed: isPremiumAvail
+                          ? () => Navigator.pushNamed(context, '/tools/whois')
+                          : () => showPremiumBottomSheet(context),
+                    ),
+                    const SizedBox(height: Constants.listSpacing),
+                    ToolCard(
+                      toolName: 'DNS Lookup',
+                      toolDesc: Constants.dnsDesc,
+                      isPremium: !isPremiumAvail,
+                      onPressed: isPremiumAvail
+                          ? () =>
+                              Navigator.pushNamed(context, '/tools/dns_lookup')
+                          : () => showPremiumBottomSheet(context),
+                    ),
+                    const SizedBox(height: Constants.listSpacing),
+                    if (kDebugMode) const DebugSection(),
+                    if (!isPremiumGranted)
+                      Container(
+                        alignment: Alignment.center,
+                        width: banner.size.width.toDouble(),
+                        height: banner.size.height.toDouble(),
+                        child: adWidget,
+                      ),
+                  ],
+                );
+              },
+              iosBuilder: (context) {
+                return Column(
+                  children: [
+                    const WifiStatusCard(),
+                    const CarrierStatusCard(),
+                    CupertinoListSection.insetGrouped(
+                      hasLeading: false,
+                      header: const Text('Utilities'),
+                      children: [
+                        ToolCard(
+                          toolName: 'Ping',
+                          toolDesc: Constants.pingDesc,
+                          onPressed: () => Navigator.pushNamed(
+                            context,
+                            '/tools/ping',
+                            arguments: '',
+                          ),
+                        ),
+                        //! lan_scanner not supported on iOS
+                        // ToolCard(
+                        //   toolName: 'LAN Scanner',
+                        //   toolDesc: Constants.lanScannerDesc,
+                        //   onPressed: state.isWifiConnected
+                        //       ? () => Navigator.pushNamed(context, '/tools/lan')
+                        //       : null,
+                        // ),
+                        ToolCard(
+                          toolName: 'Wake On LAN',
+                          toolDesc: Constants.wolDesc,
+                          onPressed: state.isWifiConnected
+                              ? () => Navigator.pushNamed(context, '/tools/wol')
+                              : null,
+                        ),
+                        ToolCard(
+                          toolName: 'IP Geolocation',
+                          toolDesc: Constants.ipGeoDesc,
+                          isPremium: !isPremiumAvail,
+                          onPressed: isPremiumAvail
+                              ? () =>
+                                  Navigator.pushNamed(context, '/tools/ip_geo')
+                              : () => showPremiumBottomSheet(context),
+                        ),
+                        ToolCard(
+                          toolName: 'Whois',
+                          toolDesc: Constants.whoisDesc,
+                          isPremium: !isPremiumAvail,
+                          onPressed: isPremiumAvail
+                              ? () =>
+                                  Navigator.pushNamed(context, '/tools/whois')
+                              : () => showPremiumBottomSheet(context),
+                        ),
+                        ToolCard(
+                          toolName: 'DNS Lookup',
+                          toolDesc: Constants.dnsDesc,
+                          isPremium: !isPremiumAvail,
+                          onPressed: isPremiumAvail
+                              ? () => Navigator.pushNamed(
+                                    context,
+                                    '/tools/dns_lookup',
+                                  )
+                              : () => showPremiumBottomSheet(context),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: Constants.listSpacing),
+                    if (kDebugMode) const DebugSection(),
+                    if (!isPremiumGranted)
+                      Container(
+                        alignment: Alignment.center,
+                        width: banner.size.width.toDouble(),
+                        height: banner.size.height.toDouble(),
+                        child: adWidget,
+                      ),
+                  ],
+                );
+              },
             ),
-            const SizedBox(height: Constants.listSpacing),
-            ToolCard(
-              toolName: 'LAN Scanner',
-              toolDesc: Constants.lanScannerDesc,
-              onPressed: state.isWifiConnected
-                  ? () => Navigator.pushNamed(context, '/tools/lan')
-                  : null,
-            ),
-            const SizedBox(height: Constants.listSpacing),
-            ToolCard(
-              toolName: 'Wake On LAN',
-              toolDesc: Constants.wolDesc,
-              onPressed: state.isWifiConnected
-                  ? () => Navigator.pushNamed(context, '/tools/wol')
-                  : null,
-            ),
-            const SizedBox(height: Constants.listSpacing),
-            ToolCard(
-              toolName: 'IP Geolocation',
-              toolDesc: Constants.ipGeoDesc,
-              isPremium: !isPremiumAvail,
-              onPressed: isPremiumAvail
-                  ? () => Navigator.pushNamed(context, '/tools/ip_geo')
-                  : () => showPremiumBottomSheet(context),
-            ),
-            const SizedBox(height: Constants.listSpacing),
-            ToolCard(
-              toolName: 'Whois',
-              toolDesc: Constants.whoisDesc,
-              isPremium: !isPremiumAvail,
-              onPressed: isPremiumAvail
-                  ? () => Navigator.pushNamed(context, '/tools/whois')
-                  : () => showPremiumBottomSheet(context),
-            ),
-            const SizedBox(height: Constants.listSpacing),
-            ToolCard(
-              toolName: 'DNS Lookup',
-              toolDesc: Constants.dnsDesc,
-              isPremium: !isPremiumAvail,
-              onPressed: isPremiumAvail
-                  ? () => Navigator.pushNamed(context, '/tools/dns_lookup')
-                  : () => showPremiumBottomSheet(context),
-            ),
-            const SizedBox(height: Constants.listSpacing),
-            if (kDebugMode) const DebugSection(),
-            if (!isPremiumGranted)
-              Container(
-                alignment: Alignment.center,
-                width: banner.size.width.toDouble(),
-                height: banner.size.height.toDouble(),
-                child: adWidget,
-              ),
           ],
         );
       },
@@ -189,7 +251,7 @@ class _OverviewViewState extends State<OverviewView> {
   }
 
   void showPremiumBottomSheet(BuildContext context) {
-    if (Platform.isIOS) {
+    if (Theme.of(context).platform == TargetPlatform.iOS) {
       showCupertinoModalBottomSheet(
         context: context,
         builder: (context) => const PremiumBottomSheetBody(),
@@ -204,5 +266,25 @@ class _OverviewViewState extends State<OverviewView> {
         builder: (context) => const PremiumBottomSheetBody(),
       );
     }
+  }
+
+  void setUpIAP() {
+    final iapBox = Hive.box('iap');
+
+    isPremiumGranted =
+        iapBox.get('isPremiumGranted', defaultValue: false)! as bool;
+    isPremiumTempGranted =
+        iapBox.get('isPremiumTempGranted', defaultValue: false)! as bool;
+
+    iapBox.watch(key: 'isPremiumGranted').listen((event) {
+      setState(() {
+        isPremiumGranted = event.value as bool;
+      });
+    });
+    iapBox.watch(key: 'isPremiumTempGranted').listen((event) {
+      setState(() {
+        isPremiumTempGranted = event.value as bool;
+      });
+    });
   }
 }

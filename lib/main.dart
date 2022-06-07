@@ -1,13 +1,9 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:dart_ping_ios/dart_ping_ios.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -36,11 +32,7 @@ void main() {
     await Hive.openBox('settings');
     await Hive.openBox('iap');
 
-    if (Platform.isIOS) DartPingIOS.register();
-
-    if (!Platform.isWindows) {
-      MobileAds.instance.initialize();
-    }
+    MobileAds.instance.initialize();
 
     HydratedBlocOverrides.runZoned(
       () async {

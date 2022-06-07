@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -21,20 +20,9 @@ class CarrierDetailView extends StatelessWidget {
   }
 
   Widget _buildIOS(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) =>
-            [
-          const CupertinoSliverNavigationBar(
-            stretch: true,
-            border: null,
-            largeTitle: Text(
-              'Carrier Details',
-            ),
-          ),
-        ],
-        body: _buildDataList(context),
-      ),
+    return CupertinoContentScaffold(
+      largeTitle: const Text('Carrier Details'),
+      child: _buildDataList(context),
     );
   }
 

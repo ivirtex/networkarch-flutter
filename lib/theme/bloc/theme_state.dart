@@ -31,13 +31,19 @@ class ThemeState extends Equatable {
   }
 
   factory ThemeState.fromJson(Map<String, dynamic> json) {
+    final Map<String, dynamic>? dynamicSchemeJson =
+        json['dynamicScheme'] as Map<String, dynamic>?;
+
     return ThemeState(
       scheme: EnumToString.fromString(
         CustomFlexScheme.values,
         json['scheme'] as String,
       )!,
-      dynamicScheme: const FlexSchemeDataConverter()
-          .fromJson(json['dynamicScheme'] as Map<String, dynamic>),
+      dynamicScheme: dynamicSchemeJson != null
+          ? const FlexSchemeDataConverter().fromJson(
+              dynamicSchemeJson,
+            )
+          : null,
       mode: EnumToString.fromString(
         ThemeMode.values,
         json['mode'] as String,
