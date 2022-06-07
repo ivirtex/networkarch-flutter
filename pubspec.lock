@@ -210,7 +210,7 @@ packages:
       name: cupertino_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   dart_code_metrics:
     dependency: "direct dev"
     description:
@@ -349,13 +349,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
-  flutter_launcher_icons_maker:
-    dependency: "direct dev"
-    description:
-      name: flutter_launcher_icons_maker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.10.2"
   flutter_localizations:
     dependency: transitive
     description: flutter
@@ -497,6 +490,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "8.1.0"
+  icons_launcher:
+    dependency: "direct dev"
+    description:
+      name: icons_launcher
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.9"
   image:
     dependency: transitive
     description:
@@ -517,7 +517,7 @@ packages:
       name: in_app_purchase
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.4"
+    version: "3.0.5"
   in_app_purchase_android:
     dependency: transitive
     description:
@@ -769,7 +769,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.10"
+    version: "2.0.11"
   path_provider_android:
     dependency: transitive
     description:
@@ -1027,6 +1027,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.1"
+  universal_io:
+    dependency: transitive
+    description:
+      name: universal_io
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.4"
   url_launcher:
     dependency: "direct main"
     description:
