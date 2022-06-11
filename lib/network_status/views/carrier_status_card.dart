@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -89,12 +90,8 @@ class CarrierStatusCard extends StatelessWidget {
                   child: Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(
-                            Icons.cell_tower_rounded,
-                            color: Themes.getPlatformIconColor(context),
-                          ),
-                          const SizedBox(width: 5),
                           Text(
                             state.carrierInfo?.carrierName ?? 'N/A',
                             style: const TextStyle(
@@ -128,9 +125,6 @@ class CarrierStatusCard extends StatelessWidget {
                   ),
                 ),
                 CupertinoListTile.notched(
-                  leadingSize: 0.0,
-                  leadingToTitle: 0.0,
-                  leading: const SizedBox(),
                   title: const Text('Detailed view'),
                   trailing: const CupertinoListTileChevron(),
                   onTap: state.isCarrierConnected

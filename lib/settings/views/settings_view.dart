@@ -1,9 +1,10 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:feedback_sentry/feedback_sentry.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -12,6 +13,8 @@ import 'package:url_launcher/url_launcher.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/package_info/package_info.dart';
+import 'package:network_arch/settings/widgets/android_theme_switcher.dart';
+import 'package:network_arch/settings/widgets/ios_theme_switcher.dart';
 import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/theme/theme.dart';
 
@@ -57,94 +60,92 @@ class _SettingsViewState extends State<SettingsView> {
   }
 
   Widget _buildBody(BuildContext context) {
-    final themeBloc = context.read<ThemeBloc>();
-
     return ContentListView(
+      usePaddingOniOS: false,
       children: [
         PlatformWidget(
           androidBuilder: (context) {
             return Column(
               children: [
-                const SmallDescription(text: 'Theme settings'),
-                DataCard(
-                  padding: EdgeInsets.zero,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                          vertical: 8.0,
-                        ),
-                        child: FlexThemeModeSwitch(
-                          themeMode: themeBloc.state.mode,
-                          onThemeModeChanged: (mode) {
-                            setState(() {
-                              themeBloc
-                                  .add(ThemeModeChangedEvent(themeMode: mode));
-                            });
-                          },
-                          flexSchemeData: Themes.schemesListWithDynamic[
-                              themeBloc.state.scheme.index],
-                          optionButtonBorderRadius: 10.0,
-                        ),
-                      ),
-                      ThemePopupMenu(
-                        schemeIndex: themeBloc.state.scheme.index,
-                        onChanged: (index) async {
-                          // Await for popup menu to close (to avoid jank)
-                          await Future.delayed(
-                            const Duration(milliseconds: 300),
-                          );
-
-                          setState(() {
-                            themeBloc.add(
-                              ThemeSchemeChangedEvent(
-                                scheme: CustomFlexScheme.values[index],
-                              ),
-                            );
-                          });
-                        },
-                      ),
-                    ],
-                  ),
+                const AndroidThemeSwitcher(),
+                const SmallDescription(text: 'Help'),
+                ActionCard(
+                  title: 'Restore purchases',
+                  desc: 'Restore purchases made in the past',
+                  icon: Icons.workspace_premium_rounded,
+                  onTap: _restorePurchases,
+                ),
+                const SizedBox(height: Constants.listSpacing),
+                ActionCard(
+                  title: 'Onboarding screen',
+                  desc: 'Resolve permissions issues',
+                  icon: Icons.info_outline_rounded,
+                  onTap: () => Navigator.pushNamed(context, '/introduction'),
+                ),
+                const SizedBox(height: Constants.listSpacing),
+                ActionCard(
+                  title: 'Send feedback',
+                  desc: 'Something is not working?',
+                  icon: Icons.feedback_outlined,
+                  onTap: () => _sendFeedback(context),
+                ),
+                const SizedBox(height: Constants.listSpacing),
+                ActionCard(
+                  title: 'Source code',
+                  desc: 'Feel free to contribute!',
+                  icon: FontAwesomeIcons.github,
+                  onTap: _canLaunchUrl ? _openSourceCode : null,
+                ),
+              ],
+            );
+          },
+          iosBuilder: (context) {
+            return Column(
+              children: [
+                CupertinoListSection.insetGrouped(
+                  header: const Text('Theme'),
+                  children: const [
+                    CupertinoListTile.notched(
+                      leading: Icon(CupertinoIcons.sun_max),
+                      title: IOSThemeSwitcher(),
+                    ),
+                  ],
+                ),
+                CupertinoListSection.insetGrouped(
+                  header: const Text('Help'),
+                  children: [
+                    ActionCard(
+                      title: 'Restore purchases',
+                      desc: 'Restore purchases made in the past',
+                      icon: CupertinoIcons.shopping_cart,
+                      onTap: _restorePurchases,
+                    ),
+                    ActionCard(
+                      title: 'Onboarding screen',
+                      desc: 'Resolve permissions issues',
+                      icon: CupertinoIcons.info,
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/introduction'),
+                    ),
+                    ActionCard(
+                      title: 'Send feedback',
+                      desc: 'Something is not working?',
+                      icon: CupertinoIcons.reply,
+                      onTap: () => _sendFeedback(context),
+                    ),
+                    ActionCard(
+                      title: 'Source code',
+                      desc: 'Feel free to contribute!',
+                      icon: FontAwesomeIcons.github,
+                      onTap: _canLaunchUrl ? _openSourceCode : null,
+                    ),
+                  ],
                 ),
               ],
             );
           },
         ),
-        const SmallDescription(text: 'Help'),
-        Column(
-          children: [
-            ActionCard(
-              title: 'Restore purchases',
-              desc: 'Restore purchases made in the past',
-              icon: Icons.workspace_premium_rounded,
-              onTap: _restorePurchases,
-            ),
-            const SizedBox(height: Constants.listSpacing),
-            ActionCard(
-              title: 'Onboarding screen',
-              desc: 'Resolve permissions issues',
-              icon: Icons.info_outline_rounded,
-              onTap: () => Navigator.pushNamed(context, '/introduction'),
-            ),
-            const SizedBox(height: Constants.listSpacing),
-            ActionCard(
-              title: 'Send feedback',
-              desc: 'Something is not working?',
-              icon: Icons.feedback_outlined,
-              onTap: () => _sendFeedback(context),
-            ),
-            const SizedBox(height: Constants.listSpacing),
-            ActionCard(
-              title: 'Source code',
-              desc: 'Feel free to contribute!',
-              icon: FontAwesomeIcons.github,
-              onTap: _canLaunchUrl ? _openSourceCode : null,
-            ),
-          ],
-        ),
-        const SizedBox(height: Constants.listSpacing),
+        // Compensate for the padding on iOS.
         const PackageInfoView(),
       ],
     );

@@ -144,7 +144,9 @@ class NetworkArch extends StatelessWidget {
                 SentryNavigatorObserver(),
               ],
               title: Constants.appName,
-              theme: Themes.cupertinoLightThemeData,
+              theme: state.mode == ThemeMode.light
+                  ? Themes.cupertinoLightThemeData
+                  : Themes.cupertinoDarkThemeData,
               routes: Constants.routes,
               home: const Home(),
             ),

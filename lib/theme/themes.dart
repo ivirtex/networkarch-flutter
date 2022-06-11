@@ -87,7 +87,7 @@ abstract class Themes {
       CupertinoColors.systemBackground;
 
   static Color getPlatformIconColor(BuildContext context) {
-    return Platform.isIOS
+    return Theme.of(context).platform == TargetPlatform.iOS
         ? const CupertinoDynamicColor.withBrightness(
             color: CupertinoColors.black,
             darkColor: CupertinoColors.white,

@@ -90,7 +90,7 @@ class _OverviewViewState extends State<OverviewView> {
     return BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
       builder: (context, state) {
         return ContentListView(
-          usePadding: false,
+          usePaddingOniOS: false,
           children: [
             PlatformWidget(
               androidBuilder: (context) {
@@ -231,15 +231,14 @@ class _OverviewViewState extends State<OverviewView> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: Constants.listSpacing),
                     if (kDebugMode) const DebugSection(),
-                    if (!isPremiumGranted)
-                      Container(
-                        alignment: Alignment.center,
-                        width: banner.size.width.toDouble(),
-                        height: banner.size.height.toDouble(),
-                        child: adWidget,
-                      ),
+                    // if (!isPremiumGranted)
+                    //   Container(
+                    //     alignment: Alignment.center,
+                    //     width: banner.size.width.toDouble(),
+                    //     height: banner.size.height.toDouble(),
+                    //     child: adWidget,
+                    //   ),
                   ],
                 );
               },
@@ -254,6 +253,7 @@ class _OverviewViewState extends State<OverviewView> {
     if (Theme.of(context).platform == TargetPlatform.iOS) {
       showCupertinoModalBottomSheet(
         context: context,
+        useRootNavigator: true,
         builder: (context) => const PremiumBottomSheetBody(),
       );
     } else {

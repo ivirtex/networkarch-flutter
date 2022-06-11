@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -88,20 +89,18 @@ class WifiStatusCard extends StatelessWidget {
                   child: Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(
-                            Icons.wifi_rounded,
-                            color: Themes.getPlatformIconColor(context),
-                          ),
-                          const SizedBox(width: 5),
-                          Text(
-                            state.wifiInfo?.wifiSSID ?? 'N/A',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.0,
+                          Flexible(
+                            flex: 3,
+                            child: Text(
+                              state.wifiInfo?.wifiSSID ?? 'N/A',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0,
+                              ),
                             ),
                           ),
-                          const Spacer(),
                           ConnectionStatus(
                             state.wifiStatus,
                             connectionChecker: () => state.isWifiConnected,
@@ -126,9 +125,6 @@ class WifiStatusCard extends StatelessWidget {
                   ),
                 ),
                 CupertinoListTile.notched(
-                  leadingSize: 0.0,
-                  leadingToTitle: 0.0,
-                  leading: const SizedBox(),
                   title: const Text('Detailed view'),
                   trailing: const CupertinoListTileChevron(),
                   onTap: state.isWifiConnected
