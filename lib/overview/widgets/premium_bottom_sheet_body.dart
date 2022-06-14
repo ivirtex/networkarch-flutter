@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -159,6 +160,26 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
         await InAppPurchase.instance.queryProductDetails(kProductIds);
 
     final List<ProductDetails> products = response.productDetails;
+
+    if (response.notFoundIDs.isNotEmpty) {
+      showPlatformDialog(
+        context: context,
+        builder: (context) {
+          return PlatformAlertDialog(
+            title: const Text('Error'),
+            content: const Text('There was an error during the purchase.'),
+            actions: [
+              PlatformDialogAction(
+                child: const Text('OK'),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          );
+        },
+      );
+
+      return;
+    }
 
     InAppPurchase.instance.buyNonConsumable(
       purchaseParam: PurchaseParam(

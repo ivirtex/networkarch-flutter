@@ -51,9 +51,6 @@ class RoundedList extends StatelessWidget {
                   },
                   separatorBuilder: (context, index) {
                     return Divider(
-                      color: Theme.of(context).platform == TargetPlatform.iOS
-                          ? CupertinoColors.separator.resolveFrom(context)
-                          : null,
                       indent: Constants.listDividerIndent,
                       height: 1.0 / MediaQuery.of(context).devicePixelRatio,
                     );
@@ -67,6 +64,7 @@ class RoundedList extends StatelessWidget {
       },
       iosBuilder: (context) {
         return CupertinoListSection.insetGrouped(
+          hasLeading: false,
           header: header != null ? Text(header!) : null,
           footer: footer != null ? Text(footer!) : null,
           children: children,

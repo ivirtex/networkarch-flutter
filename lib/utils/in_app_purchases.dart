@@ -10,6 +10,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 const Set<String> kProductIds = <String>{
   'com.hubertjozwiak.networkarch.premium',
+  'com.HubertJozwiak.NetworkArch.Premium',
 };
 
 void listenToPurchaseUpdated(

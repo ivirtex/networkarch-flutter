@@ -16,7 +16,6 @@ import 'package:network_arch/package_info/package_info.dart';
 import 'package:network_arch/settings/widgets/android_theme_switcher.dart';
 import 'package:network_arch/settings/widgets/ios_theme_switcher.dart';
 import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/theme/theme.dart';
 
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart'
     hide PlatformWidget;
@@ -61,7 +60,6 @@ class _SettingsViewState extends State<SettingsView> {
 
   Widget _buildBody(BuildContext context) {
     return ContentListView(
-      usePaddingOniOS: false,
       children: [
         PlatformWidget(
           androidBuilder: (context) {

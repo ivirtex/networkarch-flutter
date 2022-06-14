@@ -89,7 +89,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
 
   Widget _buildIOS(BuildContext context) {
     return CupertinoContentScaffold(
-      largeTitle: const Text('DNS Lookup'),
+      largeTitle: const Text('Wake on LAN'),
       navBarTrailingWidget: CupertinoButton(
         padding: EdgeInsets.zero,
         onPressed: _handleSend,
@@ -109,6 +109,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
 
   Widget _buildBody(BuildContext context) {
     return ContentListView(
+      usePaddingOniOS: true,
       children: [
         BlocConsumer<WakeOnLanBloc, WakeOnLanState>(
           listener: (context, state) {

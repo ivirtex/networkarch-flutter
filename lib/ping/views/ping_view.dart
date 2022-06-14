@@ -138,6 +138,7 @@ class _PingViewState extends State<PingView> {
   Widget _buildBody(BuildContext context) {
     return ContentListView(
       scrollController: _scrollController,
+      usePaddingOniOS: true,
       children: [
         IntrinsicHeight(
           child: Row(

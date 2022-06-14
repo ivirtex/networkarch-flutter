@@ -1,3 +1,4 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -47,10 +48,10 @@ class WolPacketDetailsView extends StatelessWidget {
               widgetL: const Text('IP address'),
               widgetR: Text(response.ipv4.address),
             ),
-            HexBytesViewer(
-              title: 'Magic packet bytes',
-              bytes: response.packetBytes,
-            ),
+            // HexBytesViewer(
+            //   title: 'Magic packet bytes',
+            //   bytes: response.packetBytes,
+            // ),
           ],
         ),
       ],

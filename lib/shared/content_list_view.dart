@@ -9,7 +9,7 @@ class ContentListView extends StatelessWidget {
   const ContentListView({
     required this.children,
     this.scrollController,
-    this.usePaddingOniOS = true,
+    this.usePaddingOniOS = false,
     Key? key,
   }) : super(key: key);
 
