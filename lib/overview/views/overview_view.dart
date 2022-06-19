@@ -26,17 +26,13 @@ class OverviewView extends StatefulWidget {
 }
 
 class _OverviewViewState extends State<OverviewView> {
-  final BannerAd banner = BannerAd(
-    adUnitId: getAdUnitId(),
-    size: AdSize.banner,
-    request: const AdRequest(),
-    listener: listener,
-  );
+  late final BannerAd _bannerAd;
+  bool _isBannerAdReady = false;
 
-  late bool isPremiumGranted;
-  late bool isPremiumTempGranted;
+  late bool _isPremiumGranted;
+  late bool _isPremiumTempGranted;
 
-  bool get isPremiumAvail => isPremiumGranted || isPremiumTempGranted;
+  bool get _isPremiumAvail => _isPremiumGranted || _isPremiumTempGranted;
 
   @override
   void initState() {
@@ -53,7 +49,26 @@ class _OverviewViewState extends State<OverviewView> {
     context.read<NetworkStatusBloc>().add(NetworkStatusStreamStarted());
     context.read<NetworkStatusBloc>().add(NetworkStatusExtIPRequested());
 
-    banner.load();
+    _bannerAd = BannerAd(
+      adUnitId: getAdUnitId(),
+      size: AdSize.banner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdReady = true;
+          });
+        },
+        onAdFailedToLoad: (ad, err) {
+          print('Failed to load a banner ad: ${err.message}');
+
+          _isBannerAdReady = false;
+          ad.dispose();
+        },
+      ),
+    );
+
+    _bannerAd.load();
 
     setUpIAP();
   }
@@ -62,7 +77,7 @@ class _OverviewViewState extends State<OverviewView> {
   void dispose() {
     super.dispose();
 
-    banner.dispose();
+    _bannerAd.dispose();
   }
 
   @override
@@ -85,8 +100,6 @@ class _OverviewViewState extends State<OverviewView> {
   }
 
   Widget _buildBody(BuildContext context) {
-    final AdWidget adWidget = AdWidget(ad: banner);
-
     return BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
       builder: (context, state) {
         return ContentListView(
@@ -130,8 +143,8 @@ class _OverviewViewState extends State<OverviewView> {
                     ToolCard(
                       toolName: 'IP Geolocation',
                       toolDesc: Constants.ipGeoDesc,
-                      isPremium: !isPremiumAvail,
-                      onPressed: isPremiumAvail
+                      isPremium: !_isPremiumAvail,
+                      onPressed: _isPremiumAvail
                           ? () => Navigator.pushNamed(context, '/tools/ip_geo')
                           : () => showPremiumBottomSheet(context),
                     ),
@@ -139,8 +152,8 @@ class _OverviewViewState extends State<OverviewView> {
                     ToolCard(
                       toolName: 'Whois',
                       toolDesc: Constants.whoisDesc,
-                      isPremium: !isPremiumAvail,
-                      onPressed: isPremiumAvail
+                      isPremium: !_isPremiumAvail,
+                      onPressed: _isPremiumAvail
                           ? () => Navigator.pushNamed(context, '/tools/whois')
                           : () => showPremiumBottomSheet(context),
                     ),
@@ -148,20 +161,20 @@ class _OverviewViewState extends State<OverviewView> {
                     ToolCard(
                       toolName: 'DNS Lookup',
                       toolDesc: Constants.dnsDesc,
-                      isPremium: !isPremiumAvail,
-                      onPressed: isPremiumAvail
+                      isPremium: !_isPremiumAvail,
+                      onPressed: _isPremiumAvail
                           ? () =>
                               Navigator.pushNamed(context, '/tools/dns_lookup')
                           : () => showPremiumBottomSheet(context),
                     ),
                     const SizedBox(height: Constants.listSpacing),
                     if (kDebugMode) const DebugSection(),
-                    if (!isPremiumGranted)
+                    if (!_isPremiumGranted)
                       Container(
                         alignment: Alignment.center,
-                        width: banner.size.width.toDouble(),
-                        height: banner.size.height.toDouble(),
-                        child: adWidget,
+                        width: _bannerAd.size.width.toDouble(),
+                        height: _bannerAd.size.height.toDouble(),
+                        child: AdWidget(ad: _bannerAd),
                       ),
                   ],
                 );
@@ -202,8 +215,8 @@ class _OverviewViewState extends State<OverviewView> {
                         ToolCard(
                           toolName: 'IP Geolocation',
                           toolDesc: Constants.ipGeoDesc,
-                          isPremium: !isPremiumAvail,
-                          onPressed: isPremiumAvail
+                          isPremium: !_isPremiumAvail,
+                          onPressed: _isPremiumAvail
                               ? () =>
                                   Navigator.pushNamed(context, '/tools/ip_geo')
                               : () => showPremiumBottomSheet(context),
@@ -211,8 +224,8 @@ class _OverviewViewState extends State<OverviewView> {
                         ToolCard(
                           toolName: 'Whois',
                           toolDesc: Constants.whoisDesc,
-                          isPremium: !isPremiumAvail,
-                          onPressed: isPremiumAvail
+                          isPremium: !_isPremiumAvail,
+                          onPressed: _isPremiumAvail
                               ? () =>
                                   Navigator.pushNamed(context, '/tools/whois')
                               : () => showPremiumBottomSheet(context),
@@ -220,8 +233,8 @@ class _OverviewViewState extends State<OverviewView> {
                         ToolCard(
                           toolName: 'DNS Lookup',
                           toolDesc: Constants.dnsDesc,
-                          isPremium: !isPremiumAvail,
-                          onPressed: isPremiumAvail
+                          isPremium: !_isPremiumAvail,
+                          onPressed: _isPremiumAvail
                               ? () => Navigator.pushNamed(
                                     context,
                                     '/tools/dns_lookup',
@@ -231,13 +244,13 @@ class _OverviewViewState extends State<OverviewView> {
                       ],
                     ),
                     if (kDebugMode) const DebugSection(),
-                    // if (!isPremiumGranted)
-                    //   Container(
-                    //     alignment: Alignment.center,
-                    //     width: banner.size.width.toDouble(),
-                    //     height: banner.size.height.toDouble(),
-                    //     child: adWidget,
-                    //   ),
+                    if (!_isPremiumGranted)
+                      Container(
+                        alignment: Alignment.center,
+                        width: _bannerAd.size.width.toDouble(),
+                        height: _bannerAd.size.height.toDouble(),
+                        child: AdWidget(ad: _bannerAd),
+                      ),
                   ],
                 );
               },
@@ -270,19 +283,19 @@ class _OverviewViewState extends State<OverviewView> {
   void setUpIAP() {
     final iapBox = Hive.box('iap');
 
-    isPremiumGranted =
+    _isPremiumGranted =
         iapBox.get('isPremiumGranted', defaultValue: false)! as bool;
-    isPremiumTempGranted =
+    _isPremiumTempGranted =
         iapBox.get('isPremiumTempGranted', defaultValue: false)! as bool;
 
     iapBox.watch(key: 'isPremiumGranted').listen((event) {
       setState(() {
-        isPremiumGranted = event.value as bool;
+        _isPremiumGranted = event.value as bool;
       });
     });
     iapBox.watch(key: 'isPremiumTempGranted').listen((event) {
       setState(() {
-        isPremiumTempGranted = event.value as bool;
+        _isPremiumTempGranted = event.value as bool;
       });
     });
   }

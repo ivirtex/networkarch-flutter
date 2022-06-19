@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/wake_on_lan/models/wol_response_model.dart';
-import 'package:network_arch/wake_on_lan/widgets/hex_bytes_viewer.dart';
 
 class WolPacketDetailsView extends StatelessWidget {
   const WolPacketDetailsView(this.response, {Key? key}) : super(key: key);
