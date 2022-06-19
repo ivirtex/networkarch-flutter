@@ -33,8 +33,8 @@ dependencies:
   flutter_svg: ^1.0.3
   font_awesome_flutter: ^10.1.0
   google_fonts: ^3.0.1
-  google_maps_flutter: ^2.1.7
-  google_mobile_ads: ^1.2.0
+  google_maps_flutter: ^2.1.8
+  google_mobile_ads: ^1.3.0
   hive: ^2.2.2
   hive_flutter: ^1.1.0
   http: ^0.13.4
@@ -49,7 +49,7 @@ dependencies:
   network_info_plus: ^2.1.3
   package_info_plus: ^1.4.2
   path_provider: ^2.0.11
-  permission_handler: ^9.2.0
+  permission_handler: ^10.0.0
   sentry_flutter: ^6.5.1
   url_launcher: ^6.1.3
   wake_on_lan: ^3.0.0

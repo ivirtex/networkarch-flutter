@@ -169,7 +169,7 @@ class _OverviewViewState extends State<OverviewView> {
                     ),
                     const SizedBox(height: Constants.listSpacing),
                     if (kDebugMode) const DebugSection(),
-                    if (!_isPremiumGranted)
+                    if (!_isPremiumGranted && _isBannerAdReady)
                       Container(
                         alignment: Alignment.center,
                         width: _bannerAd.size.width.toDouble(),
@@ -244,7 +244,7 @@ class _OverviewViewState extends State<OverviewView> {
                       ],
                     ),
                     if (kDebugMode) const DebugSection(),
-                    if (!_isPremiumGranted)
+                    if (!_isPremiumGranted && _isBannerAdReady)
                       Container(
                         alignment: Alignment.center,
                         width: _bannerAd.size.width.toDouble(),
