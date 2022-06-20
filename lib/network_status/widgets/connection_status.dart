@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -21,6 +22,8 @@ class ConnectionStatus extends StatelessWidget {
 
     final isNetworkConnected = connectionChecker();
 
+    final bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+
     switch (status) {
       case NetworkStatus.success:
         return Row(
@@ -37,7 +40,13 @@ class ConnectionStatus extends StatelessWidget {
             ),
             const SizedBox(width: 5.0),
             Icon(
-              isNetworkConnected ? Icons.check_circle : Icons.cancel,
+              isIOS
+                  ? isNetworkConnected
+                      ? CupertinoIcons.check_mark_circled_solid
+                      : CupertinoIcons.xmark_circle_fill
+                  : isNetworkConnected
+                      ? Icons.check_circle
+                      : Icons.cancel,
               size: iconSize,
               color: isNetworkConnected
                   ? Themes.getPlatformSuccessColor(context)
@@ -60,7 +69,7 @@ class ConnectionStatus extends StatelessWidget {
             ),
             const SizedBox(width: 5.0),
             Icon(
-              Icons.cancel,
+              isIOS ? CupertinoIcons.xmark_circle_fill : Icons.cancel,
               size: iconSize,
               color: isNetworkConnected
                   ? Themes.getPlatformSuccessColor(context)
@@ -83,7 +92,7 @@ class ConnectionStatus extends StatelessWidget {
             ),
             const SizedBox(width: 5.0),
             Icon(
-              Icons.cancel,
+              isIOS ? CupertinoIcons.xmark_circle_fill : Icons.cancel,
               size: iconSize,
               color: isNetworkConnected
                   ? Themes.getPlatformSuccessColor(context)

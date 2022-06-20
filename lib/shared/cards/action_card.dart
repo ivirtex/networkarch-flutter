@@ -6,6 +6,7 @@ import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
+import 'package:network_arch/network_status/widgets/adaptive_button.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
 class ActionCard extends StatelessWidget {
@@ -13,7 +14,7 @@ class ActionCard extends StatelessWidget {
     required this.title,
     this.desc,
     this.icon,
-    this.buttonStyle,
+    this.shape,
     this.onTap,
     Key? key,
   }) : super(key: key);
@@ -21,7 +22,7 @@ class ActionCard extends StatelessWidget {
   final String title;
   final String? desc;
   final IconData? icon;
-  final ButtonStyle? buttonStyle;
+  final OutlinedBorder? shape;
   final VoidCallback? onTap;
 
   @override
@@ -61,16 +62,9 @@ class ActionCard extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              ElevatedButton(
-                style: buttonStyle ??
-                    ElevatedButton.styleFrom(
-                      primary: Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withOpacity(0.15),
-                      elevation: 0.0,
-                      shape: const CircleBorder(),
-                    ),
+              AdaptiveButton(
+                buttonType: ButtonType.filledTonal,
+                shape: shape ?? const CircleBorder(),
                 onPressed: onTap,
                 child: FaIcon(
                   FontAwesomeIcons.circleArrowRight,

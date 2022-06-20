@@ -9,9 +9,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/theme/theme.dart';
 
-class AndroidThemeSwitcher extends StatelessWidget {
+class AndroidThemeSwitcher extends StatefulWidget {
   const AndroidThemeSwitcher({Key? key}) : super(key: key);
 
+  @override
+  State<AndroidThemeSwitcher> createState() => _AndroidThemeSwitcherState();
+}
+
+class _AndroidThemeSwitcherState extends State<AndroidThemeSwitcher> {
   @override
   Widget build(BuildContext context) {
     final themeBloc = context.read<ThemeBloc>();
@@ -46,11 +51,13 @@ class AndroidThemeSwitcher extends StatelessWidget {
                     const Duration(milliseconds: 300),
                   );
 
-                  themeBloc.add(
-                    ThemeSchemeChangedEvent(
-                      scheme: CustomFlexScheme.values[index],
-                    ),
-                  );
+                  setState(() {
+                    themeBloc.add(
+                      ThemeSchemeChangedEvent(
+                        scheme: CustomFlexScheme.values[index],
+                      ),
+                    );
+                  });
                 },
               ),
             ],

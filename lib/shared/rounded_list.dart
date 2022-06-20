@@ -19,7 +19,7 @@ class RoundedList extends StatelessWidget {
   }) : super(key: key);
 
   /// Preferably a List of ListTextLine widgets.
-  final List<Widget> children;
+  final List<ListTextLine> children;
   final EdgeInsets padding;
   final String? header;
   final String? footer;
@@ -66,7 +66,20 @@ class RoundedList extends StatelessWidget {
           hasLeading: false,
           header: header != null ? Text(header!) : null,
           footer: footer != null ? Text(footer!) : null,
-          children: children,
+          children: children
+              .map(
+                (ListTextLine child) => CupertinoListTile.notched(
+                  title: child.widgetL,
+                  trailing: Flexible(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: child.widgetR,
+                    ),
+                  ),
+                  onTap: child.onRefreshTap,
+                ),
+              )
+              .toList(),
         );
       },
     );

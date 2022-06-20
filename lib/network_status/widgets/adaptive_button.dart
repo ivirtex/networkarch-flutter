@@ -2,19 +2,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 // Project imports:
 import 'package:network_arch/shared/shared.dart';
 
 class AdaptiveButton extends StatelessWidget {
   const AdaptiveButton({
     required this.child,
-    this.androidIcon = FontAwesomeIcons.circleArrowRight,
-    this.cupertinoIcon,
-    this.onPressed,
     this.buttonType = ButtonType.text,
+    this.shape,
+    this.opacity,
+    this.onPressed,
     Key? key,
   }) : super(key: key);
 
@@ -32,10 +29,10 @@ class AdaptiveButton extends StatelessWidget {
   }
 
   final Widget child;
-  final IconData? androidIcon;
-  final IconData? cupertinoIcon;
-  final VoidCallback? onPressed;
   final ButtonType buttonType;
+  final OutlinedBorder? shape;
+  final double? opacity;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -47,58 +44,79 @@ class AdaptiveButton extends StatelessWidget {
 
   Widget _buildAndroid(BuildContext context) {
     switch (buttonType) {
+      case ButtonType.elevated:
+        return ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: shape,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          onPressed: onPressed,
+          child: child,
+        );
+      case ButtonType.filled:
+        return ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            // Foreground color
+            onPrimary: Theme.of(context).colorScheme.onPrimary,
+            // Background color
+            primary: Theme.of(context)
+                .colorScheme
+                .primary
+                .withOpacity(opacity ?? 0.8),
+            shape: shape,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
+          onPressed: onPressed,
+          child: child,
+        );
+      case ButtonType.filledTonal:
+        return ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            // Foreground color
+            onPrimary: Theme.of(context).colorScheme.onSecondaryContainer,
+            // Background color
+            primary: Theme.of(context)
+                .colorScheme
+                .secondaryContainer
+                .withOpacity(opacity ?? 0.5),
+            shape: shape,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ).copyWith(
+            elevation: ButtonStyleButton.allOrNull(0.0),
+          ),
+          onPressed: onPressed,
+          child: child,
+        );
+      case ButtonType.outlined:
+        return OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            shape: shape,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          onPressed: onPressed,
+          child: child,
+        );
       case ButtonType.text:
         return TextButton(
           onPressed: onPressed,
-          style: TextButton.styleFrom(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            backgroundColor:
-                Theme.of(context).colorScheme.primary.withOpacity(0.15),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const SizedBox(),
-              child,
-              FaIcon(
-                androidIcon,
-                color: Theme.of(context).iconTheme.color,
-              ),
-            ],
-          ),
-        );
-      case ButtonType.filled:
-        return FilledButton(
-          onPressed: onPressed,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const SizedBox(),
-              child,
-              FaIcon(
-                androidIcon,
-                color: Theme.of(context).iconTheme.color,
-              ),
-            ],
-          ),
+          child: child,
         );
     }
   }
 
   Widget _buildIOS(BuildContext context) {
     switch (buttonType) {
-      case ButtonType.text:
-        return CupertinoButton(
+      case ButtonType.elevated:
+      case ButtonType.filledTonal:
+      case ButtonType.outlined:
+      case ButtonType.filled:
+        return CupertinoButton.filled(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           onPressed: onPressed,
           child: child,
         );
-      case ButtonType.filled:
-        return CupertinoButton.filled(
+      case ButtonType.text:
+        return CupertinoButton(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           onPressed: onPressed,
           child: child,
@@ -108,6 +126,9 @@ class AdaptiveButton extends StatelessWidget {
 }
 
 enum ButtonType {
-  text,
+  elevated,
   filled,
+  filledTonal,
+  outlined,
+  text,
 }

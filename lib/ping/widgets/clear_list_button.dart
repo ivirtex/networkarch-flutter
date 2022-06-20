@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 
 // Project imports:
+import 'package:network_arch/network_status/widgets/adaptive_button.dart';
 import 'package:network_arch/shared/shared.dart';
 
 class ClearListButton extends StatelessWidget {
@@ -21,7 +22,8 @@ class ClearListButton extends StatelessWidget {
   }
 
   Widget _buildAndroid(BuildContext context) {
-    return FilledTonalButton(
+    return AdaptiveButton(
+      buttonType: ButtonType.filledTonal,
       onPressed: onPressed,
       child: const Text('Clear list'),
     );

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:network_arch/network_status/network_status.dart';
@@ -66,10 +67,24 @@ class WifiStatusCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   AdaptiveButton(
+                    buttonType: ButtonType.filledTonal,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                     onPressed: state.isWifiConnected
                         ? () => Navigator.of(context).pushNamed('/wifi')
                         : null,
-                    child: const Text('Detailed view'),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const SizedBox(),
+                        const Text('Detailed view'),
+                        FaIcon(
+                          FontAwesomeIcons.circleArrowRight,
+                          color: Themes.getPlatformIconColor(context),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

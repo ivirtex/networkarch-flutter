@@ -28,17 +28,13 @@ class ToolCard extends StatelessWidget {
         return ActionCard(
           title: toolName,
           desc: toolDesc,
-          buttonStyle: ElevatedButton.styleFrom(
-            primary: Theme.of(context).colorScheme.primary.withOpacity(0.15),
-            elevation: 0.0,
-            shape: CircleBorder(
-              side: isPremium
-                  ? BorderSide(
-                      width: 2.0,
-                      color: Theme.of(context).colorScheme.tertiary,
-                    )
-                  : BorderSide.none,
-            ),
+          shape: CircleBorder(
+            side: isPremium
+                ? BorderSide(
+                    width: 2.0,
+                    color: Theme.of(context).colorScheme.tertiary,
+                  )
+                : BorderSide.none,
           ),
           onTap: onPressed,
         );
@@ -51,7 +47,6 @@ class ToolCard extends StatelessWidget {
           //     ? Text(
           //         toolDesc!,
           //         overflow: TextOverflow.ellipsis,
-          //         maxLines: 2,
           //       )
           //     : null,
           trailing: const CupertinoListTileChevron(),

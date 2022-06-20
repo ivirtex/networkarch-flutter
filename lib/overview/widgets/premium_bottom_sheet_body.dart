@@ -26,7 +26,7 @@ class PremiumBottomSheetBody extends StatefulWidget {
 }
 
 class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
-  Future<bool> isIapAvailableFuture = InAppPurchase.instance.isAvailable();
+  late Future<bool> isIapAvailableFuture;
 
   RewardedAd? _rewardedAd;
   bool _isRewardedAdReady = false;
@@ -36,6 +36,7 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
     super.initState();
 
     _setUpAds();
+    isIapAvailableFuture = InAppPurchase.instance.isAvailable();
   }
 
   @override
@@ -116,7 +117,7 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
 
                     if (isIapAvailable.hasError) {
                       return AdaptiveButton.filled(
-                        child: const Text('Subscribe'),
+                        child: const Text('Error'),
                       );
                     }
 
@@ -130,9 +131,12 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
                 ),
                 const SizedBox(width: Constants.listSpacing),
                 AdaptiveButton(
+                  buttonType: ButtonType.filledTonal,
                   onPressed:
                       _isRewardedAdReady ? () => _handleWatchAd(context) : null,
-                  child: const Text('Watch ad'),
+                  child: _isRewardedAdReady
+                      ? const Text('Watch ad')
+                      : const Text('Loading'),
                 ),
                 const Spacer(),
               ],

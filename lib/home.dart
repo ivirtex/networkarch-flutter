@@ -30,6 +30,9 @@ class _HomeState extends State<Home> {
   late StreamSubscription<List<PurchaseDetails>> _subscription;
   int _selectedIndex = 0;
 
+  late final bool hasIntroductionBeenShown;
+  late final Stream<BoxEvent> hasIntroductionBeenShownStream;
+
   @override
   void initState() {
     super.initState();
@@ -37,6 +40,24 @@ class _HomeState extends State<Home> {
     context
         .read<PermissionsBloc>()
         .add(const PermissionsStatusRefreshRequested());
+
+    final settingsBox = Hive.box('settings');
+
+    hasIntroductionBeenShown = settingsBox.get(
+      'hasIntroductionBeenShown',
+      defaultValue: false,
+    ) as bool;
+
+    hasIntroductionBeenShownStream =
+        settingsBox.watch(key: 'hasIntroductionBeenShown');
+
+    hasIntroductionBeenShownStream.listen((event) {
+      if (event.value is bool) {
+        setState(() {
+          hasIntroductionBeenShown = event.value as bool;
+        });
+      }
+    });
 
     _setUpInAppPurchases();
   }
@@ -66,10 +87,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final settingsBox = Hive.box('settings');
-    final bool hasIntroductionBeenShown = settingsBox
-        .get('hasIntroductionBeenShown', defaultValue: false) as bool;
-
     return hasIntroductionBeenShown
         ? PlatformWidget(
             androidBuilder: _androidBuilder,
