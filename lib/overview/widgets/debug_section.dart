@@ -26,6 +26,13 @@ class DebugSection extends StatelessWidget {
               leftPadding: 8.0,
             ),
             ToolCard(
+              toolName: 'Grant IAP',
+              onPressed: () async {
+                await Hive.box('iap').put('ipPremiumGranted', true);
+              },
+            ),
+            const SizedBox(height: Constants.listSpacing),
+            ToolCard(
               toolName: 'Clear IAP data',
               onPressed: () async {
                 await Hive.box('iap').put('isPremiumGranted', false);
@@ -67,6 +74,12 @@ class DebugSection extends StatelessWidget {
           hasLeading: false,
           header: const Text('Debug'),
           children: [
+            ToolCard(
+              toolName: 'Grant IAP',
+              onPressed: () async {
+                await Hive.box('iap').put('ipPremiumGranted', true);
+              },
+            ),
             ToolCard(
               toolName: 'Clear IAP data',
               onPressed: () async {

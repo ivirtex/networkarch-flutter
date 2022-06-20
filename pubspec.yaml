@@ -11,7 +11,6 @@ environment:
 
 dependencies:
   animate_do: ^2.1.0
-  auto_animated: ^3.0.1
   bloc: ^8.0.3
   carrier_info: ^2.0.5
   cupertino_icons: ^1.0.5
@@ -28,7 +27,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
-  # dbus version solving issue
   flutter_platform_widgets: ^2.0.0
   flutter_svg: ^1.0.3
   font_awesome_flutter: ^10.1.0

@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:auto_animated/auto_animated.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 
@@ -197,26 +196,13 @@ class _DnsLookupViewState extends State<DnsLookupView> {
   }
 
   Widget _buildRecords(DnsLookupResponse response) {
-    return LiveList(
+    return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: response.answer.length,
-      itemBuilder: (context, index, animation) {
+      itemBuilder: (context, index) {
         final record = response.answer[index];
 
-        return FadeTransition(
-          opacity: Tween<double>(
-            begin: 0,
-            end: 1,
-          ).animate(animation),
-          child: SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(0, 0.5),
-              end: Offset.zero,
-            ).chain(CurveTween(curve: Curves.ease)).animate(animation),
-            child: DnsRecordCard(record),
-          ),
-        );
+        return DnsRecordCard(record);
       },
     );
   }

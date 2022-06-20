@@ -57,13 +57,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.2"
-  auto_animated:
-    dependency: "direct main"
-    description:
-      name: auto_animated
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.1"
   bloc:
     dependency: "direct main"
     description:
@@ -1125,13 +1118,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
-  visibility_detector:
-    dependency: transitive
-    description:
-      name: visibility_detector
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.2"
   wake_on_lan:
     dependency: "direct main"
     description:
