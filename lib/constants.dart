@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -45,7 +46,7 @@ abstract class Constants {
 
   static final Map<String, Widget Function(BuildContext)> routes = {
     '/introduction': (context) => IntroductionScreen(
-          pages: pagesList,
+          pages: getPagesList(context),
           isTopSafeArea: true,
           isBottomSafeArea: true,
           controlsPadding: EdgeInsets.symmetric(
@@ -54,11 +55,27 @@ abstract class Constants {
           ),
           done: const Text('Done'),
           next: const Icon(Icons.navigate_next),
-          onDone: () => Navigator.of(context).pop(),
+          onDone: () {
+            Hive.box('settings').put('hasIntroductionBeenShown', true);
+
+            Navigator.of(context).pop();
+          },
           dotsDecorator: DotsDecorator(
             activeColor: Theme.of(context).colorScheme.primary,
           ),
         ),
+    '/wifi': (context) => const WifiDetailedView(),
+    '/carrier': (context) => const CarrierDetailView(),
+    '/tools/ping': (context) => const PingView(),
+    '/tools/lan': (context) => const LanScannerView(),
+    '/tools/wol': (context) => const WakeOnLanView(),
+    '/tools/ip_geo': (context) => const IpGeoView(),
+    '/tools/whois': (context) => const WhoisView(),
+    '/tools/dns_lookup': (context) => const DnsLookupView(),
+  };
+
+  static final Map<String, Widget Function(BuildContext)> iOSroutes = {
+    '/introduction': (context) => Column(),
     '/wifi': (context) => const WifiDetailedView(),
     '/carrier': (context) => const CarrierDetailView(),
     '/tools/ping': (context) => const PingView(),
@@ -74,7 +91,7 @@ abstract class Constants {
 
   static const EdgeInsets bodyPadding = EdgeInsets.all(10.0);
   static const EdgeInsetsDirectional iOSbodyPadding =
-      EdgeInsetsDirectional.fromSTEB(20.0, 16.0, 20.0, 6.0);
+      EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 6.0);
 
   static const double listSpacing = 10.0;
 

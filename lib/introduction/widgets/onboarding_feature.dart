@@ -8,25 +8,30 @@ import 'package:network_arch/shared/cards/cards.dart';
 class OnboardingFeature extends StatelessWidget {
   const OnboardingFeature({
     required this.icon,
+    required this.iosIcon,
     required this.title,
     required this.description,
+    this.cardColor,
     Key? key,
   }) : super(key: key);
 
   final IconData icon;
+  final IconData iosIcon;
   final String title;
   final String description;
+  final Color? cardColor;
 
   @override
   Widget build(BuildContext context) {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
     return DataCard(
+      cardColor: cardColor,
       margin: EdgeInsets.zero,
       child: Row(
         children: [
           Icon(
-            icon,
+            Theme.of(context).platform == TargetPlatform.iOS ? iosIcon : icon,
             size: 36.0,
           ),
           const SizedBox(width: Constants.listSpacing),

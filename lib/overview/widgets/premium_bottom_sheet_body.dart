@@ -27,13 +27,22 @@ class PremiumBottomSheetBody extends StatefulWidget {
 
 class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
   Future<bool> isIapAvailableFuture = InAppPurchase.instance.isAvailable();
+
   RewardedAd? _rewardedAd;
+  bool _isRewardedAdReady = false;
 
   @override
   void initState() {
     super.initState();
 
     _setUpAds();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _rewardedAd?.dispose();
   }
 
   @override
@@ -121,7 +130,8 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
                 ),
                 const SizedBox(width: Constants.listSpacing),
                 AdaptiveButton(
-                  onPressed: () => _handleWatchAd(context),
+                  onPressed:
+                      _isRewardedAdReady ? () => _handleWatchAd(context) : null,
                   child: const Text('Watch ad'),
                 ),
                 const Spacer(),
@@ -138,18 +148,21 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
       adUnitId: getPremiumAdUnitId(),
       request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: (RewardedAd ad) {
+        onAdLoaded: (ad) {
+          _rewardedAd = ad;
+
+          setState(() {
+            _isRewardedAdReady = true;
+          });
+        },
+        onAdFailedToLoad: (err) {
           if (kDebugMode) {
-            print('$ad loaded.');
+            print('Failed to load a rewarded ad: ${err.message}');
           }
 
-          // Keep a reference to the ad so you can show it later.
-          _rewardedAd = ad;
-        },
-        onAdFailedToLoad: (LoadAdError error) {
-          if (kDebugMode) {
-            print('RewardedAd failed to load: $error');
-          }
+          setState(() {
+            _isRewardedAdReady = false;
+          });
         },
       ),
     );

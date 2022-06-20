@@ -19,7 +19,9 @@ class FilledButton extends StatelessWidget {
         onPrimary: Theme.of(context).colorScheme.onPrimary,
         // Background color
         primary: Theme.of(context).colorScheme.primary,
-      ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
+      ).copyWith(
+        elevation: ButtonStyleButton.allOrNull(0.0),
+      ),
       onPressed: onPressed,
       child: child,
     );

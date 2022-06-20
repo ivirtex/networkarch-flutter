@@ -88,6 +88,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
 
   Widget _buildBody(BuildContext context) {
     return ContentListView(
+      usePaddingOniOS: true,
       children: [
         IntrinsicHeight(
           child: Row(
@@ -108,25 +109,26 @@ class _DnsLookupViewState extends State<DnsLookupView> {
                 ),
               ),
               const SizedBox(width: 10),
-              Flexible(
-                child: DropdownButtonFormField<RrCodeName>(
-                  items: _getQueryTypes(),
-                  value: _selectedDnsQueryType,
-                  hint: const Text('Type'),
-                  icon: const Icon(Icons.arrow_downward_rounded),
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+              if (Theme.of(context).platform != TargetPlatform.iOS)
+                Flexible(
+                  child: DropdownButtonFormField<RrCodeName>(
+                    items: _getQueryTypes(),
+                    value: _selectedDnsQueryType,
+                    hint: const Text('Type'),
+                    icon: const Icon(Icons.arrow_downward_rounded),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                     ),
+                    isExpanded: true,
+                    onChanged: (type) {
+                      setState(() {
+                        _selectedDnsQueryType = type!;
+                      });
+                    },
                   ),
-                  isExpanded: true,
-                  onChanged: (type) {
-                    setState(() {
-                      _selectedDnsQueryType = type!;
-                    });
-                  },
                 ),
-              ),
             ],
           ),
         ),

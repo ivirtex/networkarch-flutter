@@ -85,6 +85,12 @@ abstract class Themes {
   static const CupertinoDynamicColor iOSCardColor =
       CupertinoColors.systemBackground;
 
+  static Color getIosBgColor(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.light
+        ? iOSlightBgColor
+        : iOSdarkBgColor;
+  }
+
   static Color getPlatformIconColor(BuildContext context) {
     return Theme.of(context).platform == TargetPlatform.iOS
         ? const CupertinoDynamicColor.withBrightness(

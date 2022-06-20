@@ -51,7 +51,9 @@ class ConnectionStatus extends StatelessWidget {
             Text(
               'Permission issue',
               style: TextStyle(
-                color: Theme.of(context).colorScheme.error,
+                color: isNetworkConnected
+                    ? Themes.getPlatformSuccessColor(context)
+                    : Themes.getPlatformErrorColor(context),
                 fontWeight: FontWeight.bold,
                 fontSize: 16.0,
               ),
@@ -60,7 +62,9 @@ class ConnectionStatus extends StatelessWidget {
             Icon(
               Icons.cancel,
               size: iconSize,
-              color: Theme.of(context).colorScheme.error,
+              color: isNetworkConnected
+                  ? Themes.getPlatformSuccessColor(context)
+                  : Themes.getPlatformErrorColor(context),
             ),
           ],
         );
@@ -70,7 +74,9 @@ class ConnectionStatus extends StatelessWidget {
             Text(
               'Error',
               style: TextStyle(
-                color: Theme.of(context).colorScheme.error,
+                color: isNetworkConnected
+                    ? Themes.getPlatformSuccessColor(context)
+                    : Themes.getPlatformErrorColor(context),
                 fontWeight: FontWeight.bold,
                 fontSize: 16.0,
               ),
@@ -79,7 +85,9 @@ class ConnectionStatus extends StatelessWidget {
             Icon(
               Icons.cancel,
               size: iconSize,
-              color: Theme.of(context).colorScheme.error,
+              color: isNetworkConnected
+                  ? Themes.getPlatformSuccessColor(context)
+                  : Themes.getPlatformErrorColor(context),
             ),
           ],
         );

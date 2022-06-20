@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -11,88 +12,92 @@ import 'package:network_arch/constants.dart';
 import 'package:network_arch/introduction/introduction.dart';
 import 'package:network_arch/permissions/permissions.dart';
 
-final List<PageViewModel> pagesList = [
-  PageViewModel(
-    title: 'Welcome to NetworkArch!',
-    image: SafeArea(
-      child: Builder(
-        builder: (context) {
-          final isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
-          const semanticsLabel = 'NetworkArch logo';
+List<PageViewModel> getPagesList(BuildContext context) {
+  final theme = Theme.of(context);
+  final isDarkModeOn = theme.brightness == Brightness.dark;
 
-          return isDarkModeOn
-              ? SvgPicture.asset(
-                  'assets/icons/icon_alpha_dark.svg',
-                  semanticsLabel: semanticsLabel,
-                )
-              : SvgPicture.asset(
-                  'assets/icons/icon_alpha_light.svg',
-                  semanticsLabel: semanticsLabel,
-                );
-        },
+  return <PageViewModel>[
+    PageViewModel(
+      title: 'Welcome to NetworkArch!',
+      image: SafeArea(
+        child: isDarkModeOn
+            ? SvgPicture.asset(
+                'assets/icons/icon_alpha_dark.svg',
+                semanticsLabel: 'NetworkArch logo',
+              )
+            : SvgPicture.asset(
+                'assets/icons/icon_alpha_light.svg',
+                semanticsLabel: 'NetworkArch logo',
+              ),
+      ),
+      decoration: const PageDecoration(
+        imagePadding: EdgeInsets.only(top: 40.0, bottom: 10.0),
+        bodyFlex: 3,
+      ),
+      bodyWidget: Column(
+        children: const [
+          Text(
+            Constants.appDesc,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 18.0),
+          ),
+          SizedBox(height: Constants.listSpacing),
+          OnboardingFeature(
+            icon: Icons.wifi_rounded,
+            iosIcon: CupertinoIcons.wifi,
+            title: 'Wi-Fi',
+            description:
+                'Explore detailed information about your Wi-Fi network',
+          ),
+          SizedBox(height: Constants.listSpacing),
+          OnboardingFeature(
+            icon: Icons.cell_tower_rounded,
+            iosIcon: CupertinoIcons.antenna_radiowaves_left_right,
+            title: 'Carrier',
+            description:
+                'Explore detailed information about your cellular network',
+          ),
+          SizedBox(height: Constants.listSpacing),
+          OnboardingFeature(
+            icon: Icons.settings_rounded,
+            iosIcon: CupertinoIcons.settings,
+            title: 'Utilities',
+            description:
+                'Test your networks thanks to various diagnostic tools such as ping, Wake on LAN, LAN Scanner and more',
+          ),
+        ],
       ),
     ),
-    decoration: const PageDecoration(
-      imagePadding: EdgeInsets.only(top: 40.0, bottom: 10.0),
-      bodyFlex: 3,
-    ),
-    bodyWidget: Column(
-      children: const [
-        Text(
-          Constants.appDesc,
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 18.0),
+    PageViewModel(
+      titleWidget: SafeArea(
+        child: Builder(
+          builder: (context) {
+            return Text(
+              'Permissions',
+              style: Theme.of(context).textTheme.headline6,
+            );
+          },
         ),
-        SizedBox(height: Constants.listSpacing),
-        OnboardingFeature(
-          icon: Icons.wifi_rounded,
-          title: 'WiFi',
-          description: 'Explore detailed information about your Wi-Fi network',
+      ),
+      useScrollView: false,
+      decoration: const PageDecoration(
+        titlePadding: EdgeInsets.symmetric(vertical: 16.0),
+        contentMargin: EdgeInsets.symmetric(
+          horizontal: 8.0,
         ),
-        SizedBox(height: Constants.listSpacing),
-        OnboardingFeature(
-          icon: Icons.cell_tower_rounded,
-          title: 'Carrier',
-          description:
-              'Explore detailed information about your cellular network',
+      ),
+      bodyWidget: const Expanded(
+        child: PermissionsView(),
+      ),
+      footer: Align(
+        alignment: Alignment.bottomCenter,
+        child: TextButton(
+          child: const Text('Open app settings'),
+          onPressed: () {
+            openAppSettings();
+          },
         ),
-        SizedBox(height: Constants.listSpacing),
-        OnboardingFeature(
-          icon: Icons.settings_rounded,
-          title: 'Tools',
-          description:
-              'Test your networks thanks to various diagnostic tools such as ping, Wake on LAN, LAN Scanner and more',
-        ),
-      ],
-    ),
-  ),
-  PageViewModel(
-    titleWidget: SafeArea(
-      child: Builder(
-        builder: (context) {
-          return Text(
-            'Permissions',
-            style: Theme.of(context).textTheme.headline6,
-          );
-        },
       ),
     ),
-    useScrollView: false,
-    decoration: const PageDecoration(
-      titlePadding: EdgeInsets.symmetric(vertical: 16.0),
-      contentMargin: EdgeInsets.symmetric(
-        horizontal: 8.0,
-      ),
-    ),
-    bodyWidget: const Expanded(child: PermissionsView()),
-    footer: Align(
-      alignment: Alignment.bottomCenter,
-      child: TextButton(
-        child: const Text('Open app settings'),
-        onPressed: () {
-          openAppSettings();
-        },
-      ),
-    ),
-  ),
-];
+  ];
+}

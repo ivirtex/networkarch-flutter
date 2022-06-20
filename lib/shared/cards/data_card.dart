@@ -12,6 +12,7 @@ class DataCard extends StatelessWidget {
     this.child,
     this.header,
     this.footer,
+    this.cardColor,
     this.margin = const EdgeInsets.only(bottom: 10.0),
     this.padding = const EdgeInsets.all(8.0),
   }) : super(key: key);
@@ -19,6 +20,7 @@ class DataCard extends StatelessWidget {
   final Widget? child;
   final String? header;
   final String? footer;
+  final Color? cardColor;
   final EdgeInsetsGeometry margin;
   final EdgeInsetsGeometry padding;
 
@@ -31,7 +33,7 @@ class DataCard extends StatelessWidget {
 
     // start with no extra blend on card, assume it is bit different from
     // scaffold background where this Card is designed to be placed.
-    Color cardColor = theme.cardColor;
+    Color defaultCardColor = theme.cardColor;
 
     if (Theme.of(context).platform == TargetPlatform.android) {
       // Scaling for the blend value, used to tune the look a bit.
@@ -43,24 +45,24 @@ class DataCard extends StatelessWidget {
       // design we want the Card on the scaffold to always have a slightly
       // different background color from scaffold background where it is placed,
       // not necessarily a lot, but always a bit at least.
-      if (cardColor == theme.scaffoldBackgroundColor) {
-        cardColor = Color.alphaBlend(
+      if (defaultCardColor == theme.scaffoldBackgroundColor) {
+        defaultCardColor = Color.alphaBlend(
           scheme.primary.withAlpha(blendFactor * 6),
-          cardColor,
+          defaultCardColor,
         );
       }
       // If it was header color that was equal, the adjustment on card, may
       // have caused card body to become equal to scaffold background, let's
       // check for it and adjust only it once again if it happened. Very unlikely
       // that this happens, but it is possible.
-      if (cardColor == theme.scaffoldBackgroundColor) {
-        cardColor = Color.alphaBlend(
+      if (defaultCardColor == theme.scaffoldBackgroundColor) {
+        defaultCardColor = Color.alphaBlend(
           scheme.primary.withAlpha(blendFactor * 2),
-          cardColor,
+          defaultCardColor,
         );
       }
     } else {
-      cardColor = CupertinoDynamicColor.resolve(
+      defaultCardColor = CupertinoDynamicColor.resolve(
         Themes.iOSCardColor,
         context,
       );
@@ -70,7 +72,7 @@ class DataCard extends StatelessWidget {
       children: [
         if (header != null) SmallDescription(text: header!),
         Card(
-          color: cardColor,
+          color: cardColor ?? defaultCardColor,
           elevation: 0.0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),

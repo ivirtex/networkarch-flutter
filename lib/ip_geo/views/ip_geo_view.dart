@@ -111,6 +111,7 @@ class _IpGeoViewState extends State<IpGeoView> {
 
   Widget _buildBody(BuildContext context) {
     return ContentListView(
+      usePaddingOniOS: true,
       children: [
         DomainTextField(
           controller: _targetHostController,

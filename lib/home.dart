@@ -9,12 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:introduction_screen/introduction_screen.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
-import 'package:network_arch/introduction/introduction_pages.dart';
 import 'package:network_arch/overview/views/overview_view.dart';
 import 'package:network_arch/permissions/permissions.dart';
 import 'package:network_arch/settings/settings.dart';
@@ -77,15 +75,9 @@ class _HomeState extends State<Home> {
             androidBuilder: _androidBuilder,
             iosBuilder: _iosBuilder,
           )
-        : IntroductionScreen(
-            pages: pagesList,
-            done: const Text('Done'),
-            next: const Icon(Icons.navigate_next),
-            onDone: () {
-              setState(() {
-                settingsBox.put('hasIntroductionBeenShown', true);
-              });
-            },
+        : PlatformWidget(
+            androidBuilder: Constants.routes['/introduction'],
+            iosBuilder: Constants.iOSroutes['/introduction'],
           );
   }
 

@@ -66,41 +66,33 @@ class _WhoisViewState extends State<WhoisView> {
           ),
         ],
       ),
-      body: _buildBody(),
+      body: _buildBody(context),
     );
   }
 
   Widget _buildIOS(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) {
-          return [
-            CupertinoSliverNavigationBar(
-              largeTitle: const Text('Whois'),
-              border: null,
-              trailing: CupertinoButton(
-                padding: EdgeInsets.zero,
-                onPressed: _handleCheck,
-                child: Text(
-                  'Check',
-                  style: TextStyle(
-                    color: CupertinoDynamicColor.resolve(
-                      CupertinoColors.activeGreen,
-                      context,
-                    ),
-                  ),
-                ),
-              ),
+    return CupertinoContentScaffold(
+      largeTitle: const Text('Whois'),
+      navBarTrailingWidget: CupertinoButton(
+        padding: EdgeInsets.zero,
+        onPressed: _handleCheck,
+        child: Text(
+          'Check',
+          style: TextStyle(
+            color: CupertinoDynamicColor.resolve(
+              CupertinoColors.activeGreen,
+              context,
             ),
-          ];
-        },
-        body: _buildBody(),
+          ),
+        ),
       ),
+      child: _buildBody(context),
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context) {
     return ContentListView(
+      usePaddingOniOS: true,
       children: [
         DomainTextField(
           controller: _targetHostController,
