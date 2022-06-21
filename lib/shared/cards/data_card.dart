@@ -12,7 +12,6 @@ class DataCard extends StatelessWidget {
     this.child,
     this.header,
     this.footer,
-    this.cardColor,
     this.margin = const EdgeInsets.only(bottom: 10.0),
     this.padding = const EdgeInsets.all(8.0),
   }) : super(key: key);
@@ -20,7 +19,6 @@ class DataCard extends StatelessWidget {
   final Widget? child;
   final String? header;
   final String? footer;
-  final Color? cardColor;
   final EdgeInsetsGeometry margin;
   final EdgeInsetsGeometry padding;
 
@@ -72,7 +70,7 @@ class DataCard extends StatelessWidget {
       children: [
         if (header != null) SmallDescription(text: header!),
         Card(
-          color: cardColor ?? defaultCardColor,
+          color: defaultCardColor,
           elevation: 0.0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),

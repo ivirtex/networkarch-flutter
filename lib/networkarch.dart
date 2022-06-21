@@ -131,8 +131,15 @@ class NetworkArch extends StatelessWidget {
   Widget _buildIOS(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
+        final bool isDark = state.mode == ThemeMode.dark;
+
         return MediaQuery.fromWindow(
           child: BetterFeedback(
+            theme: FeedbackThemeData(
+              background: isDark
+                  ? CupertinoColors.darkBackgroundGray
+                  : CupertinoColors.white,
+            ),
             child: CupertinoApp(
               useInheritedMediaQuery: true,
               localizationsDelegates: const [
@@ -147,7 +154,7 @@ class NetworkArch extends StatelessWidget {
               theme: state.mode == ThemeMode.light
                   ? Themes.cupertinoLightThemeData
                   : Themes.cupertinoDarkThemeData,
-              routes: Constants.routes,
+              routes: Constants.iOSroutes,
               home: const Home(),
             ),
           ),

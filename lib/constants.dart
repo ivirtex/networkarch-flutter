@@ -14,7 +14,9 @@ import 'package:network_arch/introduction/introduction.dart';
 import 'package:network_arch/ip_geo/ip_geo.dart';
 import 'package:network_arch/lan_scanner/lan_scanner.dart';
 import 'package:network_arch/network_status/network_status.dart';
+import 'package:network_arch/overview/overview.dart';
 import 'package:network_arch/ping/ping.dart';
+import 'package:network_arch/settings/settings.dart';
 import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
 import 'package:network_arch/whois/whois.dart';
 
@@ -45,8 +47,10 @@ abstract class Constants {
       'ca-app-pub-3940256099942544/5224354917';
 
   static final Map<String, Widget Function(BuildContext)> routes = {
+    '/overview': (context) => const OverviewView(),
+    '/settings': (context) => const SettingsView(),
     '/introduction': (context) => IntroductionScreen(
-          pages: getPagesList(context),
+          pages: pagesList,
           isTopSafeArea: true,
           isBottomSafeArea: true,
           controlsPadding: EdgeInsets.symmetric(
@@ -75,7 +79,27 @@ abstract class Constants {
   };
 
   static final Map<String, Widget Function(BuildContext)> iOSroutes = {
-    '/introduction': (context) => Column(),
+    '/overview': (context) => const OverviewView(),
+    '/settings': (context) => const SettingsView(),
+    '/introduction': (context) => IntroductionScreen(
+          pages: pagesList,
+          isTopSafeArea: true,
+          isBottomSafeArea: true,
+          controlsPadding: EdgeInsets.symmetric(
+            vertical: MediaQuery.of(context).padding.bottom,
+            horizontal: 16.0,
+          ),
+          done: const Text('Done'),
+          next: const Icon(Icons.navigate_next),
+          onDone: () {
+            Hive.box('settings').put('hasIntroductionBeenShown', true);
+
+            Navigator.of(context).pop();
+          },
+          dotsDecorator: DotsDecorator(
+            activeColor: Theme.of(context).colorScheme.primary,
+          ),
+        ),
     '/wifi': (context) => const WifiDetailedView(),
     '/carrier': (context) => const CarrierDetailView(),
     '/tools/ping': (context) => const PingView(),

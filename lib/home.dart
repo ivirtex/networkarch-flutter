@@ -149,13 +149,13 @@ class _HomeState extends State<Home> {
             return CupertinoTabView(
               defaultTitle: 'Overview',
               routes: Constants.routes,
-              builder: (context) => const OverviewView(),
+              builder: Constants.iOSroutes['/overview'],
             );
           case 1:
             return CupertinoTabView(
               defaultTitle: 'Settings',
               routes: Constants.routes,
-              builder: (context) => const SettingsView(),
+              builder: Constants.iOSroutes['/settings'],
             );
           default:
             throw 'Unexpected tab';

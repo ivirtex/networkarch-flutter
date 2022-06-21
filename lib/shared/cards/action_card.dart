@@ -21,7 +21,7 @@ class ActionCard extends StatelessWidget {
 
   final String title;
   final String? desc;
-  final IconData? icon;
+  final FaIcon? icon;
   final OutlinedBorder? shape;
   final VoidCallback? onTap;
 
@@ -36,7 +36,7 @@ class ActionCard extends StatelessWidget {
               if (icon != null)
                 Padding(
                   padding: const EdgeInsets.only(right: 14.0, left: 7.0),
-                  child: FaIcon(icon),
+                  child: icon,
                 ),
               Expanded(
                 flex: 5,
@@ -78,9 +78,25 @@ class ActionCard extends StatelessWidget {
       iosBuilder: (context) {
         return CupertinoListTile.notched(
           title: Text(title),
-          subtitle: desc != null ? Text(desc!) : null,
-          leading: icon != null ? Icon(icon) : null,
+          subtitle: desc != null
+              ? ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxWidth: 200.0,
+                    maxHeight: 200.0,
+                  ),
+                  child: Text(
+                    desc!,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                )
+              : null,
+          leading: icon,
           trailing: const CupertinoListTileChevron(),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 14.0,
+            vertical: 10.0,
+          ),
           onTap: onTap,
         );
       },

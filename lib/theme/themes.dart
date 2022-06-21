@@ -58,26 +58,14 @@ abstract class Themes {
 
   static final CupertinoThemeData cupertinoLightThemeData = CupertinoThemeData(
     brightness: Brightness.light,
-    scaffoldBackgroundColor: const CupertinoDynamicColor.withBrightness(
-      color: CupertinoColors.systemGrey6,
-      darkColor: CupertinoColors.black,
-    ),
-    barBackgroundColor: CupertinoDynamicColor.withBrightness(
-      color: CupertinoColors.systemGrey6.withOpacity(0.8),
-      darkColor: CupertinoColors.black.withOpacity(0.8),
-    ),
+    scaffoldBackgroundColor: CupertinoColors.systemGrey6,
+    barBackgroundColor: CupertinoColors.systemGrey6.withAlpha(200),
   );
 
   static final CupertinoThemeData cupertinoDarkThemeData = CupertinoThemeData(
     brightness: Brightness.dark,
-    scaffoldBackgroundColor: const CupertinoDynamicColor.withBrightness(
-      color: CupertinoColors.systemGrey6,
-      darkColor: CupertinoColors.black,
-    ),
-    barBackgroundColor: CupertinoDynamicColor.withBrightness(
-      color: CupertinoColors.systemGrey6.withOpacity(0.8),
-      darkColor: CupertinoColors.black.withOpacity(0.8),
-    ),
+    scaffoldBackgroundColor: CupertinoColors.black,
+    barBackgroundColor: CupertinoColors.black.withAlpha(200),
   );
 
   static const Color iOSlightBgColor = CupertinoColors.systemGrey5;

@@ -14,7 +14,7 @@ class RoundedList extends StatelessWidget {
     this.padding = const EdgeInsets.all(10.0),
     this.header,
     this.footer,
-    this.bgColor,
+    this.subtitle,
     Key? key,
   }) : super(key: key);
 
@@ -23,7 +23,7 @@ class RoundedList extends StatelessWidget {
   final EdgeInsets padding;
   final String? header;
   final String? footer;
-  final Color? bgColor;
+  final Widget? subtitle;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,9 @@ class RoundedList extends StatelessWidget {
               .map(
                 (ListTextLine child) => CupertinoListTile.notched(
                   title: child.widgetL,
-                  trailing: Flexible(
+                  subtitle: subtitle,
+                  trailing: Expanded(
+                    flex: 3,
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: child.widgetR,

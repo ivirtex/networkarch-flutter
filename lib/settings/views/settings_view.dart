@@ -70,28 +70,28 @@ class _SettingsViewState extends State<SettingsView> {
                 ActionCard(
                   title: 'Restore purchases',
                   desc: 'Restore purchases made in the past',
-                  icon: Icons.workspace_premium_rounded,
+                  icon: const FaIcon(Icons.workspace_premium_rounded),
                   onTap: _restorePurchases,
                 ),
                 const SizedBox(height: Constants.listSpacing),
                 ActionCard(
                   title: 'Onboarding screen',
                   desc: 'Resolve permissions issues',
-                  icon: Icons.info_outline_rounded,
+                  icon: const FaIcon(Icons.info_outline_rounded),
                   onTap: () => Navigator.pushNamed(context, '/introduction'),
                 ),
                 const SizedBox(height: Constants.listSpacing),
                 ActionCard(
                   title: 'Send feedback',
                   desc: 'Something is not working?',
-                  icon: Icons.feedback_outlined,
+                  icon: const FaIcon(Icons.feedback_outlined),
                   onTap: () => _sendFeedback(context),
                 ),
                 const SizedBox(height: Constants.listSpacing),
                 ActionCard(
                   title: 'Source code',
                   desc: 'Feel free to contribute!',
-                  icon: FontAwesomeIcons.github,
+                  icon: const FaIcon(FontAwesomeIcons.github),
                   onTap: _canLaunchUrl ? _openSourceCode : null,
                 ),
               ],
@@ -115,26 +115,20 @@ class _SettingsViewState extends State<SettingsView> {
                     ActionCard(
                       title: 'Restore purchases',
                       desc: 'Restore purchases made in the past',
-                      icon: CupertinoIcons.shopping_cart,
+                      icon: const FaIcon(CupertinoIcons.shopping_cart),
                       onTap: _restorePurchases,
                     ),
                     ActionCard(
                       title: 'Onboarding screen',
                       desc: 'Resolve permissions issues',
-                      icon: CupertinoIcons.info,
+                      icon: const FaIcon(CupertinoIcons.info),
                       onTap: () =>
                           Navigator.pushNamed(context, '/introduction'),
                     ),
                     ActionCard(
-                      title: 'Send feedback',
-                      desc: 'Something is not working?',
-                      icon: CupertinoIcons.reply,
-                      onTap: () => _sendFeedback(context),
-                    ),
-                    ActionCard(
                       title: 'Source code',
                       desc: 'Feel free to contribute!',
-                      icon: FontAwesomeIcons.github,
+                      icon: const FaIcon(FontAwesomeIcons.github),
                       onTap: _canLaunchUrl ? _openSourceCode : null,
                     ),
                   ],
@@ -142,6 +136,19 @@ class _SettingsViewState extends State<SettingsView> {
               ],
             );
           },
+        ),
+        CupertinoListSection.insetGrouped(
+          children: [
+            ActionCard(
+              title: 'Send feedback',
+              desc: 'Spotted a bug or something is not working?',
+              icon: const FaIcon(
+                CupertinoIcons.ant,
+                color: CupertinoColors.systemRed,
+              ),
+              onTap: () => _sendFeedback(context),
+            ),
+          ],
         ),
         // Compensate for the padding on iOS.
         const PackageInfoView(),

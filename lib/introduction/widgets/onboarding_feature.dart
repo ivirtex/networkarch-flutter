@@ -26,7 +26,6 @@ class OnboardingFeature extends StatelessWidget {
     final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
     return DataCard(
-      cardColor: cardColor,
       margin: EdgeInsets.zero,
       child: Row(
         children: [

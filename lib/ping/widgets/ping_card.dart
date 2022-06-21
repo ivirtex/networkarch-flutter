@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -26,17 +27,19 @@ class PingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
+
     return DataCard(
       padding: EdgeInsets.zero,
       child: ListTile(
         contentPadding: const EdgeInsets.only(left: 8.0, right: 16.0),
         leading: hasError
-            ? const StatusCard(
-                color: Colors.red,
+            ? StatusCard(
+                color: isIos ? CupertinoColors.systemRed : Colors.red,
                 text: 'Offline',
               )
-            : const StatusCard(
-                color: Colors.green,
+            : StatusCard(
+                color: isIos ? CupertinoColors.systemGreen : Colors.green,
                 text: 'Online',
               ),
         title: Text(
@@ -56,7 +59,10 @@ class PingCard extends StatelessWidget {
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Seq. pos.: ${item.response!.seq.toString()} '),
+                  Text(
+                    'Seq. pos.: ${item.response!.seq.toString()} ',
+                    style: Theme.of(context).textTheme.caption,
+                  ),
                   Text('TTL: ${item.response!.ttl.toString()}'),
                 ],
               ),
@@ -68,10 +74,16 @@ class PingCard extends StatelessWidget {
                 '${item.response!.time!.inMilliseconds.toString()} ms',
                 style: TextStyle(
                   color: item.response!.time!.inMilliseconds < 75
-                      ? Colors.green
+                      ? isIos
+                          ? CupertinoColors.systemGreen
+                          : Colors.green
                       : item.response!.time!.inMilliseconds < 150
-                          ? Colors.yellow[700]
-                          : Colors.red[700],
+                          ? isIos
+                              ? CupertinoColors.systemYellow
+                              : Colors.yellow[700]
+                          : isIos
+                              ? CupertinoColors.systemRed
+                              : Colors.red[700],
                 ),
               ),
       ),
