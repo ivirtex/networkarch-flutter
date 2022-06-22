@@ -68,16 +68,23 @@ abstract class Themes {
     barBackgroundColor: CupertinoColors.black.withAlpha(200),
   );
 
-  static const Color iOSlightBgColor = CupertinoColors.systemGrey5;
+  static const CupertinoDynamicColor iOSlightBgColor =
+      CupertinoColors.systemGrey6;
   static const Color iOSdarkBgColor = CupertinoColors.black;
-  static const CupertinoDynamicColor iOSCardColor =
-      CupertinoColors.systemBackground;
+  static const CupertinoDynamicColor iOSbgColor =
+      CupertinoDynamicColor.withBrightness(
+    color: iOSlightBgColor,
+    darkColor: iOSdarkBgColor,
+  );
 
-  static Color getIosBgColor(BuildContext context) {
-    return Theme.of(context).brightness == Brightness.light
-        ? iOSlightBgColor
-        : iOSdarkBgColor;
-  }
+  static const CupertinoDynamicColor iOSCardColor =
+      CupertinoColors.secondarySystemGroupedBackground;
+
+  // https://github.com/flutter/flutter/issues/48438
+  static const iOStextColor = CupertinoDynamicColor.withBrightness(
+    color: CupertinoColors.black,
+    darkColor: CupertinoColors.white,
+  );
 
   static Color getPlatformIconColor(BuildContext context) {
     return Theme.of(context).platform == TargetPlatform.iOS

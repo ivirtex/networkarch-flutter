@@ -111,13 +111,11 @@ class AdaptiveButton extends StatelessWidget {
       case ButtonType.outlined:
       case ButtonType.filled:
         return CupertinoButton.filled(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           onPressed: onPressed,
           child: child,
         );
       case ButtonType.text:
         return CupertinoButton(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           onPressed: onPressed,
           child: child,
         );

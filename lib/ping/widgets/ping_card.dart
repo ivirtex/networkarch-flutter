@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/ping/repository/repository.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/theme/themes.dart';
 
 class PingCard extends StatelessWidget {
   const PingCard({
@@ -44,16 +45,31 @@ class PingCard extends StatelessWidget {
               ),
         title: Text(
           addr.isEmpty ? 'N/A' : addr,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
+            color: isIos ? Themes.iOStextColor.resolveFrom(context) : null,
           ),
         ),
         subtitle: hasError
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Seq. pos.: ${list.indexOf(item) + 1}'),
-                  const Text('TTL: N/A'),
+                  Text(
+                    'Seq. pos.: ${list.indexOf(item) + 1}',
+                    style: TextStyle(
+                      color: isIos
+                          ? Themes.iOStextColor.resolveFrom(context)
+                          : null,
+                    ),
+                  ),
+                  Text(
+                    'TTL: N/A',
+                    style: TextStyle(
+                      color: isIos
+                          ? Themes.iOStextColor.resolveFrom(context)
+                          : null,
+                    ),
+                  ),
                 ],
               )
             : Column(
@@ -61,14 +77,31 @@ class PingCard extends StatelessWidget {
                 children: [
                   Text(
                     'Seq. pos.: ${item.response!.seq.toString()} ',
-                    style: Theme.of(context).textTheme.caption,
+                    style: Theme.of(context).textTheme.caption!.copyWith(
+                          color: isIos
+                              ? Themes.iOStextColor.resolveFrom(context)
+                              : null,
+                        ),
                   ),
-                  Text('TTL: ${item.response!.ttl.toString()}'),
+                  Text(
+                    'TTL: ${item.response!.ttl.toString()}',
+                    style: TextStyle(
+                      color: isIos
+                          ? Themes.iOStextColor.resolveFrom(context)
+                          : null,
+                    ),
+                  ),
                 ],
               ),
         trailing: hasError
             ? Text(
-                context.read<PingRepository>().getErrorDesc(item.error!),
+                context.read<PingRepository>().getErrorDesc(
+                      item.error!,
+                    ),
+                style: TextStyle(
+                  color:
+                      isIos ? Themes.iOStextColor.resolveFrom(context) : null,
+                ),
               )
             : Text(
                 '${item.response!.time!.inMilliseconds.toString()} ms',

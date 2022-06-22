@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/network_status/widgets/adaptive_button.dart';
 import 'package:network_arch/shared/shared.dart';
+import 'package:network_arch/theme/themes.dart';
 import 'package:network_arch/utils/in_app_purchases.dart';
 
 class PremiumBottomSheetBody extends StatefulWidget {
@@ -48,6 +50,8 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
 
   @override
   Widget build(BuildContext context) {
+    final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -58,17 +62,22 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
           children: [
             Text(
               'Help to maintain our servers',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(fontSize: 22.0),
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontSize: 22.0,
+                    color:
+                        isIOS ? Themes.iOStextColor.resolveFrom(context) : null,
+                  ),
             ),
             const SizedBox(height: 20),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 'Subscribe and get unlimited access to the following features:',
-                style: Theme.of(context).textTheme.labelLarge,
+                style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                      color: isIOS
+                          ? Themes.iOStextColor.resolveFrom(context)
+                          : null,
+                    ),
               ),
             ),
             const SizedBox(height: Constants.listSpacing),
@@ -100,13 +109,16 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
               alignment: Alignment.centerLeft,
               child: Text(
                 'Or watch a short ad to get one-time access to these tools.',
-                style: Theme.of(context).textTheme.labelLarge,
+                style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                      color: isIOS
+                          ? Themes.iOStextColor.resolveFrom(context)
+                          : null,
+                    ),
               ),
             ),
-            const SizedBox(height: Constants.listSpacing),
-            Row(
+            const Spacer(),
+            Column(
               children: [
-                const Spacer(),
                 FutureBuilder(
                   future: isIapAvailableFuture,
                   builder: (context, AsyncSnapshot<bool> isIapAvailable) {
@@ -125,20 +137,24 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
                       onPressed: isIapAvailable.data!
                           ? () => _handleSubscribe(context)
                           : null,
-                      child: const Text('Subscribe'),
+                      child: const Text(
+                        'Subscribe',
+                      ),
                     );
                   },
                 ),
                 const SizedBox(width: Constants.listSpacing),
                 AdaptiveButton(
-                  buttonType: ButtonType.filledTonal,
                   onPressed:
                       _isRewardedAdReady ? () => _handleWatchAd(context) : null,
                   child: _isRewardedAdReady
-                      ? const Text('Watch ad')
-                      : const Text('Loading'),
+                      ? const Text(
+                          'Watch ad',
+                        )
+                      : const Text(
+                          'Loading ad',
+                        ),
                 ),
-                const Spacer(),
               ],
             ),
           ],
@@ -235,11 +251,15 @@ class AdvantageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+
     return Row(
       children: [
-        const Icon(
+        Icon(
           Icons.check_circle_rounded,
-          color: Colors.green,
+          color: Theme.of(context).platform == TargetPlatform.iOS
+              ? CupertinoColors.systemGreen
+              : Colors.green,
         ),
         const SizedBox(width: 10),
         Expanded(
@@ -248,7 +268,11 @@ class AdvantageCard extends StatelessWidget {
             margin: EdgeInsets.zero,
             child: Row(
               children: [
-                Icon(icon),
+                Icon(
+                  icon,
+                  color:
+                      isIOS ? Themes.iOStextColor.resolveFrom(context) : null,
+                ),
                 const SizedBox(width: 10.0),
                 Expanded(
                   child: Column(
@@ -256,11 +280,19 @@ class AdvantageCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: Theme.of(context).textTheme.bodyLarge,
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              color: isIOS
+                                  ? Themes.iOStextColor.resolveFrom(context)
+                                  : null,
+                            ),
                       ),
                       Text(
                         subtitle,
-                        style: Theme.of(context).textTheme.caption,
+                        style: Theme.of(context).textTheme.caption!.copyWith(
+                              color: isIOS
+                                  ? Themes.iOStextColor.resolveFrom(context)
+                                  : null,
+                            ),
                       ),
                     ],
                   ),

@@ -10,6 +10,7 @@ import 'package:hive/hive.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/shared/shared.dart';
+import 'package:network_arch/theme/theme.dart';
 import 'package:network_arch/utils/utils.dart';
 import 'package:network_arch/whois/whois.dart';
 
@@ -91,6 +92,8 @@ class _WhoisViewState extends State<WhoisView> {
   }
 
   Widget _buildBody(BuildContext context) {
+    final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+
     return ContentListView(
       usePaddingOniOS: true,
       children: [
@@ -111,7 +114,14 @@ class _WhoisViewState extends State<WhoisView> {
               return SlideInUp(
                 child: FadeIn(
                   child: DataCard(
-                    child: Text(state.response),
+                    child: Text(
+                      state.response,
+                      style: TextStyle(
+                        color: isIOS
+                            ? Themes.iOStextColor.resolveFrom(context)
+                            : null,
+                      ),
+                    ),
                   ),
                 ),
               );

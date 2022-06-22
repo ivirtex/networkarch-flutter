@@ -64,6 +64,7 @@ class RoundedList extends StatelessWidget {
       iosBuilder: (context) {
         return CupertinoListSection.insetGrouped(
           hasLeading: false,
+          margin: padding,
           header: header != null ? Text(header!) : null,
           footer: footer != null ? Text(footer!) : null,
           children: children

@@ -16,6 +16,7 @@ import 'package:network_arch/network_status/bloc/bloc.dart';
 import 'package:network_arch/network_status/views/views.dart';
 import 'package:network_arch/overview/overview.dart';
 import 'package:network_arch/shared/shared.dart';
+import 'package:network_arch/theme/themes.dart';
 import 'package:network_arch/utils/utils.dart';
 
 class OverviewView extends StatefulWidget {
@@ -284,8 +285,8 @@ class _OverviewViewState extends State<OverviewView> {
     if (Theme.of(context).platform == TargetPlatform.iOS) {
       showCupertinoModalBottomSheet(
         context: context,
-        useRootNavigator: true,
-        builder: (context) => const PremiumBottomSheetBody(),
+        backgroundColor: Themes.iOSbgColor.resolveFrom(context),
+        builder: (_) => const PremiumBottomSheetBody(),
       );
     } else {
       showMaterialModalBottomSheet(
@@ -294,7 +295,7 @@ class _OverviewViewState extends State<OverviewView> {
           Theme.of(context).colorScheme.primary.withOpacity(0.03),
           Theme.of(context).colorScheme.surfaceVariant,
         ),
-        builder: (context) => const PremiumBottomSheetBody(),
+        builder: (_) => const PremiumBottomSheetBody(),
       );
     }
   }

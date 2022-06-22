@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -60,10 +59,7 @@ class DataCard extends StatelessWidget {
         );
       }
     } else {
-      defaultCardColor = CupertinoDynamicColor.resolve(
-        Themes.iOSCardColor,
-        context,
-      );
+      defaultCardColor = Themes.iOSCardColor.resolveFrom(context);
     }
 
     return Column(
