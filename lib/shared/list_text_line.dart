@@ -8,12 +8,14 @@ class ListTextLine extends StatelessWidget {
   const ListTextLine({
     required this.widgetL,
     this.widgetR,
+    this.subtitle,
     this.onRefreshTap,
     Key? key,
   }) : super(key: key);
 
   final Widget widgetL;
   final Widget? widgetR;
+  final Widget? subtitle;
   final VoidCallback? onRefreshTap;
 
   @override

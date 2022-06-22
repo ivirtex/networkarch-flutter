@@ -37,7 +37,7 @@ void showElegantNotification(
   BuildContext context,
   ElegantNotification notification,
 ) {
-  notification.background = Theme.of(context).colorScheme.surfaceVariant;
+  // notification.background = Themes.iOSCardColor.resolveFrom(context);
   notification.showProgressIndicator = false;
   notification.radius = 10.0;
 
@@ -48,5 +48,17 @@ void hideKeyboard(BuildContext context) {
   final FocusScopeNode currentFocus = FocusScope.of(context);
   if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
     FocusManager.instance.primaryFocus!.unfocus();
+  }
+}
+
+void showPlatformMessage(
+  BuildContext context, {
+  required SnackBar androidMessage,
+  required ElegantNotification iOSmessage,
+}) {
+  if (Theme.of(context).platform == TargetPlatform.iOS) {
+    showElegantNotification(context, iOSmessage);
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(androidMessage);
   }
 }

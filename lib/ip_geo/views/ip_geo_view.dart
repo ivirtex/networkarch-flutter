@@ -115,7 +115,6 @@ class _IpGeoViewState extends State<IpGeoView> {
       children: [
         DomainTextField(
           controller: _targetHostController,
-          label: 'IP address (e.g. 1.1.1.1)',
           onChanged: (_) {
             setState(() {
               _shouldCheckBeActive = _target.isNotEmpty && _isPremiumAvail;

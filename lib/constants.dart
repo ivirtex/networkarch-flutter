@@ -248,7 +248,7 @@ abstract class Constants {
   );
 
   static final ElegantNotification permissionDefaultNotification =
-      ElegantNotification.error(
+      ElegantNotification.info(
     title: const Text('Warning'),
     description: const Text(_permissionDefault),
     dismissible: true,

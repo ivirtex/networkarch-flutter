@@ -8,7 +8,7 @@ import 'package:network_arch/shared/shared.dart';
 class DomainTextField extends StatelessWidget {
   const DomainTextField({
     required this.controller,
-    required this.label,
+    this.label = 'IP address (e.g. 1.1.1.1) or domain',
     this.enabled,
     this.expands = false,
     this.errorText,

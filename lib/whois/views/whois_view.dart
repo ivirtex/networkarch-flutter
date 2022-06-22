@@ -99,7 +99,6 @@ class _WhoisViewState extends State<WhoisView> {
       children: [
         DomainTextField(
           controller: _targetHostController,
-          label: 'Domain name',
           onChanged: (_) {
             setState(() {
               _shouldCheckButtonBeActive =

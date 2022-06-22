@@ -38,12 +38,17 @@ class WifiDetailedView extends StatelessWidget {
   }
 
   Widget _buildDataList(BuildContext context) {
+    final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+
     return ContentListView(
+      usePaddingOniOS: true,
       children: [
         BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
           builder: (context, state) {
             return state.wifiStatus == NetworkStatus.success
                 ? RoundedList(
+                    padding:
+                        isIOS ? EdgeInsets.zero : const EdgeInsets.all(10.0),
                     children: [
                       ListTextLine(
                         widgetL: const Text('SSID'),
@@ -91,14 +96,19 @@ class WifiDetailedView extends StatelessWidget {
                         ListTextLine(
                           widgetL: const Text('External IPv4'),
                           widgetR: SelectableText(state.extIP ?? 'N/A'),
+                          subtitle: const Text('Tap to refresh'),
                           onRefreshTap: () => _handleExtIPRefresh(context),
                         )
                       else if (state.extIpStatus == NetworkStatus.loading)
-                        const ListTextLine(widgetL: Text('External IPv4'))
+                        const ListTextLine(
+                          widgetL: Text('External IPv4'),
+                          subtitle: Text('Tap to refresh'),
+                        )
                       else
                         ListTextLine(
                           widgetL: const Text('External IPv4'),
                           widgetR: const Text('N/A'),
+                          subtitle: const Text('Tap to refresh'),
                           onRefreshTap: () => _handleExtIPRefresh(context),
                         ),
                     ],

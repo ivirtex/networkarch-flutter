@@ -9,6 +9,7 @@ import 'package:hive/hive.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/overview/overview.dart';
 import 'package:network_arch/shared/shared.dart';
+import 'package:network_arch/utils/helpers.dart';
 
 class DebugSection extends StatelessWidget {
   const DebugSection({
@@ -89,24 +90,30 @@ class DebugSection extends StatelessWidget {
             ToolCard(
               toolName: 'Show permission granted',
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  Constants.permissionGrantedSnackbar,
+                showPlatformMessage(
+                  context,
+                  androidMessage: Constants.permissionGrantedSnackbar,
+                  iOSmessage: Constants.permissionGrantedNotification,
                 );
               },
             ),
             ToolCard(
               toolName: 'Show permission denied',
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  Constants.permissionDeniedSnackbar,
+                showPlatformMessage(
+                  context,
+                  androidMessage: Constants.permissionDeniedSnackbar,
+                  iOSmessage: Constants.permissionDeniedNotification,
                 );
               },
             ),
             ToolCard(
               toolName: 'Show permission default',
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  Constants.permissionDefaultSnackbar,
+                showPlatformMessage(
+                  context,
+                  androidMessage: Constants.permissionDefaultSnackbar,
+                  iOSmessage: Constants.permissionDefaultNotification,
                 );
               },
             ),

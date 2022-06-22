@@ -86,6 +86,8 @@ class _DnsLookupViewState extends State<DnsLookupView> {
   }
 
   Widget _buildBody(BuildContext context) {
+    final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+
     return ContentListView(
       usePaddingOniOS: true,
       children: [
@@ -153,7 +155,12 @@ class _DnsLookupViewState extends State<DnsLookupView> {
                       padding: const EdgeInsets.only(left: 10.0),
                       child: Text(
                         'Found ${state.response.answer.length} records',
-                        style: Theme.of(context).textTheme.caption,
+                        style: isIOS
+                            ? CupertinoTheme.of(context)
+                                .textTheme
+                                .tabLabelTextStyle
+                                .copyWith(fontSize: 14)
+                            : Theme.of(context).textTheme.caption,
                       ),
                     ),
                   ),
@@ -199,6 +206,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
+      itemCount: response.answer.length,
       itemBuilder: (context, index) {
         final record = response.answer[index];
 

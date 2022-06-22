@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_arch/theme/themes.dart';
 
 class ErrorCard extends StatelessWidget {
   const ErrorCard({
@@ -19,17 +20,13 @@ class ErrorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
-
     return DataCard(
       padding: const EdgeInsets.all(12),
       child: Row(
         children: [
           Icon(
             FontAwesomeIcons.circleXmark,
-            color: isIOS
-                ? CupertinoColors.systemRed
-                : Theme.of(context).colorScheme.error,
+            color: Themes.getPlatformErrorColor(context),
             size: 25,
           ),
           const SizedBox(width: 10),
@@ -37,9 +34,7 @@ class ErrorCard extends StatelessWidget {
             message ?? Constants.defaultError,
             style: TextStyle(
               fontSize: 15,
-              color: isIOS
-                  ? CupertinoColors.systemRed
-                  : Theme.of(context).colorScheme.error,
+              color: Themes.getPlatformSuccessColor(context),
             ),
           ),
         ],
