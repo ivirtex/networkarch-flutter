@@ -7,13 +7,13 @@ import 'package:network_arch/theme/themes.dart';
 
 class DataCard extends StatelessWidget {
   const DataCard({
-    Key? key,
+    super.key,
     this.child,
     this.header,
     this.footer,
-    this.margin = const EdgeInsets.only(bottom: 10.0),
-    this.padding = const EdgeInsets.all(8.0),
-  }) : super(key: key);
+    this.margin = const EdgeInsets.only(bottom: 10),
+    this.padding = const EdgeInsets.all(8),
+  });
 
   final Widget? child;
   final String? header;
@@ -23,18 +23,18 @@ class DataCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final ColorScheme scheme = theme.colorScheme;
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
 
-    final bool isDark = theme.brightness == Brightness.dark;
+    final isDark = theme.brightness == Brightness.dark;
 
     // start with no extra blend on card, assume it is bit different from
     // scaffold background where this Card is designed to be placed.
-    Color defaultCardColor = theme.cardColor;
+    var defaultCardColor = theme.cardColor;
 
     if (Theme.of(context).platform == TargetPlatform.android) {
       // Scaling for the blend value, used to tune the look a bit.
-      final int blendFactor = isDark ? 3 : 2;
+      final blendFactor = isDark ? 3 : 2;
 
       // If card or its header color, is equal to scaffold background, we will
       // adjust both and make them more primary tinted. This happens e.g. when we
@@ -67,9 +67,9 @@ class DataCard extends StatelessWidget {
         if (header != null) SmallDescription(text: header!),
         Card(
           color: defaultCardColor,
-          elevation: 0.0,
+          elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(10),
           ),
           margin: margin,
           child: Padding(

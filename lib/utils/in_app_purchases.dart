@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:async';
+
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +27,11 @@ void listenToPurchaseUpdated(
         'Received purchase: ${purchaseDetails.productID} with status: ${purchaseDetails.status}',
       );
     }
-    Sentry.captureMessage(
-      'Received purchase: ${purchaseDetails.productID} with status: ${purchaseDetails.status}',
+
+    unawaited(
+      Sentry.captureMessage(
+        'Received purchase: ${purchaseDetails.productID} with status: ${purchaseDetails.status}',
+      ),
     );
 
     if (purchaseDetails.status == PurchaseStatus.pending) {
@@ -35,7 +41,7 @@ void listenToPurchaseUpdated(
         _handleError(purchaseDetails.error!, context);
       } else if (purchaseDetails.status == PurchaseStatus.purchased ||
           purchaseDetails.status == PurchaseStatus.restored) {
-        _deliverProduct(purchaseDetails, context);
+        await _deliverProduct(purchaseDetails, context);
       }
       if (purchaseDetails.pendingCompletePurchase) {
         await InAppPurchase.instance.completePurchase(purchaseDetails);
@@ -45,7 +51,7 @@ void listenToPurchaseUpdated(
 }
 
 void _showPendingUI(BuildContext context) {
-  showPlatformDialog(
+  showPlatformDialog<void>(
     context: context,
     builder: (context) {
       return PlatformAlertDialog(
@@ -62,7 +68,7 @@ void _handleError(IAPError iapError, BuildContext context) {
     level: SentryLevel.error,
   );
 
-  showPlatformDialog(
+  showPlatformDialog<void>(
     context: context,
     builder: (context) {
       return PlatformAlertDialog(
@@ -87,10 +93,10 @@ Future<void> _deliverProduct(
   PurchaseDetails purchaseDetails,
   BuildContext context,
 ) async {
-  InAppPurchase.instance.completePurchase(purchaseDetails);
+  await InAppPurchase.instance.completePurchase(purchaseDetails);
 
   if (purchaseDetails.productID == 'com.hubertjozwiak.networkarch.premium') {
-    await Hive.box('iap').put('isPremiumGranted', true);
+    await Hive.box<bool>('iap').put('isPremiumGranted', true);
   }
 
   if (purchaseDetails.status != PurchaseStatus.restored) {

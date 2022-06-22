@@ -16,8 +16,8 @@ class DomainTextField extends StatelessWidget {
     this.suffixIcon,
     this.withoutPrefixIcon = false,
     this.onChanged,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final TextEditingController controller;
   final String label;
@@ -27,7 +27,7 @@ class DomainTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final Widget? suffixIcon;
   final bool withoutPrefixIcon;
-  final Function(String)? onChanged;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {

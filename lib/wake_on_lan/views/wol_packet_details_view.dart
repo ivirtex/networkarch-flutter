@@ -6,7 +6,7 @@ import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/wake_on_lan/models/wol_response_model.dart';
 
 class WolPacketDetailsView extends StatelessWidget {
-  const WolPacketDetailsView(this.response, {Key? key}) : super(key: key);
+  const WolPacketDetailsView(this.response, {super.key});
 
   final WolResponseModel response;
 

@@ -10,19 +10,19 @@ class ConnectionStatus extends StatelessWidget {
   const ConnectionStatus(
     this.status, {
     required this.connectionChecker,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final NetworkStatus status;
   final bool Function() connectionChecker;
 
   @override
   Widget build(BuildContext context) {
-    const double iconSize = 20.0;
+    const iconSize = 20;
 
     final isNetworkConnected = connectionChecker();
 
-    final bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+    final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
 
     switch (status) {
       case NetworkStatus.success:
@@ -35,10 +35,10 @@ class ConnectionStatus extends StatelessWidget {
                     ? Themes.getPlatformSuccessColor(context)
                     : Themes.getPlatformErrorColor(context),
                 fontWeight: FontWeight.bold,
-                fontSize: 16.0,
+                fontSize: 16,
               ),
             ),
-            const SizedBox(width: 5.0),
+            const SizedBox(width: 5),
             Icon(
               isIOS
                   ? isNetworkConnected
@@ -47,7 +47,7 @@ class ConnectionStatus extends StatelessWidget {
                   : isNetworkConnected
                       ? Icons.check_circle
                       : Icons.cancel,
-              size: iconSize,
+              size: iconSize.toDouble(),
               color: isNetworkConnected
                   ? Themes.getPlatformSuccessColor(context)
                   : Themes.getPlatformErrorColor(context),
@@ -64,13 +64,13 @@ class ConnectionStatus extends StatelessWidget {
                     ? Themes.getPlatformSuccessColor(context)
                     : Themes.getPlatformErrorColor(context),
                 fontWeight: FontWeight.bold,
-                fontSize: 16.0,
+                fontSize: 16,
               ),
             ),
-            const SizedBox(width: 5.0),
+            const SizedBox(width: 5),
             Icon(
               isIOS ? CupertinoIcons.xmark_circle_fill : Icons.cancel,
-              size: iconSize,
+              size: iconSize.toDouble(),
               color: isNetworkConnected
                   ? Themes.getPlatformSuccessColor(context)
                   : Themes.getPlatformErrorColor(context),
@@ -87,20 +87,21 @@ class ConnectionStatus extends StatelessWidget {
                     ? Themes.getPlatformSuccessColor(context)
                     : Themes.getPlatformErrorColor(context),
                 fontWeight: FontWeight.bold,
-                fontSize: 16.0,
+                fontSize: 16,
               ),
             ),
-            const SizedBox(width: 5.0),
+            const SizedBox(width: 5),
             Icon(
               isIOS ? CupertinoIcons.xmark_circle_fill : Icons.cancel,
-              size: iconSize,
+              size: iconSize.toDouble(),
               color: isNetworkConnected
                   ? Themes.getPlatformSuccessColor(context)
                   : Themes.getPlatformErrorColor(context),
             ),
           ],
         );
-      default:
+      case NetworkStatus.inital:
+      case NetworkStatus.loading:
         return Row(
           children: const [
             Text(
@@ -108,15 +109,15 @@ class ConnectionStatus extends StatelessWidget {
               style: TextStyle(
                 color: Colors.blue,
                 fontWeight: FontWeight.bold,
-                fontSize: 16.0,
+                fontSize: 16,
               ),
             ),
-            SizedBox(width: 5.0),
+            SizedBox(width: 5),
             SizedBox(
-              height: 16.0,
-              width: 16.0,
+              height: 16,
+              width: 16,
               child: CircularProgressIndicator.adaptive(
-                strokeWidth: 3.0,
+                strokeWidth: 3,
               ),
             ),
           ],

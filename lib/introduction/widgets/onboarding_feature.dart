@@ -12,8 +12,8 @@ class OnboardingFeature extends StatelessWidget {
     required this.title,
     required this.description,
     this.cardColor,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final IconData icon;
   final IconData iosIcon;
@@ -23,7 +23,7 @@ class OnboardingFeature extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+    final isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
     return DataCard(
       margin: EdgeInsets.zero,
@@ -31,7 +31,7 @@ class OnboardingFeature extends StatelessWidget {
         children: [
           Icon(
             Theme.of(context).platform == TargetPlatform.iOS ? iosIcon : icon,
-            size: 36.0,
+            size: 36,
           ),
           const SizedBox(width: Constants.listSpacing),
           Flexible(
@@ -42,7 +42,7 @@ class OnboardingFeature extends StatelessWidget {
                   title,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16.0,
+                    fontSize: 16,
                   ),
                 ),
                 Text(

@@ -31,7 +31,7 @@ class ThemeState extends Equatable {
   }
 
   factory ThemeState.fromJson(Map<String, dynamic> json) {
-    final Map<String, dynamic>? dynamicSchemeJson =
+    final dynamicSchemeJson =
         json['dynamicScheme'] as Map<String, dynamic>?;
 
     return ThemeState(

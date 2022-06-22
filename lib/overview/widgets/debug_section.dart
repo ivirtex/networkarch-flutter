@@ -13,8 +13,8 @@ import 'package:network_arch/utils/helpers.dart';
 
 class DebugSection extends StatelessWidget {
   const DebugSection({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,19 +24,19 @@ class DebugSection extends StatelessWidget {
           children: [
             const SmallDescription(
               text: 'Debug',
-              leftPadding: 8.0,
+              leftPadding: 8,
             ),
             ToolCard(
               toolName: 'Grant IAP',
               onPressed: () async {
-                await Hive.box('iap').put('ipPremiumGranted', true);
+                await Hive.box<bool>('iap').put('ipPremiumGranted', true);
               },
             ),
             const SizedBox(height: Constants.listSpacing),
             ToolCard(
               toolName: 'Clear IAP data',
               onPressed: () async {
-                await Hive.box('iap').put('isPremiumGranted', false);
+                await Hive.box<bool>('iap').put('isPremiumGranted', false);
               },
             ),
             const SizedBox(height: Constants.listSpacing),
@@ -78,13 +78,13 @@ class DebugSection extends StatelessWidget {
             ToolCard(
               toolName: 'Grant IAP',
               onPressed: () async {
-                await Hive.box('iap').put('isPremiumGranted', true);
+                await Hive.box<bool>('iap').put('isPremiumGranted', true);
               },
             ),
             ToolCard(
               toolName: 'Clear IAP data',
               onPressed: () async {
-                await Hive.box('iap').put('isPremiumGranted', false);
+                await Hive.box<bool>('iap').put('isPremiumGranted', false);
               },
             ),
             ToolCard(

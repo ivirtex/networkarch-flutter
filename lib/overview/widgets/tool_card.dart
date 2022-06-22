@@ -13,8 +13,8 @@ class ToolCard extends StatelessWidget {
     this.toolDesc,
     this.isPremium = false,
     this.onPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String toolName;
   final String? toolDesc;
@@ -31,7 +31,7 @@ class ToolCard extends StatelessWidget {
           shape: CircleBorder(
             side: isPremium
                 ? BorderSide(
-                    width: 2.0,
+                    width: 2,
                     color: Theme.of(context).colorScheme.tertiary,
                   )
                 : BorderSide.none,
@@ -45,8 +45,8 @@ class ToolCard extends StatelessWidget {
           subtitle: toolDesc != null
               ? ConstrainedBox(
                   constraints: const BoxConstraints(
-                    maxWidth: 200.0,
-                    maxHeight: 200.0,
+                    maxWidth: 200,
+                    maxHeight: 200,
                   ),
                   child: Text(
                     toolDesc!,

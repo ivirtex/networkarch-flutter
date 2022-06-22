@@ -10,8 +10,8 @@ class ThemePopupMenu extends StatelessWidget {
     required this.schemeIndex,
     required this.onChanged,
     this.contentPadding,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   final int schemeIndex;
   final ValueChanged<int> onChanged;
   // Defaults to 16, like ListTile does.
@@ -19,16 +19,16 @@ class ThemePopupMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final bool isLight = theme.brightness == Brightness.light;
+    final theme = Theme.of(context);
+    final isLight = theme.brightness == Brightness.light;
 
-    final ColorScheme colorScheme = theme.colorScheme;
+    final colorScheme = theme.colorScheme;
 
     return PopupMenuButton<int>(
       padding: EdgeInsets.zero,
       onSelected: onChanged,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(10),
       ),
       itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
         for (int i = 0; i < Themes.schemesListWithDynamic.length; i++)

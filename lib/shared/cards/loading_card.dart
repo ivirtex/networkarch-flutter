@@ -7,8 +7,8 @@ import 'package:network_arch/shared/list_circular_progress_indicator.dart';
 
 class LoadingCard extends StatelessWidget {
   const LoadingCard({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

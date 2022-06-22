@@ -6,8 +6,8 @@ class SmallDescription extends StatelessWidget {
     required this.text,
     this.leftPadding = 10.0,
     this.topPadding = 4.0,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String text;
   final double leftPadding;
@@ -18,7 +18,7 @@ class SmallDescription extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(
         left: leftPadding,
-        bottom: 4.0,
+        bottom: 4,
         top: topPadding,
       ),
       child: Align(

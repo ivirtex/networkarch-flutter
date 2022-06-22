@@ -11,11 +11,11 @@ import 'package:network_arch/shared/shared.dart';
 class RoundedList extends StatelessWidget {
   const RoundedList({
     required this.children,
-    this.padding = const EdgeInsets.all(10.0),
+    this.padding = const EdgeInsets.all(10),
     this.header,
     this.footer,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// Preferably a List of ListTextLine widgets.
   final List<ListTextLine> children;
@@ -31,7 +31,7 @@ class RoundedList extends StatelessWidget {
           children: [
             if (header != null) SmallDescription(text: header!),
             ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(10),
               child: DataCard(
                 margin: EdgeInsets.zero,
                 padding: EdgeInsets.zero,

@@ -14,7 +14,7 @@ import 'package:network_arch/shared/shared_widgets.dart';
 import 'package:network_arch/theme/themes.dart';
 
 class CarrierStatusCard extends StatelessWidget {
-  const CarrierStatusCard({Key? key}) : super(key: key);
+  const CarrierStatusCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class CarrierStatusCard extends StatelessWidget {
                             state.carrierInfo?.carrierName ?? 'N/A',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 20.0,
+                              fontSize: 20,
                             ),
                           ),
                           const Spacer(),
@@ -50,7 +50,7 @@ class CarrierStatusCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 15.0),
+                      const SizedBox(height: 15),
                       Row(
                         children: [
                           const Text('Network Generation'),
@@ -70,7 +70,7 @@ class CarrierStatusCard extends StatelessWidget {
                   AdaptiveButton(
                     buttonType: ButtonType.filledTonal,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     onPressed: state.isCarrierConnected
                         ? () => Navigator.pushNamed(context, '/carrier')
@@ -98,8 +98,8 @@ class CarrierStatusCard extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 14.0,
-                    vertical: 10.0,
+                    horizontal: 14,
+                    vertical: 10,
                   ),
                   child: Column(
                     children: [
@@ -110,7 +110,7 @@ class CarrierStatusCard extends StatelessWidget {
                             state.carrierInfo?.carrierName ?? 'N/A',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 20.0,
+                              fontSize: 20,
                             ),
                           ),
                           const Spacer(),
@@ -121,7 +121,7 @@ class CarrierStatusCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20.0),
+                      const SizedBox(height: 20),
                       Row(
                         children: [
                           const Text('Network Generation'),

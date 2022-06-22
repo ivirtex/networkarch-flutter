@@ -1,4 +1,4 @@
-include: package:lint/analysis_options.yaml
+include: package:very_good_analysis/analysis_options.yaml
 
 analyzer:
   plugins:
@@ -6,6 +6,9 @@ analyzer:
 
 linter:
   rules:
+    library_private_types_in_public_api: false
+    public_member_api_docs: false
+
     # ------ Disable individual rules ----- #
     #                 ---                   #
     # Turn off what you don't like.         #

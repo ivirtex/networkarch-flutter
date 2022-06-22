@@ -10,8 +10,8 @@ class ContentListView extends StatelessWidget {
     required this.children,
     this.scrollController,
     this.usePaddingOniOS = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final List<Widget> children;
   final ScrollController? scrollController;

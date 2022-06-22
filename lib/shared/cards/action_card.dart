@@ -16,8 +16,8 @@ class ActionCard extends StatelessWidget {
     this.icon,
     this.shape,
     this.onTap,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final String? desc;
@@ -35,7 +35,7 @@ class ActionCard extends StatelessWidget {
             children: [
               if (icon != null)
                 Padding(
-                  padding: const EdgeInsets.only(right: 14.0, left: 7.0),
+                  padding: const EdgeInsets.only(right: 14, left: 7),
                   child: icon,
                 ),
               Expanded(
@@ -47,7 +47,7 @@ class ActionCard extends StatelessWidget {
                       title,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
+                        fontSize: 20,
                       ),
                     ),
                     if (desc != null)
@@ -81,8 +81,8 @@ class ActionCard extends StatelessWidget {
           subtitle: desc != null
               ? ConstrainedBox(
                   constraints: const BoxConstraints(
-                    maxWidth: 200.0,
-                    maxHeight: 200.0,
+                    maxWidth: 200,
+                    maxHeight: 200,
                   ),
                   child: Text(
                     desc!,
@@ -94,8 +94,8 @@ class ActionCard extends StatelessWidget {
           leading: icon,
           trailing: const CupertinoListTileChevron(),
           padding: const EdgeInsets.symmetric(
-            horizontal: 14.0,
-            vertical: 10.0,
+            horizontal: 14,
+            vertical: 10,
           ),
           onTap: onTap,
         );

@@ -49,8 +49,8 @@ class WakeOnLanBloc extends Bloc<WakeOnLanEvent, WakeOnLanState> {
       return;
     }
 
-    final WakeOnLAN wol = WakeOnLAN(_ipv4, _mac);
-    final List<int> packetBytes = wol.magicPacket();
+    final wol = WakeOnLAN(_ipv4, _mac);
+    final packetBytes = wol.magicPacket();
     await wol.wake();
 
     emit(WakeOnLanSuccess(ipv4: _ipv4, mac: _mac, packetBytes: packetBytes));

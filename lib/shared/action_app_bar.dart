@@ -7,8 +7,8 @@ class ActionAppBar extends StatefulWidget with PreferredSizeWidget {
     required this.isActive,
     required this.onStartPressed,
     required this.onStopPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final bool isActive;
@@ -54,7 +54,7 @@ class ActionAppBarState extends State<ActionAppBar>
         IconButton(
           icon: AnimatedIcon(
             icon: AnimatedIcons.play_pause,
-            size: 30.0,
+            size: 30,
             progress: _controller,
           ),
           onPressed: () {

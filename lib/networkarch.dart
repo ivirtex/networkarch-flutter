@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:async';
+
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +10,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:feedback/feedback.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
@@ -21,11 +25,12 @@ import 'package:network_arch/permissions/permissions.dart';
 import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 import 'package:network_arch/theme/theme.dart';
+import 'package:network_arch/utils/utils.dart';
 import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
 import 'package:network_arch/whois/whois.dart';
 
 class NetworkArch extends StatelessWidget {
-  NetworkArch({Key? key}) : super(key: key);
+  NetworkArch({super.key});
 
   final NetworkStatusRepository networkStatusRepository =
       NetworkStatusRepository();
@@ -37,6 +42,8 @@ class NetworkArch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    setUpIAP(context);
+
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider.value(value: networkStatusRepository),
@@ -131,7 +138,7 @@ class NetworkArch extends StatelessWidget {
   Widget _buildIOS(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
-        final bool isDark = state.mode == ThemeMode.dark;
+        final isDark = state.mode == ThemeMode.dark;
 
         return MediaQuery.fromWindow(
           child: BetterFeedback(
@@ -154,7 +161,7 @@ class NetworkArch extends StatelessWidget {
               theme: state.mode == ThemeMode.light
                   ? Themes.cupertinoLightThemeData
                   : Themes.cupertinoDarkThemeData,
-              routes: Constants.iOSroutes,
+              routes: Constants.routes,
               home: const Home(),
             ),
           ),
@@ -203,18 +210,35 @@ class NetworkArch extends StatelessWidget {
 
       final themeBloc = context.read<ThemeBloc>();
       if (themeBloc.state.dynamicScheme != newDynamicScheme) {
-        themeBloc.add(
-          ThemeDynamicSchemeChangedEvent(
-            newDynamicScheme: newDynamicScheme,
-          ),
-        );
-
-        themeBloc.add(
-          const ThemeSchemeChangedEvent(
-            scheme: CustomFlexScheme.dynamic,
-          ),
-        );
+        themeBloc
+          ..add(
+            ThemeDynamicSchemeChangedEvent(
+              newDynamicScheme: newDynamicScheme,
+            ),
+          )
+          ..add(
+            const ThemeSchemeChangedEvent(
+              scheme: CustomFlexScheme.dynamic,
+            ),
+          );
       }
     }
   }
+}
+
+void setUpIAP(BuildContext context) {
+  late StreamSubscription<List<PurchaseDetails>> _subscription;
+
+  final purchaseUpdated = InAppPurchase.instance.purchaseStream;
+  _subscription = purchaseUpdated.listen(
+    (purchaseDetailsList) {
+      listenToPurchaseUpdated(purchaseDetailsList, context);
+    },
+    onDone: () {
+      _subscription.cancel();
+    },
+    onError: (dynamic error) {
+      Sentry.captureException(error);
+    },
+  );
 }

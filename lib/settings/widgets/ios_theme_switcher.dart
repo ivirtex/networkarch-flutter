@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:network_arch/theme/theme.dart';
 
 class IOSThemeSwitcher extends StatefulWidget {
-  const IOSThemeSwitcher({Key? key}) : super(key: key);
+  const IOSThemeSwitcher({super.key});
 
   @override
   State<IOSThemeSwitcher> createState() => _IOSThemeSwitcherState();
@@ -20,7 +20,6 @@ class _IOSThemeSwitcherState extends State<IOSThemeSwitcher> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     _selectedThemeMode = context.read<ThemeBloc>().state.mode;

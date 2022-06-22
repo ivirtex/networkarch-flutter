@@ -33,7 +33,7 @@ final List<PageViewModel> pagesList = [
       ),
     ),
     decoration: const PageDecoration(
-      imagePadding: EdgeInsets.only(top: 40.0, bottom: 10.0),
+      imagePadding: EdgeInsets.only(top: 40, bottom: 10),
       bodyFlex: 3,
     ),
     bodyWidget: Column(
@@ -41,7 +41,7 @@ final List<PageViewModel> pagesList = [
         Text(
           Constants.appDesc,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 18.0),
+          style: TextStyle(fontSize: 18),
         ),
         SizedBox(height: Constants.listSpacing),
         OnboardingFeature(
@@ -82,21 +82,19 @@ final List<PageViewModel> pagesList = [
     ),
     useScrollView: false,
     decoration: const PageDecoration(
-      titlePadding: EdgeInsets.symmetric(vertical: 16.0),
+      titlePadding: EdgeInsets.symmetric(vertical: 16),
       contentMargin: EdgeInsets.symmetric(
-        horizontal: 8.0,
+        horizontal: 8,
       ),
     ),
     bodyWidget: const Expanded(
       child: PermissionsView(),
     ),
-    footer: Align(
+    footer: const Align(
       alignment: Alignment.bottomCenter,
       child: TextButton(
-        child: const Text('Open app settings'),
-        onPressed: () {
-          openAppSettings();
-        },
+        onPressed: openAppSettings,
+        child: Text('Open app settings'),
       ),
     ),
   ),

@@ -11,8 +11,8 @@ class CupertinoActionAppBar extends StatelessWidget {
     required this.action,
     required this.isActive,
     this.onPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final BuildContext context;
   final String title;

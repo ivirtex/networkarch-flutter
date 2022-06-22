@@ -10,8 +10,8 @@ class ListTextLine extends StatelessWidget {
     this.widgetR,
     this.subtitle,
     this.onRefreshTap,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget widgetL;
   final Widget? widgetR;
@@ -20,11 +20,11 @@ class ListTextLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: improve alignment of widgets on wrap
+    // TODO(ivirtex): improve alignment of widgets on wrap
     return Wrap(
       alignment: WrapAlignment.spaceBetween,
-      runSpacing: 5.0,
-      spacing: 5.0,
+      runSpacing: 5,
+      spacing: 5,
       children: [
         widgetL,
         Row(
@@ -33,9 +33,9 @@ class ListTextLine extends StatelessWidget {
             if (onRefreshTap != null)
               IconButton(
                 constraints: const BoxConstraints(),
-                padding: const EdgeInsets.only(right: 4.0),
-                splashRadius: 12.0,
-                iconSize: 16.0,
+                padding: const EdgeInsets.only(right: 4),
+                splashRadius: 12,
+                iconSize: 16,
                 icon: const Icon(
                   Icons.refresh,
                   color: Colors.blue,

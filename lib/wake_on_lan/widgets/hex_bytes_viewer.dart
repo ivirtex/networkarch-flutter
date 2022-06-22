@@ -9,8 +9,8 @@ class HexBytesViewer extends StatelessWidget {
   const HexBytesViewer({
     required this.title,
     required this.bytes,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final List<int> bytes;
@@ -38,9 +38,9 @@ class HexBytesViewer extends StatelessWidget {
                   CupertinoColors.systemGrey6,
                   context,
                 ),
-          elevation: 0.0,
+          elevation: 0,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             child: Column(
               children: [
                 GridView.count(

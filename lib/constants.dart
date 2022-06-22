@@ -17,6 +17,7 @@ import 'package:network_arch/network_status/network_status.dart';
 import 'package:network_arch/overview/overview.dart';
 import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/settings/settings.dart';
+import 'package:network_arch/theme/themes.dart';
 import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
 import 'package:network_arch/whois/whois.dart';
 
@@ -53,48 +54,15 @@ abstract class Constants {
           pages: pagesList,
           isTopSafeArea: true,
           isBottomSafeArea: true,
+          globalBackgroundColor: Themes.iOSbgColor.resolveFrom(context),
           controlsPadding: EdgeInsets.symmetric(
             vertical: MediaQuery.of(context).padding.bottom,
-            horizontal: 16.0,
+            horizontal: 16,
           ),
           done: const Text('Done'),
           next: const Icon(Icons.navigate_next),
           onDone: () {
-            Hive.box('settings').put('hasIntroductionBeenShown', true);
-
-            Navigator.of(context).pop();
-          },
-          dotsDecorator: DotsDecorator(
-            activeColor: Theme.of(context).colorScheme.primary,
-          ),
-        ),
-    '/wifi': (context) => const WifiDetailedView(),
-    '/carrier': (context) => const CarrierDetailView(),
-    '/tools/ping': (context) => const PingView(),
-    '/tools/lan': (context) => const LanScannerView(),
-    '/tools/wol': (context) => const WakeOnLanView(),
-    '/tools/ip_geo': (context) => const IpGeoView(),
-    '/tools/whois': (context) => const WhoisView(),
-    '/tools/dns_lookup': (context) => const DnsLookupView(),
-  };
-
-  static final Map<String, Widget Function(BuildContext)> iOSroutes = {
-    '/overview': (context) => const OverviewView(),
-    '/settings': (context) => const SettingsView(),
-    '/introduction': (context) => IntroductionScreen(
-          pages: pagesList,
-          isTopSafeArea: true,
-          isBottomSafeArea: true,
-          controlsPadding: EdgeInsets.symmetric(
-            vertical: MediaQuery.of(context).padding.bottom,
-            horizontal: 16.0,
-          ),
-          done: const Text('Done'),
-          next: const Icon(Icons.navigate_next),
-          onDone: () {
-            Hive.box('settings').put('hasIntroductionBeenShown', true);
-
-            Navigator.of(context).pop();
+            Hive.box<bool>('settings').put('hasIntroductionBeenShown', true);
           },
           dotsDecorator: DotsDecorator(
             activeColor: Theme.of(context).colorScheme.primary,
@@ -111,17 +79,17 @@ abstract class Constants {
   };
 
   // Styles
-  static const EdgeInsets listPadding = EdgeInsets.all(10.0);
+  static const EdgeInsets listPadding = EdgeInsets.all(10);
 
-  static const EdgeInsets bodyPadding = EdgeInsets.all(10.0);
+  static const EdgeInsets bodyPadding = EdgeInsets.all(10);
   static const EdgeInsetsDirectional iOSbodyPadding =
-      EdgeInsetsDirectional.fromSTEB(18.5, 0.0, 18.5, 6.0);
+      EdgeInsetsDirectional.fromSTEB(18.5, 0, 18.5, 6);
 
-  static const double listSpacing = 10.0;
+  static const double listSpacing = 10;
 
-  static const double linearProgressWidth = 50.0;
+  static const double linearProgressWidth = 50;
 
-  static const double listDividerIndent = 14.0;
+  static const double listDividerIndent = 14;
 
   // Description styles
   static final TextStyle descStyleLight = TextStyle(
@@ -181,7 +149,7 @@ abstract class Constants {
     content: Row(
       children: const [
         Icon(Icons.check_circle_rounded, color: Colors.green),
-        SizedBox(width: 10.0),
+        SizedBox(width: 10),
         Expanded(child: Text(_permissionGranted)),
       ],
     ),
@@ -191,13 +159,13 @@ abstract class Constants {
     content: Row(
       children: const [
         Icon(Icons.error_rounded, color: Colors.red),
-        SizedBox(width: 10.0),
+        SizedBox(width: 10),
         Expanded(child: Text(_permissionDenied)),
       ],
     ),
-    action: SnackBarAction(
+    action: const SnackBarAction(
       label: 'Open settings',
-      onPressed: () => openAppSettings(),
+      onPressed: openAppSettings,
     ),
   );
 
@@ -205,13 +173,13 @@ abstract class Constants {
     content: Row(
       children: const [
         Icon(Icons.warning_rounded, color: Colors.orange),
-        SizedBox(width: 10.0),
+        SizedBox(width: 10),
         Expanded(child: Text(_permissionDefault)),
       ],
     ),
-    action: SnackBarAction(
+    action: const SnackBarAction(
       label: 'Open settings',
-      onPressed: () => openAppSettings(),
+      onPressed: openAppSettings,
     ),
   );
 
@@ -232,9 +200,9 @@ abstract class Constants {
     notificationPosition: NotificationPosition.bottom,
     animation: AnimationType.fromBottom,
     toastDuration: const Duration(milliseconds: 4000),
-    height: 140.0,
+    height: 140,
     action: const Padding(
-      padding: EdgeInsets.only(top: 10.0),
+      padding: EdgeInsets.only(top: 10),
       child: Text(
         'Open Settings',
         style: TextStyle(

@@ -13,7 +13,7 @@ import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/utils/utils.dart';
 
 class PingView extends StatefulWidget {
-  const PingView({Key? key}) : super(key: key);
+  const PingView({super.key});
 
   @override
   _PingViewState createState() => _PingViewState();
@@ -64,7 +64,7 @@ class _PingViewState extends State<PingView> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    final String routedAddr =
+    final routedAddr =
         // ignore: cast_nullable_to_non_nullable
         ModalRoute.of(context)!.settings.arguments as String;
     _targetHostController.text = routedAddr;
@@ -100,7 +100,7 @@ class _PingViewState extends State<PingView> {
               child: const Icon(Icons.arrow_upward_rounded),
               onPressed: () {
                 _scrollController.animateTo(
-                  0.0,
+                  0,
                   duration: const Duration(seconds: 1),
                   curve: Curves.easeInOut,
                 );
@@ -161,7 +161,7 @@ class _PingViewState extends State<PingView> {
                   );
                 },
               ),
-              const SizedBox(width: 10.0),
+              const SizedBox(width: 10),
               BlocBuilder<PingBloc, PingState>(
                 builder: (context, state) {
                   if (state is PingRunComplete && _pingData.isNotEmpty) {

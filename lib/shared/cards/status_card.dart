@@ -5,8 +5,8 @@ class StatusCard extends StatelessWidget {
   const StatusCard({
     required this.text,
     required this.color,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String text;
   final Color color;
@@ -15,12 +15,12 @@ class StatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: color,
-      elevation: 0.0,
+      elevation: 0,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10),
         child: Text(
           text,
           style: const TextStyle(color: Colors.white),

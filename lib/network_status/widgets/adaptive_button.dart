@@ -12,8 +12,8 @@ class AdaptiveButton extends StatelessWidget {
     this.shape,
     this.opacity,
     this.onPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   factory AdaptiveButton.filled({
     required Widget child,
@@ -65,7 +65,7 @@ class AdaptiveButton extends StatelessWidget {
                 .withOpacity(opacity ?? 0.8),
             shape: shape,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
+          ).copyWith(elevation: ButtonStyleButton.allOrNull(0)),
           onPressed: onPressed,
           child: child,
         );
@@ -82,7 +82,7 @@ class AdaptiveButton extends StatelessWidget {
             shape: shape,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ).copyWith(
-            elevation: ButtonStyleButton.allOrNull(0.0),
+            elevation: ButtonStyleButton.allOrNull(0),
           ),
           onPressed: onPressed,
           child: child,

@@ -18,8 +18,8 @@ class PingCard extends StatelessWidget {
     required this.item,
     required this.addr,
     this.hasError = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final AnimatedListModel<PingData?> list;
   final PingData item;
@@ -28,12 +28,12 @@ class PingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
+    final isIos = Theme.of(context).platform == TargetPlatform.iOS;
 
     return DataCard(
       padding: EdgeInsets.zero,
       child: ListTile(
-        contentPadding: const EdgeInsets.only(left: 8.0, right: 16.0),
+        contentPadding: const EdgeInsets.only(left: 8, right: 16),
         leading: hasError
             ? StatusCard(
                 color: isIos ? CupertinoColors.systemRed : Colors.red,

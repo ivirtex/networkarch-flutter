@@ -35,12 +35,12 @@ void main() {
     if (Platform.isIOS) DartPingIOS.register();
 
     await Hive.initFlutter();
-    await Hive.openBox('settings');
-    await Hive.openBox('iap');
+    await Hive.openBox<bool>('settings');
+    await Hive.openBox<bool>('iap');
 
-    MobileAds.instance.initialize();
+    await MobileAds.instance.initialize();
 
-    HydratedBlocOverrides.runZoned(
+    await HydratedBlocOverrides.runZoned(
       () async {
         await SentryFlutter.init(
           (options) => {

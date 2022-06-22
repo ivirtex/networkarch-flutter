@@ -20,7 +20,7 @@ import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/utils/utils.dart';
 
 class IpGeoView extends StatefulWidget {
-  const IpGeoView({Key? key}) : super(key: key);
+  const IpGeoView({super.key});
 
   @override
   State<IpGeoView> createState() => _IpGeoViewState();
@@ -123,15 +123,15 @@ class _IpGeoViewState extends State<IpGeoView> {
         ),
         const SizedBox(height: Constants.listSpacing),
         ClipRRect(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(10),
           child: SizedBox(
             height: 300,
             child: GoogleMap(
               markers: _markers.values.toSet(),
               initialCameraPosition: const CameraPosition(target: LatLng(0, 0)),
-              gestureRecognizers: {
+              gestureRecognizers: const {
                 Factory<OneSequenceGestureRecognizer>(
-                  () => EagerGestureRecognizer(),
+                  EagerGestureRecognizer.new,
                 ),
               },
               onMapCreated: (GoogleMapController controller) {
@@ -223,7 +223,7 @@ class _IpGeoViewState extends State<IpGeoView> {
 
   void _handleCheck() {
     setState(() {
-      Hive.box('iap').put('isPremiumTempGranted', false);
+      Hive.box<bool>('iap').put('isPremiumTempGranted', false);
 
       _isPremiumAvail = isPremiumActive();
     });

@@ -9,7 +9,7 @@ import 'package:network_arch/network_status/network_status.dart';
 import 'package:network_arch/shared/shared.dart';
 
 class CarrierDetailView extends StatelessWidget {
-  const CarrierDetailView({Key? key}) : super(key: key);
+  const CarrierDetailView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +47,7 @@ class CarrierDetailView extends StatelessWidget {
           builder: (context, state) {
             return state.wifiStatus == NetworkStatus.success
                 ? RoundedList(
-                    padding:
-                        isIOS ? EdgeInsets.zero : const EdgeInsets.all(10.0),
+                    padding: isIOS ? EdgeInsets.zero : const EdgeInsets.all(10),
                     children: [
                       ListTextLine(
                         widgetL: const Text('VoIP Support'),

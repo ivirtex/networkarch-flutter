@@ -18,7 +18,7 @@ class WhoisApi {
     try {
       response = await _httpClient.get(request);
     } catch (exc, stackTrace) {
-      Sentry.captureException(exc, stackTrace: stackTrace);
+      await Sentry.captureException(exc, stackTrace: stackTrace);
 
       throw WhoisRequestFailure();
     }

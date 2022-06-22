@@ -14,7 +14,7 @@ import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/utils/utils.dart';
 
 class DnsLookupView extends StatefulWidget {
-  const DnsLookupView({Key? key}) : super(key: key);
+  const DnsLookupView({super.key});
 
   @override
   _DnsLookupViewState createState() => _DnsLookupViewState();
@@ -119,7 +119,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
                     icon: const Icon(Icons.arrow_downward_rounded),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     isExpanded: true,
@@ -152,7 +152,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
+                      padding: const EdgeInsets.only(left: 10),
                       child: Text(
                         'Found ${state.response.answer.length} records',
                         style: isIOS
@@ -179,7 +179,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
 
   void _handleCheck() {
     setState(() {
-      Hive.box('iap').put('isPremiumTempGranted', false);
+      Hive.box<bool>('iap').put('isPremiumTempGranted', false);
 
       _isPremiumAvail = isPremiumActive();
     });

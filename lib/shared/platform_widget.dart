@@ -6,13 +6,11 @@ class PlatformWidget extends StatelessWidget {
   const PlatformWidget({
     this.androidBuilder,
     this.iosBuilder,
-    this.windowsBuilder,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final WidgetBuilder? androidBuilder;
   final WidgetBuilder? iosBuilder;
-  final WidgetBuilder? windowsBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +20,9 @@ class PlatformWidget extends StatelessWidget {
       case TargetPlatform.iOS:
         return iosBuilder?.call(context) ?? const SizedBox.shrink();
       case TargetPlatform.windows:
-        return windowsBuilder?.call(context) ?? const SizedBox.shrink();
-      default:
+      case TargetPlatform.macOS:
+      case TargetPlatform.linux:
+      case TargetPlatform.fuchsia:
         return androidBuilder?.call(context) ?? const SizedBox.shrink();
     }
   }

@@ -8,8 +8,8 @@ import 'package:network_arch/shared/shared.dart';
 class ClearListButton extends StatelessWidget {
   const ClearListButton({
     this.onPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final VoidCallback? onPressed;
 
@@ -31,8 +31,8 @@ class ClearListButton extends StatelessWidget {
 
   Widget _buildIOS(BuildContext context) {
     return CupertinoButton(
-      padding: const EdgeInsets.all(12.0),
-      borderRadius: BorderRadius.circular(10.0),
+      padding: const EdgeInsets.all(12),
+      borderRadius: BorderRadius.circular(10),
       onPressed: onPressed,
       child: const Text('Clear list'),
     );

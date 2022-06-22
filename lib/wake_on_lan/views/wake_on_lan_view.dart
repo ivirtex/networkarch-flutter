@@ -13,7 +13,7 @@ import 'package:network_arch/utils/utils.dart';
 import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
 
 class WakeOnLanView extends StatefulWidget {
-  const WakeOnLanView({Key? key}) : super(key: key);
+  const WakeOnLanView({super.key});
 
   @override
   _WakeOnLanViewState createState() => _WakeOnLanViewState();
@@ -132,7 +132,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
               _isValidIpv4 = true;
               _isValidMac = true;
 
-              final WolResponseModel response = WolResponseModel(
+              final response = WolResponseModel(
                 state.ipv4,
                 state.mac,
                 state.packetBytes,
@@ -239,7 +239,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
   void _handleCardTap(WolResponseModel response) {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<void>(
         builder: (context) => WolPacketDetailsView(response),
       ),
     );

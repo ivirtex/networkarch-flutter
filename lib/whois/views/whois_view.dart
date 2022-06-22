@@ -15,7 +15,7 @@ import 'package:network_arch/utils/utils.dart';
 import 'package:network_arch/whois/whois.dart';
 
 class WhoisView extends StatefulWidget {
-  const WhoisView({Key? key}) : super(key: key);
+  const WhoisView({super.key});
 
   @override
   State<WhoisView> createState() => _WhoisViewState();
@@ -143,7 +143,7 @@ class _WhoisViewState extends State<WhoisView> {
 
   void _handleCheck() {
     setState(() {
-      Hive.box('iap').put('isPremiumTempGranted', false);
+      Hive.box<bool>('iap').put('isPremiumTempGranted', false);
 
       _isPremiumAvail = isPremiumActive();
     });

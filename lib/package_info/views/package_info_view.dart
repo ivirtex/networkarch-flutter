@@ -10,7 +10,7 @@ import 'package:network_arch/package_info/package_info.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
 class PackageInfoView extends StatelessWidget {
-  const PackageInfoView({Key? key}) : super(key: key);
+  const PackageInfoView({super.key});
 
   @override
   Widget build(BuildContext context) {

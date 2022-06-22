@@ -10,8 +10,8 @@ import 'package:network_arch/theme/themes.dart';
 class DnsRecordCard extends StatelessWidget {
   const DnsRecordCard(
     this.record, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final DnsRecord record;
 

@@ -14,7 +14,7 @@ import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/shared/shared.dart';
 
 class LanScannerView extends StatefulWidget {
-  const LanScannerView({Key? key}) : super(key: key);
+  const LanScannerView({super.key});
 
   @override
   _LanScannerViewState createState() => _LanScannerViewState();
@@ -26,7 +26,7 @@ class _LanScannerViewState extends State<LanScannerView> {
   late final AnimatedListModel<InternetAddress> _hosts;
   late final LanScannerBloc _bloc;
 
-  double currProgress = 0.0;
+  double currProgress = 0;
 
   @override
   void initState() {
@@ -117,14 +117,14 @@ class _LanScannerViewState extends State<LanScannerView> {
               children: [
                 Expanded(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(8),
                     child: LinearProgressIndicator(
-                      // TODO: animate progress
+                      // TODO(ivirtex): animate progress
                       value: currProgress,
                     ),
                   ),
                 ),
-                const SizedBox(width: 8.0),
+                const SizedBox(width: 8),
                 Text('${(currProgress * 100).toInt()}%'),
               ],
             );
@@ -173,7 +173,5 @@ class _LanScannerViewState extends State<LanScannerView> {
       return;
     }
     context.read<LanScannerBloc>().add(LanScannerStarted());
-
-    await Future.delayed(Duration.zero);
   }
 }

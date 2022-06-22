@@ -14,7 +14,7 @@ import 'package:network_arch/shared/shared_widgets.dart';
 import 'package:network_arch/theme/themes.dart';
 
 class WifiStatusCard extends StatelessWidget {
-  const WifiStatusCard({Key? key}) : super(key: key);
+  const WifiStatusCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class WifiStatusCard extends StatelessWidget {
                             'Wi-Fi',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 20.0,
+                              fontSize: 20,
                             ),
                           ),
                           const Spacer(),
@@ -49,7 +49,7 @@ class WifiStatusCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20.0),
+                      const SizedBox(height: 20),
                       Row(
                         children: [
                           const Text('Local IP'),
@@ -69,7 +69,7 @@ class WifiStatusCard extends StatelessWidget {
                   AdaptiveButton(
                     buttonType: ButtonType.filledTonal,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     onPressed: state.isWifiConnected
                         ? () => Navigator.of(context).pushNamed('/wifi')
@@ -97,8 +97,8 @@ class WifiStatusCard extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 14.0,
-                    vertical: 10.0,
+                    horizontal: 14,
+                    vertical: 10,
                   ),
                   child: Column(
                     children: [
@@ -111,7 +111,7 @@ class WifiStatusCard extends StatelessWidget {
                               state.wifiInfo?.wifiSSID ?? 'N/A',
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
+                                fontSize: 20,
                               ),
                             ),
                           ),
@@ -121,7 +121,7 @@ class WifiStatusCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20.0),
+                      const SizedBox(height: 20),
                       Row(
                         children: [
                           const Text('Local IP'),

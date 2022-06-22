@@ -21,7 +21,7 @@ import 'package:network_arch/theme/themes.dart';
 import 'package:network_arch/utils/in_app_purchases.dart';
 
 class PremiumBottomSheetBody extends StatefulWidget {
-  const PremiumBottomSheetBody({Key? key}) : super(key: key);
+  const PremiumBottomSheetBody({super.key});
 
   @override
   State<PremiumBottomSheetBody> createState() => _PremiumBottomSheetBodyState();
@@ -55,15 +55,15 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          vertical: 40.0,
-          horizontal: 20.0,
+          vertical: 40,
+          horizontal: 20,
         ),
         child: Column(
           children: [
             Text(
               'Help to maintain our servers',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontSize: 22.0,
+                    fontSize: 22,
                     color:
                         isIOS ? Themes.iOStextColor.resolveFrom(context) : null,
                   ),
@@ -189,13 +189,13 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
   }
 
   Future<void> _handleSubscribe(BuildContext context) async {
-    final ProductDetailsResponse response =
+    final response =
         await InAppPurchase.instance.queryProductDetails(kProductIds);
 
-    final List<ProductDetails> products = response.productDetails;
+    final products = response.productDetails;
 
     if (response.notFoundIDs.isNotEmpty) {
-      showPlatformDialog(
+      await showPlatformDialog<void>(
         context: context,
         builder: (context) {
           return PlatformAlertDialog(
@@ -214,7 +214,7 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
       return;
     }
 
-    InAppPurchase.instance.buyNonConsumable(
+    await InAppPurchase.instance.buyNonConsumable(
       purchaseParam: PurchaseParam(
         productDetails: products.first,
       ),
@@ -228,7 +228,7 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
           print('User earned reward ${reward.type}');
         }
 
-        await Hive.box('iap').put('isPremiumTempGranted', true);
+        await Hive.box<bool>('iap').put('isPremiumTempGranted', true);
 
         if (!mounted) return;
         Navigator.pop(context);
@@ -242,8 +242,8 @@ class AdvantageCard extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.icon,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final String subtitle;
@@ -264,7 +264,7 @@ class AdvantageCard extends StatelessWidget {
         const SizedBox(width: 10),
         Expanded(
           child: DataCard(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10),
             margin: EdgeInsets.zero,
             child: Row(
               children: [
@@ -273,7 +273,7 @@ class AdvantageCard extends StatelessWidget {
                   color:
                       isIOS ? Themes.iOStextColor.resolveFrom(context) : null,
                 ),
-                const SizedBox(width: 10.0),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

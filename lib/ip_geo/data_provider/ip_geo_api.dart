@@ -1,4 +1,5 @@
 // Dart imports:
+import 'dart:async';
 import 'dart:convert';
 
 // Package imports:
@@ -21,7 +22,7 @@ class IpGeoApi {
     try {
       response = await _httpClient.get(request);
     } catch (exc, stackTrace) {
-      Sentry.captureException(exc, stackTrace: stackTrace);
+      unawaited(Sentry.captureException(exc, stackTrace: stackTrace));
 
       throw IpGeoRequestFailure();
     }

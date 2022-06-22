@@ -8,8 +8,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
@@ -17,20 +15,18 @@ import 'package:network_arch/overview/views/overview_view.dart';
 import 'package:network_arch/permissions/permissions.dart';
 import 'package:network_arch/settings/settings.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
-import 'package:network_arch/utils/in_app_purchases.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  late StreamSubscription<List<PurchaseDetails>> _subscription;
   int _selectedIndex = 0;
 
-  late final bool hasIntroductionBeenShown;
+  late bool hasIntroductionBeenShown;
   late final Stream<BoxEvent> hasIntroductionBeenShownStream;
 
   @override
@@ -41,12 +37,12 @@ class _HomeState extends State<Home> {
         .read<PermissionsBloc>()
         .add(const PermissionsStatusRefreshRequested());
 
-    final settingsBox = Hive.box('settings');
+    final settingsBox = Hive.box<bool>('settings');
 
     hasIntroductionBeenShown = settingsBox.get(
       'hasIntroductionBeenShown',
       defaultValue: false,
-    ) as bool;
+    )!;
 
     hasIntroductionBeenShownStream =
         settingsBox.watch(key: 'hasIntroductionBeenShown');
@@ -58,31 +54,6 @@ class _HomeState extends State<Home> {
         });
       }
     });
-
-    _setUpInAppPurchases();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-
-    _subscription.cancel();
-  }
-
-  void _setUpInAppPurchases() {
-    final Stream<List<PurchaseDetails>> purchaseUpdated =
-        InAppPurchase.instance.purchaseStream;
-    _subscription = purchaseUpdated.listen(
-      (purchaseDetailsList) {
-        listenToPurchaseUpdated(purchaseDetailsList, context);
-      },
-      onDone: () {
-        _subscription.cancel();
-      },
-      onError: (error) {
-        Sentry.captureException(error);
-      },
-    );
   }
 
   @override
@@ -94,7 +65,7 @@ class _HomeState extends State<Home> {
           )
         : PlatformWidget(
             androidBuilder: Constants.routes['/introduction'],
-            iosBuilder: Constants.iOSroutes['/introduction'],
+            iosBuilder: Constants.routes['/introduction'],
           );
   }
 
@@ -149,16 +120,16 @@ class _HomeState extends State<Home> {
             return CupertinoTabView(
               defaultTitle: 'Overview',
               routes: Constants.routes,
-              builder: Constants.iOSroutes['/overview'],
+              builder: Constants.routes['/overview'],
             );
           case 1:
             return CupertinoTabView(
               defaultTitle: 'Settings',
               routes: Constants.routes,
-              builder: Constants.iOSroutes['/settings'],
+              builder: Constants.routes['/settings'],
             );
           default:
-            throw 'Unexpected tab';
+            throw Exception('Unexpected tab');
         }
       },
     );

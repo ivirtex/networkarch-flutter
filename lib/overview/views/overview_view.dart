@@ -20,7 +20,7 @@ import 'package:network_arch/theme/themes.dart';
 import 'package:network_arch/utils/utils.dart';
 
 class OverviewView extends StatefulWidget {
-  const OverviewView({Key? key}) : super(key: key);
+  const OverviewView({super.key});
 
   @override
   _OverviewViewState createState() => _OverviewViewState();
@@ -113,7 +113,7 @@ class _OverviewViewState extends State<OverviewView> {
                   children: [
                     const SmallDescription(
                       text: 'Networks',
-                      leftPadding: 8.0,
+                      leftPadding: 8,
                     ),
                     const WifiStatusCard(),
                     const SizedBox(height: Constants.listSpacing),
@@ -121,7 +121,7 @@ class _OverviewViewState extends State<OverviewView> {
                     const SizedBox(height: Constants.listSpacing),
                     const SmallDescription(
                       text: 'Utilities',
-                      leftPadding: 8.0,
+                      leftPadding: 8,
                     ),
                     ToolCard(
                       toolName: 'Ping',
@@ -283,13 +283,13 @@ class _OverviewViewState extends State<OverviewView> {
 
   void showPremiumBottomSheet(BuildContext context) {
     if (Theme.of(context).platform == TargetPlatform.iOS) {
-      showCupertinoModalBottomSheet(
+      showCupertinoModalBottomSheet<void>(
         context: context,
         backgroundColor: Themes.iOSbgColor.resolveFrom(context),
         builder: (_) => const PremiumBottomSheetBody(),
       );
     } else {
-      showMaterialModalBottomSheet(
+      showMaterialModalBottomSheet<void>(
         context: context,
         backgroundColor: Color.alphaBlend(
           Theme.of(context).colorScheme.primary.withOpacity(0.03),
@@ -301,12 +301,11 @@ class _OverviewViewState extends State<OverviewView> {
   }
 
   void setUpIAP() {
-    final iapBox = Hive.box('iap');
+    final iapBox = Hive.box<bool>('iap');
 
-    _isPremiumGranted =
-        iapBox.get('isPremiumGranted', defaultValue: false)! as bool;
+    _isPremiumGranted = iapBox.get('isPremiumGranted', defaultValue: false)!;
     _isPremiumTempGranted =
-        iapBox.get('isPremiumTempGranted', defaultValue: false)! as bool;
+        iapBox.get('isPremiumTempGranted', defaultValue: false)!;
 
     iapBox.watch(key: 'isPremiumGranted').listen((event) {
       setState(() {

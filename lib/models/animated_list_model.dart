@@ -1,4 +1,7 @@
 // Flutter imports:
+// ignore_for_file: omit_local_variable_types
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 typedef RemovedItemBuilder<T> = Widget Function(
@@ -68,7 +71,7 @@ class AnimatedListModel<T> {
     // Default insert/remove animation duration is 300 ms,
     // so we need to wait for the animation to complete
     // before we can remove object from the list.
-    await Future.delayed(const Duration(milliseconds: 350));
+    await Future.delayed(const Duration(milliseconds: 350), () => null);
 
     return removedItem;
   }
@@ -88,6 +91,7 @@ class AnimatedListModel<T> {
 
       await Future.delayed(
         Duration(milliseconds: removalSpeedInMs),
+        () => null,
       );
     }
 

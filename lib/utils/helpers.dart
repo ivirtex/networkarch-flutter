@@ -13,16 +13,16 @@ import 'package:hive/hive.dart';
 import 'package:network_arch/constants.dart';
 
 bool isPremiumActive() {
-  final iapBox = Hive.box('iap');
+  final iapBox = Hive.box<bool>('iap');
 
   return iapBox.get(
         'isPremiumGranted',
         defaultValue: false,
-      ) as bool ||
+      )! ||
       iapBox.get(
         'isPremiumTempGranted',
         defaultValue: false,
-      ) as bool;
+      )!;
 }
 
 String getAdUnitId() {
@@ -38,14 +38,14 @@ void showElegantNotification(
   ElegantNotification notification,
 ) {
   // notification.background = Themes.iOSCardColor.resolveFrom(context);
-  notification.showProgressIndicator = false;
-  notification.radius = 10.0;
-
-  notification.show(context);
+  notification
+    ..showProgressIndicator = false
+    ..radius = 10.0
+    ..show(context);
 }
 
 void hideKeyboard(BuildContext context) {
-  final FocusScopeNode currentFocus = FocusScope.of(context);
+  final currentFocus = FocusScope.of(context);
   if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
     FocusManager.instance.primaryFocus!.unfocus();
   }

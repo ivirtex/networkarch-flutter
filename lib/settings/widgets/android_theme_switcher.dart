@@ -10,7 +10,7 @@ import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/theme/theme.dart';
 
 class AndroidThemeSwitcher extends StatefulWidget {
-  const AndroidThemeSwitcher({Key? key}) : super(key: key);
+  const AndroidThemeSwitcher({super.key});
 
   @override
   State<AndroidThemeSwitcher> createState() => _AndroidThemeSwitcherState();
@@ -30,8 +30,8 @@ class _AndroidThemeSwitcherState extends State<AndroidThemeSwitcher> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 8.0,
+                  horizontal: 16,
+                  vertical: 8,
                 ),
                 child: FlexThemeModeSwitch(
                   themeMode: themeBloc.state.mode,
@@ -40,7 +40,7 @@ class _AndroidThemeSwitcherState extends State<AndroidThemeSwitcher> {
                   },
                   flexSchemeData: Themes
                       .schemesListWithDynamic[themeBloc.state.scheme.index],
-                  optionButtonBorderRadius: 10.0,
+                  optionButtonBorderRadius: 10,
                 ),
               ),
               ThemePopupMenu(
@@ -49,6 +49,7 @@ class _AndroidThemeSwitcherState extends State<AndroidThemeSwitcher> {
                   // Await for popup menu to close (to avoid jank)
                   await Future.delayed(
                     const Duration(milliseconds: 300),
+                    () => null,
                   );
 
                   setState(() {

@@ -7,6 +7,7 @@ import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hive/hive.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -21,7 +22,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart'
     hide PlatformWidget;
 
 class SettingsView extends StatefulWidget {
-  const SettingsView({Key? key}) : super(key: key);
+  const SettingsView({super.key});
 
   @override
   State<SettingsView> createState() => _SettingsViewState();
@@ -122,8 +123,8 @@ class _SettingsViewState extends State<SettingsView> {
                       title: 'Onboarding screen',
                       desc: 'Resolve permissions issues',
                       icon: const FaIcon(CupertinoIcons.info),
-                      onTap: () =>
-                          Navigator.pushNamed(context, '/introduction'),
+                      onTap: () => Hive.box<bool>('settings')
+                          .put('hasIntroductionBeenShown', false),
                     ),
                     ActionCard(
                       title: 'Source code',
@@ -162,14 +163,14 @@ class _SettingsViewState extends State<SettingsView> {
 
   Future<void> _openSourceCode() async {
     if (!await launchUrl(Uri.parse(Constants.sourceCodeURL))) {
-      throw 'Could not launch URL';
+      throw Exception('Could not launch URL');
     }
   }
 
   Future<void> _restorePurchases() async {
     await InAppPurchase.instance.restorePurchases();
 
-    showPlatformDialog(
+    await showPlatformDialog<void>(
       context: context,
       builder: (context) {
         return PlatformAlertDialog(

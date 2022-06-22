@@ -27,7 +27,7 @@ class WhoisBloc extends Bloc<WhoisEvent, WhoisState> {
     emit(WhoisLoadInProgress());
 
     try {
-      final String response = await _whoisRepository.getWhois(event.domain);
+      final response = await _whoisRepository.getWhois(event.domain);
 
       emit(WhoisLoadSuccess(response));
     } on Exception {

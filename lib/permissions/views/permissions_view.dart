@@ -16,7 +16,7 @@ import 'package:network_arch/permissions/widgets/widgets.dart';
 import 'package:network_arch/shared/shared.dart';
 
 class PermissionsView extends StatefulWidget {
-  const PermissionsView({Key? key}) : super(key: key);
+  const PermissionsView({super.key});
 
   @override
   State<PermissionsView> createState() => _PermissionsViewState();

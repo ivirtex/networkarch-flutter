@@ -12,9 +12,9 @@ import 'package:network_arch/theme/themes.dart';
 
 class ErrorCard extends StatelessWidget {
   const ErrorCard({
-    Key? key,
+    super.key,
     this.message,
-  }) : super(key: key);
+  });
 
   final String? message;
 

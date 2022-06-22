@@ -28,8 +28,7 @@ class IpGeoBloc extends Bloc<IpGeoEvent, IpGeoState> {
     emit(IpGeoLoadInProgress());
 
     try {
-      final IpGeoResponse response =
-          await _ipGeoRepository.getIpGeolocation(event.ip);
+      final response = await _ipGeoRepository.getIpGeolocation(event.ip);
 
       emit(IpGeoLoadSuccess(response));
     } on Exception {

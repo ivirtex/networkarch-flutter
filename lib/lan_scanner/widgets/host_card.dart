@@ -10,8 +10,8 @@ import 'package:network_arch/shared/shared_widgets.dart';
 class HostCard extends StatelessWidget {
   const HostCard({
     required this.item,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final InternetAddress item;
 
@@ -19,14 +19,14 @@ class HostCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DataCard(
       padding: EdgeInsets.zero,
-      margin: const EdgeInsets.symmetric(vertical: 5.0),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 8),
         leading: const StatusCard(
           color: Colors.green,
           text: 'Online',
         ),
-        // TODO: Add resolving hostname
+        // TODO(ivirtex): Add resolving hostname
         // title: FutureBuilder(
         //   future: item.reverse(),
         //   builder:

@@ -16,8 +16,8 @@ class PermissionCard extends StatelessWidget {
     required this.icon,
     required this.status,
     required this.onPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final String description;
@@ -27,7 +27,7 @@ class PermissionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+    final isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -48,7 +48,7 @@ class PermissionCard extends StatelessWidget {
                       title,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
+                        fontSize: 20,
                       ),
                     ),
                     Text(
