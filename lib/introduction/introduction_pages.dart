@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -46,25 +45,20 @@ final List<PageViewModel> pagesList = [
         SizedBox(height: Constants.listSpacing),
         OnboardingFeature(
           icon: Icons.wifi_rounded,
-          iosIcon: CupertinoIcons.wifi,
-          title: 'Wi-Fi',
-          description: 'Explore detailed information about your Wi-Fi network',
+          title: Constants.wifiFeatureTitle,
+          description: Constants.wifiFeatureDesc,
         ),
         SizedBox(height: Constants.listSpacing),
         OnboardingFeature(
           icon: Icons.cell_tower_rounded,
-          iosIcon: CupertinoIcons.antenna_radiowaves_left_right,
-          title: 'Carrier',
-          description:
-              'Explore detailed information about your cellular network',
+          title: Constants.carrierFeatureTitle,
+          description: Constants.carrierFeatureDesc,
         ),
         SizedBox(height: Constants.listSpacing),
         OnboardingFeature(
           icon: Icons.settings_rounded,
-          iosIcon: CupertinoIcons.settings,
-          title: 'Utilities',
-          description:
-              'Test your networks thanks to various diagnostic tools such as ping, Wake on LAN, LAN Scanner and more',
+          title: Constants.utilitiesFeatureTitle,
+          description: Constants.utilitiesFeatureDesc,
         ),
       ],
     ),

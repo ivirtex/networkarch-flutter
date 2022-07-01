@@ -8,7 +8,6 @@ import 'package:network_arch/shared/cards/cards.dart';
 class OnboardingFeature extends StatelessWidget {
   const OnboardingFeature({
     required this.icon,
-    required this.iosIcon,
     required this.title,
     required this.description,
     this.cardColor,
@@ -16,7 +15,6 @@ class OnboardingFeature extends StatelessWidget {
   });
 
   final IconData icon;
-  final IconData iosIcon;
   final String title;
   final String description;
   final Color? cardColor;
@@ -30,7 +28,7 @@ class OnboardingFeature extends StatelessWidget {
       child: Row(
         children: [
           Icon(
-            Theme.of(context).platform == TargetPlatform.iOS ? iosIcon : icon,
+            icon,
             size: 36,
           ),
           const SizedBox(width: Constants.listSpacing),

@@ -6,6 +6,7 @@ import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
+import 'package:network_arch/constants.dart';
 import 'package:network_arch/network_status/widgets/adaptive_button.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 
@@ -93,10 +94,7 @@ class ActionCard extends StatelessWidget {
               : null,
           leading: icon,
           trailing: const CupertinoListTileChevron(),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 14,
-            vertical: 10,
-          ),
+          padding: Constants.cupertinoListTileWithIconPadding,
           onTap: onTap,
         );
       },

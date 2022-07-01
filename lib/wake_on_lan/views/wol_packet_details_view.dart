@@ -1,9 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:cupertino_lists/cupertino_lists.dart';
+
 // Project imports:
 import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/wake_on_lan/models/wol_response_model.dart';
+import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
 
 class WolPacketDetailsView extends StatelessWidget {
   const WolPacketDetailsView(this.response, {super.key});
@@ -35,25 +38,52 @@ class WolPacketDetailsView extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    return ContentListView(
-      children: [
-        RoundedList(
-          children: [
-            ListTextLine(
-              widgetL: const Text('MAC address'),
-              widgetR: Text(response.mac.address),
-            ),
-            ListTextLine(
-              widgetL: const Text('IP address'),
-              widgetR: Text(response.ipv4.address),
-            ),
-            // HexBytesViewer(
-            //   title: 'Magic packet bytes',
-            //   bytes: response.packetBytes,
-            // ),
-          ],
-        ),
-      ],
+    return PlatformWidget(
+      androidBuilder: (_) => ContentListView(
+        children: [
+          RoundedList(
+            padding: EdgeInsets.zero,
+            children: [
+              ListTextLine(
+                widgetL: const Text('MAC address'),
+                widgetR: Text(response.mac.address),
+              ),
+              ListTextLine(
+                widgetL: const Text('IP address'),
+                widgetR: Text(response.ipv4.address),
+              ),
+              HexBytesViewer(
+                title: 'Magic packet bytes',
+                bytes: response.packetBytes,
+              ),
+            ],
+          ),
+        ],
+      ),
+      iosBuilder: (_) => ContentListView(
+        children: [
+          RoundedList(
+            children: [
+              ListTextLine(
+                widgetL: const Text('MAC address'),
+                widgetR: Text(response.mac.address),
+              ),
+              ListTextLine(
+                widgetL: const Text('IP address'),
+                widgetR: Text(response.ipv4.address),
+              ),
+            ],
+          ),
+          CupertinoListSection.insetGrouped(
+            header: const Text('Magic packet bytes'),
+            children: [
+              HexBytesViewer(
+                bytes: response.packetBytes,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

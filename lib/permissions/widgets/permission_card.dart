@@ -1,13 +1,16 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/shared/shared.dart';
+import 'package:network_arch/theme/themes.dart';
 
 class PermissionCard extends StatelessWidget {
   const PermissionCard({
@@ -27,6 +30,13 @@ class PermissionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return PlatformWidget(
+      androidBuilder: _buildAndroid,
+      iosBuilder: _buildIOS,
+    );
+  }
+
+  Widget _buildAndroid(BuildContext context) {
     final isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
 
     return Column(
@@ -92,6 +102,35 @@ class PermissionCard extends StatelessWidget {
                 ),
             ],
           ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildIOS(BuildContext context) {
+    return CupertinoListSection.insetGrouped(
+      backgroundColor: CupertinoColors.systemBackground.resolveFrom(context),
+      children: [
+        CupertinoListTile(
+          backgroundColor: Themes.iOSbgColor.resolveFrom(context),
+          leading: icon,
+          title: Text(title),
+          subtitle: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: 200,
+              maxHeight: 200,
+            ),
+            child: Text(
+              description,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          trailing: status.isGranted
+              ? const Icon(CupertinoIcons.check_mark_circled_solid)
+              : const CupertinoListTileChevron(),
+          onTap: () {},
+          padding: Constants.cupertinoListTileWithIconPadding,
         ),
       ],
     );

@@ -37,9 +37,7 @@ void showElegantNotification(
   BuildContext context,
   ElegantNotification notification,
 ) {
-  // notification.background = Themes.iOSCardColor.resolveFrom(context);
   notification
-    ..showProgressIndicator = false
     ..radius = 10.0
     ..show(context);
 }

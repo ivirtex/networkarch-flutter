@@ -6,8 +6,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:cupertino_onboarding/cupertino_onboarding.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
@@ -26,46 +29,64 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
-  late bool hasIntroductionBeenShown;
-  late final Stream<BoxEvent> hasIntroductionBeenShownStream;
+  bool? hasIntroductionBeenShown;
+  StreamSubscription<BoxEvent>? hasIntroductionBeenShownSubscription;
 
   @override
   void initState() {
     super.initState();
-
-    context
-        .read<PermissionsBloc>()
-        .add(const PermissionsStatusRefreshRequested());
 
     final settingsBox = Hive.box<bool>('settings');
 
     hasIntroductionBeenShown = settingsBox.get(
       'hasIntroductionBeenShown',
       defaultValue: false,
-    )!;
+    );
+    if (!hasIntroductionBeenShown!) {
+      showCupertinoModalBottomSheet<void>(
+        context: context,
+        builder: (context) => const IosOnboarding(),
+      );
+    }
 
-    hasIntroductionBeenShownStream =
-        settingsBox.watch(key: 'hasIntroductionBeenShown');
-
-    hasIntroductionBeenShownStream.listen((event) {
+    hasIntroductionBeenShownSubscription =
+        settingsBox.watch(key: 'hasIntroductionBeenShown').listen((event) {
       if (event.value is bool) {
         setState(() {
           hasIntroductionBeenShown = event.value as bool;
         });
       }
+
+      if (!hasIntroductionBeenShown!) {
+        showCupertinoModalBottomSheet<void>(
+          context: context,
+          builder: (context) => const IosOnboarding(),
+        );
+      }
     });
+
+    context
+        .read<PermissionsBloc>()
+        .add(const PermissionsStatusRefreshRequested());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    hasIntroductionBeenShownSubscription?.cancel();
   }
 
   @override
   Widget build(BuildContext context) {
-    return hasIntroductionBeenShown
+    return hasIntroductionBeenShown!
         ? PlatformWidget(
             androidBuilder: _androidBuilder,
             iosBuilder: _iosBuilder,
           )
         : PlatformWidget(
             androidBuilder: Constants.routes['/introduction'],
-            iosBuilder: Constants.routes['/introduction'],
+            iosBuilder: _iosBuilder,
           );
   }
 
@@ -132,6 +153,58 @@ class _HomeState extends State<Home> {
             throw Exception('Unexpected tab');
         }
       },
+    );
+  }
+}
+
+class IosOnboarding extends StatelessWidget {
+  const IosOnboarding({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoOnboarding(
+      onPressedOnLastPage: () => Navigator.of(context).pop(),
+      widgetAboveBottomButton: const CupertinoButton(
+        onPressed: openAppSettings,
+        child: Text('Open App Settings'),
+      ),
+      pages: [
+        WhatsNewPage(
+          title: const Text('Welcome to NetworkArch'),
+          features: [
+            const WhatsNewFeature(
+              title: Text(Constants.wifiFeatureTitle),
+              description: Text(Constants.wifiFeatureDesc),
+              icon: Icon(
+                CupertinoIcons.wifi,
+              ),
+            ),
+            WhatsNewFeature(
+              title: const Text(Constants.carrierFeatureTitle),
+              description: const Text(Constants.carrierFeatureDesc),
+              icon: Icon(
+                CupertinoIcons.antenna_radiowaves_left_right,
+                color: CupertinoColors.activeGreen.resolveFrom(context),
+              ),
+            ),
+            WhatsNewFeature(
+              title: const Text(Constants.utilitiesFeatureTitle),
+              description: const Text(Constants.utilitiesFeatureDesc),
+              icon: Icon(
+                CupertinoIcons.check_mark_circled,
+                color: CupertinoColors.systemPink.resolveFrom(context),
+              ),
+            ),
+          ],
+        ),
+        const CupertinoOnboardingPage(
+          title: Text('Permissions'),
+          bodyPadding: EdgeInsets.zero,
+          body: PermissionsView(),
+        ),
+      ],
     );
   }
 }

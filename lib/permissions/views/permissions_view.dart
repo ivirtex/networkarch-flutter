@@ -14,6 +14,7 @@ import 'package:network_arch/permissions/bloc/permissions_bloc.dart';
 import 'package:network_arch/permissions/widgets/usage_desc.dart';
 import 'package:network_arch/permissions/widgets/widgets.dart';
 import 'package:network_arch/shared/shared.dart';
+import 'package:network_arch/utils/helpers.dart';
 
 class PermissionsView extends StatefulWidget {
   const PermissionsView({super.key});
@@ -44,21 +45,28 @@ class _PermissionsViewState extends State<PermissionsView> {
 
         if (state.latestRequested == Permission.locationWhenInUse) {
           if (state.locationStatus == PermissionStatus.granted) {
-            scaffoldMessenger.showSnackBar(
-              Constants.permissionGrantedSnackbar,
+            showPlatformMessage(
+              context,
+              androidMessage: Constants.permissionGrantedSnackbar,
+              iOSmessage: Constants.permissionGrantedNotification,
             );
           } else if (state.locationStatus ==
               PermissionStatus.permanentlyDenied) {
-            scaffoldMessenger.showSnackBar(
-              Constants.permissionDeniedSnackbar,
+            showPlatformMessage(
+              context,
+              androidMessage: Constants.permissionDeniedSnackbar,
+              iOSmessage: Constants.permissionDeniedNotification,
             );
           } else {
-            scaffoldMessenger.showSnackBar(
-              Constants.permissionDefaultSnackbar,
+            showPlatformMessage(
+              context,
+              androidMessage: Constants.permissionDefaultSnackbar,
+              iOSmessage: Constants.permissionDefaultNotification,
             );
           }
         }
 
+        // Only showed on Android
         if (state.latestRequested == Permission.phone) {
           if (state.phoneStateStatus == PermissionStatus.granted) {
             scaffoldMessenger.showSnackBar(

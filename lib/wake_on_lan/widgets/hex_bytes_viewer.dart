@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -7,22 +6,23 @@ import 'package:google_fonts/google_fonts.dart';
 
 class HexBytesViewer extends StatelessWidget {
   const HexBytesViewer({
-    required this.title,
     required this.bytes,
+    this.title,
     super.key,
   });
 
-  final String title;
   final List<int> bytes;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(title),
-        ),
+        if (title != null)
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(title!),
+          ),
         const SizedBox(height: 10),
         Card(
           margin: EdgeInsets.zero,
@@ -34,10 +34,7 @@ class HexBytesViewer extends StatelessWidget {
                   Theme.of(context).colorScheme.primary.withOpacity(0.1),
                   Theme.of(context).colorScheme.surfaceVariant,
                 )
-              : CupertinoDynamicColor.resolve(
-                  CupertinoColors.systemGrey6,
-                  context,
-                ),
+              : null,
           elevation: 0,
           child: Padding(
             padding: const EdgeInsets.all(8),

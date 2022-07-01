@@ -12,14 +12,16 @@ class RoundedList extends StatelessWidget {
   const RoundedList({
     required this.children,
     this.padding = const EdgeInsets.all(10),
+    this.iOSmargin = Constants.iOSbodyPadding,
     this.header,
     this.footer,
     super.key,
   });
 
   /// Preferably a List of ListTextLine widgets.
-  final List<ListTextLine> children;
+  final List<Widget> children;
   final EdgeInsets padding;
+  final EdgeInsets iOSmargin;
   final String? header;
   final String? footer;
 
@@ -62,27 +64,29 @@ class RoundedList extends StatelessWidget {
       iosBuilder: (context) {
         return CupertinoListSection.insetGrouped(
           hasLeading: false,
-          margin: padding,
+          margin: iOSmargin,
           header: header != null ? Text(header!) : null,
           footer: footer != null ? Text(footer!) : null,
-          children: children
-              .map(
-                (ListTextLine child) => CupertinoListTile.notched(
-                  title: child.widgetL,
-                  subtitle: child.subtitle,
-                  trailing: child.widgetR != null
-                      ? Expanded(
-                          flex: 3,
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: child.widgetR,
-                          ),
-                        )
-                      : const ListCircularProgressIndicator(),
-                  onTap: child.onRefreshTap,
-                ),
-              )
-              .toList(),
+          children: children.map(
+            (Widget child) {
+              return child is ListTextLine
+                  ? CupertinoListTile.notched(
+                      title: child.widgetL,
+                      subtitle: child.subtitle,
+                      trailing: child.widgetR != null
+                          ? Expanded(
+                              flex: 3,
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: child.widgetR,
+                              ),
+                            )
+                          : const ListCircularProgressIndicator(),
+                      onTap: child.onRefreshTap,
+                    )
+                  : child;
+            },
+          ).toList(),
         );
       },
     );

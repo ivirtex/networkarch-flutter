@@ -103,22 +103,22 @@ class ConnectionStatus extends StatelessWidget {
       case NetworkStatus.inital:
       case NetworkStatus.loading:
         return Row(
-          children: const [
-            Text(
-              'Checking connection...',
-              style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+          children: [
+            if (!isIOS) ...[
+              const Text(
+                'Checking connection...',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
-            ),
-            SizedBox(width: 5),
-            SizedBox(
+              const SizedBox(width: 5),
+            ],
+            const SizedBox(
               height: 16,
               width: 16,
-              child: CircularProgressIndicator.adaptive(
-                strokeWidth: 3,
-              ),
+              child: CircularProgressIndicator.adaptive(),
             ),
           ],
         );

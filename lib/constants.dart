@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -17,7 +18,6 @@ import 'package:network_arch/network_status/network_status.dart';
 import 'package:network_arch/overview/overview.dart';
 import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/settings/settings.dart';
-import 'package:network_arch/theme/themes.dart';
 import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
 import 'package:network_arch/whois/whois.dart';
 
@@ -29,6 +29,18 @@ abstract class Constants {
       ''';
   static const String sourceCodeURL =
       'https://github.com/ivirtex/networkarch-flutter';
+
+  static const String wifiFeatureTitle = 'Wi-Fi';
+  static const String wifiFeatureDesc =
+      'Explore detailed information about your Wi-Fi network.';
+
+  static const String carrierFeatureTitle = 'Carrier';
+  static const String carrierFeatureDesc =
+      'Explore detailed information about your cellular network.';
+
+  static const String utilitiesFeatureTitle = 'Utilities';
+  static const String utilitiesFeatureDesc =
+      'Test your network thanks to various diagnostic tools such as ping, Wake on LAN, LAN Scanner and more.';
 
   static const String usageDesc = 'We never share this data with anyone.';
 
@@ -54,7 +66,6 @@ abstract class Constants {
           pages: pagesList,
           isTopSafeArea: true,
           isBottomSafeArea: true,
-          globalBackgroundColor: Themes.iOSbgColor.resolveFrom(context),
           controlsPadding: EdgeInsets.symmetric(
             vertical: MediaQuery.of(context).padding.bottom,
             horizontal: 16,
@@ -82,8 +93,14 @@ abstract class Constants {
   static const EdgeInsets listPadding = EdgeInsets.all(10);
 
   static const EdgeInsets bodyPadding = EdgeInsets.all(10);
-  static const EdgeInsetsDirectional iOSbodyPadding =
-      EdgeInsetsDirectional.fromSTEB(18.5, 0, 18.5, 6);
+  static const EdgeInsets iOSbodyPadding =
+      EdgeInsets.fromLTRB(18.5, 0, 18.5, 6);
+
+  static const EdgeInsets cupertinoListTileWithIconPadding =
+      EdgeInsets.symmetric(
+    horizontal: 14,
+    vertical: 10,
+  );
 
   static const double listSpacing = 10;
 
@@ -188,6 +205,7 @@ abstract class Constants {
     title: const Text('Success'),
     description: const Text(_permissionGranted),
     dismissible: true,
+    showProgressIndicator: false,
     notificationPosition: NotificationPosition.bottom,
     animation: AnimationType.fromBottom,
   );
@@ -197,6 +215,7 @@ abstract class Constants {
     title: const Text('Error'),
     description: const Text(_permissionDenied),
     dismissible: true,
+    showProgressIndicator: false,
     notificationPosition: NotificationPosition.bottom,
     animation: AnimationType.fromBottom,
     toastDuration: const Duration(milliseconds: 4000),
@@ -206,7 +225,8 @@ abstract class Constants {
       child: Text(
         'Open Settings',
         style: TextStyle(
-          color: Colors.blue,
+          // Only iOS uses this notifications so we can use `CupertinoColors`
+          color: CupertinoColors.activeBlue,
         ),
       ),
     ),
@@ -220,6 +240,7 @@ abstract class Constants {
     title: const Text('Warning'),
     description: const Text(_permissionDefault),
     dismissible: true,
+    showProgressIndicator: false,
     notificationPosition: NotificationPosition.bottom,
     animation: AnimationType.fromBottom,
   );

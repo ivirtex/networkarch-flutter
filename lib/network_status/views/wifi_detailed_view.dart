@@ -41,7 +41,6 @@ class WifiDetailedView extends StatelessWidget {
     final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
 
     return ContentListView(
-      usePaddingOniOS: true,
       children: [
         BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
           builder: (context, state) {

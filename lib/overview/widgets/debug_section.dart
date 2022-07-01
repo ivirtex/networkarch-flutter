@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:hive/hive.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
+import 'package:network_arch/home.dart';
 import 'package:network_arch/overview/overview.dart';
 import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/utils/helpers.dart';
@@ -114,6 +116,16 @@ class DebugSection extends StatelessWidget {
                   context,
                   androidMessage: Constants.permissionDefaultSnackbar,
                   iOSmessage: Constants.permissionDefaultNotification,
+                );
+              },
+            ),
+            ToolCard(
+              toolName: 'Show iOS onboarding',
+              onPressed: () {
+                showCupertinoModalBottomSheet<void>(
+                  context: context,
+                  useRootNavigator: true,
+                  builder: (context) => const IosOnboarding(),
                 );
               },
             ),
