@@ -4,11 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/shared/shared.dart';
+import 'package:network_arch/theme/themes.dart';
 import 'package:network_arch/utils/utils.dart';
 import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
 
@@ -172,18 +174,38 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
           },
         ),
         const SizedBox(height: 10),
-        AnimatedList(
-          key: _listKey,
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          initialItemCount: wolResponses.length,
-          itemBuilder: (context, index, animation) {
-            return _buildItem(
-              context,
-              animation,
-              wolResponses[index],
-            );
-          },
+        PlatformWidget(
+          androidBuilder: (_) => AnimatedList(
+            key: _listKey,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            initialItemCount: wolResponses.length,
+            itemBuilder: (context, index, animation) {
+              return _buildItem(
+                context,
+                animation,
+                wolResponses[index],
+              );
+            },
+          ),
+          iosBuilder: (_) => CupertinoListSection.insetGrouped(
+            margin: EdgeInsets.zero,
+            children: [
+              AnimatedList(
+                key: _listKey,
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                initialItemCount: wolResponses.length,
+                itemBuilder: (context, index, animation) {
+                  return _buildItem(
+                    context,
+                    animation,
+                    wolResponses[index],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -198,21 +220,38 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
       opacity: animation.drive(wolResponses.fadeTween),
       child: SlideTransition(
         position: animation.drive(wolResponses.slideTween),
-        child: DataCard(
-          padding: EdgeInsets.zero,
-          child: ListTile(
+        child: PlatformWidget(
+          androidBuilder: (_) => DataCard(
+            padding: EdgeInsets.zero,
+            child: ListTile(
+              leading: item.status == WolStatus.success
+                  ? const StatusCard(
+                      color: Colors.green,
+                      text: 'Success',
+                    )
+                  : const StatusCard(
+                      color: Colors.red,
+                      text: 'Error',
+                    ),
+              title: Text(item.mac.address),
+              subtitle: Text(item.ipv4.address),
+              trailing: const Icon(Icons.navigate_next),
+              onTap: () => _handleCardTap(item),
+            ),
+          ),
+          iosBuilder: (_) => CupertinoListTile.notched(
             leading: item.status == WolStatus.success
-                ? const StatusCard(
-                    color: Colors.green,
-                    text: 'Success',
+                ? Icon(
+                    CupertinoIcons.check_mark_circled_solid,
+                    color: Themes.getPlatformSuccessColor(context),
                   )
-                : const StatusCard(
-                    color: Colors.red,
-                    text: 'Error',
+                : Icon(
+                    CupertinoIcons.xmark_circle_fill,
+                    color: Themes.getPlatformErrorColor(context),
                   ),
             title: Text(item.mac.address),
             subtitle: Text(item.ipv4.address),
-            trailing: const Icon(Icons.navigate_next),
+            trailing: const CupertinoListTileChevron(),
             onTap: () => _handleCardTap(item),
           ),
         ),

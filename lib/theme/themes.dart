@@ -77,8 +77,17 @@ abstract class Themes {
     darkColor: iOSdarkBgColor,
   );
 
-  static const CupertinoDynamicColor iOSCardColor =
-      CupertinoColors.secondarySystemGroupedBackground;
+  static final CupertinoDynamicColor iOSCardColor =
+      CupertinoDynamicColor.withBrightness(
+    color: CupertinoColors.white,
+    darkColor: CupertinoColors.systemGrey6.darkColor,
+  );
+
+  static final CupertinoDynamicColor iOSOnboardingBgColor =
+      CupertinoDynamicColor.withBrightness(
+    color: CupertinoColors.white,
+    darkColor: CupertinoColors.systemGrey6.darkColor,
+  );
 
   // https://github.com/flutter/flutter/issues/48438
   static const iOStextColor = CupertinoDynamicColor.withBrightness(

@@ -111,7 +111,7 @@ class PermissionCard extends StatelessWidget {
 
   Widget _buildIOS(BuildContext context) {
     return CupertinoListSection.insetGrouped(
-      backgroundColor: CupertinoColors.systemBackground.resolveFrom(context),
+      backgroundColor: Themes.iOSOnboardingBgColor.resolveFrom(context),
       header: Text(title),
       children: [
         CupertinoListTile(

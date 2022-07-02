@@ -18,17 +18,19 @@ class CupertinoContentScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      child: CustomScrollView(
-        slivers: [
-          customHeader ??
-              CupertinoSliverNavigationBar(
-                stretch: true,
-                border: null,
-                largeTitle: largeTitle,
-                trailing: navBarTrailingWidget,
-              ),
-          SliverToBoxAdapter(child: child),
-        ],
+      child: CupertinoScrollbar(
+        child: CustomScrollView(
+          slivers: [
+            customHeader ??
+                CupertinoSliverNavigationBar(
+                  stretch: true,
+                  border: null,
+                  largeTitle: largeTitle,
+                  trailing: navBarTrailingWidget,
+                ),
+            SliverToBoxAdapter(child: child),
+          ],
+        ),
       ),
     );
   }

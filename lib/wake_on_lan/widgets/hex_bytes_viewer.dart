@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:google_fonts/google_fonts.dart';
 
+// Project imports:
+import 'package:network_arch/theme/themes.dart';
+
 class HexBytesViewer extends StatelessWidget {
   const HexBytesViewer({
     required this.bytes,
@@ -18,12 +21,13 @@ class HexBytesViewer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (title != null)
+        if (title != null) ...[
           Align(
             alignment: Alignment.centerLeft,
             child: Text(title!),
           ),
-        const SizedBox(height: 10),
+          const SizedBox(height: 10),
+        ],
         Card(
           margin: EdgeInsets.zero,
           shape: RoundedRectangleBorder(
@@ -34,7 +38,7 @@ class HexBytesViewer extends StatelessWidget {
                   Theme.of(context).colorScheme.primary.withOpacity(0.1),
                   Theme.of(context).colorScheme.surfaceVariant,
                 )
-              : null,
+              : Themes.iOSOnboardingBgColor.resolveFrom(context),
           elevation: 0,
           child: Padding(
             padding: const EdgeInsets.all(8),
@@ -49,7 +53,10 @@ class HexBytesViewer extends StatelessWidget {
                     for (final byte in bytes)
                       Text(
                         byte.toRadixString(16).padLeft(2, '0'),
-                        style: GoogleFonts.sourceCodePro(),
+                        style: GoogleFonts.sourceCodePro(
+                          // On android, this makes no difference
+                          color: Themes.iOStextColor.resolveFrom(context),
+                        ),
                       ),
                   ],
                 ),
@@ -63,12 +70,16 @@ class HexBytesViewer extends StatelessWidget {
                       if (byte < 128)
                         Text(
                           String.fromCharCode(byte),
-                          style: GoogleFonts.sourceCodePro(),
+                          style: GoogleFonts.sourceCodePro(
+                            color: Themes.iOStextColor.resolveFrom(context),
+                          ),
                         )
                       else
                         Text(
                           '.',
-                          style: GoogleFonts.sourceCodePro(),
+                          style: GoogleFonts.sourceCodePro(
+                            color: Themes.iOStextColor.resolveFrom(context),
+                          ),
                         ),
                   ],
                 ),

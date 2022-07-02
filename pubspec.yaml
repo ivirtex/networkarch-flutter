@@ -29,7 +29,7 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.0.1
   flutter_platform_widgets: ^2.0.0
-  flutter_svg: ^1.1.1
+  flutter_svg: ^1.1.0
   font_awesome_flutter: ^10.1.0
   google_fonts: ^3.0.1
   google_maps_flutter: ^2.1.8

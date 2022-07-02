@@ -27,10 +27,9 @@ class IpGeoView extends StatefulWidget {
 }
 
 class _IpGeoViewState extends State<IpGeoView> {
-  final Completer<GoogleMapController> _controller = Completer();
   final Map<String, Marker> _markers = {};
 
-  late final String _darkModeMapStyle;
+  late final GoogleMapController _controller;
 
   final _targetHostController = TextEditingController();
   String get _target => _targetHostController.text;
@@ -42,8 +41,6 @@ class _IpGeoViewState extends State<IpGeoView> {
   void initState() {
     super.initState();
 
-    loadDarkModeMapStyle();
-
     _isPremiumAvail = isPremiumActive();
   }
 
@@ -52,12 +49,11 @@ class _IpGeoViewState extends State<IpGeoView> {
     super.dispose();
 
     _targetHostController.dispose();
-    _controller.future.then((ctr) => ctr.dispose());
+    _controller.dispose();
   }
 
-  Future<void> loadDarkModeMapStyle() async {
-    _darkModeMapStyle =
-        await rootBundle.loadString('assets/dark_mode_map_style.txt');
+  Future<String> loadDarkModeMapStyle() async {
+    return rootBundle.loadString('assets/dark_mode_map_style.txt');
   }
 
   @override
@@ -135,11 +131,13 @@ class _IpGeoViewState extends State<IpGeoView> {
                 ),
               },
               onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
+                _controller = controller;
 
-                Theme.of(context).brightness == Brightness.dark
-                    ? controller.setMapStyle(_darkModeMapStyle)
-                    : controller.setMapStyle(null);
+                loadDarkModeMapStyle().then((style) async {
+                  Theme.of(context).brightness == Brightness.dark
+                      ? await controller.setMapStyle(style)
+                      : await controller.setMapStyle(null);
+                });
               },
             ),
           ),
@@ -235,34 +233,32 @@ class _IpGeoViewState extends State<IpGeoView> {
   }
 
   void _onSuccesfullUpdate(IpGeoLoadSuccess state) {
-    _controller.future.then((controller) {
-      controller.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: LatLng(
-              state.ipGeoModel.lat!,
-              state.ipGeoModel.lon!,
-            ),
-            zoom: 2,
+    _controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(
+            state.ipGeoModel.lat!,
+            state.ipGeoModel.lon!,
           ),
+          zoom: 2,
         ),
-      );
+      ),
+    );
 
-      final marker = Marker(
-        markerId: MarkerId(state.ipGeoModel.query!),
-        position: LatLng(
-          state.ipGeoModel.lat!,
-          state.ipGeoModel.lon!,
-        ),
-        infoWindow: InfoWindow(
-          title: state.ipGeoModel.query,
-          snippet: state.ipGeoModel.country,
-        ),
-      );
+    final marker = Marker(
+      markerId: MarkerId(state.ipGeoModel.query!),
+      position: LatLng(
+        state.ipGeoModel.lat!,
+        state.ipGeoModel.lon!,
+      ),
+      infoWindow: InfoWindow(
+        title: state.ipGeoModel.query,
+        snippet: state.ipGeoModel.country,
+      ),
+    );
 
-      setState(() {
-        _markers[state.ipGeoModel.query!] = marker;
-      });
+    setState(() {
+      _markers[state.ipGeoModel.query!] = marker;
     });
   }
 }
