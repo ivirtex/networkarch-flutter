@@ -127,11 +127,11 @@ abstract class Constants {
   static const String wolDesc = 'Send magic packets on your local network';
 
   static const String ipGeoDesc =
-      'Get the geolocation of a specific IP address';
+      'Get the geolocation of a specific IP address.';
 
-  static const String whoisDesc = 'Lookup information about a specific domain';
+  static const String whoisDesc = 'Lookup information about a specific domain.';
 
-  static const String dnsDesc = 'Lookup DNS records of a specific domain';
+  static const String dnsDesc = 'Lookup DNS records of a specific domain.';
 
   // Error descriptions
   static const String defaultError = "Couldn't read the data";

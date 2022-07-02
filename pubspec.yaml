@@ -15,7 +15,7 @@ dependencies:
   carrier_info: ^2.0.5
   cupertino_icons: ^1.0.5
   cupertino_lists: ^1.0.1
-  cupertino_onboarding: ^1.0.1
+  cupertino_onboarding: ^1.0.2
   dart_ping: ^6.1.2
   dart_ping_ios: ^1.1.0
   dynamic_color: ^1.4.0

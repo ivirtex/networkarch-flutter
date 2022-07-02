@@ -21,7 +21,7 @@ class RoundedList extends StatelessWidget {
   /// Preferably a List of ListTextLine widgets.
   final List<Widget> children;
   final EdgeInsets padding;
-  final EdgeInsets iOSmargin;
+  final EdgeInsets? iOSmargin;
   final String? header;
   final String? footer;
 

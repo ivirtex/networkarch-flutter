@@ -155,6 +155,7 @@ class _IpGeoViewState extends State<IpGeoView> {
             if (state is IpGeoLoadSuccess) {
               return RoundedList(
                 padding: EdgeInsets.zero,
+                iOSmargin: EdgeInsets.zero,
                 children: [
                   ListTextLine(
                     widgetL: const Text('IP'),

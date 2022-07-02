@@ -34,7 +34,7 @@ class ErrorCard extends StatelessWidget {
             message ?? Constants.defaultError,
             style: TextStyle(
               fontSize: 15,
-              color: Themes.getPlatformSuccessColor(context),
+              color: Themes.getPlatformErrorColor(context),
             ),
           ),
         ],

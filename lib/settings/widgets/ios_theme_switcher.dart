@@ -8,14 +8,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // Project imports:
 import 'package:network_arch/theme/theme.dart';
 
-class IOSThemeSwitcher extends StatefulWidget {
-  const IOSThemeSwitcher({super.key});
+class IosThemeSwitcher extends StatefulWidget {
+  const IosThemeSwitcher({super.key});
 
   @override
-  State<IOSThemeSwitcher> createState() => _IOSThemeSwitcherState();
+  State<IosThemeSwitcher> createState() => _IosThemeSwitcherState();
 }
 
-class _IOSThemeSwitcherState extends State<IOSThemeSwitcher> {
+class _IosThemeSwitcherState extends State<IosThemeSwitcher> {
   late ThemeMode _selectedThemeMode;
 
   @override
@@ -34,11 +34,9 @@ class _IOSThemeSwitcherState extends State<IOSThemeSwitcher> {
           setState(() {
             _selectedThemeMode = mode;
 
-            context.read<ThemeBloc>().add(
-                  ThemeModeChangedEvent(
-                    themeMode: mode,
-                  ),
-                );
+            context
+                .read<ThemeBloc>()
+                .add(ThemeModeChangedEvent(themeMode: mode));
           });
         }
       },

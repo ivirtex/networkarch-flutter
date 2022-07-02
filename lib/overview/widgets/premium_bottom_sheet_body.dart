@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:cupertino_onboarding/cupertino_onboarding.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -17,8 +17,12 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/network_status/widgets/adaptive_button.dart';
 import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/theme/themes.dart';
 import 'package:network_arch/utils/in_app_purchases.dart';
+
+// Package imports:
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart'
+    hide PlatformWidget;
+
 
 class PremiumBottomSheetBody extends StatefulWidget {
   const PremiumBottomSheetBody({super.key});
@@ -50,115 +54,136 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
 
   @override
   Widget build(BuildContext context) {
-    final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
-
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 40,
-          horizontal: 20,
-        ),
-        child: Column(
-          children: [
-            Text(
-              'Help to maintain our servers',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontSize: 22,
-                    color:
-                        isIOS ? Themes.iOStextColor.resolveFrom(context) : null,
-                  ),
-            ),
-            const SizedBox(height: 20),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Subscribe and get unlimited access to the following features:',
-                style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                      color: isIOS
-                          ? Themes.iOStextColor.resolveFrom(context)
-                          : null,
-                    ),
+    return PlatformWidget(
+      androidBuilder: (_) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 40,
+            horizontal: 20,
+          ),
+          child: Column(
+            children: [
+              Text(
+                'Help to maintain our servers',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(fontSize: 22),
               ),
-            ),
-            const SizedBox(height: Constants.listSpacing),
-            const AdvantageCard(
-              title: 'IP Geolocation',
-              subtitle: Constants.ipGeoDesc,
-              icon: Icons.location_on_rounded,
-            ),
-            const SizedBox(height: Constants.listSpacing),
-            const AdvantageCard(
-              title: 'Whois',
-              subtitle: Constants.whoisDesc,
-              icon: Icons.info_rounded,
-            ),
-            const SizedBox(height: Constants.listSpacing),
-            const AdvantageCard(
-              title: 'DNS Lookup',
-              subtitle: Constants.dnsDesc,
-              icon: Icons.search_rounded,
-            ),
-            const SizedBox(height: Constants.listSpacing),
-            const AdvantageCard(
-              title: 'No ads',
-              subtitle: 'No ads, no distractions',
-              icon: Icons.ad_units_rounded,
-            ),
-            const SizedBox(height: Constants.listSpacing),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Or watch a short ad to get one-time access to these tools.',
-                style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                      color: isIOS
-                          ? Themes.iOStextColor.resolveFrom(context)
-                          : null,
-                    ),
+              const SizedBox(height: 20),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Subscribe and get unlimited access to the following features:',
+                ),
               ),
-            ),
-            const Spacer(),
-            Column(
-              children: [
-                FutureBuilder(
-                  future: isIapAvailableFuture,
-                  builder: (context, AsyncSnapshot<bool> isIapAvailable) {
-                    if (isIapAvailable.connectionState ==
-                        ConnectionState.waiting) {
-                      return const ListCircularProgressIndicator();
-                    }
+              const SizedBox(height: Constants.listSpacing),
+              const AdvantageCard(
+                title: 'IP Geolocation',
+                subtitle: Constants.ipGeoDesc,
+                icon: Icons.location_on_rounded,
+              ),
+              const SizedBox(height: Constants.listSpacing),
+              const AdvantageCard(
+                title: 'Whois',
+                subtitle: Constants.whoisDesc,
+                icon: Icons.info_rounded,
+              ),
+              const SizedBox(height: Constants.listSpacing),
+              const AdvantageCard(
+                title: 'DNS Lookup',
+                subtitle: Constants.dnsDesc,
+                icon: Icons.search_rounded,
+              ),
+              const SizedBox(height: Constants.listSpacing),
+              const AdvantageCard(
+                title: 'No ads',
+                subtitle: 'No ads, no distractions.',
+                icon: Icons.ad_units_rounded,
+              ),
+              const SizedBox(height: Constants.listSpacing),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Or watch a short ad to get one-time access to these tools.',
+                ),
+              ),
+              const Spacer(),
+              Column(
+                children: [
+                  FutureBuilder(
+                    future: isIapAvailableFuture,
+                    builder: (context, AsyncSnapshot<bool> isIapAvailable) {
+                      if (isIapAvailable.connectionState ==
+                          ConnectionState.waiting) {
+                        return const ListCircularProgressIndicator();
+                      }
 
-                    if (isIapAvailable.hasError) {
+                      if (isIapAvailable.hasError) {
+                        return AdaptiveButton.filled(
+                          child: const Text('Error'),
+                        );
+                      }
+
                       return AdaptiveButton.filled(
-                        child: const Text('Error'),
+                        onPressed: isIapAvailable.data!
+                            ? () => _handleSubscribe(context)
+                            : null,
+                        child: const Text('Subscribe'),
                       );
-                    }
-
-                    return AdaptiveButton.filled(
-                      onPressed: isIapAvailable.data!
-                          ? () => _handleSubscribe(context)
-                          : null,
-                      child: const Text(
-                        'Subscribe',
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(width: Constants.listSpacing),
-                AdaptiveButton(
-                  onPressed:
-                      _isRewardedAdReady ? () => _handleWatchAd(context) : null,
-                  child: _isRewardedAdReady
-                      ? const Text(
-                          'Watch ad',
-                        )
-                      : const Text(
-                          'Loading ad',
-                        ),
-                ),
-              ],
-            ),
-          ],
+                    },
+                  ),
+                  const SizedBox(width: Constants.listSpacing),
+                  AdaptiveButton(
+                    onPressed: _isRewardedAdReady
+                        ? () => _handleWatchAd(context)
+                        : null,
+                    child: _isRewardedAdReady
+                        ? const Text('Watch ad')
+                        : const Text('Loading ad'),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
+      ),
+      iosBuilder: (_) => CupertinoOnboarding(
+        onPressedOnLastPage: () => _handleSubscribe(context),
+        bottomButtonChild: const Text('Subscribe'),
+        widgetAboveBottomButton: CupertinoButton(
+          onPressed: _isRewardedAdReady ? () => _handleWatchAd(context) : null,
+          child: _isRewardedAdReady
+              ? const Text('Watch ad')
+              : const Text('Loading ad'),
+        ),
+        pages: [
+          WhatsNewPage(
+            title: const Text('Help to maintain our servers'),
+            features: const [
+              WhatsNewFeature(
+                title: Text('IP Geolocation'),
+                description: Text(Constants.ipGeoDesc),
+                icon: Icon(CupertinoIcons.location),
+              ),
+              WhatsNewFeature(
+                title: Text('Whois'),
+                description: Text(Constants.whoisDesc),
+                icon: Icon(CupertinoIcons.info),
+              ),
+              WhatsNewFeature(
+                title: Text('DNS Lookup'),
+                description: Text(Constants.dnsDesc),
+                icon: Icon(CupertinoIcons.search),
+              ),
+              WhatsNewFeature(
+                title: Text('No ads'),
+                description: Text('No ads, no distractions.'),
+                icon: Icon(CupertinoIcons.device_phone_portrait),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -251,15 +276,11 @@ class AdvantageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
-
     return Row(
       children: [
-        Icon(
+        const Icon(
           Icons.check_circle_rounded,
-          color: Theme.of(context).platform == TargetPlatform.iOS
-              ? CupertinoColors.systemGreen
-              : Colors.green,
+          color: Colors.green,
         ),
         const SizedBox(width: 10),
         Expanded(
@@ -270,8 +291,6 @@ class AdvantageCard extends StatelessWidget {
               children: [
                 Icon(
                   icon,
-                  color:
-                      isIOS ? Themes.iOStextColor.resolveFrom(context) : null,
                 ),
                 const SizedBox(width: 10),
                 Expanded(
@@ -280,19 +299,11 @@ class AdvantageCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              color: isIOS
-                                  ? Themes.iOStextColor.resolveFrom(context)
-                                  : null,
-                            ),
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       Text(
                         subtitle,
-                        style: Theme.of(context).textTheme.caption!.copyWith(
-                              color: isIOS
-                                  ? Themes.iOStextColor.resolveFrom(context)
-                                  : null,
-                            ),
+                        style: Theme.of(context).textTheme.caption,
                       ),
                     ],
                   ),

@@ -106,7 +106,7 @@ class _SettingsViewState extends State<SettingsView> {
                   children: const [
                     CupertinoListTile.notched(
                       leading: Icon(CupertinoIcons.sun_max),
-                      title: IOSThemeSwitcher(),
+                      title: IosThemeSwitcher(),
                     ),
                   ],
                 ),

@@ -54,7 +54,7 @@ class ActionCard extends StatelessWidget {
                     if (desc != null)
                       Text(
                         desc!,
-                        maxLines: 2,
+                        maxLines: 3,
                         style: TextStyle(
                           color: Theme.of(context).textTheme.caption?.color,
                         ),
@@ -87,7 +87,7 @@ class ActionCard extends StatelessWidget {
                   ),
                   child: Text(
                     desc!,
-                    maxLines: 2,
+                    maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
                 )

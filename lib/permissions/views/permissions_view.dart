@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -41,8 +42,6 @@ class _PermissionsViewState extends State<PermissionsView> {
   Widget _buildBody(BuildContext context) {
     return BlocConsumer<PermissionsBloc, PermissionsState>(
       listener: (context, state) {
-        final scaffoldMessenger = ScaffoldMessenger.of(context);
-
         if (state.latestRequested == Permission.locationWhenInUse) {
           if (state.locationStatus == PermissionStatus.granted) {
             showPlatformMessage(
@@ -68,6 +67,8 @@ class _PermissionsViewState extends State<PermissionsView> {
 
         // Only showed on Android
         if (state.latestRequested == Permission.phone) {
+          final scaffoldMessenger = ScaffoldMessenger.of(context);
+
           if (state.phoneStateStatus == PermissionStatus.granted) {
             scaffoldMessenger.showSnackBar(
               Constants.permissionGrantedSnackbar,
@@ -91,6 +92,7 @@ class _PermissionsViewState extends State<PermissionsView> {
               title: 'Location',
               description: Constants.locationPermissionDesc,
               icon: const FaIcon(FontAwesomeIcons.locationArrow),
+              iOSicon: const Icon(CupertinoIcons.location),
               status: state.locationStatus ?? PermissionStatus.denied,
               onPressed: () {
                 context
@@ -105,6 +107,7 @@ class _PermissionsViewState extends State<PermissionsView> {
                   title: 'Phone',
                   description: Constants.phoneStatePermissionDesc,
                   icon: const FaIcon(FontAwesomeIcons.phoneFlip),
+                  iOSicon: const Icon(Icons.phone_iphone),
                   status: state.phoneStateStatus ?? PermissionStatus.denied,
                   onPressed: () {
                     context

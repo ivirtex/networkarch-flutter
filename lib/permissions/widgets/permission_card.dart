@@ -17,6 +17,7 @@ class PermissionCard extends StatelessWidget {
     required this.title,
     required this.description,
     required this.icon,
+    required this.iOSicon,
     required this.status,
     required this.onPressed,
     super.key,
@@ -25,6 +26,7 @@ class PermissionCard extends StatelessWidget {
   final String title;
   final String description;
   final FaIcon icon;
+  final Icon iOSicon;
   final PermissionStatus status;
   final VoidCallback? onPressed;
 
@@ -110,26 +112,36 @@ class PermissionCard extends StatelessWidget {
   Widget _buildIOS(BuildContext context) {
     return CupertinoListSection.insetGrouped(
       backgroundColor: CupertinoColors.systemBackground.resolveFrom(context),
+      header: Text(title),
       children: [
         CupertinoListTile(
           backgroundColor: Themes.iOSbgColor.resolveFrom(context),
-          leading: icon,
-          title: Text(title),
-          subtitle: ConstrainedBox(
+          leading: iOSicon,
+          title: ConstrainedBox(
             constraints: const BoxConstraints(
-              maxWidth: 200,
-              maxHeight: 200,
+              maxWidth: 150,
+              maxHeight: 500,
             ),
             child: Text(
               description,
-              maxLines: 3,
+              maxLines: 5,
               overflow: TextOverflow.ellipsis,
             ),
           ),
           trailing: status.isGranted
-              ? const Icon(CupertinoIcons.check_mark_circled_solid)
-              : const CupertinoListTileChevron(),
-          onTap: () {},
+              ? Icon(
+                  CupertinoIcons.check_mark_circled_solid,
+                  color: Themes.getPlatformSuccessColor(context),
+                )
+              : status.isPermanentlyDenied
+                  ? Icon(
+                      CupertinoIcons.xmark_circle_fill,
+                      color: Themes.getPlatformErrorColor(context),
+                    )
+                  : CupertinoButton(
+                      onPressed: onPressed,
+                      child: const Text('Request'),
+                    ),
           padding: Constants.cupertinoListTileWithIconPadding,
         ),
       ],

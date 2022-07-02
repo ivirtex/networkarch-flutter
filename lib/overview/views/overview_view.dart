@@ -285,6 +285,7 @@ class _OverviewViewState extends State<OverviewView> {
     if (Theme.of(context).platform == TargetPlatform.iOS) {
       showCupertinoModalBottomSheet<void>(
         context: context,
+        useRootNavigator: true,
         backgroundColor: Themes.iOSbgColor.resolveFrom(context),
         builder: (_) => const PremiumBottomSheetBody(),
       );
