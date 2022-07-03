@@ -115,7 +115,10 @@ class PermissionCard extends StatelessWidget {
       header: Text(title),
       children: [
         CupertinoListTile(
-          backgroundColor: Themes.iOSbgColor.resolveFrom(context),
+          backgroundColor: CupertinoDynamicColor.withBrightness(
+            color: CupertinoColors.systemGrey6.color,
+            darkColor: CupertinoColors.systemGrey5.darkColor,
+          ).resolveFrom(context),
           leading: iOSicon,
           title: ConstrainedBox(
             constraints: const BoxConstraints(

@@ -56,16 +56,14 @@ abstract class Themes {
     );
   }
 
-  static final CupertinoThemeData cupertinoLightThemeData = CupertinoThemeData(
+  static const CupertinoThemeData cupertinoLightThemeData = CupertinoThemeData(
     brightness: Brightness.light,
     scaffoldBackgroundColor: CupertinoColors.systemGrey6,
-    barBackgroundColor: CupertinoColors.systemGrey6.withAlpha(200),
   );
 
-  static final CupertinoThemeData cupertinoDarkThemeData = CupertinoThemeData(
+  static const CupertinoThemeData cupertinoDarkThemeData = CupertinoThemeData(
     brightness: Brightness.dark,
     scaffoldBackgroundColor: CupertinoColors.black,
-    barBackgroundColor: CupertinoColors.black.withAlpha(200),
   );
 
   static const CupertinoDynamicColor iOSlightBgColor =

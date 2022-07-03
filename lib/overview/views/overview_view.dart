@@ -16,7 +16,6 @@ import 'package:network_arch/network_status/bloc/bloc.dart';
 import 'package:network_arch/network_status/views/views.dart';
 import 'package:network_arch/overview/overview.dart';
 import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/theme/themes.dart';
 import 'package:network_arch/utils/utils.dart';
 
 class OverviewView extends StatefulWidget {

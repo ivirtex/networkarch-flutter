@@ -1,6 +1,9 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 
+// Project imports:
+import 'package:network_arch/theme/themes.dart';
+
 class CupertinoContentScaffold extends StatelessWidget {
   const CupertinoContentScaffold({
     required this.child,
@@ -25,6 +28,8 @@ class CupertinoContentScaffold extends StatelessWidget {
                 CupertinoSliverNavigationBar(
                   stretch: true,
                   border: null,
+                  backgroundColor:
+                      Themes.iOSbgColor.resolveFrom(context).withAlpha(200),
                   largeTitle: largeTitle,
                   trailing: navBarTrailingWidget,
                 ),

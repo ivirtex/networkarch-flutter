@@ -276,11 +276,14 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
   }
 
   void _handleCardTap(WolResponseModel response) {
-    Navigator.push(
-      context,
-      MaterialPageRoute<void>(
-        builder: (context) => WolPacketDetailsView(response),
-      ),
+    Navigator.of(context).push<void>(
+      Theme.of(context).platform == TargetPlatform.iOS
+          ? CupertinoPageRoute(
+              builder: (_) => WolPacketDetailsView(response),
+            )
+          : MaterialPageRoute(
+              builder: (_) => WolPacketDetailsView(response),
+            ),
     );
   }
 }
