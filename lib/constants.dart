@@ -119,12 +119,12 @@ abstract class Constants {
 
   // Tools descriptions
   static const String pingDesc =
-      'Send ICMP pings to specific IP address or domain';
+      'Send ICMP pings to specific IP address or domain.';
 
   static const String lanScannerDesc =
-      'Discover network devices in the local network';
+      'Discover network devices in the local network.';
 
-  static const String wolDesc = 'Send magic packets on your local network';
+  static const String wolDesc = 'Send magic packets on your local network.';
 
   static const String ipGeoDesc =
       'Get the geolocation of a specific IP address.';
@@ -148,10 +148,10 @@ abstract class Constants {
 
   // Permissions descriptions
   static const String locationPermissionDesc =
-      'We need your location permission in order to access Wi-Fi information';
+      'We need your location permission in order to access Wi-Fi information.';
 
   static const String phoneStatePermissionDesc =
-      'We need your phone permission in order to access carrier information';
+      'We need your phone permission in order to access carrier information.';
 
   // Permissions snackbars
   static const String _permissionGranted = 'Permission granted!';
