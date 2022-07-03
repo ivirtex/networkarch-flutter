@@ -149,6 +149,7 @@ class NetworkArch extends StatelessWidget {
             ),
             child: CupertinoApp(
               useInheritedMediaQuery: true,
+              debugShowCheckedModeBanner: false,
               localizationsDelegates: const [
                 DefaultMaterialLocalizations.delegate,
                 DefaultWidgetsLocalizations.delegate,

@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -67,23 +68,20 @@ class _LanScannerViewState extends State<LanScannerView> {
 
   Widget _buildIOS(BuildContext context) {
     return CupertinoContentScaffold(
-      customHeader: BlocBuilder<LanScannerBloc, LanScannerState>(
+      largeTitle: const Text('Lan Scanner'),
+      navBarTrailingWidget: BlocBuilder<LanScannerBloc, LanScannerState>(
         builder: (context, state) {
           return state is LanScannerRunStart ||
                   state is LanScannerRunProgressUpdate
-              ? CupertinoActionAppBar(
-                  context,
-                  title: 'LAN Scanner',
-                  action: ButtonAction.stop,
-                  isActive: true,
+              ? CupertinoButton(
+                  padding: EdgeInsets.zero,
                   onPressed: _handleStop,
+                  child: const Text('Stop'),
                 )
-              : CupertinoActionAppBar(
-                  context,
-                  title: 'LAN Scanner',
-                  action: ButtonAction.start,
-                  isActive: true,
+              : CupertinoButton(
+                  padding: EdgeInsets.zero,
                   onPressed: _handleStart,
+                  child: const Text('Start'),
                 );
         },
       ),

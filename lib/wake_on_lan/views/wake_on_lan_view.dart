@@ -98,10 +98,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
         child: Text(
           'Send',
           style: TextStyle(
-            color: CupertinoDynamicColor.resolve(
-              CupertinoColors.activeGreen,
-              context,
-            ),
+            color: CupertinoColors.systemGreen.resolveFrom(context),
           ),
         ),
       ),

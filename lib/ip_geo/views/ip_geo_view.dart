@@ -94,10 +94,7 @@ class _IpGeoViewState extends State<IpGeoView> {
         child: Text(
           'Check',
           style: TextStyle(
-            color: CupertinoDynamicColor.resolve(
-              CupertinoColors.activeGreen,
-              context,
-            ),
+            color: CupertinoColors.systemGreen.resolveFrom(context),
           ),
         ),
       ),

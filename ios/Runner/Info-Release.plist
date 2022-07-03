@@ -46,6 +46,8 @@
 		<string>We need your location permission in order to access Wi-Fi informations</string>
 		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 		<string>We need your location permission in order to access Wi-Fi informations</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+		<string>We need your location permission in order to access Wi-Fi informations</string>
 
 		<key>GADApplicationIdentifier</key>
 		<string>ca-app-pub-3222092607864795~8507922744</string>

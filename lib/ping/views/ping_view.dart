@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -112,22 +113,29 @@ class _PingViewState extends State<PingView> {
 
   Widget _buildIOS(BuildContext context) {
     return CupertinoContentScaffold(
-      customHeader: BlocBuilder<PingBloc, PingState>(
+      largeTitle: const Text('Ping'),
+      navBarTrailingWidget: BlocBuilder<PingBloc, PingState>(
         builder: (context, state) {
           return state is PingRunNewData
-              ? CupertinoActionAppBar(
-                  context,
-                  title: 'Ping',
-                  action: ButtonAction.stop,
-                  isActive: _shouldStartButtonBeActive,
-                  onPressed: _handleStop,
+              ? CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: _shouldStartButtonBeActive ? _handleStop : null,
+                  child: Text(
+                    'Stop',
+                    style: TextStyle(
+                      color: CupertinoColors.systemRed.resolveFrom(context),
+                    ),
+                  ),
                 )
-              : CupertinoActionAppBar(
-                  context,
-                  title: 'Ping',
-                  action: ButtonAction.start,
-                  isActive: _shouldStartButtonBeActive,
-                  onPressed: _handleStart,
+              : CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: _shouldStartButtonBeActive ? _handleStart : null,
+                  child: Text(
+                    'Start',
+                    style: TextStyle(
+                      color: CupertinoColors.systemGreen.resolveFrom(context),
+                    ),
+                  ),
                 );
         },
       ),
