@@ -139,7 +139,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
 
             if (state is DnsLookupLoadFailure) {
               return const ErrorCard(
-                message: 'Failed to load data',
+                message: 'Failed to load the data',
               );
             }
 

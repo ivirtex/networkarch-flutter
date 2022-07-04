@@ -2,15 +2,16 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:elegant_notification/elegant_notification.dart';
 import 'package:hive/hive.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
+import 'package:network_arch/permissions/permissions.dart';
 
 bool isPremiumActive() {
   final iapBox = Hive.box<bool>('iap');
@@ -33,15 +34,6 @@ String getAdUnitId() {
       : Constants.testBannerAdUnitId;
 }
 
-void showElegantNotification(
-  BuildContext context,
-  ElegantNotification notification,
-) {
-  notification
-    ..radius = 10.0
-    ..show(context);
-}
-
 void hideKeyboard(BuildContext context) {
   final currentFocus = FocusScope.of(context);
   if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
@@ -51,12 +43,46 @@ void hideKeyboard(BuildContext context) {
 
 void showPlatformMessage(
   BuildContext context, {
-  required SnackBar androidMessage,
-  required ElegantNotification iOSmessage,
+  required MessageType type,
 }) {
-  if (Theme.of(context).platform == TargetPlatform.iOS) {
-    showElegantNotification(context, iOSmessage);
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(androidMessage);
+  final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+
+  switch (type) {
+    case MessageType.granted:
+      isIOS
+          ? showCupertinoDialog<void>(
+              context: context,
+              builder: Constants.permissionGrantedCupertinoDialog,
+            )
+          : ScaffoldMessenger.of(context).showSnackBar(
+              Constants.permissionGrantedSnackbar,
+            );
+      break;
+    case MessageType.denied:
+      isIOS
+          ? showCupertinoDialog<void>(
+              context: context,
+              builder: Constants.permissionDeniedCupertinoDialog,
+            )
+          : ScaffoldMessenger.of(context).showSnackBar(
+              Constants.permissionDeniedSnackbar,
+            );
+      break;
+    case MessageType.default_:
+      isIOS
+          ? showCupertinoDialog<void>(
+              context: context,
+              builder: Constants.permissionDefaultCupertinoDialog,
+            )
+          : ScaffoldMessenger.of(context).showSnackBar(
+              Constants.permissionDefaultSnackbar,
+            );
+      break;
   }
+
+  // if (Theme.of(context).platform == TargetPlatform.iOS) {
+  //   showElegantNotification(context, iOSmessage);
+  // } else {
+  //   ScaffoldMessenger.of(context).showSnackBar(androidMessage);
+  // }
 }

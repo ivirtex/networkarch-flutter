@@ -10,6 +10,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/introduction/introduction.dart';
 import 'package:network_arch/overview/overview.dart';
+import 'package:network_arch/permissions/permissions.dart';
 import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/utils/helpers.dart';
 
@@ -94,8 +95,7 @@ class DebugSection extends StatelessWidget {
               onPressed: () {
                 showPlatformMessage(
                   context,
-                  androidMessage: Constants.permissionGrantedSnackbar,
-                  iOSmessage: Constants.permissionGrantedNotification,
+                  type: MessageType.granted,
                 );
               },
             ),
@@ -104,8 +104,7 @@ class DebugSection extends StatelessWidget {
               onPressed: () {
                 showPlatformMessage(
                   context,
-                  androidMessage: Constants.permissionDeniedSnackbar,
-                  iOSmessage: Constants.permissionDeniedNotification,
+                  type: MessageType.denied,
                 );
               },
             ),
@@ -114,8 +113,7 @@ class DebugSection extends StatelessWidget {
               onPressed: () {
                 showPlatformMessage(
                   context,
-                  androidMessage: Constants.permissionDefaultSnackbar,
-                  iOSmessage: Constants.permissionDefaultNotification,
+                  type: MessageType.default_,
                 );
               },
             ),

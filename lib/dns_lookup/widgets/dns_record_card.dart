@@ -27,7 +27,7 @@ class DnsRecordCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                '${rrCodeToName(record.type).name} Record',
+                rrCodeToName(record.type).name,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,

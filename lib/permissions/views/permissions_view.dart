@@ -11,9 +11,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
-import 'package:network_arch/permissions/bloc/permissions_bloc.dart';
-import 'package:network_arch/permissions/widgets/usage_desc.dart';
-import 'package:network_arch/permissions/widgets/widgets.dart';
+import 'package:network_arch/permissions/permissions.dart';
 import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/utils/helpers.dart';
 
@@ -46,21 +44,18 @@ class _PermissionsViewState extends State<PermissionsView> {
           if (state.locationStatus == PermissionStatus.granted) {
             showPlatformMessage(
               context,
-              androidMessage: Constants.permissionGrantedSnackbar,
-              iOSmessage: Constants.permissionGrantedNotification,
+              type: MessageType.granted,
             );
           } else if (state.locationStatus ==
               PermissionStatus.permanentlyDenied) {
             showPlatformMessage(
               context,
-              androidMessage: Constants.permissionDeniedSnackbar,
-              iOSmessage: Constants.permissionDeniedNotification,
+              type: MessageType.denied,
             );
           } else {
             showPlatformMessage(
               context,
-              androidMessage: Constants.permissionDefaultSnackbar,
-              iOSmessage: Constants.permissionDefaultNotification,
+              type: MessageType.default_,
             );
           }
         }

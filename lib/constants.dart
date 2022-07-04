@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:elegant_notification/elegant_notification.dart';
-import 'package:elegant_notification/resources/arrays.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -124,17 +122,16 @@ abstract class Constants {
   static const String lanScannerDesc =
       'Discover network devices in the local network.';
 
-  static const String wolDesc = 'Send magic packets on your local network.';
+  static const String wolDesc = 'Send magic packets in your local network.';
 
-  static const String ipGeoDesc =
-      'Get the geolocation of a specific IP address.';
+  static const String ipGeoDesc = 'Get the geolocation of any IP address.';
 
-  static const String whoisDesc = 'Lookup information about a specific domain.';
+  static const String whoisDesc = 'Lookup information about any domain.';
 
-  static const String dnsDesc = 'Lookup DNS records of a specific domain.';
+  static const String dnsDesc = 'Lookup DNS records of any domain.';
 
   // Error descriptions
-  static const String defaultError = "Couldn't read the data";
+  static const String defaultError = "Couldn't load the data";
 
   static const String simError = 'No SIM card';
 
@@ -153,14 +150,14 @@ abstract class Constants {
   static const String phoneStatePermissionDesc =
       'We need your phone permission in order to access carrier information.';
 
-  // Permissions snackbars
-  static const String _permissionGranted = 'Permission granted!';
+  // Permissions messages
+  static const String _permissionGranted = 'Permission succesfully granted.';
 
   static const String _permissionDenied =
-      '''Permission denied, the app may not function properly, check the app's settings''';
+      '''Permission denied, the app may not function properly, check the app's settings.''';
 
   static const String _permissionDefault =
-      'Something gone wrong, check app permissions';
+      'Something gone wrong, check app permissions.';
 
   static final SnackBar permissionGrantedSnackbar = SnackBar(
     content: Row(
@@ -200,48 +197,59 @@ abstract class Constants {
     ),
   );
 
-  static final ElegantNotification permissionGrantedNotification =
-      ElegantNotification.success(
-    title: const Text('Success'),
-    description: const Text(_permissionGranted),
-    dismissible: true,
-    showProgressIndicator: false,
-    notificationPosition: NotificationPosition.bottom,
-    animation: AnimationType.fromBottom,
-  );
+  static CupertinoAlertDialog permissionGrantedCupertinoDialog(
+    BuildContext context,
+  ) =>
+      CupertinoAlertDialog(
+        title: const Text('Permission granted'),
+        content: const Text(_permissionGranted),
+        actions: [
+          CupertinoDialogAction(
+            child: const Text('OK'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
 
-  static final ElegantNotification permissionDeniedNotification =
-      ElegantNotification.error(
-    title: const Text('Error'),
-    description: const Text(_permissionDenied),
-    dismissible: true,
-    showProgressIndicator: false,
-    notificationPosition: NotificationPosition.bottom,
-    animation: AnimationType.fromBottom,
-    toastDuration: const Duration(milliseconds: 4000),
-    height: 140,
-    action: const Padding(
-      padding: EdgeInsets.only(top: 10),
-      child: Text(
-        'Open Settings',
-        style: TextStyle(
-          // Only iOS uses this notifications so we can use `CupertinoColors`
-          color: CupertinoColors.activeBlue,
-        ),
-      ),
-    ),
-    onActionPressed: () {
-      openAppSettings();
-    },
-  );
+  static CupertinoAlertDialog permissionDeniedCupertinoDialog(
+    BuildContext context,
+  ) =>
+      CupertinoAlertDialog(
+        title: const Text('Permission denied'),
+        content: const Text(_permissionDenied),
+        actions: [
+          const CupertinoDialogAction(
+            onPressed: openAppSettings,
+            child: Text('Open settings'),
+          ),
+          CupertinoDialogAction(
+            child: const Text('OK'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
 
-  static final ElegantNotification permissionDefaultNotification =
-      ElegantNotification.info(
-    title: const Text('Warning'),
-    description: const Text(_permissionDefault),
-    dismissible: true,
-    showProgressIndicator: false,
-    notificationPosition: NotificationPosition.bottom,
-    animation: AnimationType.fromBottom,
-  );
+  static CupertinoAlertDialog permissionDefaultCupertinoDialog(
+    BuildContext context,
+  ) =>
+      CupertinoAlertDialog(
+        title: const Text('Something gone wrong'),
+        content: const Text(_permissionDefault),
+        actions: [
+          const CupertinoDialogAction(
+            onPressed: openAppSettings,
+            child: Text('Open settings'),
+          ),
+          CupertinoDialogAction(
+            child: const Text('OK'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
 }

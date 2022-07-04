@@ -267,13 +267,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.0"
-  elegant_notification:
-    dependency: "direct main"
-    description:
-      name: elegant_notification
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.6.0"
   enum_to_string:
     dependency: "direct main"
     description:
