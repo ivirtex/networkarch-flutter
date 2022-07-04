@@ -23,6 +23,7 @@ class PingBloc extends Bloc<PingEvent, PingState> {
   }
 
   final PingRepository _pingRepository;
+  String? target;
 
   @override
   Future<void> close() {
@@ -32,7 +33,8 @@ class PingBloc extends Bloc<PingEvent, PingState> {
   }
 
   void _onStarted(PingStarted event, Emitter<PingState> emit) {
-    final stream = _pingRepository.getPingStream(host: event.host);
+    final stream = _pingRepository.getPingStream(host: event.target);
+    target = event.target;
 
     _pingRepository.subscription = stream.listen((ping) {
       add(PingNewDataAdded(ping));

@@ -4,9 +4,9 @@ part of 'ping_bloc.dart';
 abstract class PingEvent {}
 
 class PingStarted extends PingEvent {
-  PingStarted(this.host);
+  PingStarted(this.target);
 
-  final String host;
+  final String target;
 }
 
 class PingNewDataAdded extends PingEvent {

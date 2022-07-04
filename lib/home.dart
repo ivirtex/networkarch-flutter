@@ -41,12 +41,6 @@ class _HomeState extends State<Home> {
       'hasIntroductionBeenShown',
       defaultValue: false,
     );
-    if (!hasIntroductionBeenShown!) {
-      showCupertinoModalBottomSheet<void>(
-        context: context,
-        builder: (context) => const IosOnboarding(),
-      );
-    }
 
     hasIntroductionBeenShownSubscription =
         settingsBox.watch(key: 'hasIntroductionBeenShown').listen((event) {
@@ -55,13 +49,15 @@ class _HomeState extends State<Home> {
           hasIntroductionBeenShown = event.value as bool;
         });
       }
-
-      if (!hasIntroductionBeenShown!) {
-        showCupertinoModalBottomSheet<void>(
-          context: context,
-          builder: (context) => const IosOnboarding(),
-        );
-      }
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        if (!hasIntroductionBeenShown!) {
+          showCupertinoModalBottomSheet<void>(
+            context: context,
+            isDismissible: false,
+            builder: (context) => const IosOnboarding(),
+          );
+        }
+      });
     });
 
     context

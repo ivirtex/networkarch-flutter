@@ -25,12 +25,12 @@ class _PingViewState extends State<PingView> {
   final _listKey = GlobalKey<AnimatedListState>();
   final _targetHostController = TextEditingController();
   final _scrollController = ScrollController();
-  late final AnimatedListModel<PingData?> _pingData;
+  late final AnimatedListModel<PingData> _pingData;
 
   String get _target => _targetHostController.text;
-  String _finalTarget = '';
 
   bool _shouldStartButtonBeActive = false;
+  bool _isClearListButtonLocked = false;
   bool _shouldAutoScroll = true;
   bool _isFabVisible = false;
 
@@ -68,7 +68,10 @@ class _PingViewState extends State<PingView> {
     final routedAddr =
         // ignore: cast_nullable_to_non_nullable
         ModalRoute.of(context)!.settings.arguments as String;
-    _targetHostController.text = routedAddr;
+
+    if (routedAddr != '') {
+      _targetHostController.text = routedAddr;
+    }
   }
 
   @override
@@ -119,7 +122,7 @@ class _PingViewState extends State<PingView> {
           return state is PingRunNewData
               ? CupertinoButton(
                   padding: EdgeInsets.zero,
-                  onPressed: _shouldStartButtonBeActive ? _handleStop : null,
+                  onPressed: _handleStop,
                   child: Text(
                     'Stop',
                     style: TextStyle(
@@ -133,7 +136,10 @@ class _PingViewState extends State<PingView> {
                   child: Text(
                     'Start',
                     style: TextStyle(
-                      color: CupertinoColors.systemGreen.resolveFrom(context),
+                      color: _shouldStartButtonBeActive
+                          ? CupertinoColors.systemGreen.resolveFrom(context)
+                          : CupertinoColors.placeholderText
+                              .resolveFrom(context),
                     ),
                   ),
                 );
@@ -172,13 +178,17 @@ class _PingViewState extends State<PingView> {
               const SizedBox(width: 10),
               BlocBuilder<PingBloc, PingState>(
                 builder: (context, state) {
-                  if (state is PingRunComplete && _pingData.isNotEmpty) {
+                  if (_pingData.isNotEmpty && !_isClearListButtonLocked) {
                     return ClearListButton(
                       onPressed: () async {
+                        setState(() {
+                          _isClearListButtonLocked = true;
+                        });
+
                         await _pingData.removeAllElements(context);
 
                         setState(() {
-                          _shouldStartButtonBeActive = _target.isNotEmpty;
+                          _isClearListButtonLocked = false;
                         });
                       },
                     );
@@ -200,7 +210,7 @@ class _PingViewState extends State<PingView> {
             return _buildItem(
               context,
               animation,
-              _pingData[index]!,
+              _pingData[index],
             );
           },
         ),
@@ -220,7 +230,7 @@ class _PingViewState extends State<PingView> {
         child: PingCard(
           list: _pingData,
           item: item,
-          addr: _finalTarget,
+          addr: context.read<PingBloc>().target,
           hasError: item.error != null,
         ),
       ),
@@ -230,17 +240,25 @@ class _PingViewState extends State<PingView> {
   Future<void> _handleStart() async {
     hideKeyboard(context);
 
+    setState(() {
+      _isClearListButtonLocked = true;
+    });
+
     await _pingData.removeAllElements(context);
 
-    _finalTarget = _target;
-    _targetHostController.text = '';
-
     if (!mounted) return;
-    context.read<PingBloc>().add(PingStarted(_finalTarget));
+    context.read<PingBloc>().add(PingStarted(_target));
+
+    _targetHostController.text = '';
+    _shouldStartButtonBeActive = false;
   }
 
   void _handleStop() {
     context.read<PingBloc>().add(PingStopped());
+
+    setState(() {
+      _isClearListButtonLocked = false;
+    });
   }
 
   void _handleNewData(PingState state) {
@@ -261,7 +279,7 @@ class _PingViewState extends State<PingView> {
           state.pingData.error?.error != ErrorType.RequestTimedOut) {
         _appBarKey.currentState?.toggleAnimation();
 
-        context.read<PingBloc>().add(PingStopped());
+        _handleStop();
       }
     }
   }
