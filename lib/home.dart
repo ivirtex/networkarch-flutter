@@ -3,12 +3,15 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:adapty_flutter/adapty_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
@@ -28,8 +31,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
-  bool? hasIntroductionBeenShown;
-  StreamSubscription<BoxEvent>? hasIntroductionBeenShownSubscription;
+  bool? _hasIntroductionBeenShown;
+  StreamSubscription<BoxEvent>? _hasIntroductionBeenShownSubscription;
 
   @override
   void initState() {
@@ -37,20 +40,20 @@ class _HomeState extends State<Home> {
 
     final settingsBox = Hive.box<bool>('settings');
 
-    hasIntroductionBeenShown = settingsBox.get(
+    _hasIntroductionBeenShown = settingsBox.get(
       'hasIntroductionBeenShown',
       defaultValue: false,
     );
 
-    hasIntroductionBeenShownSubscription =
+    _hasIntroductionBeenShownSubscription =
         settingsBox.watch(key: 'hasIntroductionBeenShown').listen((event) {
       if (event.value is bool) {
         setState(() {
-          hasIntroductionBeenShown = event.value as bool;
+          _hasIntroductionBeenShown = event.value as bool;
         });
       }
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        if (!hasIntroductionBeenShown!) {
+        if (!_hasIntroductionBeenShown!) {
           showCupertinoModalBottomSheet<void>(
             context: context,
             isDismissible: false,
@@ -59,6 +62,8 @@ class _HomeState extends State<Home> {
         }
       });
     });
+
+    setupIAP();
 
     context
         .read<PermissionsBloc>()
@@ -69,12 +74,12 @@ class _HomeState extends State<Home> {
   void dispose() {
     super.dispose();
 
-    hasIntroductionBeenShownSubscription?.cancel();
+    _hasIntroductionBeenShownSubscription?.cancel();
   }
 
   @override
   Widget build(BuildContext context) {
-    return hasIntroductionBeenShown!
+    return _hasIntroductionBeenShown!
         ? PlatformWidget(
             androidBuilder: _androidBuilder,
             iosBuilder: _iosBuilder,
@@ -149,6 +154,23 @@ class _HomeState extends State<Home> {
         }
       },
     );
+  }
+
+  Future<void> setupIAP() async {
+    try {
+      final purchaserInfo = await Adapty.getPurchaserInfo(forceUpdate: true);
+      if (purchaserInfo.accessLevels['premium']?.isActive ?? false) {
+        if (kDebugMode) {
+          print('Granting access to premium features...');
+        }
+
+        await Hive.box<bool>('iap').put('isPremiumGranted', true);
+      } else {
+        await Hive.box<bool>('iap').put('isPremiumGranted', false);
+      }
+    } catch (e) {
+      unawaited(Sentry.captureException(e));
+    }
   }
 }
 

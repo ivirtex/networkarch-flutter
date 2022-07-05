@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:async';
-
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +7,6 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:feedback/feedback.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
@@ -25,7 +21,6 @@ import 'package:network_arch/permissions/permissions.dart';
 import 'package:network_arch/ping/ping.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
 import 'package:network_arch/theme/theme.dart';
-import 'package:network_arch/utils/utils.dart';
 import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
 import 'package:network_arch/whois/whois.dart';
 
@@ -42,8 +37,6 @@ class NetworkArch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    setUpIAP(context);
-
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider.value(value: networkStatusRepository),
@@ -225,21 +218,4 @@ class NetworkArch extends StatelessWidget {
       }
     }
   }
-}
-
-void setUpIAP(BuildContext context) {
-  late StreamSubscription<List<PurchaseDetails>> _subscription;
-
-  final purchaseUpdated = InAppPurchase.instance.purchaseStream;
-  _subscription = purchaseUpdated.listen(
-    (purchaseDetailsList) {
-      listenToPurchaseUpdated(purchaseDetailsList, context);
-    },
-    onDone: () {
-      _subscription.cancel();
-    },
-    onError: (dynamic error) {
-      Sentry.captureException(error);
-    },
-  );
 }

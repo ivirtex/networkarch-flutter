@@ -209,8 +209,11 @@
 			<string>https</string>
 			<string>http</string>
 		</array>
-		<key>CADisableMinimumFrameDurationOnPhone</key>
 
+		<key>AdaptyPublicSdkKey</key>
+		<string>public_live_xuW2ftX9.SiFLdvlhc6rfP6r5bnWA</string>
+
+		<key>CADisableMinimumFrameDurationOnPhone</key>
 
 		<true/>
 	</dict>

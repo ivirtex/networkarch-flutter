@@ -106,8 +106,8 @@ class _DnsLookupViewState extends State<DnsLookupView> {
                   },
                 ),
               ),
-              const SizedBox(width: 10),
-              if (Theme.of(context).platform != TargetPlatform.iOS)
+              if (Theme.of(context).platform != TargetPlatform.iOS) ...[
+                const SizedBox(width: 10),
                 Flexible(
                   child: DropdownButtonFormField<RrCodeName>(
                     items: _getQueryTypes(),
@@ -127,6 +127,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
                     },
                   ),
                 ),
+              ],
             ],
           ),
         ),

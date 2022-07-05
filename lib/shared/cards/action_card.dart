@@ -15,6 +15,7 @@ class ActionCard extends StatelessWidget {
     required this.title,
     this.desc,
     this.icon,
+    this.cupertinoTrailing = const CupertinoListTileChevron(),
     this.shape,
     this.onTap,
     super.key,
@@ -23,6 +24,7 @@ class ActionCard extends StatelessWidget {
   final String title;
   final String? desc;
   final FaIcon? icon;
+  final Widget cupertinoTrailing;
   final OutlinedBorder? shape;
   final VoidCallback? onTap;
 
@@ -93,7 +95,7 @@ class ActionCard extends StatelessWidget {
                 )
               : null,
           leading: icon,
-          trailing: const CupertinoListTileChevron(),
+          trailing: cupertinoTrailing,
           padding: Constants.cupertinoListTileWithIconPadding,
           onTap: onTap,
         );

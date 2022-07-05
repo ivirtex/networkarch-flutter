@@ -8,18 +8,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:adapty_flutter/adapty_flutter.dart';
+import 'package:adapty_flutter/models/adapty_paywall.dart';
 import 'package:cupertino_onboarding/cupertino_onboarding.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/network_status/widgets/adaptive_button.dart';
 import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/utils/in_app_purchases.dart';
 
-// Package imports:
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart'
     hide PlatformWidget;
 
@@ -32,17 +32,19 @@ class PremiumBottomSheetBody extends StatefulWidget {
 }
 
 class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
-  late Future<bool> isIapAvailableFuture;
-
   RewardedAd? _rewardedAd;
   bool _isRewardedAdReady = false;
+
+  AdaptyPaywall? _paywall;
+
+  bool _isPurchasing = false;
 
   @override
   void initState() {
     super.initState();
 
     _setUpAds();
-    isIapAvailableFuture = InAppPurchase.instance.isAvailable();
+    _setupIAP();
   }
 
   @override
@@ -111,27 +113,9 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
               const Spacer(),
               Column(
                 children: [
-                  FutureBuilder(
-                    future: isIapAvailableFuture,
-                    builder: (context, AsyncSnapshot<bool> isIapAvailable) {
-                      if (isIapAvailable.connectionState ==
-                          ConnectionState.waiting) {
-                        return const ListCircularProgressIndicator();
-                      }
-
-                      if (isIapAvailable.hasError) {
-                        return AdaptiveButton.filled(
-                          child: const Text('Error'),
-                        );
-                      }
-
-                      return AdaptiveButton.filled(
-                        onPressed: isIapAvailable.data!
-                            ? () => _handleSubscribe(context)
-                            : null,
-                        child: const Text('Subscribe'),
-                      );
-                    },
+                  AdaptiveButton.filled(
+                    child: const Text('Subscribe'),
+                    onPressed: () => _handleSubscribe(context),
                   ),
                   const SizedBox(width: Constants.listSpacing),
                   AdaptiveButton(
@@ -150,7 +134,16 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
       ),
       iosBuilder: (_) => CupertinoOnboarding(
         onPressedOnLastPage: () => _handleSubscribe(context),
-        bottomButtonChild: const Text('Subscribe'),
+        bottomButtonColor: _isPurchasing
+            ? CupertinoColors.quaternarySystemFill.resolveFrom(context)
+            : null,
+        bottomButtonChild: _isPurchasing
+            ? const SizedBox(
+                // Maintain same height in both widgets.
+                height: 19,
+                child: CupertinoActivityIndicator(),
+              )
+            : const Text('Subscribe'),
         widgetAboveBottomButton: CupertinoButton(
           onPressed: _isRewardedAdReady ? () => _handleWatchAd(context) : null,
           child: _isRewardedAdReady
@@ -213,37 +206,71 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
     );
   }
 
-  Future<void> _handleSubscribe(BuildContext context) async {
-    final response =
-        await InAppPurchase.instance.queryProductDetails(kProductIds);
+  Future<void> _setupIAP() async {
+    try {
+      final getPaywallsResult = await Adapty.getPaywalls();
+      final paywalls = getPaywallsResult.paywalls;
 
-    final products = response.productDetails;
+      _paywall = paywalls
+          ?.firstWhere((paywall) => paywall.developerId == 'premium_paywall');
+    } catch (e) {
+      if (kDebugMode) {
+        print('Failed to get paywalls: $e');
+      }
 
-    if (response.notFoundIDs.isNotEmpty) {
-      await showPlatformDialog<void>(
-        context: context,
-        builder: (context) {
-          return PlatformAlertDialog(
-            title: const Text('Error'),
-            content: const Text('There was an error during the purchase.'),
-            actions: [
-              PlatformDialogAction(
-                child: const Text('OK'),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
-          );
-        },
-      );
-
-      return;
+      unawaited(Sentry.captureException(e));
     }
+  }
 
-    await InAppPurchase.instance.buyNonConsumable(
-      purchaseParam: PurchaseParam(
-        productDetails: products.first,
-      ),
-    );
+  Future<void> _handleSubscribe(BuildContext context) async {
+    final product = _paywall?.products?.first;
+
+    if (product != null) {
+      setState(() {
+        _isPurchasing = true;
+      });
+
+      try {
+        final makePurchaseResult = await Adapty.makePurchase(product);
+
+        if (makePurchaseResult
+                .purchaserInfo?.accessLevels['premium']?.isActive ??
+            false) {
+          await Hive.box<bool>('iap').put('isPremiumGranted', true);
+
+          setState(() {
+            _isPurchasing = false;
+          });
+
+          await showPlatformDialog<void>(
+            context: context,
+            builder: (_) => PlatformAlertDialog(
+              title: const Text('Success!'),
+              content: const Text('Thank you for your purchase. Enjoy!'),
+              actions: [
+                PlatformDialogAction(
+                  child: const Text('OK'),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            ),
+          );
+
+          if (!mounted) return;
+          Navigator.pop(context);
+        }
+      } catch (e) {
+        if (kDebugMode) {
+          print('Failed to make purchase: $e');
+        }
+
+        setState(() {
+          _isPurchasing = false;
+        });
+
+        unawaited(Sentry.captureException(e));
+      }
+    }
   }
 
   void _handleWatchAd(BuildContext context) {

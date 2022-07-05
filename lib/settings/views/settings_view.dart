@@ -1,14 +1,18 @@
+// Dart imports:
+import 'dart:async';
+
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:adapty_flutter/adapty_flutter.dart';
 import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -30,6 +34,8 @@ class SettingsView extends StatefulWidget {
 
 class _SettingsViewState extends State<SettingsView> {
   bool _canLaunchUrl = true;
+
+  bool _arePurchasesRestoring = false;
 
   @override
   void initState() {
@@ -117,7 +123,10 @@ class _SettingsViewState extends State<SettingsView> {
                       title: 'Restore purchases',
                       desc: 'Restore purchases made in the past',
                       icon: const FaIcon(CupertinoIcons.shopping_cart),
-                      onTap: _restorePurchases,
+                      cupertinoTrailing: _arePurchasesRestoring
+                          ? const CupertinoActivityIndicator()
+                          : const CupertinoListTileChevron(),
+                      onTap: _arePurchasesRestoring ? null : _restorePurchases,
                     ),
                     ActionCard(
                       title: 'Onboarding screen',
@@ -168,7 +177,25 @@ class _SettingsViewState extends State<SettingsView> {
   }
 
   Future<void> _restorePurchases() async {
-    await InAppPurchase.instance.restorePurchases();
+    setState(() {
+      _arePurchasesRestoring = true;
+    });
+
+    try {
+      final restorePurchasesResult = await Adapty.restorePurchases();
+
+      if (restorePurchasesResult
+              .purchaserInfo?.accessLevels['premium']?.isActive ??
+          false) {
+        await Hive.box<bool>('iap').put('isPremiumGranted', true);
+      }
+    } catch (e) {
+      unawaited(Sentry.captureException(e));
+    }
+
+    setState(() {
+      _arePurchasesRestoring = false;
+    });
 
     await showPlatformDialog<void>(
       context: context,

@@ -20,16 +20,18 @@ class ErrorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+
     return DataCard(
       padding: const EdgeInsets.all(12),
       child: Row(
         children: [
           Icon(
-            FontAwesomeIcons.circleXmark,
+            isIOS ? CupertinoIcons.xmark_circle : FontAwesomeIcons.circleXmark,
             color: Themes.getPlatformErrorColor(context),
             size: 25,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 5),
           Text(
             message ?? Constants.defaultError,
             style: TextStyle(

@@ -1,4 +1,8 @@
 PODS:
+  - Adapty (1.16.10)
+  - adapty_flutter (1.0.0):
+    - Adapty (= 1.16.10)
+    - Flutter
   - carrier_info (0.0.1):
     - Flutter
   - Flutter (1.0.0)
@@ -56,8 +60,6 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.7.0)"
   - GoogleUtilities/Reachability (7.7.0):
     - GoogleUtilities/Logger
-  - in_app_purchase_storekit (0.0.1):
-    - Flutter
   - in_app_review (0.2.0):
     - Flutter
   - nanopb (2.30908.0):
@@ -85,12 +87,12 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - adapty_flutter (from `.symlinks/plugins/adapty_flutter/ios`)
   - carrier_info (from `.symlinks/plugins/carrier_info/ios`)
   - Flutter (from `Flutter`)
   - flutter_icmp_ping (from `.symlinks/plugins/flutter_icmp_ping/ios`)
   - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
   - google_mobile_ads (from `.symlinks/plugins/google_mobile_ads/ios`)
-  - in_app_purchase_storekit (from `.symlinks/plugins/in_app_purchase_storekit/ios`)
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - network_info_plus (from `.symlinks/plugins/network_info_plus/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
@@ -101,6 +103,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Adapty
     - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleMaps
@@ -111,6 +114,8 @@ SPEC REPOS:
     - Sentry
 
 EXTERNAL SOURCES:
+  adapty_flutter:
+    :path: ".symlinks/plugins/adapty_flutter/ios"
   carrier_info:
     :path: ".symlinks/plugins/carrier_info/ios"
   Flutter:
@@ -121,8 +126,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_maps_flutter/ios"
   google_mobile_ads:
     :path: ".symlinks/plugins/google_mobile_ads/ios"
-  in_app_purchase_storekit:
-    :path: ".symlinks/plugins/in_app_purchase_storekit/ios"
   in_app_review:
     :path: ".symlinks/plugins/in_app_review/ios"
   network_info_plus:
@@ -139,6 +142,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
+  Adapty: 76319ab7bde8708c722702fff371ef15c84ec55e
+  adapty_flutter: 4857d8c3310aa2b062342e56db889e8cbc94783c
   carrier_info: 74da91657834617c4409e6afdb706ac4685efe66
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_icmp_ping: 07e508847df7fa9262d050bb0b203de074bbe517
@@ -149,7 +154,6 @@ SPEC CHECKSUMS:
   GoogleMaps: 008e2c80e38605b56b560e8deb73d4194ff30bef
   GoogleUserMessagingPlatform: ab890ce5f6620f293a21b6bdd82e416a2c73aeca
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
-  in_app_purchase_storekit: d7fcf4646136ec258e237872755da8ea6c1b6096
   in_app_review: 4a97249f7a2f539a0f294c2d9196b7fe35e49541
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   network_info_plus: b78876159360f5580608c2cea620d6ceffabd0ad

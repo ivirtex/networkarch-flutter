@@ -10,12 +10,13 @@ environment:
   sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
+  adapty_flutter: ^1.0.12
   animate_do: ^2.1.0
   bloc: ^8.0.3
   carrier_info: ^2.0.5
   cupertino_icons: ^1.0.5
   cupertino_lists: ^1.0.1
-  cupertino_onboarding: ^1.0.2
+  cupertino_onboarding: ^1.1.0
   dart_ping: ^6.1.2
   dart_ping_ios: ^1.1.0
   dynamic_color: ^1.4.0
@@ -37,7 +38,6 @@ dependencies:
   hive_flutter: ^1.1.0
   http: ^0.13.4
   hydrated_bloc: ^8.1.0
-  in_app_purchase: ^3.0.6
   in_app_review: ^2.0.4
   introduction_screen: ^3.0.2
   json_annotation: ^4.5.0
