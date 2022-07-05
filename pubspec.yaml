@@ -48,7 +48,7 @@ dependencies:
   package_info_plus: ^1.4.2
   path_provider: ^2.0.11
   permission_handler: ^10.0.0
-  sentry_flutter: ^6.6.1
+  sentry_flutter: ^6.6.2
   url_launcher: ^6.1.4
   wake_on_lan: ^3.0.0
 
