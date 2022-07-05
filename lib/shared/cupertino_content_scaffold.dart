@@ -27,7 +27,7 @@ class CupertinoContentScaffold extends StatelessWidget {
             customHeader ??
                 CupertinoSliverNavigationBar(
                   stretch: true,
-                  border: null,
+                  // border: null,
                   backgroundColor:
                       Themes.iOSbgColor.resolveFrom(context).withAlpha(200),
                   largeTitle: largeTitle,
