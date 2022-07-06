@@ -224,7 +224,7 @@ packages:
       name: cupertino_onboarding
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1"
   dart_code_metrics:
     dependency: "direct dev"
     description:

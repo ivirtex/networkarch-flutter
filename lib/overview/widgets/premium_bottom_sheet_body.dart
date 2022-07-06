@@ -23,7 +23,6 @@ import 'package:network_arch/shared/shared.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart'
     hide PlatformWidget;
 
-
 class PremiumBottomSheetBody extends StatefulWidget {
   const PremiumBottomSheetBody({super.key});
 
@@ -153,7 +152,12 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
         pages: [
           WhatsNewPage(
             title: const Text('Help to maintain our servers'),
+            titleToBodySpacing: 20,
+            titleTopIndent: 40,
             features: const [
+              Text(
+                'Subscribe and get unlimited access to the following features:',
+              ),
               WhatsNewFeature(
                 title: Text('IP Geolocation'),
                 description: Text(Constants.ipGeoDesc),
@@ -173,6 +177,9 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
                 title: Text('No ads'),
                 description: Text('No ads, no distractions.'),
                 icon: Icon(CupertinoIcons.device_phone_portrait),
+              ),
+              Text(
+                'Or watch a short ad to get one-time access to these tools.',
               ),
             ],
           ),
@@ -245,8 +252,8 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
           await showPlatformDialog<void>(
             context: context,
             builder: (_) => PlatformAlertDialog(
-              title: const Text('Success!'),
-              content: const Text('Thank you for your purchase. Enjoy!'),
+              title: const Text('Success'),
+              content: const Text('Thank you for your purchase! :)'),
               actions: [
                 PlatformDialogAction(
                   child: const Text('OK'),
@@ -267,8 +274,6 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
         setState(() {
           _isPurchasing = false;
         });
-
-        unawaited(Sentry.captureException(e));
       }
     }
   }

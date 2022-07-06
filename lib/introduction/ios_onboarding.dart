@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 // Package imports:
 import 'package:cupertino_onboarding/cupertino_onboarding.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
@@ -17,7 +18,11 @@ class IosOnboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoOnboarding(
-      onPressedOnLastPage: () => Navigator.of(context).pop(),
+      onPressedOnLastPage: () {
+        Navigator.of(context).pop();
+
+        Hive.box<bool>('settings').put('hasIntroductionBeenShown', true);
+      },
       widgetAboveBottomButton: const CupertinoButton(
         onPressed: openAppSettings,
         child: Text('Open App Settings'),

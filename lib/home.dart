@@ -45,6 +45,16 @@ class _HomeState extends State<Home> {
       defaultValue: false,
     );
 
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (!_hasIntroductionBeenShown!) {
+        showCupertinoModalBottomSheet<void>(
+          context: context,
+          enableDrag: false,
+          builder: (context) => const IosOnboarding(),
+        );
+      }
+    });
+
     _hasIntroductionBeenShownSubscription =
         settingsBox.watch(key: 'hasIntroductionBeenShown').listen((event) {
       if (event.value is bool) {
@@ -56,7 +66,6 @@ class _HomeState extends State<Home> {
         if (!_hasIntroductionBeenShown!) {
           showCupertinoModalBottomSheet<void>(
             context: context,
-            isDismissible: false,
             builder: (context) => const IosOnboarding(),
           );
         }
