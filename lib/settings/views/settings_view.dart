@@ -101,6 +101,7 @@ class _SettingsViewState extends State<SettingsView> {
                   icon: const FaIcon(FontAwesomeIcons.github),
                   onTap: _canLaunchUrl ? _openSourceCode : null,
                 ),
+                const SizedBox(height: Constants.listSpacing),
               ],
             );
           },
@@ -147,18 +148,34 @@ class _SettingsViewState extends State<SettingsView> {
             );
           },
         ),
-        CupertinoListSection.insetGrouped(
-          children: [
-            ActionCard(
-              title: 'Send feedback',
-              desc: 'Spotted a bug or something is not working?',
-              icon: const FaIcon(
-                CupertinoIcons.ant,
-                color: CupertinoColors.systemRed,
+        PlatformWidget(
+          androidBuilder: (context) => Column(
+            children: [
+              ActionCard(
+                title: 'Send feedback',
+                desc: 'Spotted a bug or something is not working?',
+                icon: const FaIcon(
+                  FontAwesomeIcons.bug,
+                  color: Colors.red,
+                ),
+                onTap: () => _sendFeedback(context),
               ),
-              onTap: () => _sendFeedback(context),
-            ),
-          ],
+              const SizedBox(height: Constants.listSpacing),
+            ],
+          ),
+          iosBuilder: (context) => CupertinoListSection.insetGrouped(
+            children: [
+              ActionCard(
+                title: 'Send feedback',
+                desc: 'Spotted a bug or something is not working?',
+                icon: const FaIcon(
+                  CupertinoIcons.ant,
+                  color: CupertinoColors.systemRed,
+                ),
+                onTap: () => _sendFeedback(context),
+              ),
+            ],
+          ),
         ),
         // Compensate for the padding on iOS.
         const PackageInfoView(),
