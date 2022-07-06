@@ -238,14 +238,14 @@ packages:
       name: dart_ping
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.2"
+    version: "7.0.0"
   dart_ping_ios:
     dependency: "direct main"
     description:
       name: dart_ping_ios
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "2.0.0"
   dart_style:
     dependency: transitive
     description:
@@ -580,7 +580,7 @@ packages:
       name: lan_scanner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.4.1"
+    version: "3.5.0"
   logging:
     dependency: transitive
     description:
