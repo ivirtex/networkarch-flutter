@@ -22,6 +22,7 @@ import 'package:network_arch/shared/shared.dart';
 
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart'
     hide PlatformWidget;
+import 'package:url_launcher/url_launcher.dart';
 
 class PremiumBottomSheetBody extends StatefulWidget {
   const PremiumBottomSheetBody({super.key});
@@ -184,6 +185,18 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
                 description: Text('No ads, no distractions.'),
                 icon: Icon(CupertinoIcons.device_phone_portrait),
               ),
+              Row(
+                children: [
+                  CupertinoButton(
+                    onPressed: _openPrivacyPolicy,
+                    child: const Text('Privacy Policy'),
+                  ),
+                  CupertinoButton(
+                    onPressed: _openTermsOfUse,
+                    child: const Text('Terms of Use'),
+                  ),
+                ],
+              ),
               const Text(
                 'Or watch a short ad to get one-time access to these tools.',
               ),
@@ -297,6 +310,18 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
         Navigator.pop(context);
       },
     );
+  }
+
+  Future<void> _openPrivacyPolicy() async {
+    if (!await launchUrl(Uri.parse(Constants.privacyPolicyURL))) {
+      throw Exception('Could not launch URL');
+    }
+  }
+
+  Future<void> _openTermsOfUse() async {
+    if (!await launchUrl(Uri.parse(Constants.termsOfUseURL))) {
+      throw Exception('Could not launch URL');
+    }
   }
 }
 

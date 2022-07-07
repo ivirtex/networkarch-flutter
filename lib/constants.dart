@@ -28,6 +28,12 @@ abstract class Constants {
   static const String sourceCodeURL =
       'https://github.com/ivirtex/networkarch-flutter';
 
+  static const String privacyPolicyURL =
+      'https://ivirtex.dev/projects/networkarch/privacyPolicy';
+
+  static const String termsOfUseURL =
+      'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/';
+
   static const String wifiFeatureTitle = 'Wi-Fi';
   static const String wifiFeatureDesc =
       'Explore detailed information about your Wi-Fi network.';
