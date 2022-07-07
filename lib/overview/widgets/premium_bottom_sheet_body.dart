@@ -132,7 +132,8 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
         ),
       ),
       iosBuilder: (_) => CupertinoOnboarding(
-        onPressedOnLastPage: () => _handleSubscribe(context),
+        onPressedOnLastPage:
+            _paywall != null ? () => _handleSubscribe(context) : null,
         bottomButtonColor: _isPurchasing
             ? CupertinoColors.quaternarySystemFill.resolveFrom(context)
             : null,
@@ -154,31 +155,36 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
             title: const Text('Help to maintain our servers'),
             titleToBodySpacing: 20,
             titleTopIndent: 40,
-            features: const [
-              Text(
-                'Subscribe and get unlimited access to the following features:',
-              ),
-              WhatsNewFeature(
+            features: [
+              if (_paywall != null)
+                Text(
+                  'Subscribe for ${_paywall?.products?.first.localizedPrice} per ${_paywall?.products?.first.localizedSubscriptionPeriod} and get unlimited access to the following features:',
+                )
+              else
+                const Text(
+                  'Subscribe and get unlimited access to the following features:',
+                ),
+              const WhatsNewFeature(
                 title: Text('IP Geolocation'),
                 description: Text(Constants.ipGeoDesc),
                 icon: Icon(CupertinoIcons.location),
               ),
-              WhatsNewFeature(
+              const WhatsNewFeature(
                 title: Text('Whois'),
                 description: Text(Constants.whoisDesc),
                 icon: Icon(CupertinoIcons.info),
               ),
-              WhatsNewFeature(
+              const WhatsNewFeature(
                 title: Text('DNS Lookup'),
                 description: Text(Constants.dnsDesc),
                 icon: Icon(CupertinoIcons.search),
               ),
-              WhatsNewFeature(
+              const WhatsNewFeature(
                 title: Text('No ads'),
                 description: Text('No ads, no distractions.'),
                 icon: Icon(CupertinoIcons.device_phone_portrait),
               ),
-              Text(
+              const Text(
                 'Or watch a short ad to get one-time access to these tools.',
               ),
             ],
