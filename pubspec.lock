@@ -238,7 +238,7 @@ packages:
       name: dart_ping
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.0.0"
+    version: "7.0.1"
   dart_ping_ios:
     dependency: "direct main"
     description:
@@ -336,7 +336,7 @@ packages:
       name: flex_color_scheme
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.1"
+    version: "5.1.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -566,14 +566,14 @@ packages:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.5.0"
+    version: "4.6.0"
   json_serializable:
     dependency: "direct main"
     description:
       name: json_serializable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.2.0"
+    version: "6.3.1"
   lan_scanner:
     dependency: "direct main"
     description:
@@ -895,14 +895,14 @@ packages:
       name: sentry
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.6.2"
+    version: "6.6.3"
   sentry_flutter:
     dependency: "direct main"
     description:
       name: sentry_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.6.2"
+    version: "6.6.3"
   shelf:
     dependency: transitive
     description:
