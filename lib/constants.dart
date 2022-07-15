@@ -260,4 +260,58 @@ abstract class Constants {
           ),
         ],
       );
+
+  // WOL iOS dialogs
+  static const String _wolIpValidationError =
+      'Provided IPv4 address is invalid, check your data and try again.';
+
+  static CupertinoAlertDialog wolIpValidationError(BuildContext context) =>
+      CupertinoAlertDialog(
+        title: const Text('Error'),
+        content: const Text(_wolIpValidationError),
+        actions: [
+          CupertinoDialogAction(
+            child: const Text('OK'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
+
+  static const String _wolMacValidationError =
+      'Provided MAC address is invalid, check your data and try again.';
+
+  static CupertinoAlertDialog wolMacValidationError(BuildContext context) =>
+      CupertinoAlertDialog(
+        title: const Text('Error'),
+        content: const Text(_wolMacValidationError),
+        actions: [
+          CupertinoDialogAction(
+            child: const Text('OK'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
+
+  static const String _wolIpAndMacValidationError =
+      'Provided IPv4 and MAC address are invalid, check your data and try again.';
+
+  static CupertinoAlertDialog wolIpAndMacValidationError(
+    BuildContext context,
+  ) =>
+      CupertinoAlertDialog(
+        title: const Text('Error'),
+        content: const Text(_wolIpAndMacValidationError),
+        actions: [
+          CupertinoDialogAction(
+            child: const Text('OK'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
 }

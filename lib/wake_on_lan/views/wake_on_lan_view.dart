@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:network_arch/constants.dart';
 
 // Project imports:
 import 'package:network_arch/models/animated_list_model.dart';
@@ -96,7 +97,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
         padding: EdgeInsets.zero,
         onPressed: _handleSend,
         child: Text(
-          'Send',
+          'Send packet',
           style: TextStyle(
             color: CupertinoColors.systemGreen.resolveFrom(context),
           ),
@@ -112,19 +113,42 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
       children: [
         BlocConsumer<WakeOnLanBloc, WakeOnLanState>(
           listener: (context, state) {
+            final isIos = Theme.of(context).platform == TargetPlatform.iOS;
+
             if (state is WakeOnLanIPValidationFailure) {
               _isValidIpv4 = false;
               _isValidMac = true;
+
+              if (isIos) {
+                showCupertinoDialog<void>(
+                  context: context,
+                  builder: Constants.wolIpValidationError,
+                );
+              }
             }
 
             if (state is WakeOnLanMACValidationFailure) {
               _isValidIpv4 = true;
               _isValidMac = false;
+
+              if (isIos) {
+                showCupertinoDialog<void>(
+                  context: context,
+                  builder: Constants.wolMacValidationError,
+                );
+              }
             }
 
             if (state is WakeOnLanIPandMACValidationFailure) {
               _isValidIpv4 = false;
               _isValidMac = false;
+
+              if (isIos) {
+                showCupertinoDialog<void>(
+                  context: context,
+                  builder: Constants.wolIpAndMacValidationError,
+                );
+              }
             }
 
             if (state is WakeOnLanSuccess) {

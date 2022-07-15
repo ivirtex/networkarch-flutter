@@ -131,7 +131,9 @@ class _WhoisViewState extends State<WhoisView> {
             }
 
             if (state is WhoisLoadFailure) {
-              return const ErrorCard(message: 'Failed to load data');
+              return const ErrorCard(
+                message: Constants.defaultError,
+              );
             }
 
             return const SizedBox();
