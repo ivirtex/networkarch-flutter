@@ -62,19 +62,6 @@ class _PingViewState extends State<PingView> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    final routedAddr =
-        // ignore: cast_nullable_to_non_nullable
-        ModalRoute.of(context)!.settings.arguments as String;
-
-    if (routedAddr != '') {
-      _targetHostController.text = routedAddr;
-    }
-  }
-
-  @override
   void dispose() {
     super.dispose();
 
@@ -83,6 +70,11 @@ class _PingViewState extends State<PingView> {
 
   @override
   Widget build(BuildContext context) {
+    final routedAddr =
+        // ignore: cast_nullable_to_non_nullable
+        ModalRoute.of(context)!.settings.arguments as String;
+    if (routedAddr.isNotEmpty) _targetHostController.text = routedAddr;
+
     return PlatformWidget(
       androidBuilder: _buildAndroid,
       iosBuilder: _buildIOS,
@@ -230,7 +222,9 @@ class _PingViewState extends State<PingView> {
         child: PingCard(
           list: _pingData,
           item: item,
-          addr: context.read<PingBloc>().target,
+          addr: context.read<PingBloc>().target!.isEmpty
+              ? 'N/A'
+              : context.read<PingBloc>().target!,
           hasError: item.error != null,
         ),
       ),

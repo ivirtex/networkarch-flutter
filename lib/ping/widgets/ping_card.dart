@@ -16,14 +16,14 @@ class PingCard extends StatelessWidget {
   const PingCard({
     required this.list,
     required this.item,
-    this.addr,
+    required this.addr,
     this.hasError = false,
     super.key,
   });
 
   final AnimatedListModel<PingData?> list;
   final PingData item;
-  final String? addr;
+  final String addr;
   final bool hasError;
 
   @override
@@ -44,7 +44,7 @@ class PingCard extends StatelessWidget {
                 text: 'Online',
               ),
         title: Text(
-          addr ?? 'N/A',
+          addr,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: isIos ? Themes.iOStextColor.resolveFrom(context) : null,

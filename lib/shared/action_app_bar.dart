@@ -57,13 +57,15 @@ class ActionAppBarState extends State<ActionAppBar>
             size: 30,
             progress: _controller,
           ),
-          onPressed: () {
-            isStartActionActive
-                ? widget.onStartPressed()
-                : widget.onStopPressed();
+          onPressed: widget.isActive
+              ? () {
+                  isStartActionActive
+                      ? widget.onStartPressed()
+                      : widget.onStopPressed();
 
-            toggleAnimation();
-          },
+                  toggleAnimation();
+                }
+              : null,
         ),
       ],
     );

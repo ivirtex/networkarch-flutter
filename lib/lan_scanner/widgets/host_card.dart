@@ -50,7 +50,7 @@ class HostCard extends StatelessWidget {
         title: Text(item.address),
         trailing: TextButton(
           onPressed: () {
-            Navigator.of(context).popAndPushNamed(
+            Navigator.of(context).pushNamed(
               '/tools/ping',
               arguments: item.address,
             );

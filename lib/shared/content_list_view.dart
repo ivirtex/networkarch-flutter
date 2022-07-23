@@ -21,10 +21,9 @@ class ContentListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return PlatformWidget(
       androidBuilder: (context) {
-        return Scrollbar(
-          child: SingleChildScrollView(
-            child: _buildBody(context),
-          ),
+        return SingleChildScrollView(
+          controller: scrollController,
+          child: _buildBody(context),
         );
       },
       iosBuilder: _buildBody,
@@ -42,7 +41,6 @@ class ContentListView extends StatelessWidget {
         context: context,
         removeTop: true,
         child: ListView(
-          controller: scrollController,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           children: children,
