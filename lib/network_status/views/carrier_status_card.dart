@@ -35,9 +35,9 @@ class CarrierStatusCard extends StatelessWidget {
                             color: Themes.getPlatformIconColor(context),
                           ),
                           const SizedBox(width: 5),
-                          Text(
-                            state.carrierInfo?.carrierName ?? 'N/A',
-                            style: const TextStyle(
+                          const Text(
+                            'Carrier',
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),

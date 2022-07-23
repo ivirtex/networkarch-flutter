@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:network_arch/permissions/message_type.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
@@ -40,9 +41,7 @@ class _OverviewViewState extends State<OverviewView> {
 
     Permission.location.isGranted.then((bool isGranted) {
       if (!isGranted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          Constants.permissionDeniedSnackbar,
-        );
+        showPlatformMessage(context, type: MessageType.denied);
       }
     });
 

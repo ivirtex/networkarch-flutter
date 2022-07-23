@@ -32,7 +32,7 @@ class DebugSection extends StatelessWidget {
             ToolCard(
               toolName: 'Grant IAP',
               onPressed: () async {
-                await Hive.box<bool>('iap').put('ipPremiumGranted', true);
+                await Hive.box<bool>('iap').put('isPremiumGranted', true);
               },
             ),
             const SizedBox(height: Constants.listSpacing),

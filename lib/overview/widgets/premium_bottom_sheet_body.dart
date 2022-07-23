@@ -239,6 +239,10 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
 
       _paywall = paywalls
           ?.firstWhere((paywall) => paywall.developerId == 'premium_paywall');
+
+      if (_paywall != null) {
+        await Adapty.logShowPaywall(paywall: _paywall!);
+      }
     } catch (e) {
       if (kDebugMode) {
         print('Failed to get paywalls: $e');
