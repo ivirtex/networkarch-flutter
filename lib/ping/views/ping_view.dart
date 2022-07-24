@@ -270,7 +270,7 @@ class _PingViewState extends State<PingView> {
       }
 
       if (state.pingData.error != null &&
-          state.pingData.error?.error != ErrorType.requestTimedOut) {
+          state.pingData.error?.error != ErrorType.RequestTimedOut) {
         _appBarKey.currentState?.toggleAnimation();
 
         _handleStop();

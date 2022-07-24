@@ -30,13 +30,13 @@ class PingRepository {
 
   String getErrorDesc(PingError error) {
     switch (error.error) {
-      case ErrorType.unknown:
+      case ErrorType.Unknown:
         return Constants.unknownError;
-      case ErrorType.unknownHost:
+      case ErrorType.UnknownHost:
         return Constants.unknownHostError;
-      case ErrorType.requestTimedOut:
+      case ErrorType.RequestTimedOut:
         return Constants.requestTimedOutError;
-      case ErrorType.noReply:
+      case ErrorType.NoReply:
         return Constants.noReplyError;
     }
   }

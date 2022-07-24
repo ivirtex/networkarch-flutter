@@ -1,18 +1,15 @@
 // Dart imports:
-// ignore_for_file: depend_on_referenced_packages
-
-// Dart imports:
 import 'dart:async';
 
 // Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:lan_scanner/lan_scanner.dart';
 import 'package:meta/meta.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 
 // Project imports:
 import 'package:network_arch/lan_scanner/repository/lan_scanner_repository.dart';
+import 'package:network_tools/network_tools.dart';
 
 part 'lan_scanner_event.dart';
 part 'lan_scanner_state.dart';
@@ -34,7 +31,7 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
     Emitter<LanScannerState> emit,
   ) async {
     final ip = await NetworkInfo().getWifiIP();
-    final subnet = ipToCSubnet(ip ?? '');
+    final subnet = ip!.substring(0, ip.lastIndexOf('.'));
 
     final stream = _lanScannerRepository.getLanScannerStream(
       subnet: subnet,
@@ -46,7 +43,7 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
     );
 
     _lanScannerRepository.subscription = stream.listen(
-      (HostModel host) {
+      (ActiveHost host) {
         add(LanScannerHostFound(host));
       },
       onDone: () {

@@ -123,7 +123,7 @@ class _LanScannerViewState extends State<LanScannerView> {
                   ),
                 ),
                 const SizedBox(width: 8),
-                Text('${(currProgress * 100).toInt()}%'),
+                Text('${currProgress.toInt()}%'),
               ],
             );
           },
@@ -167,9 +167,7 @@ class _LanScannerViewState extends State<LanScannerView> {
   Future<void> _handleStart() async {
     await _hosts.removeAllElements(context);
 
-    if (!mounted) {
-      return;
-    }
+    if (!mounted) return;
     context.read<LanScannerBloc>().add(LanScannerStarted());
   }
 }
