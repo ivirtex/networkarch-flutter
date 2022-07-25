@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:isolate';
 
 // Package imports:
 import 'package:network_tools/network_tools.dart';
@@ -7,21 +8,20 @@ import 'package:network_tools/network_tools.dart';
 class LanScannerRepository {
   LanScannerRepository();
 
-  StreamSubscription<ActiveHost>? _subscription;
+  Future<void> startScanning(List<dynamic> args) async {
+    final responsePort = args[0] as SendPort;
+    final subnet = args[1] as String;
 
-  // ignore: avoid_setters_without_getters
-  set subscription(StreamSubscription<ActiveHost> subscription) {
-    _subscription = subscription;
-  }
+    final stream = HostScanner.discover(
+      subnet,
+      progressCallback: responsePort.send,
+      resultsInIpAscendingOrder: false,
+    );
 
-  void dispose() {
-    _subscription?.cancel();
-  }
+    await for (final host in stream) {
+      responsePort.send(host);
+    }
 
-  Stream<ActiveHost> getLanScannerStream({
-    required String subnet,
-    ProgressCallback? callback,
-  }) {
-    return HostScanner.discover(subnet, progressCallback: callback);
+    return;
   }
 }

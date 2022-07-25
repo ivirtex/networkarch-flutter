@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +10,7 @@ import 'package:network_arch/lan_scanner/bloc/lan_scanner_bloc.dart';
 import 'package:network_arch/lan_scanner/widgets/host_card.dart';
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/shared/shared.dart';
+import 'package:network_tools/network_tools.dart';
 
 class LanScannerView extends StatefulWidget {
   const LanScannerView({super.key});
@@ -24,7 +22,7 @@ class LanScannerView extends StatefulWidget {
 class _LanScannerViewState extends State<LanScannerView> {
   final _appBarKey = GlobalKey<ActionAppBarState>();
   final _listKey = GlobalKey<AnimatedListState>();
-  late final AnimatedListModel<InternetAddress> _hosts;
+  late final AnimatedListModel<ActiveHost> _hosts;
   late final LanScannerBloc _bloc;
 
   double currProgress = 0;
@@ -103,9 +101,7 @@ class _LanScannerViewState extends State<LanScannerView> {
             }
 
             if (state is LanScannerRunNewHost) {
-              final host = InternetAddress(state.host.ip);
-
-              _hosts.insert(_hosts.length, host);
+              _hosts.insert(_hosts.length, state.host);
             }
           },
           buildWhen: (previous, current) =>
@@ -149,7 +145,7 @@ class _LanScannerViewState extends State<LanScannerView> {
   FadeTransition _buildItem(
     BuildContext context,
     Animation<double> animation,
-    InternetAddress item,
+    ActiveHost item,
   ) {
     return FadeTransition(
       opacity: animation.drive(_hosts.fadeTween),

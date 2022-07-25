@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:isolate';
 
 // Package imports:
 import 'package:bloc/bloc.dart';
@@ -33,23 +34,28 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
     final ip = await NetworkInfo().getWifiIP();
     final subnet = ip!.substring(0, ip.lastIndexOf('.'));
 
-    final stream = _lanScannerRepository.getLanScannerStream(
-      subnet: subnet,
-      callback: (progress) {
-        if (!isClosed) {
-          add(LanScannerProgressUpdated(progress));
-        }
-      },
+    final receivePort = ReceivePort();
+    await Isolate.spawn(
+      _lanScannerRepository.startScanning,
+      [receivePort.sendPort, subnet],
     );
+    print('Spawned isolate');
 
-    _lanScannerRepository.subscription = stream.listen(
-      (ActiveHost host) {
-        add(LanScannerHostFound(host));
-      },
-      onDone: () {
-        add(LanScannerCompleted());
-      },
-    );
+    await for (final message in receivePort) {
+      if (message is ActiveHost) {
+        add(LanScannerHostFound(message));
+      }
+
+      if (message is double) {
+        add(LanScannerProgressUpdated(message));
+
+        if (message == 100.0) {
+          add(LanScannerCompleted());
+        }
+      }
+    }
+
+    Isolate.exit();
   }
 
   void _onProgressUpdated(
@@ -67,8 +73,6 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
   }
 
   void _onStopped(LanScannerStopped event, Emitter<LanScannerState> emit) {
-    _lanScannerRepository.dispose();
-
     emit(const LanScannerRunStop());
   }
 
