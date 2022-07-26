@@ -57,7 +57,7 @@ dev_dependencies:
   dart_code_metrics: ^4.16.0
   flutter_test:
     sdk: flutter
-  icons_launcher: ^1.2.1
+  icons_launcher: ^2.0.0
   import_sorter: ^4.6.0
   very_good_analysis: ^3.0.1
 
