@@ -281,7 +281,7 @@ class _OverviewViewState extends State<OverviewView> {
 
   void showPremiumBottomSheet(BuildContext context) {
     if (Theme.of(context).platform == TargetPlatform.iOS) {
-      showCupertinoModalBottomSheet<void>(
+      CupertinoScaffold.showCupertinoModalBottomSheet<void>(
         context: context,
         useRootNavigator: true,
         builder: (_) => const PremiumBottomSheetBody(),

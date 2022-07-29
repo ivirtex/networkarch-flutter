@@ -15,7 +15,7 @@ class LanScannerRepository {
     final stream = HostScanner.discover(
       subnet,
       progressCallback: responsePort.send,
-      resultsInIpAscendingOrder: false,
+      timeoutInSeconds: 3,
     );
 
     await for (final host in stream) {

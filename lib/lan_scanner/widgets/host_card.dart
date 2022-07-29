@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -49,7 +46,7 @@ class HostCard extends StatelessWidget {
         //   },
         // ),
         title: Text(item.ip),
-        subtitle: Text('${item.reponseTime!.inMilliseconds} ms'),
+        subtitle: Text('${item.responseTime!.inMilliseconds} ms'),
         trailing: TextButton(
           onPressed: () {
             Navigator.of(context).pushNamed(

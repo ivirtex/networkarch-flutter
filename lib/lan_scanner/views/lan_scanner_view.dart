@@ -113,6 +113,10 @@ class _LanScannerViewState extends State<LanScannerView> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: LinearProgressIndicator(
+                      backgroundColor: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.1),
                       // TODO(ivirtex): animate progress
                       value: currProgress,
                     ),

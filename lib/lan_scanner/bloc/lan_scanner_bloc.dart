@@ -39,7 +39,6 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
       _lanScannerRepository.startScanning,
       [receivePort.sendPort, subnet],
     );
-    print('Spawned isolate');
 
     await for (final message in receivePort) {
       if (message is ActiveHost) {
