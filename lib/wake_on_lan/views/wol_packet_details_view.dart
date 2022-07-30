@@ -42,7 +42,6 @@ class WolPacketDetailsView extends StatelessWidget {
       androidBuilder: (_) => ContentListView(
         children: [
           RoundedList(
-            padding: EdgeInsets.zero,
             children: [
               ListTextLine(
                 widgetL: const Text('MAC address'),
