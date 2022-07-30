@@ -208,7 +208,7 @@ class _IpGeoViewState extends State<IpGeoView> {
 
             if (state is IpGeoLoadFailure) {
               return const ErrorCard(
-                message: 'Error while loading the data',
+                message: Constants.defaultError,
               );
             }
 

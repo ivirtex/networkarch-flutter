@@ -36,8 +36,10 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
     final ip = await NetworkInfo().getWifiIP();
     final subnet = ip!.substring(0, ip.lastIndexOf('.'));
 
+    emit(const LanScannerRunStart());
+
     final receivePort = ReceivePort();
-    await Isolate.spawn(
+    _scanIsolate = await Isolate.spawn(
       _lanScannerRepository.startScanning,
       [receivePort.sendPort, subnet],
     );

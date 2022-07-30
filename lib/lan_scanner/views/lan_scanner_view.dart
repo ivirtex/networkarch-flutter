@@ -91,17 +91,21 @@ class _LanScannerViewState extends State<LanScannerView> {
         BlocListener<LanScannerBloc, LanScannerState>(
           listener: (context, state) {
             if (state is LanScannerRunProgressUpdate) {
-              _appBarKey.currentState!.setState(() {
-                _appBarKey.currentState!.progress = state.progress / 100;
-              });
+              _appBarKey.currentState?.setIndicatorProgress(
+                state.progress / 100,
+              );
             }
 
             if (state is LanScannerRunComplete) {
-              _appBarKey.currentState!.toggleAnimation();
+              _appBarKey.currentState?.toggleAnimation();
             }
 
             if (state is LanScannerRunNewHost) {
               _hosts.insert(_hosts.length, state.host);
+            }
+
+            if (state is LanScannerRunStop) {
+              _appBarKey.currentState?.setIndicatorProgress(0);
             }
           },
           child: AnimatedList(
@@ -142,9 +146,7 @@ class _LanScannerViewState extends State<LanScannerView> {
 
   Future<void> _handleStart() async {
     await _hosts.removeAllElements(context);
-    _appBarKey.currentState!.setState(() {
-      _appBarKey.currentState!.progress = null;
-    });
+    _appBarKey.currentState?.setIndicatorProgress(null);
 
     if (!mounted) return;
     context.read<LanScannerBloc>().add(LanScannerStarted());

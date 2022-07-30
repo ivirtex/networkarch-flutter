@@ -139,7 +139,7 @@ abstract class Constants {
   static const String dnsDesc = 'Lookup DNS records of any domain.';
 
   // Error descriptions
-  static const String defaultError = "Couldn't load the data";
+  static const String defaultError = 'Error while loading data';
 
   static const String simError = 'No SIM card';
 

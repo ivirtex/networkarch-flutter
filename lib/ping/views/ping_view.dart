@@ -238,9 +238,7 @@ class _PingViewState extends State<PingView> {
       _isClearListButtonLocked = true;
     });
 
-    _appBarKey.currentState!.setState(() {
-      _appBarKey.currentState!.progress = null;
-    });
+    _appBarKey.currentState?.setIndicatorProgress(null);
 
     await _pingData.removeAllElements(context);
 
@@ -254,9 +252,7 @@ class _PingViewState extends State<PingView> {
   void _handleStop() {
     context.read<PingBloc>().add(PingStopped());
 
-    _appBarKey.currentState!.setState(() {
-      _appBarKey.currentState!.progress = 1.0;
-    });
+    _appBarKey.currentState?.setIndicatorProgress(1);
 
     setState(() {
       _isClearListButtonLocked = false;

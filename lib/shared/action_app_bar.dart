@@ -48,6 +48,12 @@ class ActionAppBarState extends State<ActionAppBar>
     _controller.dispose();
   }
 
+  void setIndicatorProgress(double? progress) {
+    setState(() {
+      this.progress = progress;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -55,32 +61,32 @@ class ActionAppBarState extends State<ActionAppBar>
       actions: [
         Padding(
           padding: EdgeInsets.only(right: Constants.bodyPadding.right),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              CircularProgressIndicator(
-                backgroundColor:
-                    Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                value: progress,
-              ),
-              InkWell(
-                customBorder: const CircleBorder(),
-                onTap: widget.isActive
-                    ? () {
-                        isStartActionActive
-                            ? widget.onStartPressed()
-                            : widget.onStopPressed();
+          child: InkWell(
+            customBorder: const CircleBorder(),
+            onTap: widget.isActive
+                ? () {
+                    isStartActionActive
+                        ? widget.onStartPressed()
+                        : widget.onStopPressed();
 
-                        toggleAnimation();
-                      }
-                    : null,
-                child: AnimatedIcon(
+                    toggleAnimation();
+                  }
+                : null,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                CircularProgressIndicator(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                  value: progress,
+                ),
+                AnimatedIcon(
                   icon: AnimatedIcons.play_pause,
                   progress: _controller,
-                  size: 30,
+                  size: 25,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
