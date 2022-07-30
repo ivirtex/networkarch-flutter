@@ -7,6 +7,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:feedback/feedback.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
@@ -156,7 +157,8 @@ class NetworkArch extends StatelessWidget {
                   ? Themes.cupertinoLightThemeData
                   : Themes.cupertinoDarkThemeData,
               routes: Constants.routes,
-              home: const Home(),
+              // Added to
+              home: const CupertinoScaffold(body: Home()),
             ),
           ),
         );

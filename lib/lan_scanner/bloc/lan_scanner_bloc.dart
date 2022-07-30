@@ -7,10 +7,10 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:network_info_plus/network_info_plus.dart';
+import 'package:network_tools/network_tools.dart';
 
 // Project imports:
 import 'package:network_arch/lan_scanner/repository/lan_scanner_repository.dart';
-import 'package:network_tools/network_tools.dart';
 
 part 'lan_scanner_event.dart';
 part 'lan_scanner_state.dart';

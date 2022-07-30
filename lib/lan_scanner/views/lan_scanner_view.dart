@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:network_tools/network_tools.dart';
 
 // Project imports:
 import 'package:network_arch/lan_scanner/bloc/lan_scanner_bloc.dart';
 import 'package:network_arch/lan_scanner/widgets/host_card.dart';
 import 'package:network_arch/models/animated_list_model.dart';
 import 'package:network_arch/shared/shared.dart';
-import 'package:network_tools/network_tools.dart';
 
 class LanScannerView extends StatefulWidget {
   const LanScannerView({super.key});

@@ -1,9 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:network_tools/network_tools.dart';
+
 // Project imports:
 import 'package:network_arch/shared/shared_widgets.dart';
-import 'package:network_tools/network_tools.dart';
 
 class HostCard extends StatelessWidget {
   const HostCard({
