@@ -25,8 +25,6 @@ class _LanScannerViewState extends State<LanScannerView> {
   late final AnimatedListModel<ActiveHost> _hosts;
   late final LanScannerBloc _bloc;
 
-  double currProgress = 0;
-
   @override
   void initState() {
     super.initState();
@@ -90,10 +88,12 @@ class _LanScannerViewState extends State<LanScannerView> {
   Widget _buildBody(BuildContext context) {
     return ContentListView(
       children: [
-        BlocConsumer<LanScannerBloc, LanScannerState>(
+        BlocListener<LanScannerBloc, LanScannerState>(
           listener: (context, state) {
             if (state is LanScannerRunProgressUpdate) {
-              currProgress = state.progress;
+              _appBarKey.currentState!.setState(() {
+                _appBarKey.currentState!.progress = state.progress / 100;
+              });
             }
 
             if (state is LanScannerRunComplete) {
@@ -104,43 +104,19 @@ class _LanScannerViewState extends State<LanScannerView> {
               _hosts.insert(_hosts.length, state.host);
             }
           },
-          buildWhen: (previous, current) =>
-              current is LanScannerRunProgressUpdate,
-          builder: (context, state) {
-            return Row(
-              children: [
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: LinearProgressIndicator(
-                      backgroundColor: Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withOpacity(0.1),
-                      // TODO(ivirtex): animate progress
-                      value: currProgress,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Text('${currProgress.toInt()}%'),
-              ],
-            );
-          },
-        ),
-        const SizedBox(height: 10),
-        AnimatedList(
-          key: _listKey,
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          initialItemCount: _hosts.length,
-          itemBuilder: (context, index, animation) {
-            return _buildItem(
-              context,
-              animation,
-              _hosts[index],
-            );
-          },
+          child: AnimatedList(
+            key: _listKey,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            initialItemCount: _hosts.length,
+            itemBuilder: (context, index, animation) {
+              return _buildItem(
+                context,
+                animation,
+                _hosts[index],
+              );
+            },
+          ),
         ),
       ],
     );
@@ -166,6 +142,9 @@ class _LanScannerViewState extends State<LanScannerView> {
 
   Future<void> _handleStart() async {
     await _hosts.removeAllElements(context);
+    _appBarKey.currentState!.setState(() {
+      _appBarKey.currentState!.progress = null;
+    });
 
     if (!mounted) return;
     context.read<LanScannerBloc>().add(LanScannerStarted());

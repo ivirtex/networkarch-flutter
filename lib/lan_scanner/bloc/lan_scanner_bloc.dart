@@ -27,6 +27,8 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
 
   final LanScannerRepository _lanScannerRepository;
 
+  Isolate? _scanIsolate;
+
   Future<void> _onStarted(
     LanScannerStarted event,
     Emitter<LanScannerState> emit,
@@ -72,6 +74,8 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
   }
 
   void _onStopped(LanScannerStopped event, Emitter<LanScannerState> emit) {
+    _scanIsolate?.kill();
+
     emit(const LanScannerRunStop());
   }
 

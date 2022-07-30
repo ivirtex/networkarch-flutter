@@ -55,13 +55,17 @@ class _WhoisViewState extends State<WhoisView> {
       appBar: AppBar(
         title: const Text('Whois'),
         actions: [
-          TextButton(
-            onPressed: _shouldCheckButtonBeActive ? _handleCheck : null,
-            child: Text(
-              'Check',
-              style: TextStyle(
-                color: _shouldCheckButtonBeActive ? Colors.green : Colors.grey,
-                fontSize: 16,
+          Padding(
+            padding: EdgeInsets.only(right: Constants.bodyPadding.right),
+            child: TextButton(
+              onPressed: _shouldCheckButtonBeActive ? _handleCheck : null,
+              child: Text(
+                'Check',
+                style: TextStyle(
+                  color:
+                      _shouldCheckButtonBeActive ? Colors.green : Colors.grey,
+                  fontSize: 16,
+                ),
               ),
             ),
           ),

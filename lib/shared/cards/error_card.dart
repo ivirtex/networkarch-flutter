@@ -31,7 +31,7 @@ class ErrorCard extends StatelessWidget {
             color: Themes.getPlatformErrorColor(context),
             size: 25,
           ),
-          const SizedBox(width: 5),
+          const SizedBox(width: 10),
           Text(
             message ?? Constants.defaultError,
             style: TextStyle(

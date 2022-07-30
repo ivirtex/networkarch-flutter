@@ -69,13 +69,16 @@ class _IpGeoViewState extends State<IpGeoView> {
       appBar: AppBar(
         title: const Text('IP Geolocation'),
         actions: [
-          TextButton(
-            onPressed: _shouldCheckBeActive ? _handleCheck : null,
-            child: Text(
-              'Check',
-              style: TextStyle(
-                color: _shouldCheckBeActive ? Colors.green : Colors.grey,
-                fontSize: 16,
+          Padding(
+            padding: EdgeInsets.only(right: Constants.bodyPadding.right),
+            child: TextButton(
+              onPressed: _shouldCheckBeActive ? _handleCheck : null,
+              child: Text(
+                'Check',
+                style: TextStyle(
+                  color: _shouldCheckBeActive ? Colors.green : Colors.grey,
+                  fontSize: 16,
+                ),
               ),
             ),
           ),

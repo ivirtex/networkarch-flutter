@@ -74,13 +74,16 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
       appBar: AppBar(
         title: const Text('Wake on LAN'),
         actions: [
-          TextButton(
-            onPressed: _shouldSendButtonBeActive ? _handleSend : null,
-            child: Text(
-              'Send',
-              style: TextStyle(
-                color: _shouldSendButtonBeActive ? Colors.green : Colors.grey,
-                fontSize: 16,
+          Padding(
+            padding: EdgeInsets.only(right: Constants.bodyPadding.right),
+            child: TextButton(
+              onPressed: _shouldSendButtonBeActive ? _handleSend : null,
+              child: Text(
+                'Send',
+                style: TextStyle(
+                  color: _shouldSendButtonBeActive ? Colors.green : Colors.grey,
+                  fontSize: 16,
+                ),
               ),
             ),
           ),

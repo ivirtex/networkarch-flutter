@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:network_arch/constants.dart';
 
 class ActionAppBar extends StatefulWidget with PreferredSizeWidget {
   const ActionAppBar({
@@ -28,6 +29,7 @@ class ActionAppBarState extends State<ActionAppBar>
 
   bool isAnimating = false;
   bool isStartActionActive = true;
+  double? progress = 0;
 
   @override
   void initState() {
@@ -51,21 +53,35 @@ class ActionAppBarState extends State<ActionAppBar>
     return AppBar(
       title: Text(widget.title),
       actions: [
-        IconButton(
-          icon: AnimatedIcon(
-            icon: AnimatedIcons.play_pause,
-            size: 30,
-            progress: _controller,
-          ),
-          onPressed: widget.isActive
-              ? () {
-                  isStartActionActive
-                      ? widget.onStartPressed()
-                      : widget.onStopPressed();
+        Padding(
+          padding: EdgeInsets.only(right: Constants.bodyPadding.right),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              CircularProgressIndicator(
+                backgroundColor:
+                    Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                value: progress,
+              ),
+              InkWell(
+                customBorder: const CircleBorder(),
+                onTap: widget.isActive
+                    ? () {
+                        isStartActionActive
+                            ? widget.onStartPressed()
+                            : widget.onStopPressed();
 
-                  toggleAnimation();
-                }
-              : null,
+                        toggleAnimation();
+                      }
+                    : null,
+                child: AnimatedIcon(
+                  icon: AnimatedIcons.play_pause,
+                  progress: _controller,
+                  size: 30,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
