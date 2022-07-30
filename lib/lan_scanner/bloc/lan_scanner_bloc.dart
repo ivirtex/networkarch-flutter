@@ -1,15 +1,13 @@
 // Dart imports:
-// ignore_for_file: depend_on_referenced_packages
-
-// Dart imports:
 import 'dart:async';
+import 'dart:isolate';
 
 // Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:lan_scanner/lan_scanner.dart';
 import 'package:meta/meta.dart';
 import 'package:network_info_plus/network_info_plus.dart';
+import 'package:network_tools/network_tools.dart';
 
 // Project imports:
 import 'package:network_arch/lan_scanner/repository/lan_scanner_repository.dart';
@@ -34,25 +32,29 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
     Emitter<LanScannerState> emit,
   ) async {
     final ip = await NetworkInfo().getWifiIP();
-    final subnet = ipToCSubnet(ip ?? '');
+    final subnet = ip!.substring(0, ip.lastIndexOf('.'));
 
-    final stream = _lanScannerRepository.getLanScannerStream(
-      subnet: subnet,
-      callback: (progress) {
-        if (!isClosed) {
-          add(LanScannerProgressUpdated(progress));
+    final receivePort = ReceivePort();
+    await Isolate.spawn(
+      _lanScannerRepository.startScanning,
+      [receivePort.sendPort, subnet],
+    );
+
+    await for (final message in receivePort) {
+      if (message is ActiveHost) {
+        add(LanScannerHostFound(message));
+      }
+
+      if (message is double) {
+        add(LanScannerProgressUpdated(message));
+
+        if (message == 100.0) {
+          add(LanScannerCompleted());
         }
-      },
-    );
+      }
+    }
 
-    _lanScannerRepository.subscription = stream.listen(
-      (HostModel host) {
-        add(LanScannerHostFound(host));
-      },
-      onDone: () {
-        add(LanScannerCompleted());
-      },
-    );
+    Isolate.exit();
   }
 
   void _onProgressUpdated(
@@ -70,8 +72,6 @@ class LanScannerBloc extends Bloc<LanScannerEvent, LanScannerState> {
   }
 
   void _onStopped(LanScannerStopped event, Emitter<LanScannerState> emit) {
-    _lanScannerRepository.dispose();
-
     emit(const LanScannerRunStop());
   }
 

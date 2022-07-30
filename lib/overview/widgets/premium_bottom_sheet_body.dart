@@ -14,6 +14,7 @@ import 'package:cupertino_onboarding/cupertino_onboarding.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
@@ -22,7 +23,6 @@ import 'package:network_arch/shared/shared.dart';
 
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart'
     hide PlatformWidget;
-import 'package:url_launcher/url_launcher.dart';
 
 class PremiumBottomSheetBody extends StatefulWidget {
   const PremiumBottomSheetBody({super.key});

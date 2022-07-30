@@ -1,46 +1,46 @@
 PODS:
-  - Adapty (1.16.10)
+  - Adapty (1.17.7)
   - adapty_flutter (1.0.0):
-    - Adapty (= 1.16.10)
+    - Adapty (= 1.17.7)
     - Flutter
   - carrier_info (0.0.1):
     - Flutter
   - Flutter (1.0.0)
   - flutter_icmp_ping (0.0.1):
     - Flutter
-  - Google-Mobile-Ads-SDK (8.13.0):
-    - GoogleAppMeasurement (< 9.0, >= 7.0)
+  - Google-Mobile-Ads-SDK (9.6.0):
+    - GoogleAppMeasurement (< 10.0, >= 7.0)
     - GoogleUserMessagingPlatform (>= 1.1)
   - google_maps_flutter (0.0.1):
     - Flutter
     - GoogleMaps
   - google_mobile_ads (0.0.1):
     - Flutter
-    - Google-Mobile-Ads-SDK (= 8.13.0)
-  - GoogleAppMeasurement (8.15.0):
-    - GoogleAppMeasurement/AdIdSupport (= 8.15.0)
+    - Google-Mobile-Ads-SDK (= 9.6.0)
+  - GoogleAppMeasurement (9.3.0):
+    - GoogleAppMeasurement/AdIdSupport (= 9.3.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
     - GoogleUtilities/MethodSwizzler (~> 7.7)
     - GoogleUtilities/Network (~> 7.7)
     - "GoogleUtilities/NSData+zlib (~> 7.7)"
-    - nanopb (~> 2.30908.0)
-  - GoogleAppMeasurement/AdIdSupport (8.15.0):
-    - GoogleAppMeasurement/WithoutAdIdSupport (= 8.15.0)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleAppMeasurement/AdIdSupport (9.3.0):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 9.3.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
     - GoogleUtilities/MethodSwizzler (~> 7.7)
     - GoogleUtilities/Network (~> 7.7)
     - "GoogleUtilities/NSData+zlib (~> 7.7)"
-    - nanopb (~> 2.30908.0)
-  - GoogleAppMeasurement/WithoutAdIdSupport (8.15.0):
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleAppMeasurement/WithoutAdIdSupport (9.3.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
     - GoogleUtilities/MethodSwizzler (~> 7.7)
     - GoogleUtilities/Network (~> 7.7)
     - "GoogleUtilities/NSData+zlib (~> 7.7)"
-    - nanopb (~> 2.30908.0)
-  - GoogleMaps (4.1.0):
-    - GoogleMaps/Maps (= 4.1.0)
-  - GoogleMaps/Base (4.1.0)
-  - GoogleMaps/Maps (4.1.0):
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleMaps (4.2.0):
+    - GoogleMaps/Maps (= 4.2.0)
+  - GoogleMaps/Base (4.2.0)
+  - GoogleMaps/Maps (4.2.0):
     - GoogleMaps/Base
   - GoogleUserMessagingPlatform (2.0.0)
   - GoogleUtilities/AppDelegateSwizzler (7.7.0):
@@ -62,11 +62,11 @@ PODS:
     - GoogleUtilities/Logger
   - in_app_review (0.2.0):
     - Flutter
-  - nanopb (2.30908.0):
-    - nanopb/decode (= 2.30908.0)
-    - nanopb/encode (= 2.30908.0)
-  - nanopb/decode (2.30908.0)
-  - nanopb/encode (2.30908.0)
+  - nanopb (2.30909.0):
+    - nanopb/decode (= 2.30909.0)
+    - nanopb/encode (= 2.30909.0)
+  - nanopb/decode (2.30909.0)
+  - nanopb/encode (2.30909.0)
   - network_info_plus (0.0.1):
     - Flutter
   - package_info_plus (0.4.5):
@@ -76,13 +76,13 @@ PODS:
   - permission_handler_apple (9.0.4):
     - Flutter
   - PromisesObjC (2.1.1)
-  - Sentry (7.19.0):
-    - Sentry/Core (= 7.19.0)
-  - Sentry/Core (7.19.0)
+  - Sentry (7.22.0):
+    - Sentry/Core (= 7.22.0)
+  - Sentry/Core (7.22.0)
   - sentry_flutter (0.0.1):
     - Flutter
     - FlutterMacOS
-    - Sentry (~> 7.19.0)
+    - Sentry (~> 7.22.0)
   - url_launcher_ios (0.0.1):
     - Flutter
 
@@ -142,29 +142,29 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  Adapty: 76319ab7bde8708c722702fff371ef15c84ec55e
-  adapty_flutter: 4857d8c3310aa2b062342e56db889e8cbc94783c
+  Adapty: 7b0d95d78b86df348dd9c488c6955624f671e53a
+  adapty_flutter: 27f1022f0c2b0777ad4cac3561d61747e1db13ae
   carrier_info: 74da91657834617c4409e6afdb706ac4685efe66
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_icmp_ping: 07e508847df7fa9262d050bb0b203de074bbe517
-  Google-Mobile-Ads-SDK: 05e5d68bb42a61b2e5bef336a52789785605aa22
+  Google-Mobile-Ads-SDK: bdf13d37aa77e368510687b5305d4972b4f9e9c7
   google_maps_flutter: c59fc576c0d0c7f4dc4bd63832c862d22d5a7c6d
-  google_mobile_ads: 36eaaacc5c08ca2b9c4878232ab98152b11805cc
-  GoogleAppMeasurement: 4c19f031220c72464d460c9daa1fb5d1acce958e
-  GoogleMaps: 008e2c80e38605b56b560e8deb73d4194ff30bef
+  google_mobile_ads: 8d52c91890e95afc0718f810860b25e55394a327
+  GoogleAppMeasurement: b907bdad775b6975a8108762345b2cfbf1a93c37
+  GoogleMaps: eb03e327edfd70b06de1e6e321653f73712df7ad
   GoogleUserMessagingPlatform: ab890ce5f6620f293a21b6bdd82e416a2c73aeca
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   in_app_review: 4a97249f7a2f539a0f294c2d9196b7fe35e49541
-  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   network_info_plus: b78876159360f5580608c2cea620d6ceffabd0ad
   package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
-  Sentry: d6b16e66a0ad0c39a0b76d9a1194e68e78c37ce6
-  sentry_flutter: 609b096af497fa64af7c6c94e792d0780aa472a6
+  Sentry: 30b51086ca9aac23337880152e95538f7e177f7f
+  sentry_flutter: eaca55af5c951f4be6c4b1daddce1744c37d8476
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
 
-PODFILE CHECKSUM: ccee150732349ac279ab9e0406da8d258d58d986
+PODFILE CHECKSUM: 35344b8338ca5ced9f605eae16aeb422c92c1a1e
 
 COCOAPODS: 1.11.3

@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:network_arch/permissions/message_type.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
@@ -16,6 +15,7 @@ import 'package:network_arch/constants.dart';
 import 'package:network_arch/network_status/bloc/bloc.dart';
 import 'package:network_arch/network_status/views/views.dart';
 import 'package:network_arch/overview/overview.dart';
+import 'package:network_arch/permissions/message_type.dart';
 import 'package:network_arch/shared/shared.dart';
 import 'package:network_arch/utils/utils.dart';
 
@@ -281,7 +281,7 @@ class _OverviewViewState extends State<OverviewView> {
 
   void showPremiumBottomSheet(BuildContext context) {
     if (Theme.of(context).platform == TargetPlatform.iOS) {
-      showCupertinoModalBottomSheet<void>(
+      CupertinoScaffold.showCupertinoModalBottomSheet<void>(
         context: context,
         useRootNavigator: true,
         builder: (_) => const PremiumBottomSheetBody(),

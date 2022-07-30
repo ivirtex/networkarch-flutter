@@ -1,32 +1,27 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:isolate';
 
 // Package imports:
-import 'package:lan_scanner/lan_scanner.dart';
+import 'package:network_tools/network_tools.dart';
 
 class LanScannerRepository {
   LanScannerRepository();
 
-  final LanScanner _scanner = LanScanner();
-  StreamSubscription<HostModel>? _subscription;
+  Future<void> startScanning(List<dynamic> args) async {
+    final responsePort = args[0] as SendPort;
+    final subnet = args[1] as String;
 
-  // ignore: avoid_setters_without_getters
-  set subscription(StreamSubscription<HostModel> subscription) {
-    _subscription = subscription;
-  }
-
-  void dispose() {
-    _subscription?.cancel();
-  }
-
-  Stream<HostModel> getLanScannerStream({
-    required String subnet,
-    ProgressCallback? callback,
-  }) {
-    return _scanner.icmpScan(
+    final stream = HostScanner.discover(
       subnet,
-      progressCallback: callback,
-      scanThreads: 15,
+      progressCallback: responsePort.send,
+      timeoutInSeconds: 3,
     );
+
+    await for (final host in stream) {
+      responsePort.send(host);
+    }
+
+    return;
   }
 }

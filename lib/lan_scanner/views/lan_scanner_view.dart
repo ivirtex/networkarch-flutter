@@ -1,12 +1,10 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:network_tools/network_tools.dart';
 
 // Project imports:
 import 'package:network_arch/lan_scanner/bloc/lan_scanner_bloc.dart';
@@ -24,7 +22,7 @@ class LanScannerView extends StatefulWidget {
 class _LanScannerViewState extends State<LanScannerView> {
   final _appBarKey = GlobalKey<ActionAppBarState>();
   final _listKey = GlobalKey<AnimatedListState>();
-  late final AnimatedListModel<InternetAddress> _hosts;
+  late final AnimatedListModel<ActiveHost> _hosts;
   late final LanScannerBloc _bloc;
 
   double currProgress = 0;
@@ -103,9 +101,7 @@ class _LanScannerViewState extends State<LanScannerView> {
             }
 
             if (state is LanScannerRunNewHost) {
-              final host = InternetAddress(state.host.ip);
-
-              _hosts.insert(_hosts.length, host);
+              _hosts.insert(_hosts.length, state.host);
             }
           },
           buildWhen: (previous, current) =>
@@ -117,13 +113,17 @@ class _LanScannerViewState extends State<LanScannerView> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: LinearProgressIndicator(
+                      backgroundColor: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.1),
                       // TODO(ivirtex): animate progress
                       value: currProgress,
                     ),
                   ),
                 ),
                 const SizedBox(width: 8),
-                Text('${(currProgress * 100).toInt()}%'),
+                Text('${currProgress.toInt()}%'),
               ],
             );
           },
@@ -149,7 +149,7 @@ class _LanScannerViewState extends State<LanScannerView> {
   FadeTransition _buildItem(
     BuildContext context,
     Animation<double> animation,
-    InternetAddress item,
+    ActiveHost item,
   ) {
     return FadeTransition(
       opacity: animation.drive(_hosts.fadeTween),
@@ -167,9 +167,7 @@ class _LanScannerViewState extends State<LanScannerView> {
   Future<void> _handleStart() async {
     await _hosts.removeAllElements(context);
 
-    if (!mounted) {
-      return;
-    }
+    if (!mounted) return;
     context.read<LanScannerBloc>().add(LanScannerStarted());
   }
 }
