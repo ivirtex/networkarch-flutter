@@ -29,14 +29,14 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.0.1
   flutter_platform_widgets: ^2.0.0
-  flutter_svg: ^1.1.1+1
+  flutter_svg: ^1.1.2
   font_awesome_flutter: ^10.1.0
   google_fonts: ^3.0.1
   google_maps_flutter: ^2.1.10
   google_mobile_ads: ^2.0.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  http: ^0.13.4
+  http: ^0.13.5
   hydrated_bloc: ^8.1.0
   in_app_review: ^2.0.4
   introduction_screen: ^3.0.2
@@ -60,7 +60,7 @@ dev_dependencies:
   dart_code_metrics: ^4.17.0
   flutter_test:
     sdk: flutter
-  icons_launcher: ^2.0.1
+  icons_launcher: ^2.0.2
   import_sorter: ^4.6.0
   very_good_analysis: ^3.0.1
 
