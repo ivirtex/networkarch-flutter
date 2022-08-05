@@ -47,11 +47,13 @@ class _HomeState extends State<Home> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (!_hasIntroductionBeenShown!) {
-        showCupertinoModalBottomSheet<void>(
-          context: context,
-          enableDrag: false,
-          builder: (context) => const IosOnboarding(),
-        );
+        if (Theme.of(context).platform == TargetPlatform.iOS) {
+          showCupertinoModalBottomSheet<void>(
+            context: context,
+            enableDrag: false,
+            builder: (context) => const IosOnboarding(),
+          );
+        }
       }
     });
 
@@ -64,10 +66,12 @@ class _HomeState extends State<Home> {
       }
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         if (!_hasIntroductionBeenShown!) {
-          showCupertinoModalBottomSheet<void>(
-            context: context,
-            builder: (context) => const IosOnboarding(),
-          );
+          if (Theme.of(context).platform == TargetPlatform.iOS) {
+            showCupertinoModalBottomSheet<void>(
+              context: context,
+              builder: (context) => const IosOnboarding(),
+            );
+          }
         }
       });
     });
@@ -88,15 +92,10 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return _hasIntroductionBeenShown!
-        ? PlatformWidget(
-            androidBuilder: _androidBuilder,
-            iosBuilder: _iosBuilder,
-          )
-        : PlatformWidget(
-            androidBuilder: Constants.routes['/introduction'],
-            iosBuilder: _iosBuilder,
-          );
+    return PlatformWidget(
+      androidBuilder: _androidBuilder,
+      iosBuilder: _iosBuilder,
+    );
   }
 
   Widget _androidBuilder(BuildContext context) {

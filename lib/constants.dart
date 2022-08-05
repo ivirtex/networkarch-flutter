@@ -77,9 +77,9 @@ abstract class Constants {
           done: const Text('Done'),
           next: const Icon(Icons.navigate_next),
           onDone: () {
-            Hive.box<bool>('settings').put('hasIntroductionBeenShown', true);
-
             Navigator.of(context).pop();
+
+            Hive.box<bool>('settings').put('hasIntroductionBeenShown', true);
           },
           dotsDecorator: DotsDecorator(
             activeColor: Theme.of(context).colorScheme.primary,

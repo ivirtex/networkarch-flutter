@@ -1,5 +1,8 @@
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+
+// Project imports:
 import 'package:network_arch/dns_lookup/dns_lookup.dart';
 
 class MockDnsLookupApi extends Mock implements DnsLookupApi {}

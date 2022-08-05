@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
+
+// Project imports:
 import 'package:network_arch/dns_lookup/bloc/bloc.dart';
 
 void main() {

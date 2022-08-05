@@ -301,7 +301,11 @@ class _OverviewViewState extends State<OverviewView> {
   void setUpIAP() {
     final iapBox = Hive.box<bool>('iap');
 
-    _isPremiumGranted = iapBox.get('isPremiumGranted', defaultValue: false)!;
+    // Grants premium when debug or profile mode is enabled
+    _isPremiumGranted = iapBox.get(
+      'isPremiumGranted',
+      defaultValue: kDebugMode || kProfileMode,
+    )!;
     _isPremiumTempGranted =
         iapBox.get('isPremiumTempGranted', defaultValue: false)!;
 

@@ -1,6 +1,9 @@
+// Package imports:
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+
+// Project imports:
 import 'package:network_arch/dns_lookup/dns_lookup.dart';
 
 class MockDnsLookupRepository extends Mock implements DnsLookupRepository {}
