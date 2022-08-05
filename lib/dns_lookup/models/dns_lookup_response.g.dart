@@ -21,7 +21,7 @@ DnsLookupResponse _$DnsLookupResponseFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$DnsLookupResponseToJson(DnsLookupResponse instance) =>
     <String, dynamic>{
       'Status': instance.status,
-      'Question': instance.question,
-      'Answer': instance.answer,
+      'Question': instance.question.map((e) => e.toJson()).toList(),
+      'Answer': instance.answer.map((e) => e.toJson()).toList(),
       'Comment': instance.comment,
     };

@@ -1,11 +1,12 @@
 // Package imports:
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'dns_record.g.dart';
 
 @JsonSerializable()
-class DnsRecord {
-  DnsRecord(this.name, this.type, this.ttl, this.data);
+class DnsRecord extends Equatable {
+  const DnsRecord(this.name, this.type, this.ttl, this.data);
 
   factory DnsRecord.fromJson(Map<String, dynamic> json) =>
       _$DnsRecordFromJson(json);
@@ -17,4 +18,7 @@ class DnsRecord {
   @JsonKey(name: 'TTL')
   final int ttl;
   final String data;
+
+  @override
+  List<Object?> get props => [name, type, ttl, data];
 }

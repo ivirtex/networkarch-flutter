@@ -8,7 +8,7 @@ import 'package:network_arch/dns_lookup/models/dns_record.dart';
 
 part 'dns_lookup_response.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class DnsLookupResponse extends Equatable {
   const DnsLookupResponse(
     this.status,

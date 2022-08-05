@@ -28,6 +28,7 @@ class DnsLookupApi {
 
       throw DnsLookupRequestFailure();
     }
+
     if (response.statusCode != 200) {
       throw DnsLookupRequestFailure();
     }
@@ -39,7 +40,7 @@ class DnsLookupApi {
     } catch (exc, stackTrace) {
       await Sentry.captureException(exc, stackTrace: stackTrace);
 
-      throw DnsLookupNotFound();
+      throw DnsLookupJsonDecodeFailure();
     }
     // bodyJson = bodyJson.map((key, value) {
     //   return MapEntry(key.toLowerCase(), value);
@@ -52,6 +53,8 @@ class DnsLookupApi {
     return DnsLookupResponse.fromJson(bodyJson);
   }
 }
+
+class DnsLookupJsonDecodeFailure implements Exception {}
 
 class DnsLookupRequestFailure implements Exception {}
 
