@@ -39,11 +39,14 @@ class _OverviewViewState extends State<OverviewView> {
   void initState() {
     super.initState();
 
-    Permission.location.isGranted.then((bool isGranted) {
-      if (!isGranted) {
-        showPlatformMessage(context, type: MessageType.denied);
-      }
-    });
+    if (Hive.box<bool>('settings')
+        .get('hasIntroductionBeenShown', defaultValue: false)!) {
+      Permission.location.isGranted.then((bool isGranted) {
+        if (!isGranted) {
+          showPlatformMessage(context, type: MessageType.denied);
+        }
+      });
+    }
 
     context.read<NetworkStatusBloc>().add(NetworkStatusStreamStarted());
     context.read<NetworkStatusBloc>().add(NetworkStatusExtIPRequested());

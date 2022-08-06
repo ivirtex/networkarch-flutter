@@ -85,7 +85,8 @@ class _SettingsViewState extends State<SettingsView> {
                   title: 'Onboarding screen',
                   desc: 'Resolve permissions issues',
                   icon: const FaIcon(Icons.info_outline_rounded),
-                  onTap: () => Navigator.pushNamed(context, '/introduction'),
+                  onTap: () => Hive.box<bool>('settings')
+                      .put('hasIntroductionBeenShown', false),
                 ),
                 const SizedBox(height: Constants.listSpacing),
                 ActionCard(

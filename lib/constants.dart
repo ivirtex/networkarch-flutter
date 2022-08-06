@@ -70,6 +70,8 @@ abstract class Constants {
           pages: pagesList,
           isTopSafeArea: true,
           isBottomSafeArea: true,
+          curve: Curves.easeInOut,
+          animationDuration: 500,
           controlsPadding: EdgeInsets.symmetric(
             vertical: MediaQuery.of(context).padding.bottom,
             horizontal: 16,

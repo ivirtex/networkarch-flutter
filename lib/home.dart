@@ -53,6 +53,12 @@ class _HomeState extends State<Home> {
             enableDrag: false,
             builder: (context) => const IosOnboarding(),
           );
+        } else {
+          showMaterialModalBottomSheet<void>(
+            context: context,
+            enableDrag: false,
+            builder: Constants.routes['/introduction']!,
+          );
         }
       }
     });
@@ -64,19 +70,24 @@ class _HomeState extends State<Home> {
           _hasIntroductionBeenShown = event.value as bool;
         });
       }
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        if (!_hasIntroductionBeenShown!) {
-          if (Theme.of(context).platform == TargetPlatform.iOS) {
-            showCupertinoModalBottomSheet<void>(
-              context: context,
-              builder: (context) => const IosOnboarding(),
-            );
-          }
+      if (!_hasIntroductionBeenShown!) {
+        if (Theme.of(context).platform == TargetPlatform.iOS) {
+          showCupertinoModalBottomSheet<void>(
+            context: context,
+            builder: (context) => const IosOnboarding(),
+          );
+        } else {
+          showMaterialModalBottomSheet<void>(
+            context: context,
+            builder: Constants.routes['/introduction']!,
+          );
         }
-      });
+      }
     });
 
-    setupIAP();
+    if (kReleaseMode) {
+      setupIAP();
+    }
 
     context
         .read<PermissionsBloc>()
@@ -168,10 +179,6 @@ class _HomeState extends State<Home> {
     try {
       final purchaserInfo = await Adapty.getPurchaserInfo(forceUpdate: true);
       if (purchaserInfo.accessLevels['premium']?.isActive ?? false) {
-        if (kDebugMode) {
-          print('Granting access to premium features...');
-        }
-
         await Hive.box<bool>('iap').put('isPremiumGranted', true);
       } else {
         await Hive.box<bool>('iap').put('isPremiumGranted', false);
