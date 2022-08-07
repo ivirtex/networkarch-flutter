@@ -13,7 +13,6 @@ import 'package:adapty_flutter/models/adapty_paywall.dart';
 import 'package:cupertino_onboarding/cupertino_onboarding.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -25,34 +24,23 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart'
     hide PlatformWidget;
 
 class PremiumBottomSheetBody extends StatefulWidget {
-  const PremiumBottomSheetBody({super.key});
+  const PremiumBottomSheetBody({
+    required this.rewardedAd,
+    required this.isRewardedAdReady,
+    required this.paywall,
+    super.key,
+  });
+
+  final RewardedAd? rewardedAd;
+  final bool isRewardedAdReady;
+  final AdaptyPaywall? paywall;
 
   @override
   State<PremiumBottomSheetBody> createState() => _PremiumBottomSheetBodyState();
 }
 
 class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
-  RewardedAd? _rewardedAd;
-  bool _isRewardedAdReady = false;
-
-  AdaptyPaywall? _paywall;
-
   bool _isPurchasing = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _setUpAds();
-    _setupIAP();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-
-    _rewardedAd?.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,10 +107,10 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
                   ),
                   const SizedBox(width: Constants.listSpacing),
                   AdaptiveButton(
-                    onPressed: _isRewardedAdReady
+                    onPressed: widget.isRewardedAdReady
                         ? () => _handleWatchAd(context)
                         : null,
-                    child: _isRewardedAdReady
+                    child: widget.isRewardedAdReady
                         ? const Text('Watch ad')
                         : const Text('Loading ad'),
                   ),
@@ -134,7 +122,7 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
       ),
       iosBuilder: (_) => CupertinoOnboarding(
         onPressedOnLastPage:
-            _paywall != null ? () => _handleSubscribe(context) : null,
+            widget.paywall != null ? () => _handleSubscribe(context) : null,
         bottomButtonColor: _isPurchasing
             ? CupertinoColors.quaternarySystemFill.resolveFrom(context)
             : null,
@@ -146,8 +134,9 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
               )
             : const Text('Subscribe'),
         widgetAboveBottomButton: CupertinoButton(
-          onPressed: _isRewardedAdReady ? () => _handleWatchAd(context) : null,
-          child: _isRewardedAdReady
+          onPressed:
+              widget.isRewardedAdReady ? () => _handleWatchAd(context) : null,
+          child: widget.isRewardedAdReady
               ? const Text('Watch ad')
               : const Text('Loading ad'),
         ),
@@ -157,9 +146,9 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
             titleToBodySpacing: 20,
             titleTopIndent: 40,
             features: [
-              if (_paywall != null)
+              if (widget.paywall != null)
                 Text(
-                  'Subscribe for ${_paywall?.products?.first.localizedPrice} per ${_paywall?.products?.first.localizedSubscriptionPeriod} and get unlimited access to the following features:',
+                  'Subscribe for ${widget.paywall?.products?.first.localizedPrice} per ${widget.paywall?.products?.first.localizedSubscriptionPeriod} and get unlimited access to the following features:',
                 )
               else
                 const Text(
@@ -207,53 +196,8 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
     );
   }
 
-  Future<void> _setUpAds() async {
-    await RewardedAd.load(
-      adUnitId: getPremiumAdUnitId(),
-      request: const AdRequest(),
-      rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: (ad) {
-          _rewardedAd = ad;
-
-          setState(() {
-            _isRewardedAdReady = true;
-          });
-        },
-        onAdFailedToLoad: (err) {
-          if (kDebugMode) {
-            print('Failed to load a rewarded ad: ${err.message}');
-          }
-
-          setState(() {
-            _isRewardedAdReady = false;
-          });
-        },
-      ),
-    );
-  }
-
-  Future<void> _setupIAP() async {
-    try {
-      final getPaywallsResult = await Adapty.getPaywalls();
-      final paywalls = getPaywallsResult.paywalls;
-
-      _paywall = paywalls
-          ?.firstWhere((paywall) => paywall.developerId == 'premium_paywall');
-
-      if (_paywall != null) {
-        await Adapty.logShowPaywall(paywall: _paywall!);
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print('Failed to get paywalls: $e');
-      }
-
-      unawaited(Sentry.captureException(e));
-    }
-  }
-
   Future<void> _handleSubscribe(BuildContext context) async {
-    final product = _paywall?.products?.first;
+    final product = widget.paywall?.products?.first;
 
     if (product != null) {
       setState(() {
@@ -302,7 +246,7 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
   }
 
   void _handleWatchAd(BuildContext context) {
-    _rewardedAd?.show(
+    widget.rewardedAd?.show(
       onUserEarnedReward: (ad, reward) async {
         if (kDebugMode) {
           print('User earned reward ${reward.type}');

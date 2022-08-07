@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (!_hasIntroductionBeenShown!) {
         if (Theme.of(context).platform == TargetPlatform.iOS) {
-          showCupertinoModalBottomSheet<void>(
+          CupertinoScaffold.showCupertinoModalBottomSheet<void>(
             context: context,
             enableDrag: false,
             builder: (context) => const IosOnboarding(),
@@ -72,7 +72,7 @@ class _HomeState extends State<Home> {
       }
       if (!_hasIntroductionBeenShown!) {
         if (Theme.of(context).platform == TargetPlatform.iOS) {
-          showCupertinoModalBottomSheet<void>(
+          CupertinoScaffold.showCupertinoModalBottomSheet<void>(
             context: context,
             builder: (context) => const IosOnboarding(),
           );

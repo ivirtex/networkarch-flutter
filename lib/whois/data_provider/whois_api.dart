@@ -8,6 +8,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 class WhoisApi {
   WhoisApi({http.Client? client}) : _httpClient = client ?? http.Client();
 
+  // TODO(ivirtex): use new api url
   static const String _baseUrl = 'http://ivirtex.tplinkdns.com:2137/whois';
   final http.Client _httpClient;
 
@@ -23,6 +24,7 @@ class WhoisApi {
       throw WhoisRequestFailure();
     }
 
+    // TODO(ivirtex): improve error handling (different messages for each error)
     if (response.statusCode == 400) {
       throw WhoisRequestFailure();
     }

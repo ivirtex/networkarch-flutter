@@ -1,14 +1,20 @@
+// Dart imports:
+import 'dart:async';
+
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:adapty_flutter/adapty_flutter.dart';
+import 'package:adapty_flutter/models/adapty_paywall.dart';
 import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
@@ -34,6 +40,11 @@ class _OverviewViewState extends State<OverviewView> {
   late bool _isPremiumTempGranted;
 
   bool get _isPremiumAvail => _isPremiumGranted || _isPremiumTempGranted;
+
+  RewardedAd? _rewardedAd;
+  bool _isRewardedAdReady = false;
+
+  AdaptyPaywall? _paywall;
 
   @override
   void initState() {
@@ -74,7 +85,9 @@ class _OverviewViewState extends State<OverviewView> {
 
     _bannerAd.load();
 
-    setUpIAP();
+    _setUpIAP();
+    _setupIAPForPaywall();
+    _setUpAdsForPaywall();
   }
 
   @override
@@ -283,25 +296,34 @@ class _OverviewViewState extends State<OverviewView> {
   }
 
   void showPremiumBottomSheet(BuildContext context) {
-    if (Theme.of(context).platform == TargetPlatform.iOS) {
+    final theme = Theme.of(context);
+    if (theme.platform == TargetPlatform.iOS) {
       CupertinoScaffold.showCupertinoModalBottomSheet<void>(
         context: context,
         useRootNavigator: true,
-        builder: (_) => const PremiumBottomSheetBody(),
+        builder: (_) => PremiumBottomSheetBody(
+          rewardedAd: _rewardedAd,
+          isRewardedAdReady: _isRewardedAdReady,
+          paywall: _paywall,
+        ),
       );
     } else {
       showMaterialModalBottomSheet<void>(
         context: context,
         backgroundColor: Color.alphaBlend(
-          Theme.of(context).colorScheme.primary.withOpacity(0.03),
-          Theme.of(context).colorScheme.surfaceVariant,
+          theme.colorScheme.primary.withOpacity(0.03),
+          theme.colorScheme.surfaceVariant,
         ),
-        builder: (_) => const PremiumBottomSheetBody(),
+        builder: (_) => PremiumBottomSheetBody(
+          rewardedAd: _rewardedAd,
+          isRewardedAdReady: _isRewardedAdReady,
+          paywall: _paywall,
+        ),
       );
     }
   }
 
-  void setUpIAP() {
+  void _setUpIAP() {
     final iapBox = Hive.box<bool>('iap');
 
     // Grants premium when debug or profile mode is enabled
@@ -322,5 +344,50 @@ class _OverviewViewState extends State<OverviewView> {
         _isPremiumTempGranted = event.value as bool;
       });
     });
+  }
+
+  Future<void> _setUpAdsForPaywall() async {
+    await RewardedAd.load(
+      adUnitId: getPremiumAdUnitId(),
+      request: const AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          _rewardedAd = ad;
+
+          setState(() {
+            _isRewardedAdReady = true;
+          });
+        },
+        onAdFailedToLoad: (err) {
+          if (kDebugMode) {
+            print('Failed to load a rewarded ad: ${err.message}');
+          }
+
+          setState(() {
+            _isRewardedAdReady = false;
+          });
+        },
+      ),
+    );
+  }
+
+  Future<void> _setupIAPForPaywall() async {
+    try {
+      final getPaywallsResult = await Adapty.getPaywalls();
+      final paywalls = getPaywallsResult.paywalls;
+
+      _paywall = paywalls
+          ?.firstWhere((paywall) => paywall.developerId == 'premium_paywall');
+
+      if (_paywall != null) {
+        await Adapty.logShowPaywall(paywall: _paywall!);
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Failed to get paywalls: $e');
+      }
+
+      unawaited(Sentry.captureException(e));
+    }
   }
 }
