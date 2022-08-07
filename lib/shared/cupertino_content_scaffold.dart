@@ -10,12 +10,14 @@ class CupertinoContentScaffold extends StatelessWidget {
     this.largeTitle,
     this.navBarTrailingWidget,
     this.customHeader,
+    this.scrollController,
     super.key,
   });
 
   final Widget? largeTitle;
   final Widget? navBarTrailingWidget;
   final Widget? customHeader;
+  final ScrollController? scrollController;
   final Widget child;
 
   @override
@@ -23,6 +25,7 @@ class CupertinoContentScaffold extends StatelessWidget {
     return CupertinoPageScaffold(
       child: CupertinoScrollbar(
         child: CustomScrollView(
+          controller: scrollController,
           slivers: [
             customHeader ??
                 CupertinoSliverNavigationBar(

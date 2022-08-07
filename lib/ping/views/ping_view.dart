@@ -109,6 +109,7 @@ class _PingViewState extends State<PingView> {
   Widget _buildIOS(BuildContext context) {
     return CupertinoContentScaffold(
       largeTitle: const Text('Ping'),
+      scrollController: _scrollController,
       navBarTrailingWidget: BlocBuilder<PingBloc, PingState>(
         builder: (context, state) {
           return state is PingRunNewData
