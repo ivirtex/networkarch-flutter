@@ -8,8 +8,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 class WhoisApi {
   WhoisApi({http.Client? client}) : _httpClient = client ?? http.Client();
 
-  // TODO(ivirtex): use new api url
-  static const String _baseUrl = 'http://ivirtex.tplinkdns.com:2137/whois';
+  static const String _baseUrl = 'http://api.ivirtex.dev:2137/whois';
   final http.Client _httpClient;
 
   Future<String> getWhois(String domain) async {
