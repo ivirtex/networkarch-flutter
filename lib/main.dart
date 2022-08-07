@@ -37,7 +37,6 @@ void main() {
     if (Platform.isIOS) DartPingIOS.register();
 
     Adapty.activate();
-    await Adapty.setLogLevel(AdaptyLogLevel.verbose);
 
     await Hive.initFlutter();
     await Hive.openBox<bool>('settings');
