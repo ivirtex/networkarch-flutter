@@ -86,7 +86,7 @@ class _HomeState extends State<Home> {
     });
 
     if (kReleaseMode) {
-      setupIAP();
+      _fetchIapData();
     }
 
     context
@@ -175,9 +175,9 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Future<void> setupIAP() async {
+  Future<void> _fetchIapData() async {
     try {
-      final purchaserInfo = await Adapty.getPurchaserInfo(forceUpdate: true);
+      final purchaserInfo = await Adapty.getPurchaserInfo();
       if (purchaserInfo.accessLevels['premium']?.isActive ?? false) {
         await Hive.box<bool>('iap').put('isPremiumGranted', true);
       } else {

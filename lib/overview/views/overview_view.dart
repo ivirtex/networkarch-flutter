@@ -41,9 +41,6 @@ class _OverviewViewState extends State<OverviewView> {
 
   bool get _isPremiumAvail => _isPremiumGranted || _isPremiumTempGranted;
 
-  RewardedAd? _rewardedAd;
-  bool _isRewardedAdReady = false;
-
   AdaptyPaywall? _paywall;
 
   @override
@@ -85,9 +82,8 @@ class _OverviewViewState extends State<OverviewView> {
 
     _bannerAd.load();
 
-    _setUpIAP();
-    _setupIAPForPaywall();
-    _setUpAdsForPaywall();
+    _setUpIapAndListenForChanges();
+    _setupIapPaywall();
   }
 
   @override
@@ -302,28 +298,25 @@ class _OverviewViewState extends State<OverviewView> {
         context: context,
         useRootNavigator: true,
         builder: (_) => PremiumBottomSheetBody(
-          rewardedAd: _rewardedAd,
-          isRewardedAdReady: _isRewardedAdReady,
           paywall: _paywall,
         ),
       );
     } else {
       showMaterialModalBottomSheet<void>(
         context: context,
+        useRootNavigator: true,
         backgroundColor: Color.alphaBlend(
           theme.colorScheme.primary.withOpacity(0.03),
           theme.colorScheme.surfaceVariant,
         ),
         builder: (_) => PremiumBottomSheetBody(
-          rewardedAd: _rewardedAd,
-          isRewardedAdReady: _isRewardedAdReady,
           paywall: _paywall,
         ),
       );
     }
   }
 
-  void _setUpIAP() {
+  void _setUpIapAndListenForChanges() {
     final iapBox = Hive.box<bool>('iap');
 
     // Grants premium when debug or profile mode is enabled
@@ -346,42 +339,13 @@ class _OverviewViewState extends State<OverviewView> {
     });
   }
 
-  Future<void> _setUpAdsForPaywall() async {
-    await RewardedAd.load(
-      adUnitId: getPremiumAdUnitId(),
-      request: const AdRequest(),
-      rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: (ad) {
-          _rewardedAd = ad;
-
-          setState(() {
-            _isRewardedAdReady = true;
-          });
-        },
-        onAdFailedToLoad: (err) {
-          if (kDebugMode) {
-            print('Failed to load a rewarded ad: ${err.message}');
-          }
-
-          setState(() {
-            _isRewardedAdReady = false;
-          });
-        },
-      ),
-    );
-  }
-
-  Future<void> _setupIAPForPaywall() async {
+  Future<void> _setupIapPaywall() async {
     try {
       final getPaywallsResult = await Adapty.getPaywalls();
       final paywalls = getPaywallsResult.paywalls;
 
       _paywall = paywalls
           ?.firstWhere((paywall) => paywall.developerId == 'premium_paywall');
-
-      if (_paywall != null) {
-        await Adapty.logShowPaywall(paywall: _paywall!);
-      }
     } catch (e) {
       if (kDebugMode) {
         print('Failed to get paywalls: $e');

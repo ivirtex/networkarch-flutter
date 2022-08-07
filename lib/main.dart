@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:adapty_flutter/models/adapty_enums.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,6 +37,7 @@ void main() {
     if (Platform.isIOS) DartPingIOS.register();
 
     Adapty.activate();
+    await Adapty.setLogLevel(AdaptyLogLevel.verbose);
 
     await Hive.initFlutter();
     await Hive.openBox<bool>('settings');

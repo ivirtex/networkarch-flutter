@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
+import 'package:adapty_flutter/results/make_purchase_result.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -25,14 +26,10 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart'
 
 class PremiumBottomSheetBody extends StatefulWidget {
   const PremiumBottomSheetBody({
-    required this.rewardedAd,
-    required this.isRewardedAdReady,
     required this.paywall,
     super.key,
   });
 
-  final RewardedAd? rewardedAd;
-  final bool isRewardedAdReady;
   final AdaptyPaywall? paywall;
 
   @override
@@ -40,12 +37,23 @@ class PremiumBottomSheetBody extends StatefulWidget {
 }
 
 class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
+  RewardedAd? _rewardedAd;
+  bool _isRewardedAdReady = false;
+
   bool _isPurchasing = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _setUpAdsForPaywall();
+    if (widget.paywall != null) Adapty.logShowPaywall(paywall: widget.paywall!);
+  }
 
   @override
   Widget build(BuildContext context) {
     return PlatformWidget(
-      androidBuilder: (_) => SafeArea(
+      androidBuilder: (context) => SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 40,
@@ -102,15 +110,15 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
               Column(
                 children: [
                   AdaptiveButton.filled(
+                    onPressed: _handleSubscribe,
                     child: const Text('Subscribe'),
-                    onPressed: () => _handleSubscribe(context),
                   ),
                   const SizedBox(width: Constants.listSpacing),
                   AdaptiveButton(
-                    onPressed: widget.isRewardedAdReady
+                    onPressed: _isRewardedAdReady
                         ? () => _handleWatchAd(context)
                         : null,
-                    child: widget.isRewardedAdReady
+                    child: _isRewardedAdReady
                         ? const Text('Watch ad')
                         : const Text('Loading ad'),
                   ),
@@ -120,9 +128,8 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
           ),
         ),
       ),
-      iosBuilder: (_) => CupertinoOnboarding(
-        onPressedOnLastPage:
-            widget.paywall != null ? () => _handleSubscribe(context) : null,
+      iosBuilder: (context) => CupertinoOnboarding(
+        onPressedOnLastPage: widget.paywall != null ? _handleSubscribe : null,
         bottomButtonColor: _isPurchasing
             ? CupertinoColors.quaternarySystemFill.resolveFrom(context)
             : null,
@@ -134,9 +141,8 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
               )
             : const Text('Subscribe'),
         widgetAboveBottomButton: CupertinoButton(
-          onPressed:
-              widget.isRewardedAdReady ? () => _handleWatchAd(context) : null,
-          child: widget.isRewardedAdReady
+          onPressed: _isRewardedAdReady ? () => _handleWatchAd(context) : null,
+          child: _isRewardedAdReady
               ? const Text('Watch ad')
               : const Text('Loading ad'),
         ),
@@ -196,7 +202,7 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
     );
   }
 
-  Future<void> _handleSubscribe(BuildContext context) async {
+  Future<void> _handleSubscribe() async {
     final product = widget.paywall?.products?.first;
 
     if (product != null) {
@@ -204,49 +210,62 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
         _isPurchasing = true;
       });
 
+      MakePurchaseResult? makePurchaseResult;
+
       try {
-        final makePurchaseResult = await Adapty.makePurchase(product);
-
-        if (makePurchaseResult
-                .purchaserInfo?.accessLevels['premium']?.isActive ??
-            false) {
-          await Hive.box<bool>('iap').put('isPremiumGranted', true);
-
-          setState(() {
-            _isPurchasing = false;
-          });
-
-          await showPlatformDialog<void>(
-            context: context,
-            builder: (_) => PlatformAlertDialog(
-              title: const Text('Success'),
-              content: const Text('Thank you for your purchase! :)'),
-              actions: [
-                PlatformDialogAction(
-                  child: const Text('OK'),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            ),
-          );
-
-          if (!mounted) return;
-          Navigator.pop(context);
-        }
+        makePurchaseResult = await Adapty.makePurchase(product);
       } catch (e) {
         if (kDebugMode) {
           print('Failed to make purchase: $e');
         }
+      }
 
-        setState(() {
-          _isPurchasing = false;
-        });
+      setState(() {
+        _isPurchasing = false;
+      });
+
+      if (makePurchaseResult
+              ?.purchaserInfo?.accessLevels['premium']?.isActive ??
+          false) {
+        await Hive.box<bool>('iap').put('isPremiumGranted', true);
+
+        await showPlatformDialog<void>(
+          context: context,
+          builder: (_) => PlatformAlertDialog(
+            title: const Text('Success'),
+            content: const Text('Thank you for your purchase! :)'),
+            actions: [
+              PlatformDialogAction(
+                child: const Text('OK'),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          ),
+        );
+
+        if (!mounted) return;
+        Navigator.pop(context);
+      } else {
+        await showPlatformDialog<void>(
+          context: context,
+          builder: (_) => PlatformAlertDialog(
+            title: const Text('Error'),
+            content:
+                const Text('Something went wrong. Please try again later.'),
+            actions: [
+              PlatformDialogAction(
+                child: const Text('OK'),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          ),
+        );
       }
     }
   }
 
   void _handleWatchAd(BuildContext context) {
-    widget.rewardedAd?.show(
+    _rewardedAd?.show(
       onUserEarnedReward: (ad, reward) async {
         if (kDebugMode) {
           print('User earned reward ${reward.type}');
@@ -270,6 +289,31 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
     if (!await launchUrl(Uri.parse(Constants.termsOfUseURL))) {
       throw Exception('Could not launch URL');
     }
+  }
+
+  Future<void> _setUpAdsForPaywall() async {
+    await RewardedAd.load(
+      adUnitId: getPremiumAdUnitId(),
+      request: const AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          _rewardedAd = ad;
+
+          setState(() {
+            _isRewardedAdReady = true;
+          });
+        },
+        onAdFailedToLoad: (err) {
+          if (kDebugMode) {
+            print('Failed to load a rewarded ad: ${err.message}');
+          }
+
+          setState(() {
+            _isRewardedAdReady = false;
+          });
+        },
+      ),
+    );
   }
 }
 
