@@ -12,7 +12,7 @@ environment:
 dependencies:
   adapty_flutter: ^1.0.14
   animate_do: ^2.1.0
-  bloc: ^8.0.3
+  bloc: ^8.1.0
   carrier_info: ^2.0.5
   cupertino_icons: ^1.0.5
   cupertino_lists: ^1.0.1
