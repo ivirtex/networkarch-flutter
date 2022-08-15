@@ -70,7 +70,7 @@ packages:
       name: bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.0.3"
+    version: "8.1.0"
   bloc_test:
     dependency: "direct dev"
     description:
@@ -369,7 +369,7 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.0.1"
+    version: "8.1.1"
   flutter_icmp_ping:
     dependency: transitive
     description:

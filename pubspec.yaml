@@ -27,7 +27,7 @@ dependencies:
   flex_color_scheme: ^5.1.0
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.0.1
+  flutter_bloc: ^8.1.1
   flutter_platform_widgets: ^2.0.0
   flutter_svg: ^1.1.3
   font_awesome_flutter: ^10.1.0
