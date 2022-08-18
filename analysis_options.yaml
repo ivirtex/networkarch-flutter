@@ -51,6 +51,14 @@ dart_code_metrics:
     - test/**
   rules:
     - avoid-global-state
+    - avoid-border-all
+    - avoid-shrink-wrap-in-lists
+    - avoid-unnecessary-setstate
+    - avoid-use-expanded-as-spacer
+    - avoid-wrapping-in-padding
+    - prefer-correct-edge-insets-constructor
+    - prefer-extracting-callbacks:
+        allowed-line-count: 5
     - newline-before-return
     - no-boolean-literal-compare
     - no-empty-block
