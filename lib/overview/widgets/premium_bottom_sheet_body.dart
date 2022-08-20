@@ -19,6 +19,7 @@ import 'package:url_launcher/url_launcher.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/network_status/widgets/adaptive_button.dart';
+import 'package:network_arch/overview/overview.dart';
 import 'package:network_arch/shared/shared.dart';
 
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart'
@@ -293,7 +294,7 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
 
   Future<void> _setUpAdsForPaywall() async {
     await RewardedAd.load(
-      adUnitId: getPremiumAdUnitId(),
+      adUnitId: _getPremiumAdUnitId(),
       request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) {
@@ -303,76 +304,23 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
             _isRewardedAdReady = true;
           });
         },
-        onAdFailedToLoad: (err) {
-          if (kDebugMode) {
-            print('Failed to load a rewarded ad: ${err.message}');
-          }
-
-          setState(() {
-            _isRewardedAdReady = false;
-          });
-        },
+        onAdFailedToLoad: _onAdFailedToLoad,
       ),
     );
   }
-}
 
-class AdvantageCard extends StatelessWidget {
-  const AdvantageCard({
-    required this.title,
-    required this.subtitle,
-    required this.icon,
-    super.key,
-  });
+  void _onAdFailedToLoad(LoadAdError err) {
+    if (kDebugMode) {
+      print('Failed to load a rewarded ad: ${err.message}');
+    }
 
-  final String title;
-  final String subtitle;
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Icon(
-          Icons.check_circle_rounded,
-          color: Colors.green,
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: DataCard(
-            padding: const EdgeInsets.all(10),
-            margin: EdgeInsets.zero,
-            child: Row(
-              children: [
-                Icon(
-                  icon,
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      Text(
-                        subtitle,
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
+    setState(() {
+      _isRewardedAdReady = false;
+    });
   }
 }
 
-String getPremiumAdUnitId() {
+String _getPremiumAdUnitId() {
   return kReleaseMode
       ? Platform.isIOS
           ? Constants.premiumAccessIOSAdUnitId

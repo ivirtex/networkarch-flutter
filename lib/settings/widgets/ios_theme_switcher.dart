@@ -29,22 +29,22 @@ class _IosThemeSwitcherState extends State<IosThemeSwitcher> {
   Widget build(BuildContext context) {
     return CupertinoSlidingSegmentedControl(
       groupValue: _selectedThemeMode,
-      onValueChanged: (ThemeMode? mode) {
-        if (mode != null) {
-          setState(() {
-            _selectedThemeMode = mode;
-
-            context
-                .read<ThemeBloc>()
-                .add(ThemeModeChangedEvent(themeMode: mode));
-          });
-        }
-      },
+      onValueChanged: _onThemeModeChanged,
       children: const <ThemeMode, Widget>{
         ThemeMode.light: Text('Light'),
         ThemeMode.dark: Text('Dark'),
         ThemeMode.system: Text('System'),
       },
     );
+  }
+
+  void _onThemeModeChanged(ThemeMode? mode) {
+    if (mode != null) {
+      setState(() {
+        _selectedThemeMode = mode;
+
+        context.read<ThemeBloc>().add(ThemeModeChangedEvent(themeMode: mode));
+      });
+    }
   }
 }

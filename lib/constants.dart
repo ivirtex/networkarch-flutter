@@ -102,7 +102,7 @@ abstract class Constants {
 
   static const EdgeInsets bodyPadding = EdgeInsets.all(10);
   static const EdgeInsets iOSbodyPadding =
-      EdgeInsets.fromLTRB(18.5, 0, 18.5, 6);
+      EdgeInsets.only(left: 18.5, right: 18.5, bottom: 6);
 
   static const EdgeInsets cupertinoListTileWithIconPadding =
       EdgeInsets.symmetric(

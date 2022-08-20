@@ -173,17 +173,7 @@ class _PingViewState extends State<PingView> {
                 builder: (context, state) {
                   if (_pingData.isNotEmpty && !_isClearListButtonLocked) {
                     return ClearListButton(
-                      onPressed: () async {
-                        setState(() {
-                          _isClearListButtonLocked = true;
-                        });
-
-                        await _pingData.removeAllElements(context);
-
-                        setState(() {
-                          _isClearListButtonLocked = false;
-                        });
-                      },
+                      onPressed: _onClearButtonPressed,
                     );
                   }
 
@@ -281,5 +271,17 @@ class _PingViewState extends State<PingView> {
         _handleStop();
       }
     }
+  }
+
+  Future<void> _onClearButtonPressed() async {
+    setState(() {
+      _isClearListButtonLocked = true;
+    });
+
+    await _pingData.removeAllElements(context);
+
+    setState(() {
+      _isClearListButtonLocked = false;
+    });
   }
 }

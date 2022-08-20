@@ -47,13 +47,13 @@ class HostCard extends StatelessWidget {
         //     return Text(snapshot.data?.host ?? 'N/A');
         //   },
         // ),
-        title: Text(item.ip),
+        title: Text(item.address),
         subtitle: Text('${item.responseTime!.inMilliseconds} ms'),
         trailing: TextButton(
           onPressed: () {
             Navigator.of(context).pushNamed(
               '/tools/ping',
-              arguments: item.ip,
+              arguments: item.address,
             );
           },
           child: const Text('Ping'),

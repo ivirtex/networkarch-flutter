@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:adapty_flutter/adapty_flutter.dart';
 import 'package:cupertino_lists/cupertino_lists.dart';
-import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:wiredash/wiredash.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
@@ -185,7 +185,7 @@ class _SettingsViewState extends State<SettingsView> {
   }
 
   void _sendFeedback(BuildContext context) {
-    BetterFeedback.of(context).showAndUploadToSentry();
+    Wiredash.of(context).show(inheritMaterialTheme: true);
   }
 
   Future<void> _openSourceCode() async {

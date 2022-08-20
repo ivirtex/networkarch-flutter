@@ -130,15 +130,7 @@ class _IpGeoViewState extends State<IpGeoView> {
                   EagerGestureRecognizer.new,
                 ),
               },
-              onMapCreated: (GoogleMapController controller) {
-                _controller = controller;
-
-                loadDarkModeMapStyle().then((style) async {
-                  Theme.of(context).brightness == Brightness.dark
-                      ? await controller.setMapStyle(style)
-                      : await controller.setMapStyle(null);
-                });
-              },
+              onMapCreated: _onMapCreated,
             ),
           ),
         ),
@@ -229,6 +221,16 @@ class _IpGeoViewState extends State<IpGeoView> {
     context.read<IpGeoBloc>().add(IpGeoRequested(ip: _target));
 
     hideKeyboard(context);
+  }
+
+  void _onMapCreated(GoogleMapController controller) {
+    _controller = controller;
+
+    loadDarkModeMapStyle().then((style) async {
+      Theme.of(context).brightness == Brightness.dark
+          ? await controller.setMapStyle(style)
+          : await controller.setMapStyle(null);
+    });
   }
 
   void _onSuccesfullUpdate(IpGeoLoadSuccess state) {

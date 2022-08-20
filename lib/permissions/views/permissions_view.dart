@@ -39,47 +39,7 @@ class _PermissionsViewState extends State<PermissionsView> {
 
   Widget _buildBody(BuildContext context) {
     return BlocConsumer<PermissionsBloc, PermissionsState>(
-      listener: (context, state) {
-        if (state.latestRequested == Permission.locationWhenInUse) {
-          if (state.locationStatus == PermissionStatus.granted) {
-            showPlatformMessage(
-              context,
-              type: MessageType.granted,
-            );
-          } else if (state.locationStatus ==
-              PermissionStatus.permanentlyDenied) {
-            showPlatformMessage(
-              context,
-              type: MessageType.denied,
-            );
-          } else {
-            showPlatformMessage(
-              context,
-              type: MessageType.default_,
-            );
-          }
-        }
-
-        // Only showed on Android
-        if (state.latestRequested == Permission.phone) {
-          final scaffoldMessenger = ScaffoldMessenger.of(context);
-
-          if (state.phoneStateStatus == PermissionStatus.granted) {
-            scaffoldMessenger.showSnackBar(
-              Constants.permissionGrantedSnackbar,
-            );
-          } else if (state.phoneStateStatus ==
-              PermissionStatus.permanentlyDenied) {
-            scaffoldMessenger.showSnackBar(
-              Constants.permissionDeniedSnackbar,
-            );
-          } else {
-            scaffoldMessenger.showSnackBar(
-              Constants.permissionDefaultSnackbar,
-            );
-          }
-        }
-      },
+      listener: _permissionStateListener,
       builder: (context, state) {
         return ContentListView(
           children: [
@@ -119,5 +79,45 @@ class _PermissionsViewState extends State<PermissionsView> {
         );
       },
     );
+  }
+
+  void _permissionStateListener(BuildContext context, PermissionsState state) {
+    if (state.latestRequested == Permission.locationWhenInUse) {
+      if (state.locationStatus == PermissionStatus.granted) {
+        showPlatformMessage(
+          context,
+          type: MessageType.granted,
+        );
+      } else if (state.locationStatus == PermissionStatus.permanentlyDenied) {
+        showPlatformMessage(
+          context,
+          type: MessageType.denied,
+        );
+      } else {
+        showPlatformMessage(
+          context,
+          type: MessageType.default_,
+        );
+      }
+    }
+
+    // Only showed on Android
+    if (state.latestRequested == Permission.phone) {
+      final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+      if (state.phoneStateStatus == PermissionStatus.granted) {
+        scaffoldMessenger.showSnackBar(
+          Constants.permissionGrantedSnackbar,
+        );
+      } else if (state.phoneStateStatus == PermissionStatus.permanentlyDenied) {
+        scaffoldMessenger.showSnackBar(
+          Constants.permissionDeniedSnackbar,
+        );
+      } else {
+        scaffoldMessenger.showSnackBar(
+          Constants.permissionDefaultSnackbar,
+        );
+      }
+    }
   }
 }

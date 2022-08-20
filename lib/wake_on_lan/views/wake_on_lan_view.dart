@@ -115,58 +115,7 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
       usePaddingOniOS: true,
       children: [
         BlocConsumer<WakeOnLanBloc, WakeOnLanState>(
-          listener: (context, state) {
-            final isIos = Theme.of(context).platform == TargetPlatform.iOS;
-
-            if (state is WakeOnLanIPValidationFailure) {
-              _isValidIpv4 = false;
-              _isValidMac = true;
-
-              if (isIos) {
-                showCupertinoDialog<void>(
-                  context: context,
-                  builder: Constants.wolIpValidationError,
-                );
-              }
-            }
-
-            if (state is WakeOnLanMACValidationFailure) {
-              _isValidIpv4 = true;
-              _isValidMac = false;
-
-              if (isIos) {
-                showCupertinoDialog<void>(
-                  context: context,
-                  builder: Constants.wolMacValidationError,
-                );
-              }
-            }
-
-            if (state is WakeOnLanIPandMACValidationFailure) {
-              _isValidIpv4 = false;
-              _isValidMac = false;
-
-              if (isIos) {
-                showCupertinoDialog<void>(
-                  context: context,
-                  builder: Constants.wolIpAndMacValidationError,
-                );
-              }
-            }
-
-            if (state is WakeOnLanSuccess) {
-              _isValidIpv4 = true;
-              _isValidMac = true;
-
-              final response = WolResponseModel(
-                state.ipv4,
-                state.mac,
-                state.packetBytes,
-                WolStatus.success,
-              );
-              wolResponses.insert(wolResponses.length, response);
-            }
-          },
+          listener: _wakeOnLanStateListener,
           builder: (context, state) {
             return Column(
               children: [
@@ -233,6 +182,59 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
         ),
       ],
     );
+  }
+
+  void _wakeOnLanStateListener(BuildContext context, WakeOnLanState state) {
+    final isIos = Theme.of(context).platform == TargetPlatform.iOS;
+
+    if (state is WakeOnLanIPValidationFailure) {
+      _isValidIpv4 = false;
+      _isValidMac = true;
+
+      if (isIos) {
+        showCupertinoDialog<void>(
+          context: context,
+          builder: Constants.wolIpValidationError,
+        );
+      }
+    }
+
+    if (state is WakeOnLanMACValidationFailure) {
+      _isValidIpv4 = true;
+      _isValidMac = false;
+
+      if (isIos) {
+        showCupertinoDialog<void>(
+          context: context,
+          builder: Constants.wolMacValidationError,
+        );
+      }
+    }
+
+    if (state is WakeOnLanIPandMACValidationFailure) {
+      _isValidIpv4 = false;
+      _isValidMac = false;
+
+      if (isIos) {
+        showCupertinoDialog<void>(
+          context: context,
+          builder: Constants.wolIpAndMacValidationError,
+        );
+      }
+    }
+
+    if (state is WakeOnLanSuccess) {
+      _isValidIpv4 = true;
+      _isValidMac = true;
+
+      final response = WolResponseModel(
+        state.ipv4,
+        state.mac,
+        state.packetBytes,
+        WolStatus.success,
+      );
+      wolResponses.insert(wolResponses.length, response);
+    }
   }
 
   Widget _buildItem(

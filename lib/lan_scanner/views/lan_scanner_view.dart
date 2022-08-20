@@ -89,25 +89,7 @@ class _LanScannerViewState extends State<LanScannerView> {
     return ContentListView(
       children: [
         BlocListener<LanScannerBloc, LanScannerState>(
-          listener: (context, state) {
-            if (state is LanScannerRunProgressUpdate) {
-              _appBarKey.currentState?.setIndicatorProgress(
-                state.progress / 100,
-              );
-            }
-
-            if (state is LanScannerRunComplete) {
-              _appBarKey.currentState?.toggleAnimation();
-            }
-
-            if (state is LanScannerRunNewHost) {
-              _hosts.insert(_hosts.length, state.host);
-            }
-
-            if (state is LanScannerRunStop) {
-              _appBarKey.currentState?.setIndicatorProgress(0);
-            }
-          },
+          listener: _lanScannerStateListener,
           child: AnimatedList(
             key: _listKey,
             physics: const NeverScrollableScrollPhysics(),
@@ -124,6 +106,29 @@ class _LanScannerViewState extends State<LanScannerView> {
         ),
       ],
     );
+  }
+
+  void _lanScannerStateListener(
+    BuildContext context,
+    LanScannerState state,
+  ) {
+    if (state is LanScannerRunProgressUpdate) {
+      _appBarKey.currentState?.setIndicatorProgress(
+        state.progress / 100,
+      );
+    }
+
+    if (state is LanScannerRunComplete) {
+      _appBarKey.currentState?.toggleAnimation();
+    }
+
+    if (state is LanScannerRunNewHost) {
+      _hosts.insert(_hosts.length, state.host);
+    }
+
+    if (state is LanScannerRunStop) {
+      _appBarKey.currentState?.setIndicatorProgress(0);
+    }
   }
 
   FadeTransition _buildItem(

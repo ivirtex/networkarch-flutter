@@ -12,7 +12,7 @@ class LanScannerRepository {
     final responsePort = args[0] as SendPort;
     final subnet = args[1] as String;
 
-    final stream = HostScanner.discover(
+    final stream = HostScanner.getAllPingableDevices(
       subnet,
       progressCallback: responsePort.send,
       timeoutInSeconds: 3,

@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:dynamic_color/dynamic_color.dart';
-import 'package:feedback/feedback.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:wiredash/wiredash.dart';
 
 // Project imports:
 import 'package:network_arch/constants.dart';
@@ -94,6 +94,7 @@ class NetworkArch extends StatelessWidget {
             Themes.schemesListWithDynamic.first;
 
     return DynamicColorBuilder(
+      // ignore: prefer-extracting-callbacks
       builder: (lightDynamic, darkDynamic) {
         handleDynamicColors(lightDynamic, darkDynamic, context);
 
@@ -102,14 +103,9 @@ class NetworkArch extends StatelessWidget {
             final themeData = Themes.getLightThemeDataFor(state.scheme);
             final darkThemeData = Themes.getDarkThemeDataFor(state.scheme);
 
-            final feedbackBackgroundColor = state.mode == ThemeMode.light
-                ? themeData.colorScheme.background.withOpacity(0.9)
-                : darkThemeData.colorScheme.background.withOpacity(0.9);
-
-            return BetterFeedback(
-              theme: FeedbackThemeData(
-                background: feedbackBackgroundColor,
-              ),
+            return Wiredash(
+              projectId: 'networkarch-jto3hyq',
+              secret: 'wCFJdv9cYZqN1lnX6nIukcXx9qYQwhPA',
               child: MaterialApp(
                 debugShowCheckedModeBanner: false,
                 navigatorObservers: [
@@ -132,34 +128,26 @@ class NetworkArch extends StatelessWidget {
   Widget _buildIOS(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
-        final isDark = state.mode == ThemeMode.dark;
-
-        return MediaQuery.fromWindow(
-          child: BetterFeedback(
-            theme: FeedbackThemeData(
-              background: isDark
-                  ? CupertinoColors.darkBackgroundGray
-                  : CupertinoColors.white,
-            ),
-            child: CupertinoApp(
-              useInheritedMediaQuery: true,
-              debugShowCheckedModeBanner: false,
-              localizationsDelegates: const [
-                DefaultMaterialLocalizations.delegate,
-                DefaultWidgetsLocalizations.delegate,
-                DefaultCupertinoLocalizations.delegate,
-              ],
-              navigatorObservers: [
-                SentryNavigatorObserver(),
-              ],
-              title: Constants.appName,
-              theme: state.mode == ThemeMode.light
-                  ? Themes.cupertinoLightThemeData
-                  : Themes.cupertinoDarkThemeData,
-              routes: Constants.routes,
-              // Added to
-              home: const CupertinoScaffold(body: Home()),
-            ),
+        return Wiredash(
+          projectId: 'networkarch-jto3hyq',
+          secret: 'wCFJdv9cYZqN1lnX6nIukcXx9qYQwhPA',
+          child: CupertinoApp(
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: const [
+              DefaultMaterialLocalizations.delegate,
+              DefaultWidgetsLocalizations.delegate,
+              DefaultCupertinoLocalizations.delegate,
+            ],
+            navigatorObservers: [
+              SentryNavigatorObserver(),
+            ],
+            title: Constants.appName,
+            theme: state.mode == ThemeMode.light
+                ? Themes.cupertinoLightThemeData
+                : Themes.cupertinoDarkThemeData,
+            routes: Constants.routes,
+            // Added to
+            home: const CupertinoScaffold(body: Home()),
           ),
         );
       },

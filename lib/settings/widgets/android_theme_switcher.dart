@@ -45,26 +45,27 @@ class _AndroidThemeSwitcherState extends State<AndroidThemeSwitcher> {
               ),
               ThemePopupMenu(
                 schemeIndex: themeBloc.state.scheme.index,
-                onChanged: (index) async {
-                  // Await for popup menu to close (to avoid jank)
-                  await Future.delayed(
-                    const Duration(milliseconds: 300),
-                    () => null,
-                  );
-
-                  setState(() {
-                    themeBloc.add(
-                      ThemeSchemeChangedEvent(
-                        scheme: CustomFlexScheme.values[index],
-                      ),
-                    );
-                  });
-                },
+                onChanged: onThemeSchemeChanged,
               ),
             ],
           ),
         ),
       ],
     );
+  }
+
+  Future<void> onThemeSchemeChanged(int index) async {
+    await Future.delayed(
+      const Duration(milliseconds: 300),
+      () => null,
+    );
+
+    setState(() {
+      context.read<ThemeBloc>().add(
+            ThemeSchemeChangedEvent(
+              scheme: CustomFlexScheme.values[index],
+            ),
+          );
+    });
   }
 }

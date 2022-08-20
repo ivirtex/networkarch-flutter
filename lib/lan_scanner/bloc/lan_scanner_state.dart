@@ -34,7 +34,7 @@ class LanScannerRunNewHost extends LanScannerState {
   final ActiveHost host;
 
   @override
-  List<Object> get props => [host.ip];
+  List<Object> get props => [host.address];
 }
 
 class LanScannerRunStop extends LanScannerState {
