@@ -51,7 +51,7 @@ dependencies:
   sentry_flutter: ^6.9.1
   url_launcher: ^6.1.5
   wake_on_lan: ^3.0.0
-  wiredash: ^1.1.0
+  wiredash: ^1.5.0
 
 dev_dependencies:
   bloc_test: ^9.1.0
