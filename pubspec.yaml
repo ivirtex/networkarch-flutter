@@ -30,7 +30,7 @@ dependencies:
   flutter_svg: ^1.1.4
   font_awesome_flutter: ^10.1.0
   google_fonts: ^3.0.1
-  google_maps_flutter: ^2.1.12
+  google_maps_flutter: ^2.2.0
   google_mobile_ads: ^2.0.1
   hive: ^2.2.3
   hive_flutter: ^1.1.0
