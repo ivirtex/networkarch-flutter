@@ -19,7 +19,7 @@ dependencies:
   cupertino_onboarding: ^1.1.1
   dart_ping: ^7.0.1
   dart_ping_ios: ^2.0.0
-  dynamic_color: ^1.4.0
+  dynamic_color: ^1.5.4
   enum_to_string: ^2.0.1
   equatable: ^2.0.5
   flex_color_scheme: ^5.1.0
