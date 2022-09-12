@@ -57,9 +57,8 @@ class AdaptiveButton extends StatelessWidget {
         return ElevatedButton(
           style: ElevatedButton.styleFrom(
             // Foreground color
-            onPrimary: Theme.of(context).colorScheme.onPrimary,
-            // Background color
-            primary: Theme.of(context)
+            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+            backgroundColor: Theme.of(context)
                 .colorScheme
                 .primary
                 .withOpacity(opacity ?? 0.8),
@@ -73,9 +72,9 @@ class AdaptiveButton extends StatelessWidget {
         return ElevatedButton(
           style: ElevatedButton.styleFrom(
             // Foreground color
-            onPrimary: Theme.of(context).colorScheme.onSecondaryContainer,
+            foregroundColor: Theme.of(context).colorScheme.onSecondaryContainer,
             // Background color
-            primary: Theme.of(context)
+            backgroundColor: Theme.of(context)
                 .colorScheme
                 .secondaryContainer
                 .withOpacity(opacity ?? 0.5),
