@@ -31,6 +31,12 @@ class ContentListView extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
+    final Matrix4 resultMatrix = Matrix4.identity();
+    resultMatrix
+      ..translate(2, 3)
+      ..scale(1, 1, 1.0)
+      ..translate(-2, -3);
+
     return Padding(
       padding: Theme.of(context).platform == TargetPlatform.iOS
           ? usePaddingOniOS

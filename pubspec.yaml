@@ -22,7 +22,7 @@ dependencies:
   dynamic_color: ^1.5.4
   enum_to_string: ^2.0.1
   equatable: ^2.0.5
-  flex_color_scheme: ^6.0.0
+  flex_color_scheme: ^6.0.1
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
@@ -38,8 +38,8 @@ dependencies:
   hydrated_bloc: ^8.1.0
   in_app_review: ^2.0.4
   introduction_screen: ^3.0.2
-  json_annotation: ^4.6.0
-  json_serializable: ^6.3.1
+  json_annotation: ^4.7.0
+  json_serializable: ^6.4.0
   # lan_scanner: ^3.5.0
   mocktail: ^0.3.0
   modal_bottom_sheet: ^2.1.2
@@ -47,21 +47,21 @@ dependencies:
   network_tools: ^3.0.0+2
   package_info_plus: ^1.4.3+1
   path_provider: ^2.0.11
-  permission_handler: ^10.0.0
-  sentry_flutter: ^6.9.1
+  permission_handler: ^10.0.1
+  sentry_flutter: ^6.10.0
   url_launcher: ^6.1.5
   wake_on_lan: ^3.0.0
   wiredash: ^1.5.0
 
 dev_dependencies:
   bloc_test: ^9.1.0
-  build_runner: ^2.2.0
-  dart_code_metrics: ^4.18.0
+  build_runner: ^2.2.1
+  dart_code_metrics: ^4.19.0
   flutter_test:
     sdk: flutter
   icons_launcher: ^2.0.5
   import_sorter: ^4.6.0
-  very_good_analysis: ^3.0.2
+  very_good_analysis: ^3.1.0
 
 flutter:
   uses-material-design: true
