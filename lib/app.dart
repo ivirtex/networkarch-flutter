@@ -25,8 +25,8 @@ import 'package:network_arch/theme/theme.dart';
 import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
 import 'package:network_arch/whois/whois.dart';
 
-class NetworkArch extends StatelessWidget {
-  NetworkArch({super.key});
+class App extends StatelessWidget {
+  App({super.key});
 
   final NetworkStatusRepository networkStatusRepository =
       NetworkStatusRepository();
@@ -146,7 +146,6 @@ class NetworkArch extends StatelessWidget {
                 ? Themes.cupertinoLightThemeData
                 : Themes.cupertinoDarkThemeData,
             routes: Constants.routes,
-            // Added to
             home: const CupertinoScaffold(body: Home()),
           ),
         );

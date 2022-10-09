@@ -37,6 +37,7 @@ class RoundedList extends StatelessWidget {
               child: DataCard(
                 margin: EdgeInsets.zero,
                 padding: EdgeInsets.zero,
+                // ignore: avoid-shrink-wrap-in-lists
                 child: ListView.separated(
                   padding: EdgeInsets.zero,
                   physics: const NeverScrollableScrollPhysics(),

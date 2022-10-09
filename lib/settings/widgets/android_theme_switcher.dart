@@ -28,6 +28,7 @@ class _AndroidThemeSwitcherState extends State<AndroidThemeSwitcher> {
           padding: EdgeInsets.zero,
           child: Column(
             children: [
+              // ignore: avoid-wrapping-in-padding
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,

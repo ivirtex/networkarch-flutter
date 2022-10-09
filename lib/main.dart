@@ -16,7 +16,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
-import 'package:network_arch/networkarch.dart';
+import 'package:network_arch/app.dart';
 import 'package:network_arch/simple_bloc_observer.dart';
 
 void main() {
@@ -52,7 +52,7 @@ void main() {
                 ? 'https://5d6f627c688b407e96c3d26d2df7457c@o923305.ingest.sentry.io/6238035'
                 : '',
           },
-          appRunner: () => runApp(NetworkArch()),
+          appRunner: () => runApp(App()),
         );
       },
       blocObserver: kDebugMode ? SimpleBlocObserver() : null,
