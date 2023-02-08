@@ -13,11 +13,11 @@ dependencies:
   adapty_flutter: ^2.2.5
   animate_do: ^3.0.2
   bloc: ^8.1.1
-  carrier_info: 2.0.5
+  carrier_info: ^2.0.8
   cupertino_icons: ^1.0.5
   cupertino_onboarding: ^1.1.1
-  dart_ping: ^7.0.1
-  dart_ping_ios: ^2.0.0
+  dart_ping: ^7.0.2
+  dart_ping_ios: ^2.0.1
   dynamic_color: ^1.6.2
   enum_to_string: ^2.0.1
   equatable: ^2.0.5
@@ -25,8 +25,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
-  flutter_platform_widgets: ^2.0.0
-  flutter_svg: ^1.1.5
+  flutter_platform_widgets: ^3.0.0
+  flutter_svg: ^2.0.0+1
   font_awesome_flutter: ^10.3.0
   google_fonts: ^4.0.3
   google_maps_flutter: ^2.2.3
@@ -34,17 +34,17 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   http: ^0.13.5
-  hydrated_bloc: ^8.1.0
-  in_app_review: ^2.0.4
-  introduction_screen: ^3.0.2
-  json_annotation: ^4.7.0
-  json_serializable: ^6.5.0
+  hydrated_bloc: ^9.1.0
+  in_app_review: ^2.0.6
+  introduction_screen: ^3.1.4
+  json_annotation: ^4.8.0
+  json_serializable: ^6.6.1
   # lan_scanner: ^3.5.0
   meta: ^1.8.0
   mocktail: ^0.3.0
   modal_bottom_sheet: ^3.0.0-pre
   network_info_plus: ^3.0.1
-  network_tools: ^3.0.0+2
+  network_tools: ^3.0.0+3
   package_info_plus: ^3.0.2
   path: ^1.8.2
   path_provider: ^2.0.12
@@ -55,15 +55,15 @@ dependencies:
   wiredash: ^1.5.0
 
 dev_dependencies:
-  bloc_test: ^9.1.0
-  build_runner: ^2.2.1
-  dart_code_metrics: ^4.19.1
+  bloc_test: ^9.1.1
+  build_runner: ^2.3.3
+  dart_code_metrics: ^5.5.1
   flutter_test:
     sdk: flutter
-  icons_launcher: ^2.0.5
+  icons_launcher: ^2.0.6
   import_sorter: ^4.6.0
   mockingjay: ^0.3.0
-  very_good_analysis: ^3.1.0
+  very_good_analysis: ^4.0.0+1
 
 flutter:
   uses-material-design: true
