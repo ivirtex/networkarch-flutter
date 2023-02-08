@@ -69,7 +69,7 @@ final List<PageViewModel> pagesList = [
         builder: (context) {
           return Text(
             'Permissions',
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.titleLarge,
           );
         },
       ),

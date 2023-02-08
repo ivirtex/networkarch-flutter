@@ -1,8 +1,6 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:cupertino_lists/cupertino_lists.dart';
 
 // Project imports:
 import 'package:network_arch/shared/shared_widgets.dart';

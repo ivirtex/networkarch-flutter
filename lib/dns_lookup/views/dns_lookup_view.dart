@@ -162,7 +162,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
                                 .textTheme
                                 .tabLabelTextStyle
                                 .copyWith(fontSize: 14)
-                            : Theme.of(context).textTheme.caption,
+                            : Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
                   ),

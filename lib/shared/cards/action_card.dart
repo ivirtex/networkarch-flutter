@@ -1,8 +1,8 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
@@ -58,7 +58,7 @@ class ActionCard extends StatelessWidget {
                         desc!,
                         maxLines: 3,
                         style: TextStyle(
-                          color: Theme.of(context).textTheme.caption?.color,
+                          color: Theme.of(context).textTheme.bodySmall?.color,
                         ),
                       ),
                   ],

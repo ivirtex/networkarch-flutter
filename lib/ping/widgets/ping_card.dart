@@ -76,15 +76,15 @@ class PingCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Seq. pos.: ${item.response!.seq.toString()} ',
-                    style: Theme.of(context).textTheme.caption!.copyWith(
+                    'Seq. pos.: ${item.response!.seq} ',
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: isIos
                               ? Themes.iOStextColor.resolveFrom(context)
                               : null,
                         ),
                   ),
                   Text(
-                    'TTL: ${item.response!.ttl.toString()}',
+                    'TTL: ${item.response!.ttl}',
                     style: TextStyle(
                       color: isIos
                           ? Themes.iOStextColor.resolveFrom(context)
@@ -104,7 +104,7 @@ class PingCard extends StatelessWidget {
                 ),
               )
             : Text(
-                '${item.response!.time!.inMilliseconds.toString()} ms',
+                '${item.response!.time!.inMilliseconds} ms',
                 style: TextStyle(
                   color: item.response!.time!.inMilliseconds < 75
                       ? isIos

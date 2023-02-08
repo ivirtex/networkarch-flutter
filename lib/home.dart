@@ -177,7 +177,7 @@ class _HomeState extends State<Home> {
 
   Future<void> _fetchIapData() async {
     try {
-      final purchaserInfo = await Adapty.getPurchaserInfo();
+      final purchaserInfo = await Adapty().getProfile();
       if (purchaserInfo.accessLevels['premium']?.isActive ?? false) {
         await Hive.box<bool>('iap').put('isPremiumGranted', true);
       } else {

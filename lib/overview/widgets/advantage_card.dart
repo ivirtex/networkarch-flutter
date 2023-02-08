@@ -45,7 +45,7 @@ class AdvantageCard extends StatelessWidget {
                       ),
                       Text(
                         subtitle,
-                        style: Theme.of(context).textTheme.caption,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
                   ),

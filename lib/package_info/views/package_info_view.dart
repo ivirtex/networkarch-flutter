@@ -1,8 +1,7 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 // Package imports:
-import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:

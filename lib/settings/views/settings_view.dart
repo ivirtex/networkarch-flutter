@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:adapty_flutter/adapty_flutter.dart';
-import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
@@ -200,11 +199,9 @@ class _SettingsViewState extends State<SettingsView> {
     });
 
     try {
-      final restorePurchasesResult = await Adapty.restorePurchases();
+      final restorePurchasesResult = await Adapty().restorePurchases();
 
-      if (restorePurchasesResult
-              .purchaserInfo?.accessLevels['premium']?.isActive ??
-          false) {
+      if (restorePurchasesResult.accessLevels['premium']?.isActive ?? false) {
         await Hive.box<bool>('iap').put('isPremiumGranted', true);
       }
     } catch (e) {

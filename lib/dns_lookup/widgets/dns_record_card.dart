@@ -36,7 +36,7 @@ class DnsRecordCard extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                'TTL: ${record.ttl.toString()}',
+                'TTL: ${record.ttl}',
                 style: TextStyle(
                   color: isIOS ? iOStextColor : null,
                 ),

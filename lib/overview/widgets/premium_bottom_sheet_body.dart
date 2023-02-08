@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:adapty_flutter/adapty_flutter.dart';
-import 'package:adapty_flutter/models/adapty_paywall.dart';
-import 'package:adapty_flutter/results/make_purchase_result.dart';
 import 'package:cupertino_onboarding/cupertino_onboarding.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -42,13 +40,16 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
   bool _isRewardedAdReady = false;
 
   bool _isPurchasing = false;
+  AdaptyPaywallProduct? _product;
 
   @override
   void initState() {
     super.initState();
 
     _setUpAdsForPaywall();
-    if (widget.paywall != null) Adapty.logShowPaywall(paywall: widget.paywall!);
+    if (widget.paywall != null) {
+      Adapty().logShowPaywall(paywall: widget.paywall!);
+    }
   }
 
   @override
@@ -155,7 +156,7 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
             features: [
               if (widget.paywall != null)
                 Text(
-                  'Subscribe for ${widget.paywall?.products?.first.localizedPrice} per ${widget.paywall?.products?.first.localizedSubscriptionPeriod} and get unlimited access to the following features:',
+                  'Subscribe for ${_product?.localizedPrice} per ${_product?.localizedSubscriptionPeriod} and get unlimited access to the following features:',
                 )
               else
                 const Text(
@@ -204,64 +205,61 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
   }
 
   Future<void> _handleSubscribe() async {
-    final product = widget.paywall?.products?.first;
+    final products =
+        await Adapty().getPaywallProducts(paywall: widget.paywall!);
+    _product = products.first;
 
-    if (product != null) {
-      setState(() {
-        _isPurchasing = true;
-      });
+    setState(() {
+      _isPurchasing = true;
+    });
 
-      MakePurchaseResult? makePurchaseResult;
+    AdaptyProfile? makePurchaseResult;
 
-      try {
-        makePurchaseResult = await Adapty.makePurchase(product);
-      } catch (e) {
-        if (kDebugMode) {
-          print('Failed to make purchase: $e');
-        }
+    try {
+      makePurchaseResult = await Adapty().makePurchase(product: _product!);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Failed to make purchase: $e');
       }
+    }
 
-      setState(() {
-        _isPurchasing = false;
-      });
+    setState(() {
+      _isPurchasing = false;
+    });
 
-      if (makePurchaseResult
-              ?.purchaserInfo?.accessLevels['premium']?.isActive ??
-          false) {
-        await Hive.box<bool>('iap').put('isPremiumGranted', true);
+    if (makePurchaseResult?.accessLevels['premium']?.isActive ?? false) {
+      await Hive.box<bool>('iap').put('isPremiumGranted', true);
 
-        await showPlatformDialog<void>(
-          context: context,
-          builder: (_) => PlatformAlertDialog(
-            title: const Text('Success'),
-            content: const Text('Thank you for your purchase! :)'),
-            actions: [
-              PlatformDialogAction(
-                child: const Text('OK'),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
-          ),
-        );
+      await showPlatformDialog<void>(
+        context: context,
+        builder: (_) => PlatformAlertDialog(
+          title: const Text('Success'),
+          content: const Text('Thank you for your purchase! :)'),
+          actions: [
+            PlatformDialogAction(
+              child: const Text('OK'),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        ),
+      );
 
-        if (!mounted) return;
-        Navigator.pop(context);
-      } else {
-        await showPlatformDialog<void>(
-          context: context,
-          builder: (_) => PlatformAlertDialog(
-            title: const Text('Error'),
-            content:
-                const Text('Something went wrong. Please try again later.'),
-            actions: [
-              PlatformDialogAction(
-                child: const Text('OK'),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
-          ),
-        );
-      }
+      if (!mounted) return;
+      Navigator.pop(context);
+    } else {
+      await showPlatformDialog<void>(
+        context: context,
+        builder: (_) => PlatformAlertDialog(
+          title: const Text('Error'),
+          content: const Text('Something went wrong. Please try again later.'),
+          actions: [
+            PlatformDialogAction(
+              child: const Text('OK'),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        ),
+      );
     }
   }
 
@@ -318,12 +316,12 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
       _isRewardedAdReady = false;
     });
   }
-}
 
-String _getPremiumAdUnitId() {
-  return kReleaseMode
-      ? Platform.isIOS
-          ? Constants.premiumAccessIOSAdUnitId
-          : Constants.premiumAccessAndroidAdUnitId
-      : Constants.testRewardedAdUnitId;
+  String _getPremiumAdUnitId() {
+    return kReleaseMode
+        ? Platform.isIOS
+            ? Constants.premiumAccessIOSAdUnitId
+            : Constants.premiumAccessAndroidAdUnitId
+        : Constants.testRewardedAdUnitId;
+  }
 }

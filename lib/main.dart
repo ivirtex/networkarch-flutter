@@ -35,7 +35,7 @@ void main() {
 
     if (Platform.isIOS) DartPingIOS.register();
 
-    Adapty.activate();
+    Adapty().activate();
 
     await Hive.initFlutter();
     await Hive.openBox<bool>('settings');

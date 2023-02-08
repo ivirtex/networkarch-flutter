@@ -2,13 +2,12 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:adapty_flutter/adapty_flutter.dart';
-import 'package:adapty_flutter/models/adapty_paywall.dart';
-import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -341,11 +340,7 @@ class _OverviewViewState extends State<OverviewView> {
 
   Future<void> _setupIapPaywall() async {
     try {
-      final getPaywallsResult = await Adapty.getPaywalls();
-      final paywalls = getPaywallsResult.paywalls;
-
-      _paywall = paywalls
-          ?.firstWhere((paywall) => paywall.developerId == 'premium_paywall');
+      _paywall = await Adapty().getPaywall(id: 'premium_paywall');
     } catch (e) {
       if (kDebugMode) {
         print('Failed to get paywalls: $e');
