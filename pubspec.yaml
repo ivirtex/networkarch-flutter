@@ -43,7 +43,7 @@ dependencies:
   meta: ^1.8.0
   mocktail: ^0.3.0
   modal_bottom_sheet: ^3.0.0-pre
-  network_info_plus: ^3.0.1
+  network_info_plus: ^3.0.2
   network_tools: ^3.0.0+2
   package_info_plus: ^3.0.2
   path: ^1.8.2
