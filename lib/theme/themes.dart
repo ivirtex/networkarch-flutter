@@ -87,12 +87,6 @@ abstract class Themes {
     darkColor: CupertinoColors.systemGrey6.darkColor,
   );
 
-  // https://github.com/flutter/flutter/issues/48438
-  static const iOStextColor = CupertinoDynamicColor.withBrightness(
-    color: CupertinoColors.black,
-    darkColor: CupertinoColors.white,
-  );
-
   static Color getPlatformIconColor(BuildContext context) {
     return Theme.of(context).platform == TargetPlatform.iOS
         ? const CupertinoDynamicColor.withBrightness(

@@ -57,25 +57,23 @@ class NetworkStatusRepository {
     late StreamController<CarrierInfoModel> controller;
     Timer? timer;
 
-    CarrierInfoModel carrierInfo;
+    CarrierInfoModel? carrierInfo;
 
     Future<void> fetchData(_) async {
-      if (Platform.isIOS) {
-        carrierInfo = await _carrierDataProvider.getCellularData();
-
-        controller.add(carrierInfo);
-      } else {
+      if (Platform.isAndroid) {
         if (await _carrierDataProvider.getPermissionStatus() ==
-            PermissionStatus.granted) {
-          carrierInfo = await _carrierDataProvider.getCellularData();
-
-          controller.add(carrierInfo);
-        } else {
+            PermissionStatus.denied) {
           controller.addError(
             NetworkStatus.permissionIssue,
             StackTrace.current,
           );
         }
+      }
+
+      carrierInfo = await _carrierDataProvider.getCellularData();
+
+      if (carrierInfo != null) {
+        controller.add(carrierInfo!);
       }
     }
 

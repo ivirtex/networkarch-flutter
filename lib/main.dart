@@ -27,36 +27,32 @@ void main() {
       systemNavigationBarColor: Colors.transparent,
     ),
   );
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge)
-      .whenComplete(() async {
-    final storage = await HydratedStorage.build(
-      storageDirectory: await getApplicationDocumentsDirectory(),
-    );
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge).whenComplete(
+    () async {
+      HydratedBloc.storage = await HydratedStorage.build(
+        storageDirectory: await getApplicationDocumentsDirectory(),
+      );
+      Bloc.observer = SimpleBlocObserver();
 
-    if (Platform.isIOS) DartPingIOS.register();
+      if (Platform.isIOS) DartPingIOS.register();
 
-    Adapty().activate();
+      Adapty().activate();
 
-    await Hive.initFlutter();
-    await Hive.openBox<bool>('settings');
-    await Hive.openBox<bool>('iap');
+      await Hive.initFlutter();
+      await Hive.openBox<bool>('settings');
+      await Hive.openBox<bool>('iap');
 
-    await MobileAds.instance.initialize();
+      await MobileAds.instance.initialize();
 
-    await HydratedBlocOverrides.runZoned(
-      () async {
-        await SentryFlutter.init(
-          (options) => {
-            options.tracesSampleRate = 0.2,
-            options.dsn = kReleaseMode
-                ? 'https://5d6f627c688b407e96c3d26d2df7457c@o923305.ingest.sentry.io/6238035'
-                : '',
-          },
-          appRunner: () => runApp(App()),
-        );
-      },
-      blocObserver: kDebugMode ? SimpleBlocObserver() : null,
-      storage: storage,
-    );
-  });
+      await SentryFlutter.init(
+        (options) => {
+          options.tracesSampleRate = 0.2,
+          options.dsn = kReleaseMode
+              ? 'https://5d6f627c688b407e96c3d26d2df7457c@o923305.ingest.sentry.io/6238035'
+              : '',
+        },
+        appRunner: () => runApp(NetworkArch()),
+      );
+    },
+  );
 }

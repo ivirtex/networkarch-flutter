@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -72,9 +73,14 @@ class DataCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           margin: margin,
-          child: Padding(
-            padding: padding,
-            child: child,
+          child: DefaultTextStyle(
+            style: Theme.of(context).platform == TargetPlatform.iOS
+                ? CupertinoTheme.of(context).textTheme.textStyle
+                : Theme.of(context).textTheme.bodySmall!,
+            child: Padding(
+              padding: padding,
+              child: child,
+            ),
           ),
         ),
         if (footer != null) SmallDescription(text: footer!),

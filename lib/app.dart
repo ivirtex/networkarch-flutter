@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:wiredash/wiredash.dart';
 
@@ -128,16 +127,15 @@ class App extends StatelessWidget {
   Widget _buildIOS(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
-        return Wiredash(
-          projectId: 'networkarch-jto3hyq',
-          secret: 'wCFJdv9cYZqN1lnX6nIukcXx9qYQwhPA',
+        final isDark = state.mode == ThemeMode.dark;
+
+        return BetterFeedback(
+          theme: FeedbackThemeData(
+            background: isDark
+                ? CupertinoColors.darkBackgroundGray
+                : CupertinoColors.white,
+          ),
           child: CupertinoApp(
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: const [
-              DefaultMaterialLocalizations.delegate,
-              DefaultWidgetsLocalizations.delegate,
-              DefaultCupertinoLocalizations.delegate,
-            ],
             navigatorObservers: [
               SentryNavigatorObserver(),
             ],
@@ -146,7 +144,7 @@ class App extends StatelessWidget {
                 ? Themes.cupertinoLightThemeData
                 : Themes.cupertinoDarkThemeData,
             routes: Constants.routes,
-            home: const CupertinoScaffold(body: Home()),
+            home: const Home(),
           ),
         );
       },

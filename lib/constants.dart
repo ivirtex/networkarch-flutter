@@ -68,8 +68,6 @@ abstract class Constants {
     '/settings': (context) => const SettingsView(),
     '/introduction': (context) => IntroductionScreen(
           pages: pagesList,
-          isTopSafeArea: true,
-          isBottomSafeArea: true,
           curve: Curves.easeInOut,
           animationDuration: 500,
           controlsPadding: EdgeInsets.symmetric(
@@ -169,9 +167,9 @@ abstract class Constants {
   static const String _permissionDefault =
       'Something gone wrong, check app permissions.';
 
-  static final SnackBar permissionGrantedSnackbar = SnackBar(
+  static const SnackBar permissionGrantedSnackbar = SnackBar(
     content: Row(
-      children: const [
+      children: [
         Icon(Icons.check_circle_rounded, color: Colors.green),
         SizedBox(width: 10),
         Expanded(child: Text(_permissionGranted)),
@@ -179,29 +177,29 @@ abstract class Constants {
     ),
   );
 
-  static final SnackBar permissionDeniedSnackbar = SnackBar(
+  static const SnackBar permissionDeniedSnackbar = SnackBar(
     content: Row(
-      children: const [
+      children: [
         Icon(Icons.error_rounded, color: Colors.red),
         SizedBox(width: 10),
         Expanded(child: Text(_permissionDenied)),
       ],
     ),
-    action: const SnackBarAction(
+    action: SnackBarAction(
       label: 'Open settings',
       onPressed: openAppSettings,
     ),
   );
 
-  static final SnackBar permissionDefaultSnackbar = SnackBar(
+  static const SnackBar permissionDefaultSnackbar = SnackBar(
     content: Row(
-      children: const [
+      children: [
         Icon(Icons.warning_rounded, color: Colors.orange),
         SizedBox(width: 10),
         Expanded(child: Text(_permissionDefault)),
       ],
     ),
-    action: const SnackBarAction(
+    action: SnackBarAction(
       label: 'Open settings',
       onPressed: openAppSettings,
     ),

@@ -292,8 +292,9 @@ class _OverviewViewState extends State<OverviewView> {
 
   void showPremiumBottomSheet(BuildContext context) {
     final theme = Theme.of(context);
+
     if (theme.platform == TargetPlatform.iOS) {
-      CupertinoScaffold.showCupertinoModalBottomSheet<void>(
+      showCupertinoModalBottomSheet<void>(
         context: context,
         useRootNavigator: true,
         builder: (_) => PremiumBottomSheetBody(
@@ -304,10 +305,6 @@ class _OverviewViewState extends State<OverviewView> {
       showMaterialModalBottomSheet<void>(
         context: context,
         useRootNavigator: true,
-        backgroundColor: Color.alphaBlend(
-          theme.colorScheme.primary.withOpacity(0.03),
-          theme.colorScheme.surfaceVariant,
-        ),
         builder: (_) => PremiumBottomSheetBody(
           paywall: _paywall,
         ),

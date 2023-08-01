@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:network_arch/constants.dart';
 
-class ActionAppBar extends StatefulWidget with PreferredSizeWidget {
+class ActionAppBar extends StatefulWidget implements PreferredSizeWidget {
   const ActionAppBar({
     required this.title,
     required this.isActive,

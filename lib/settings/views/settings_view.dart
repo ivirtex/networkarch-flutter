@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:adapty_flutter/adapty_flutter.dart';
+import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';

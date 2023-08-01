@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -38,101 +39,94 @@ class CarrierDetailView extends StatelessWidget {
   }
 
   Widget _buildDataList(BuildContext context) {
-    final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
-
     return ContentListView(
       children: [
         BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
           builder: (context, state) {
-            return state.wifiStatus == NetworkStatus.success
-                ? RoundedList(
-                    padding: isIOS ? EdgeInsets.zero : const EdgeInsets.all(10),
-                    children: [
-                      ListTextLine(
-                        widgetL: const Text('VoIP Support'),
-                        widgetR: state.carrierInfo!.allowsVOIP
-                            ? const Text(
-                                'Yes',
-                                style: TextStyle(
-                                  color: Colors.green,
-                                ),
-                              )
-                            : const Text(
-                                'No',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                ),
+            switch (state.carrierStatus) {
+              case NetworkStatus.inital:
+              case NetworkStatus.loading:
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              case NetworkStatus.failure:
+                return const Center(
+                  child: Text('Failed to load carrier data'),
+                );
+              case NetworkStatus.permissionIssue:
+                return const Center(
+                  child: Text('Carrier data permission denied'),
+                );
+              case NetworkStatus.success:
+                final widgets = <Widget>[];
+
+                return PlatformWidget(
+                  iosBuilder: (context) {
+                    for (final carrier
+                        in state.carrierInfo!.iosCarrierData!.carrierData) {
+                      widgets.add(
+                        CupertinoListSection.insetGrouped(
+                          header: Text('${carrier.carrierName} details'),
+                          children: [
+                            CupertinoListTile.notched(
+                              title: const Text('Carrier name'),
+                              trailing: Text(
+                                carrier.carrierName,
                               ),
-                      ),
-                      ListTextLine(
-                        widgetL: const Text('Carrier Name'),
-                        widgetR: Text(
-                          state.carrierInfo!.carrierName ?? 'N/A',
+                            ),
+                            CupertinoListTile.notched(
+                              title: const Text('ISO country code'),
+                              trailing: Text(
+                                carrier.isoCountryCode,
+                              ),
+                            ),
+                            CupertinoListTile.notched(
+                              title: const Text('Mobile country code'),
+                              trailing: Text(
+                                carrier.mobileCountryCode,
+                              ),
+                            ),
+                            CupertinoListTile.notched(
+                              title: const Text('Mobile network code'),
+                              trailing: Text(
+                                carrier.mobileNetworkCode,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      ListTextLine(
-                        widgetL: const Text('ISO Country Code'),
-                        widgetR: Text(
-                          state.carrierInfo!.isoCountryCode ?? 'N/A',
+                      );
+                    }
+
+                    widgets.addAll(
+                      [
+                        CupertinoListSection.insetGrouped(
+                          children: [
+                            CupertinoListTile.notched(
+                              title: const Text('Connection status'),
+                              trailing: Text(
+                                state.isCarrierConnected
+                                    ? 'Connected'
+                                    : 'Not connected',
+                              ),
+                            ),
+                            CupertinoListTile.notched(
+                              title: const Text('External IP'),
+                              trailing: Text(
+                                state.extIP ?? 'Unknown',
+                              ),
+                              onTap: () => _handleExtIPRefresh(context),
+                            ),
+                          ],
                         ),
-                      ),
-                      ListTextLine(
-                        widgetL: const Text('Mobile Country Code'),
-                        widgetR: Text(
-                          state.carrierInfo!.mobileCountryCode ?? 'N/A',
-                        ),
-                      ),
-                      ListTextLine(
-                        widgetL: const Text('Mobile Network Code'),
-                        widgetR: Text(
-                          state.carrierInfo!.mobileNetworkCode ?? 'N/A',
-                        ),
-                      ),
-                      ListTextLine(
-                        widgetL: const Text('Network Generation'),
-                        widgetR: Text(
-                          state.carrierInfo!.networkGeneration ?? 'N/A',
-                        ),
-                      ),
-                      ListTextLine(
-                        widgetL: const Text('Radio Access Technology'),
-                        widgetR: Text(
-                          state.carrierInfo!.radioType ?? 'N/A',
-                        ),
-                      ),
-                      if (state.extIpStatus == NetworkStatus.success)
-                        ListTextLine(
-                          widgetL: const Text('External IPv4'),
-                          widgetR: Text(state.extIP.toString()),
-                          subtitle: const Text('Tap to refresh'),
-                          onRefreshTap: () => _handleExtIPRefresh(context),
-                        )
-                      else if (state.extIpStatus == NetworkStatus.loading)
-                        const ListTextLine(
-                          widgetL: Text('External IPv4'),
-                          subtitle: Text('Tap to refresh'),
-                        )
-                      else
-                        ListTextLine(
-                          widgetL: const Text('External IPv4'),
-                          widgetR: const Text('N/A'),
-                          subtitle: const Text('Tap to refresh'),
-                          onRefreshTap: () => _handleExtIPRefresh(context),
-                        ),
-                    ],
-                  )
-                : const RoundedList(
-                    children: [
-                      ListTextLine(widgetL: Text('VoIP Support')),
-                      ListTextLine(widgetL: Text('Carrier Name')),
-                      ListTextLine(widgetL: Text('ISO Country Code')),
-                      ListTextLine(widgetL: Text('Mobile Country Code')),
-                      ListTextLine(widgetL: Text('Mobile Network Code')),
-                      ListTextLine(widgetL: Text('Network Generation')),
-                      ListTextLine(widgetL: Text('Radio Access Technology')),
-                      ListTextLine(widgetL: Text('External IPv4')),
-                    ],
-                  );
+                      ],
+                    );
+
+                    return ListView(
+                      children: widgets,
+                    );
+                  },
+                );
+            }
           },
         ),
       ],

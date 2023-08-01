@@ -1,4 +1,7 @@
 // Dart imports:
+// ignore_for_file: use_build_context_synchronously
+
+// Dart imports:
 import 'dart:async';
 import 'dart:io';
 
@@ -42,6 +45,8 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
   bool _isPurchasing = false;
   AdaptyPaywallProduct? _product;
 
+  List<AdaptyPaywallProduct>? products;
+
   @override
   void initState() {
     super.initState();
@@ -49,7 +54,13 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
     _setUpAdsForPaywall();
     if (widget.paywall != null) {
       Adapty().logShowPaywall(paywall: widget.paywall!);
+
+      fetchProducts();
     }
+  }
+
+  Future<void> fetchProducts() async {
+    products = await Adapty().getPaywallProducts(paywall: widget.paywall!);
   }
 
   @override
@@ -154,9 +165,9 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
             titleToBodySpacing: 20,
             titleTopIndent: 40,
             features: [
-              if (widget.paywall != null)
+              if (products != null)
                 Text(
-                  'Subscribe for ${_product?.localizedPrice} per ${_product?.localizedSubscriptionPeriod} and get unlimited access to the following features:',
+                  'Subscribe for ${products?.first.localizedPrice} per ${products?.first.localizedSubscriptionPeriod} and get unlimited access to the following features:',
                 )
               else
                 const Text(
@@ -205,21 +216,20 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
   }
 
   Future<void> _handleSubscribe() async {
-    final products =
-        await Adapty().getPaywallProducts(paywall: widget.paywall!);
-    _product = products.first;
+    final product = products?.first;
 
     setState(() {
       _isPurchasing = true;
     });
 
-    AdaptyProfile? makePurchaseResult;
+      AdaptyProfile? adaptyProfile;
 
-    try {
-      makePurchaseResult = await Adapty().makePurchase(product: _product!);
-    } catch (e) {
-      if (kDebugMode) {
-        print('Failed to make purchase: $e');
+      try {
+        adaptyProfile = await Adapty().makePurchase(product: product);
+      } catch (e) {
+        if (kDebugMode) {
+          print('Failed to make purchase: $e');
+        }
       }
     }
 
@@ -227,8 +237,8 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
       _isPurchasing = false;
     });
 
-    if (makePurchaseResult?.accessLevels['premium']?.isActive ?? false) {
-      await Hive.box<bool>('iap').put('isPremiumGranted', true);
+      if (adaptyProfile?.accessLevels['premium']?.isActive ?? false) {
+        await Hive.box<bool>('iap').put('isPremiumGranted', true);
 
       await showPlatformDialog<void>(
         context: context,
@@ -317,11 +327,45 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
     });
   }
 
-  String _getPremiumAdUnitId() {
-    return kReleaseMode
-        ? Platform.isIOS
-            ? Constants.premiumAccessIOSAdUnitId
-            : Constants.premiumAccessAndroidAdUnitId
-        : Constants.testRewardedAdUnitId;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Icon(
+          Icons.check_circle_rounded,
+          color: Colors.green,
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: DataCard(
+            padding: const EdgeInsets.all(10),
+            margin: EdgeInsets.zero,
+            child: Row(
+              children: [
+                Icon(
+                  icon,
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        subtitle,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

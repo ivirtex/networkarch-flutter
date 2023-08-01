@@ -1,4 +1,3 @@
-/// FlexScheme with added Android 12+ dynamic colors
 // ignore_for_file: comment_references
 
 enum CustomFlexScheme {

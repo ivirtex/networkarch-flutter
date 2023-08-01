@@ -35,8 +35,8 @@ final List<PageViewModel> pagesList = [
       imagePadding: EdgeInsets.only(top: 40, bottom: 10),
       bodyFlex: 3,
     ),
-    bodyWidget: Column(
-      children: const [
+    bodyWidget: const Column(
+      children: [
         Text(
           Constants.appDesc,
           textAlign: TextAlign.center,

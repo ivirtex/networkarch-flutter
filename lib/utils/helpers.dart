@@ -57,7 +57,6 @@ void showPlatformMessage(
           : ScaffoldMessenger.of(context).showSnackBar(
               Constants.permissionGrantedSnackbar,
             );
-      break;
     case MessageType.denied:
       isIOS
           ? showCupertinoDialog<void>(
@@ -67,7 +66,6 @@ void showPlatformMessage(
           : ScaffoldMessenger.of(context).showSnackBar(
               Constants.permissionDeniedSnackbar,
             );
-      break;
     case MessageType.default_:
       isIOS
           ? showCupertinoDialog<void>(
@@ -77,7 +75,6 @@ void showPlatformMessage(
           : ScaffoldMessenger.of(context).showSnackBar(
               Constants.permissionDefaultSnackbar,
             );
-      break;
   }
 
   // if (Theme.of(context).platform == TargetPlatform.iOS) {

@@ -12,10 +12,10 @@ class LoadingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DataCard(
-      padding: const EdgeInsets.all(16),
+    return const DataCard(
+      padding: EdgeInsets.all(16),
       child: Row(
-        children: const [
+        children: [
           Spacer(),
           ListCircularProgressIndicator(),
           Spacer(),

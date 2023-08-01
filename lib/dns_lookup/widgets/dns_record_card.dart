@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:network_arch/constants.dart';
 import 'package:network_arch/dns_lookup/dns_lookup.dart';
 import 'package:network_arch/shared/shared_widgets.dart';
-import 'package:network_arch/theme/themes.dart';
 
 class DnsRecordCard extends StatelessWidget {
   const DnsRecordCard(
@@ -17,9 +16,6 @@ class DnsRecordCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
-    final iOStextColor = Themes.iOStextColor.resolveFrom(context);
-
     return DataCard(
       padding: const EdgeInsets.all(10),
       child: Column(
@@ -28,18 +24,14 @@ class DnsRecordCard extends StatelessWidget {
             children: [
               Text(
                 rrCodeToName(record.type).name,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
-                  color: isIOS ? iOStextColor : null,
                 ),
               ),
               const Spacer(),
               Text(
                 'TTL: ${record.ttl}',
-                style: TextStyle(
-                  color: isIOS ? iOStextColor : null,
-                ),
               ),
             ],
           ),
@@ -55,9 +47,6 @@ class DnsRecordCard extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: Text(
               record.data,
-              style: TextStyle(
-                color: isIOS ? iOStextColor : null,
-              ),
             ),
           ),
         ],
