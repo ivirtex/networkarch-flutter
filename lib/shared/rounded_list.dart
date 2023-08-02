@@ -10,7 +10,7 @@ class RoundedList extends StatelessWidget {
   const RoundedList({
     required this.children,
     this.padding = const EdgeInsets.all(10),
-    this.iOSmargin = Constants.iOSbodyPadding,
+    this.iOSmargin,
     this.header,
     this.footer,
     super.key,
@@ -66,26 +66,7 @@ class RoundedList extends StatelessWidget {
           margin: iOSmargin,
           header: header != null ? Text(header!) : null,
           footer: footer != null ? Text(footer!) : null,
-          children: children.map(
-            (Widget child) {
-              return child is ListTextLine
-                  ? CupertinoListTile.notched(
-                      title: child.widgetL,
-                      subtitle: child.subtitle,
-                      trailing: child.widgetR != null
-                          ? Expanded(
-                              flex: 3,
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                child: child.widgetR,
-                              ),
-                            )
-                          : const ListCircularProgressIndicator(),
-                      onTap: child.onRefreshTap,
-                    )
-                  : child;
-            },
-          ).toList(),
+          children: children,
         );
       },
     );

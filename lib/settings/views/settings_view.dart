@@ -212,6 +212,7 @@ class _SettingsViewState extends State<SettingsView> {
       _arePurchasesRestoring = false;
     });
 
+    // ignore: use_build_context_synchronously
     await showPlatformDialog<void>(
       context: context,
       builder: (context) {

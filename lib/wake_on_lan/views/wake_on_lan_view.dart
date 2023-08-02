@@ -243,42 +243,39 @@ class _WakeOnLanViewState extends State<WakeOnLanView> {
   ) {
     return FadeTransition(
       opacity: animation.drive(wolResponses.fadeTween),
-      child: SlideTransition(
-        position: animation.drive(wolResponses.slideTween),
-        child: PlatformWidget(
-          androidBuilder: (_) => DataCard(
-            padding: EdgeInsets.zero,
-            child: ListTile(
-              leading: item.status == WolStatus.success
-                  ? const StatusCard(
-                      color: Colors.green,
-                      text: 'Success',
-                    )
-                  : const StatusCard(
-                      color: Colors.red,
-                      text: 'Error',
-                    ),
-              title: Text(item.mac.address),
-              subtitle: Text(item.ipv4.address),
-              trailing: const Icon(Icons.navigate_next),
-              onTap: () => _handleCardTap(item),
-            ),
-          ),
-          iosBuilder: (_) => CupertinoListTile.notched(
+      child: PlatformWidget(
+        androidBuilder: (_) => DataCard(
+          padding: EdgeInsets.zero,
+          child: ListTile(
             leading: item.status == WolStatus.success
-                ? Icon(
-                    CupertinoIcons.check_mark_circled_solid,
-                    color: Themes.getPlatformSuccessColor(context),
+                ? const StatusCard(
+                    color: Colors.green,
+                    text: 'Success',
                   )
-                : Icon(
-                    CupertinoIcons.xmark_circle_fill,
-                    color: Themes.getPlatformErrorColor(context),
+                : const StatusCard(
+                    color: Colors.red,
+                    text: 'Error',
                   ),
             title: Text(item.mac.address),
             subtitle: Text(item.ipv4.address),
-            trailing: const CupertinoListTileChevron(),
+            trailing: const Icon(Icons.navigate_next),
             onTap: () => _handleCardTap(item),
           ),
+        ),
+        iosBuilder: (_) => CupertinoListTile.notched(
+          leading: item.status == WolStatus.success
+              ? Icon(
+                  CupertinoIcons.check_mark_circled_solid,
+                  color: Themes.getPlatformSuccessColor(context),
+                )
+              : Icon(
+                  CupertinoIcons.xmark_circle_fill,
+                  color: Themes.getPlatformErrorColor(context),
+                ),
+          title: Text(item.mac.address),
+          subtitle: Text(item.ipv4.address),
+          trailing: const CupertinoListTileChevron(),
+          onTap: () => _handleCardTap(item),
         ),
       ),
     );

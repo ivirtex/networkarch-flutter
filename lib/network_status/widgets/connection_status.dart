@@ -27,6 +27,7 @@ class ConnectionStatus extends StatelessWidget {
     switch (status) {
       case NetworkStatus.success:
         return Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               isNetworkConnected ? 'Connected' : 'Disconnected',
@@ -56,6 +57,7 @@ class ConnectionStatus extends StatelessWidget {
         );
       case NetworkStatus.permissionIssue:
         return Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               'Permission issue',
@@ -79,6 +81,7 @@ class ConnectionStatus extends StatelessWidget {
         );
       case NetworkStatus.failure:
         return Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               'Error',
@@ -103,6 +106,7 @@ class ConnectionStatus extends StatelessWidget {
       case NetworkStatus.inital:
       case NetworkStatus.loading:
         return Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             if (!isIOS) ...[
               const Text(

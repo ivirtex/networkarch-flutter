@@ -138,10 +138,7 @@ class _LanScannerViewState extends State<LanScannerView> {
   ) {
     return FadeTransition(
       opacity: animation.drive(_hosts.fadeTween),
-      child: SlideTransition(
-        position: animation.drive(_hosts.slideTween),
-        child: HostCard(item: item),
-      ),
+      child: HostCard(item: item),
     );
   }
 

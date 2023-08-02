@@ -3,16 +3,19 @@ import 'package:carrier_info/carrier_info.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
-import 'package:network_arch/network_status/network_status.dart';
+import 'package:network_arch/network_status/models/models.dart';
 
 class CarrierDataProvider {
-  Future<CarrierInfoModel?> getCellularData() async {
-    final android = await CarrierInfo.getAndroidInfo();
-    final ios = await CarrierInfo.getIosInfo();
-
+  Future<CarrierInfoModel> getCellularData() async {
     return CarrierInfoModel(
-      androidCarrierData: android,
-      iosCarrierData: ios,
+      allowsVOIP: await CarrierInfo.allowsVOIP,
+      carrierName: await CarrierInfo.carrierName,
+      isoCountryCode: await CarrierInfo.isoCountryCode,
+      mobileCountryCode: await CarrierInfo.mobileCountryCode,
+      mobileNetworkCode: await CarrierInfo.mobileNetworkCode,
+      mobileNetworkOperator: await CarrierInfo.mobileNetworkOperator,
+      networkGeneration: await CarrierInfo.networkGeneration,
+      radioType: await CarrierInfo.radioType,
     );
   }
 

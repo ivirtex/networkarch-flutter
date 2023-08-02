@@ -21,10 +21,6 @@ class AnimatedListModel<T> {
   final RemovedItemBuilder<T> removedItemBuilder;
   final List<T> _items;
 
-  final Animatable<Offset> slideTween = Tween<Offset>(
-    begin: const Offset(0, 0.5),
-    end: Offset.zero,
-  ).chain(CurveTween(curve: Curves.easeInOut));
   final Animatable<double> fadeTween = Tween<double>(
     begin: 0,
     end: 1,

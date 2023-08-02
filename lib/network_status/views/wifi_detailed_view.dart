@@ -38,91 +38,92 @@ class WifiDetailedView extends StatelessWidget {
   }
 
   Widget _buildDataList(BuildContext context) {
-    final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
-
     return ContentListView(
       children: [
         BlocBuilder<NetworkStatusBloc, NetworkStatusState>(
           builder: (context, state) {
-            return state.wifiStatus == NetworkStatus.success
-                ? RoundedList(
-                    padding: isIOS ? EdgeInsets.zero : const EdgeInsets.all(10),
-                    children: [
-                      ListTextLine(
-                        widgetL: const Text('SSID'),
-                        widgetR: SelectableText(
-                          state.wifiInfo!.wifiSSID ?? 'N/A',
+            switch (state.wifiStatus) {
+              case NetworkStatus.inital:
+              case NetworkStatus.loading:
+                return const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                );
+              case NetworkStatus.permissionIssue:
+                return const ErrorCard(
+                  message: 'Permission to access Wi-Fi information denied.',
+                );
+              case NetworkStatus.success:
+              case NetworkStatus.failure:
+                return Column(
+                  children: [
+                    RoundedList(
+                      children: [
+                        ListTextLine(
+                          widgetL: const Text('SSID'),
+                          widgetR: SelectableText(
+                            state.wifiInfo?.wifiSSID ?? 'N/A',
+                          ),
                         ),
-                      ),
-                      ListTextLine(
-                        widgetL: const Text('BSSID'),
-                        widgetR: SelectableText(
-                          state.wifiInfo!.wifiBSSID ?? 'N/A',
+                        ListTextLine(
+                          widgetL: const Text('BSSID'),
+                          widgetR: SelectableText(
+                            state.wifiInfo?.wifiBSSID ?? 'N/A',
+                          ),
                         ),
-                      ),
-                      ListTextLine(
-                        widgetL: const Text('Local IPv4'),
-                        widgetR: SelectableText(
-                          state.wifiInfo!.wifiIPv4 ?? 'N/A',
+                        ListTextLine(
+                          widgetL: const Text('Local IPv4'),
+                          widgetR: SelectableText(
+                            state.wifiInfo?.wifiIPv4 ?? 'N/A',
+                          ),
                         ),
-                      ),
-                      ListTextLine(
-                        widgetL: const Text('Local IPv6'),
-                        widgetR: SelectableText(
-                          state.wifiInfo!.wifiIPv6 ?? 'N/A',
+                        ListTextLine(
+                          widgetL: const Text('Local IPv6'),
+                          widgetR: SelectableText(
+                            state.wifiInfo?.wifiIPv6 ?? 'N/A',
+                          ),
                         ),
-                      ),
-                      ListTextLine(
-                        widgetL: const Text('Broadcast address'),
-                        widgetR: SelectableText(
-                          state.wifiInfo!.wifiBroadcast ?? 'N/A',
+                        ListTextLine(
+                          widgetL: const Text('Broadcast address'),
+                          widgetR: SelectableText(
+                            state.wifiInfo?.wifiBroadcast ?? 'N/A',
+                          ),
                         ),
-                      ),
-                      ListTextLine(
-                        widgetL: const Text('Gateway'),
-                        widgetR: SelectableText(
-                          state.wifiInfo!.wifiGateway ?? 'N/A',
+                        ListTextLine(
+                          widgetL: const Text('Gateway'),
+                          widgetR: SelectableText(
+                            state.wifiInfo?.wifiGateway ?? 'N/A',
+                          ),
                         ),
-                      ),
-                      ListTextLine(
-                        widgetL: const Text('Submask'),
-                        widgetR: SelectableText(
-                          state.wifiInfo!.wifiSubmask ?? 'N/A',
+                        ListTextLine(
+                          widgetL: const Text('Submask'),
+                          widgetR: SelectableText(
+                            state.wifiInfo?.wifiSubmask ?? 'N/A',
+                          ),
                         ),
-                      ),
-                      if (state.extIpStatus == NetworkStatus.success)
+                      ],
+                    ),
+                    RoundedList(
+                      children: [
                         ListTextLine(
                           widgetL: const Text('External IPv4'),
-                          widgetR: SelectableText(state.extIP ?? 'N/A'),
                           subtitle: const Text('Tap to refresh'),
-                          onRefreshTap: () => _handleExtIPRefresh(context),
-                        )
-                      else if (state.extIpStatus == NetworkStatus.loading)
-                        const ListTextLine(
-                          widgetL: Text('External IPv4'),
-                          subtitle: Text('Tap to refresh'),
-                        )
-                      else
-                        ListTextLine(
-                          widgetL: const Text('External IPv4'),
-                          widgetR: const Text('N/A'),
-                          subtitle: const Text('Tap to refresh'),
+                          widgetR: state.extIpStatus == NetworkStatus.inital ||
+                                  state.extIpStatus == NetworkStatus.loading
+                              ? const ListCircularProgressIndicator()
+                              : state.extIpStatus == NetworkStatus.failure
+                                  ? const ErrorCard(
+                                      message: 'Failed to get external IP',
+                                    )
+                                  : SelectableText(
+                                      state.extIP ?? 'N/A',
+                                    ),
                           onRefreshTap: () => _handleExtIPRefresh(context),
                         ),
-                    ],
-                  )
-                : const RoundedList(
-                    children: [
-                      ListTextLine(widgetL: Text('SSID')),
-                      ListTextLine(widgetL: Text('BSSID')),
-                      ListTextLine(widgetL: Text('Local IPv4')),
-                      ListTextLine(widgetL: Text('Local IPv6')),
-                      ListTextLine(widgetL: Text('Broadcast address')),
-                      ListTextLine(widgetL: Text('Gateway')),
-                      ListTextLine(widgetL: Text('Submask')),
-                      ListTextLine(widgetL: Text('External IP')),
-                    ],
-                  );
+                      ],
+                    )
+                  ],
+                );
+            }
           },
         ),
       ],

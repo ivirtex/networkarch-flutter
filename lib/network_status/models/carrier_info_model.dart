@@ -1,25 +1,38 @@
 // Package imports:
-import 'package:carrier_info/carrier_info.dart';
 import 'package:equatable/equatable.dart';
 
 class CarrierInfoModel extends Equatable {
   const CarrierInfoModel({
-    required this.androidCarrierData,
-    required this.iosCarrierData,
+    required this.allowsVOIP,
+    this.carrierName,
+    this.isoCountryCode,
+    this.mobileCountryCode,
+    this.mobileNetworkCode,
+    this.mobileNetworkOperator,
+    this.networkGeneration,
+    this.radioType,
   });
 
-  final AndroidCarrierData? androidCarrierData;
-  final IosCarrierData? iosCarrierData;
+  final bool allowsVOIP;
+  final String? carrierName;
+  final String? isoCountryCode;
+  final String? mobileCountryCode;
+  final String? mobileNetworkCode;
+  final String? mobileNetworkOperator;
+  final String? networkGeneration;
+  final String? radioType;
 
-  bool get isCarrierConnected =>
-      androidCarrierData?.isSmsCapable ??
-      false ||
-          iosCarrierData!.carrierData
-              .any((element) => element.mobileNetworkCode != '');
+  bool get isCarrierConnected => carrierName != null;
 
   @override
   List<Object?> get props => [
-        androidCarrierData,
-        iosCarrierData,
+        allowsVOIP,
+        carrierName,
+        isoCountryCode,
+        mobileCountryCode,
+        mobileNetworkCode,
+        mobileNetworkOperator,
+        networkGeneration,
+        radioType,
       ];
 }

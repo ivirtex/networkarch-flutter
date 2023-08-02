@@ -13,7 +13,7 @@ dependencies:
   adapty_flutter: ^2.4.4
   animate_do: ^3.0.2
   bloc: ^8.1.2
-  carrier_info: ^2.0.8
+  carrier_info: 2.0.6
   cupertino_icons: ^1.0.5
   cupertino_onboarding: ^1.1.1
   dart_ping: ^8.0.1

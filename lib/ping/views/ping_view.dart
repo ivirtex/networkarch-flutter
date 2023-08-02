@@ -184,18 +184,27 @@ class _PingViewState extends State<PingView> {
           ),
         ),
         const SizedBox(height: 10),
-        AnimatedList(
-          key: _listKey,
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          initialItemCount: _pingData.length,
-          itemBuilder: (context, index, animation) {
-            return _buildItem(
-              context,
-              animation,
-              _pingData[index],
-            );
-          },
+        AnimatedSize(
+          duration: const Duration(milliseconds: 150),
+          alignment: Alignment.topCenter,
+          child: RoundedList(
+            iOSmargin: EdgeInsets.zero,
+            children: [
+              AnimatedList(
+                key: _listKey,
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                initialItemCount: _pingData.length,
+                itemBuilder: (context, index, animation) {
+                  return _buildItem(
+                    context,
+                    animation,
+                    _pingData[index],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -208,16 +217,13 @@ class _PingViewState extends State<PingView> {
   ) {
     return FadeTransition(
       opacity: animation.drive(_pingData.fadeTween),
-      child: SlideTransition(
-        position: animation.drive(_pingData.slideTween),
-        child: PingCard(
-          list: _pingData,
-          item: item,
-          addr: context.read<PingBloc>().target!.isEmpty
-              ? 'N/A'
-              : context.read<PingBloc>().target!,
-          hasError: item.error != null,
-        ),
+      child: PingCard(
+        list: _pingData,
+        item: item,
+        addr: context.read<PingBloc>().target!.isEmpty
+            ? 'N/A'
+            : context.read<PingBloc>().target!,
+        hasError: item.error != null,
       ),
     );
   }

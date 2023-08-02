@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -47,84 +46,78 @@ class CarrierDetailView extends StatelessWidget {
               case NetworkStatus.inital:
               case NetworkStatus.loading:
                 return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              case NetworkStatus.failure:
-                return const Center(
-                  child: Text('Failed to load carrier data'),
+                  child: CircularProgressIndicator.adaptive(),
                 );
               case NetworkStatus.permissionIssue:
                 return const Center(
                   child: Text('Carrier data permission denied'),
                 );
+              case NetworkStatus.failure:
               case NetworkStatus.success:
-                final widgets = <Widget>[];
-
-                return PlatformWidget(
-                  iosBuilder: (context) {
-                    for (final carrier
-                        in state.carrierInfo!.iosCarrierData!.carrierData) {
-                      widgets.add(
-                        CupertinoListSection.insetGrouped(
-                          header: Text('${carrier.carrierName} details'),
-                          children: [
-                            CupertinoListTile.notched(
-                              title: const Text('Carrier name'),
-                              trailing: Text(
-                                carrier.carrierName,
-                              ),
-                            ),
-                            CupertinoListTile.notched(
-                              title: const Text('ISO country code'),
-                              trailing: Text(
-                                carrier.isoCountryCode,
-                              ),
-                            ),
-                            CupertinoListTile.notched(
-                              title: const Text('Mobile country code'),
-                              trailing: Text(
-                                carrier.mobileCountryCode,
-                              ),
-                            ),
-                            CupertinoListTile.notched(
-                              title: const Text('Mobile network code'),
-                              trailing: Text(
-                                carrier.mobileNetworkCode,
-                              ),
-                            ),
-                          ],
+                return Column(
+                  children: [
+                    RoundedList(
+                      children: [
+                        ListTextLine(
+                          widgetL: const Text('Allows VOIP'),
+                          widgetR: Text(
+                            state.carrierInfo?.allowsVOIP.toString() ?? 'N/A',
+                          ),
                         ),
-                      );
-                    }
-
-                    widgets.addAll(
-                      [
-                        CupertinoListSection.insetGrouped(
-                          children: [
-                            CupertinoListTile.notched(
-                              title: const Text('Connection status'),
-                              trailing: Text(
-                                state.isCarrierConnected
-                                    ? 'Connected'
-                                    : 'Not connected',
-                              ),
-                            ),
-                            CupertinoListTile.notched(
-                              title: const Text('External IP'),
-                              trailing: Text(
-                                state.extIP ?? 'Unknown',
-                              ),
-                              onTap: () => _handleExtIPRefresh(context),
-                            ),
-                          ],
+                        ListTextLine(
+                          widgetL: const Text('Carrier name'),
+                          widgetR: Text(
+                            state.carrierInfo?.carrierName ?? 'N/A',
+                          ),
+                        ),
+                        ListTextLine(
+                          widgetL: const Text('ISO country code'),
+                          widgetR: Text(
+                            state.carrierInfo?.isoCountryCode ?? 'N/A',
+                          ),
+                        ),
+                        ListTextLine(
+                          widgetL: const Text('Mobile country code'),
+                          widgetR: Text(
+                            state.carrierInfo?.mobileCountryCode ?? 'N/A',
+                          ),
+                        ),
+                        ListTextLine(
+                          widgetL: const Text('Mobile network code'),
+                          widgetR: Text(
+                            state.carrierInfo?.mobileNetworkCode ?? 'N/A',
+                          ),
+                        ),
+                        ListTextLine(
+                          widgetL: const Text('Connection status'),
+                          widgetR: ConnectionStatus(
+                            state.carrierStatus,
+                            connectionChecker: () =>
+                                state.carrierInfo?.isCarrierConnected ?? false,
+                          ),
                         ),
                       ],
-                    );
-
-                    return ListView(
-                      children: widgets,
-                    );
-                  },
+                    ),
+                    RoundedList(
+                      children: [
+                        ListTextLine(
+                          widgetL: const Text('External IP'),
+                          subtitle: const Text('Tap to refresh'),
+                          widgetR: state.extIpStatus == NetworkStatus.inital ||
+                                  state.extIpStatus == NetworkStatus.loading
+                              ? const ListCircularProgressIndicator()
+                              : state.extIpStatus == NetworkStatus.failure
+                                  ? const ErrorCard(
+                                      message: 'Failed to get external IP',
+                                    )
+                                  : SelectableText(
+                                      state.extIP ?? 'N/A',
+                                    ),
+                          onRefreshTap: () => _handleExtIPRefresh(context),
+                        ),
+                      ],
+                    ),
+                  ],
                 );
             }
           },

@@ -141,10 +141,10 @@ packages:
     dependency: "direct main"
     description:
       name: carrier_info
-      sha256: "72b650aecb6267804f71c279099e87f0fe4201321ebdb09a13a60db18509ac43"
+      sha256: "52cf512e7180af2106c32a9480b8f442bc583ef221fb806ed48335ef8022a5a8"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.8"
+    version: "2.0.6"
   characters:
     dependency: transitive
     description:

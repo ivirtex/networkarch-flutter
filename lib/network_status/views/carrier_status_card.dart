@@ -56,11 +56,7 @@ class CarrierStatusCard extends StatelessWidget {
                           const Text('Network Generation'),
                           const Spacer(),
                           if (state.carrierStatus == NetworkStatus.success)
-                            Text(
-                              state.carrierInfo?.androidCarrierData
-                                      ?.telephonyInfo.first.networkGeneration ??
-                                  'N/A',
-                            )
+                            Text(state.carrierInfo?.networkGeneration ?? 'N/A')
                           else if (state.carrierStatus ==
                               NetworkStatus.permissionIssue)
                             const Text('N/A')
@@ -111,9 +107,7 @@ class CarrierStatusCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            state.carrierInfo?.iosCarrierData?.carrierData.first
-                                    .carrierName ??
-                                'N/A',
+                            state.carrierInfo?.carrierName ?? 'N/A',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
@@ -134,12 +128,7 @@ class CarrierStatusCard extends StatelessWidget {
                           const Spacer(),
                           if (state.carrierStatus == NetworkStatus.success)
                             Text(
-                              state
-                                      .carrierInfo
-                                      ?.iosCarrierData
-                                      ?.carrierRadioAccessTechnologyTypeList
-                                      .first ??
-                                  'N/A',
+                              state.carrierInfo?.networkGeneration ?? 'N/A',
                             )
                           else if (state.carrierStatus ==
                               NetworkStatus.permissionIssue)
