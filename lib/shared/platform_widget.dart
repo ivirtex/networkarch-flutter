@@ -15,12 +15,11 @@ class PlatformWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     switch (Theme.of(context).platform) {
-      case TargetPlatform.android:
-        return androidBuilder?.call(context) ?? const SizedBox.shrink();
+      case TargetPlatform.macOS:
       case TargetPlatform.iOS:
         return iosBuilder?.call(context) ?? const SizedBox.shrink();
+      case TargetPlatform.android:
       case TargetPlatform.windows:
-      case TargetPlatform.macOS:
       case TargetPlatform.linux:
       case TargetPlatform.fuchsia:
         return androidBuilder?.call(context) ?? const SizedBox.shrink();

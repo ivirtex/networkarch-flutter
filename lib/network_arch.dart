@@ -93,7 +93,6 @@ class NetworkArch extends StatelessWidget {
             Themes.schemesListWithDynamic.first;
 
     return DynamicColorBuilder(
-      // ignore: prefer-extracting-callbacks
       builder: (lightDynamic, darkDynamic) {
         handleDynamicColors(lightDynamic, darkDynamic, context);
 
