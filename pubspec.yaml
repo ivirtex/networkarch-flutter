@@ -21,8 +21,6 @@ dependencies:
   dynamic_color: ^1.4.0
   enum_to_string: ^2.0.1
   equatable: ^2.0.5
-  feedback: ^2.6.0
-  feedback_sentry: ^2.3.0
   flex_color_scheme: ^7.2.0
   flutter:
     sdk: flutter
@@ -43,6 +41,7 @@ dependencies:
   json_serializable: ^6.7.1
   # lan_scanner: ^3.5.0
   meta: ^1.8.0
+  mockingjay: ^0.3.0
   mocktail: ^0.3.0
   modal_bottom_sheet: ^3.0.0-pre
   network_info_plus: ^4.0.1
@@ -53,6 +52,7 @@ dependencies:
   sentry_flutter: ^7.9.0
   url_launcher: ^6.1.12
   wake_on_lan: ^3.2.0+1
+  wiredash: ^1.7.2
 
 dev_dependencies:
   bloc_test: ^9.1.3

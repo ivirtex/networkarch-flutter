@@ -1,4 +1,3 @@
-// Dart imports:
 // ignore_for_file: use_build_context_synchronously
 
 // Dart imports:
@@ -43,7 +42,6 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
   bool _isRewardedAdReady = false;
 
   bool _isPurchasing = false;
-  AdaptyPaywallProduct? _product;
 
   List<AdaptyPaywallProduct>? products;
 
@@ -222,14 +220,13 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
       _isPurchasing = true;
     });
 
-      AdaptyProfile? adaptyProfile;
+    AdaptyProfile? adaptyProfile;
 
-      try {
-        adaptyProfile = await Adapty().makePurchase(product: product);
-      } catch (e) {
-        if (kDebugMode) {
-          print('Failed to make purchase: $e');
-        }
+    try {
+      adaptyProfile = await Adapty().makePurchase(product: product!);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Failed to make purchase: $e');
       }
     }
 
@@ -237,8 +234,8 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
       _isPurchasing = false;
     });
 
-      if (adaptyProfile?.accessLevels['premium']?.isActive ?? false) {
-        await Hive.box<bool>('iap').put('isPremiumGranted', true);
+    if (adaptyProfile?.accessLevels['premium']?.isActive ?? false) {
+      await Hive.box<bool>('iap').put('isPremiumGranted', true);
 
       await showPlatformDialog<void>(
         context: context,
@@ -256,20 +253,6 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
 
       if (!mounted) return;
       Navigator.pop(context);
-    } else {
-      await showPlatformDialog<void>(
-        context: context,
-        builder: (_) => PlatformAlertDialog(
-          title: const Text('Error'),
-          content: const Text('Something went wrong. Please try again later.'),
-          actions: [
-            PlatformDialogAction(
-              child: const Text('OK'),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        ),
-      );
     }
   }
 
@@ -317,6 +300,14 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
     );
   }
 
+  String _getPremiumAdUnitId() {
+    return kReleaseMode
+        ? Platform.isIOS
+            ? Constants.premiumAccessIOSAdUnitId
+            : Constants.premiumAccessAndroidAdUnitId
+        : Constants.testRewardedAdUnitId;
+  }
+
   void _onAdFailedToLoad(LoadAdError err) {
     if (kDebugMode) {
       print('Failed to load a rewarded ad: ${err.message}');
@@ -325,47 +316,5 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
     setState(() {
       _isRewardedAdReady = false;
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Icon(
-          Icons.check_circle_rounded,
-          color: Colors.green,
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: DataCard(
-            padding: const EdgeInsets.all(10),
-            margin: EdgeInsets.zero,
-            child: Row(
-              children: [
-                Icon(
-                  icon,
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      Text(
-                        subtitle,
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
   }
 }

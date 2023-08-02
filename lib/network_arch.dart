@@ -24,8 +24,8 @@ import 'package:network_arch/theme/theme.dart';
 import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
 import 'package:network_arch/whois/whois.dart';
 
-class App extends StatelessWidget {
-  App({super.key});
+class NetworkArch extends StatelessWidget {
+  NetworkArch({super.key});
 
   final NetworkStatusRepository networkStatusRepository =
       NetworkStatusRepository();
@@ -127,14 +127,9 @@ class App extends StatelessWidget {
   Widget _buildIOS(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
-        final isDark = state.mode == ThemeMode.dark;
-
-        return BetterFeedback(
-          theme: FeedbackThemeData(
-            background: isDark
-                ? CupertinoColors.darkBackgroundGray
-                : CupertinoColors.white,
-          ),
+        return Wiredash(
+          projectId: 'networkarch-jto3hyq',
+          secret: 'wCFJdv9cYZqN1lnX6nIukcXx9qYQwhPA',
           child: CupertinoApp(
             navigatorObservers: [
               SentryNavigatorObserver(),
