@@ -27,120 +27,93 @@ class PingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformWidget(
-      androidBuilder: (context) {
-        return DataCard(
-          padding: EdgeInsets.zero,
-          child: ListTile(
-            contentPadding: const EdgeInsets.only(left: 8, right: 16),
-            leading: hasError
-                ? const StatusCard(
-                    color: Colors.red,
-                    text: 'Offline',
-                  )
-                : const StatusCard(
-                    color: Colors.green,
-                    text: 'Online',
-                  ),
-            title: Text(
-              addr,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
+    final isIos = Theme.of(context).platform == TargetPlatform.iOS;
+
+    return DataCard(
+      padding: EdgeInsets.zero,
+      margin: const EdgeInsets.symmetric(vertical: 5),
+      child: ListTile(
+        contentPadding: const EdgeInsets.only(left: 8, right: 16),
+        leading: hasError
+            ? StatusCard(
+                color: isIos ? CupertinoColors.systemRed : Colors.red,
+                text: 'Offline',
+              )
+            : StatusCard(
+                color: isIos ? CupertinoColors.systemGreen : Colors.green,
+                text: 'Online',
               ),
-            ),
-            subtitle: hasError
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Seq. pos.: ${list.indexOf(item) + 1}',
-                      ),
-                      const Text(
-                        'TTL: N/A',
-                      ),
-                    ],
-                  )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Seq. pos.: ${item.response!.seq} ',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                      Text(
-                        'TTL: ${item.response!.ttl}',
-                      ),
-                    ],
-                  ),
-            trailing: hasError
-                ? Text(
-                    context.read<PingRepository>().getErrorDesc(
-                          item.error!,
-                        ),
-                  )
-                : Text(
-                    '${item.response!.time!.inMilliseconds} ms',
+        title: Text(
+          addr,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: isIos ? CupertinoColors.label.resolveFrom(context) : null,
+          ),
+        ),
+        subtitle: hasError
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Seq. pos.: ${list.indexOf(item) + 1}',
                     style: TextStyle(
-                      color: item.response!.time!.inMilliseconds < 75
-                          ? Colors.green
-                          : item.response!.time!.inMilliseconds < 150
-                              ? Colors.yellow
-                              : Colors.red,
+                      color: isIos
+                          ? CupertinoColors.label.resolveFrom(context)
+                          : null,
                     ),
                   ),
-          ),
-        );
-      },
-      iosBuilder: (context) {
-        return CupertinoListTile.notched(
-          title: Text(
-            addr,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          subtitle: hasError
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Seq. pos.: ${list.indexOf(item) + 1}',
+                  Text(
+                    'TTL: N/A',
+                    style: TextStyle(
+                      color: isIos
+                          ? CupertinoColors.label.resolveFrom(context)
+                          : null,
                     ),
-                    const Text(
-                      'TTL: N/A',
-                    ),
-                  ],
-                )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Seq. pos.: ${item.response!.seq} ',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    Text(
-                      'TTL: ${item.response!.ttl}',
-                    ),
-                  ],
-                ),
-          trailing: hasError
-              ? Text(
-                  context.read<PingRepository>().getErrorDesc(
-                        item.error!,
-                      ),
-                )
-              : Text(
-                  '${item.response!.time!.inMilliseconds} ms',
-                  style: TextStyle(
-                    color: item.response!.time!.inMilliseconds < 75
-                        ? CupertinoColors.systemGreen
-                        : item.response!.time!.inMilliseconds < 150
-                            ? CupertinoColors.systemYellow
-                            : CupertinoColors.systemRed,
+                  )
+                ],
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Seq. pos.: ${item.response!.seq} ',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: isIos
+                              ? CupertinoColors.label.resolveFrom(context)
+                              : null,
+                        ),
                   ),
+                  Text(
+                    'TTL: ${item.response!.ttl}',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: isIos
+                              ? CupertinoColors.label.resolveFrom(context)
+                              : null,
+                        ),
+                  ),
+                ],
+              ),
+        trailing: hasError
+            ? Text(
+                context.read<PingRepository>().getErrorDesc(item.error!),
+              )
+            : Text(
+                '${item.response!.time!.inMilliseconds} ms',
+                style: TextStyle(
+                  color: item.response!.time!.inMilliseconds < 75
+                      ? isIos
+                          ? CupertinoColors.systemGreen
+                          : Colors.green
+                      : item.response!.time!.inMilliseconds < 150
+                          ? isIos
+                              ? CupertinoColors.systemYellow
+                              : Colors.yellow[700]
+                          : isIos
+                              ? CupertinoColors.systemRed
+                              : Colors.red[700],
                 ),
-        );
-      },
+              ),
+      ),
     );
   }
 }
