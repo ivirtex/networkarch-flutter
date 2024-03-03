@@ -1,6 +1,5 @@
 part of 'lan_scanner_bloc.dart';
 
-@immutable
 abstract class LanScannerEvent {}
 
 class LanScannerStarted extends LanScannerEvent {
@@ -16,7 +15,7 @@ class LanScannerProgressUpdated extends LanScannerEvent {
 class LanScannerHostFound extends LanScannerEvent {
   LanScannerHostFound(this.host);
 
-  final ActiveHost host;
+  final Host host;
 }
 
 class LanScannerStopped extends LanScannerEvent {

@@ -38,6 +38,8 @@ class PingRepository {
         return Constants.requestTimedOutError;
       case ErrorType.noReply:
         return Constants.noReplyError;
+      case ErrorType.timeToLiveExceeded:
+        return Constants.unknownError;
     }
   }
 }

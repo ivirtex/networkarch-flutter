@@ -69,7 +69,7 @@ class PingCard extends StatelessWidget {
                           ? CupertinoColors.label.resolveFrom(context)
                           : null,
                     ),
-                  )
+                  ),
                 ],
               )
             : Column(

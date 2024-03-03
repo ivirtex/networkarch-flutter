@@ -45,11 +45,12 @@ void main() {
       await MobileAds.instance.initialize();
 
       await SentryFlutter.init(
-        (options) => {
-          options.tracesSampleRate = 0.2,
-          options.dsn = kReleaseMode
-              ? 'https://5d6f627c688b407e96c3d26d2df7457c@o923305.ingest.sentry.io/6238035'
-              : '',
+        (options) {
+          options
+            ..tracesSampleRate = 0.2
+            ..dsn = kReleaseMode
+                ? 'https://5d6f627c688b407e96c3d26d2df7457c@o923305.ingest.sentry.io/6238035'
+                : '';
         },
         appRunner: () => runApp(NetworkArch()),
       );

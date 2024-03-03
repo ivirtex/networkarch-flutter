@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:network_tools/network_tools.dart';
+import 'package:lan_scanner/lan_scanner.dart';
 
 // Project imports:
 import 'package:network_arch/lan_scanner/bloc/lan_scanner_bloc.dart';
@@ -22,7 +22,7 @@ class LanScannerView extends StatefulWidget {
 class _LanScannerViewState extends State<LanScannerView> {
   final _appBarKey = GlobalKey<ActionAppBarState>();
   final _listKey = GlobalKey<AnimatedListState>();
-  late final AnimatedListModel<ActiveHost> _hosts;
+  late final AnimatedListModel<Host> _hosts;
   late final LanScannerBloc _bloc;
 
   @override
@@ -134,7 +134,7 @@ class _LanScannerViewState extends State<LanScannerView> {
   FadeTransition _buildItem(
     BuildContext context,
     Animation<double> animation,
-    ActiveHost item,
+    Host item,
   ) {
     return FadeTransition(
       opacity: animation.drive(_hosts.fadeTween),

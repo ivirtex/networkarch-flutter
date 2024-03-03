@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:network_tools/network_tools.dart';
+import 'package:lan_scanner/lan_scanner.dart';
 
 // Project imports:
 import 'package:network_arch/shared/shared_widgets.dart';
@@ -13,7 +13,7 @@ class HostCard extends StatelessWidget {
     super.key,
   });
 
-  final ActiveHost item;
+  final Host item;
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +47,13 @@ class HostCard extends StatelessWidget {
         //     return Text(snapshot.data?.host ?? 'N/A');
         //   },
         // ),
-        title: Text(item.address),
-        subtitle: Text('${item.responseTime!.inMilliseconds} ms'),
+        title: Text(item.internetAddress.address),
+        subtitle: Text('${item.pingTime!.inMilliseconds} ms'),
         trailing: TextButton(
           onPressed: () {
             Navigator.of(context).pushNamed(
               '/tools/ping',
-              arguments: item.address,
+              arguments: item.internetAddress.address,
             );
           },
           child: const Text('Ping'),

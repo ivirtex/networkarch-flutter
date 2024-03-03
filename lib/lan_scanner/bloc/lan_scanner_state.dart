@@ -1,6 +1,5 @@
 part of 'lan_scanner_bloc.dart';
 
-@immutable
 abstract class LanScannerState extends Equatable {
   const LanScannerState();
 }
@@ -31,10 +30,10 @@ class LanScannerRunProgressUpdate extends LanScannerState {
 class LanScannerRunNewHost extends LanScannerState {
   const LanScannerRunNewHost(this.host);
 
-  final ActiveHost host;
+  final Host host;
 
   @override
-  List<Object> get props => [host.address];
+  List<Object> get props => [host.internetAddress];
 }
 
 class LanScannerRunStop extends LanScannerState {

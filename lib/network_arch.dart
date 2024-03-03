@@ -30,7 +30,6 @@ class NetworkArch extends StatelessWidget {
   final NetworkStatusRepository networkStatusRepository =
       NetworkStatusRepository();
   final pingRepository = PingRepository();
-  final lanScannerRepository = LanScannerRepository();
   final ipGeoRepository = IpGeoRepository();
   final whoisRepository = WhoisRepository();
   final dnsLookupRepository = DnsLookupRepository();
@@ -41,7 +40,6 @@ class NetworkArch extends StatelessWidget {
       providers: [
         RepositoryProvider.value(value: networkStatusRepository),
         RepositoryProvider.value(value: pingRepository),
-        RepositoryProvider.value(value: lanScannerRepository),
         RepositoryProvider.value(value: ipGeoRepository),
         RepositoryProvider.value(value: whoisRepository),
         RepositoryProvider.value(value: dnsLookupRepository),
@@ -64,7 +62,7 @@ class NetworkArch extends StatelessWidget {
             create: (context) => PingBloc(pingRepository),
           ),
           BlocProvider(
-            create: (context) => LanScannerBloc(lanScannerRepository),
+            create: (context) => LanScannerBloc(),
           ),
           BlocProvider(
             create: (context) => WakeOnLanBloc(),

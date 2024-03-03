@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 
 class CarrierInfoModel extends Equatable {
   const CarrierInfoModel({
-    required this.allowsVOIP,
+    this.allowsVOIP,
     this.carrierName,
     this.isoCountryCode,
     this.mobileCountryCode,
@@ -13,7 +13,7 @@ class CarrierInfoModel extends Equatable {
     this.radioType,
   });
 
-  final bool allowsVOIP;
+  final bool? allowsVOIP;
   final String? carrierName;
   final String? isoCountryCode;
   final String? mobileCountryCode;

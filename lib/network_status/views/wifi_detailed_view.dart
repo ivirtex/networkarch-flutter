@@ -120,7 +120,7 @@ class WifiDetailedView extends StatelessWidget {
                           onRefreshTap: () => _handleExtIPRefresh(context),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 );
             }

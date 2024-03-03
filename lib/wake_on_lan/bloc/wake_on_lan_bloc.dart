@@ -11,7 +11,7 @@ class WakeOnLanBloc extends Bloc<WakeOnLanEvent, WakeOnLanState> {
     on<WakeOnLanRequested>(_onRequested);
   }
 
-  late IPv4Address _ipv4;
+  late IPAddress _ipv4;
   bool _isValidIPv4 = true;
 
   late MACAddress _mac;
@@ -21,14 +21,14 @@ class WakeOnLanBloc extends Bloc<WakeOnLanEvent, WakeOnLanState> {
     WakeOnLanRequested event,
     Emitter<WakeOnLanState> emit,
   ) async {
-    if (IPv4Address.validate(event.ipv4)) {
-      _ipv4 = IPv4Address(event.ipv4);
+    if (IPAddress.validate(event.ipv4).state) {
+      _ipv4 = IPAddress(event.ipv4);
       _isValidIPv4 = true;
     } else {
       _isValidIPv4 = false;
     }
 
-    if (MACAddress.validate(event.macAddress)) {
+    if (MACAddress.validate(event.macAddress).state) {
       _mac = MACAddress(event.macAddress);
       _isValidMAC = true;
     } else {

@@ -337,7 +337,7 @@ class _OverviewViewState extends State<OverviewView> {
 
   Future<void> _setupIapPaywall() async {
     try {
-      _paywall = await Adapty().getPaywall(id: 'premium_paywall');
+      _paywall = await Adapty().getPaywall(placementId: 'premium_paywall');
     } catch (e) {
       if (kDebugMode) {
         print('Failed to get paywalls: $e');

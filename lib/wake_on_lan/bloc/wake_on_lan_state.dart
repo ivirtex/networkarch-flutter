@@ -13,7 +13,7 @@ class WakeOnLanSuccess extends WakeOnLanState {
     required this.packetBytes,
   });
 
-  final IPv4Address ipv4;
+  final IPAddress ipv4;
   final MACAddress mac;
   final List<int> packetBytes;
 }

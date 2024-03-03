@@ -89,13 +89,6 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 const SizedBox(height: Constants.listSpacing),
                 ActionCard(
-                  title: 'Send feedback',
-                  desc: 'Something is not working?',
-                  icon: const FaIcon(Icons.feedback_outlined),
-                  onTap: () => _sendFeedback(context),
-                ),
-                const SizedBox(height: Constants.listSpacing),
-                ActionCard(
                   title: 'Source code',
                   desc: 'Feel free to contribute!',
                   icon: const FaIcon(FontAwesomeIcons.github),
@@ -184,7 +177,9 @@ class _SettingsViewState extends State<SettingsView> {
   }
 
   void _sendFeedback(BuildContext context) {
-    Wiredash.of(context).show(inheritMaterialTheme: true);
+    Wiredash.of(context).show(
+      inheritMaterialTheme: true,
+    );
   }
 
   Future<void> _openSourceCode() async {
@@ -212,7 +207,10 @@ class _SettingsViewState extends State<SettingsView> {
       _arePurchasesRestoring = false;
     });
 
-    // ignore: use_build_context_synchronously
+    if (!mounted) {
+      return;
+    }
+
     await showPlatformDialog<void>(
       context: context,
       builder: (context) {

@@ -165,7 +165,7 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
             features: [
               if (products != null)
                 Text(
-                  'Subscribe for ${products?.first.localizedPrice} per ${products?.first.localizedSubscriptionPeriod} and get unlimited access to the following features:',
+                  'Subscribe for ${products?.first.price} per ${products?.first.subscriptionDetails?.subscriptionPeriod} and get unlimited access to the following features:',
                 )
               else
                 const Text(
